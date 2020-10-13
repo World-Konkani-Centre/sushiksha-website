@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main id="main">
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>Users</h2>
+            <div class="row">
+                <div class="col-lg-8 col-md-7">
+
+                </div>
+                <div class="col-lg-4 col-md-5 col-11">
+                    <div class="search-form ">
+                        <form action="{% url 'user-search' %}">
+                            <input type="text" name="q">
+                            <button type="submit"><i class="icofont-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <section id="team" class="team">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row" data-aos="zoom-in" data-aos-delay="100">
+                    {% for user in users %}
+                        <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
+                            <div class="member ">
+                                <div class="member-img">
+                                    <img src="{{ user.profile.image.url }}" class="img-fluid" alt="{{ user.username }}">
+                                    <div class="social">
+                                        {% if user.profile.twitter %}
+                                            <a href="{{ user.profile.twitter}}" target="_blank"><i class="icofont-twitter"></i></a>
+                                        {% endif %}
+                                        {% if user.profile.facebook %}
+                                            <a href="{{ user.profile.facebook }}" target="_blank"><i class="icofont-facebook"></i></a>
+                                        {% endif %}
+                                        {% if user.profile.instagram %}
+                                            <a href="{{ user.profile.instagram }}" target="_blank"><i class="icofont-instagram"></i></a>
+                                        {% endif %}
+                                        {% if user.profile.linkedin %}
+                                            <a href="{{ user.profile.linkedin }}" target="_blank"><i class="icofont-linkedin"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="member-info">
+                                    <h4><a href="{% url 'user-detail' user.id %}">{{ user.username }}</a></h4>
+                                    <span>{{ user.profile.profession }}</span>
+                                    <p>
+                                        <strong>Email ID: </strong>{{ user.email }}
+                                        <strong>VKSSF Batch: </strong>{{ user.profile.batch }}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+
+
+{% endblock content %}

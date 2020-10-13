@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>Blog</h2>
+            </div>
+        </div><!-- End Breadcrumbs -->
+
+        <section id="blog" class="blog">
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-lg-8 entries">
+
+                        <div class="row">
+                            {% for post in queryset %}
+                                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+
+                                    <article class="entry">
+
+                                        <div class="entry-img">
+                                            <img src="{{ post.thumbnail.url }}" alt="" class="img-fluid">
+                                        </div>
+
+                                        <h2 class="entry-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h2>
+
+                                        <div class="entry-meta">
+                                            <ul>
+                                                <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
+                                                <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i><a>{{ post.timestamp | timesince }} ago</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="entry-content">
+                                            <p>
+                                                {{ post.overview }}.
+                                            </p>
+                                            <div class="read-more">
+                                                <a href="{{ post.get_absolute_url }}">Read More</a>
+                                            </div>
+                                        </div>
+
+                                    </article><!-- End blog entry -->
+
+                                </div>
+                            {% endfor %}
+
+
+                        </div>
+
+                        <div class="blog-pagination">
+                            <ul class="justify-content-center">
+                                {% if queryset.has_previous %}
+                                    <li><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}"> <i class="icofont-rounded-left"></i></a></li>
+                                {% else %}
+                                    <li class="disabled"><i class="icofont-rounded-left"></i></li>
+                                {% endif %}
+                                <li class="active"><a href="?{{ page_request_var }}={{ queryset.number }}">{{ queryset.number }}</a></li>
+
+                                {% if queryset.has_next %}
+                                    <li><a href="?{{ page_request_var }}={{ queryset.next_page_number }}"> <i class="icofont-rounded-right"></i></a></li>
+                                {% else %}
+                                    <li class="disabled"> <i class="icofont-rounded-right"></i></li>
+
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                    </div><!-- End blog entries list -->
+
+                    <div class="col-lg-4" data-aos="fade-up">
+
+                        <div class="sidebar">
+
+                            <h3 class="sidebar-title">Search</h3>
+                            <div class="sidebar-item search-form">
+                                <form action="{% url 'search' %}">
+                                    <input type="text" name="q">
+                                    <button type="submit"><i class="icofont-search"></i></button>
+                                </form>
+
+                            </div><!-- End sidebar search formn-->
+
+                            <h3 class="sidebar-title">Categories</h3>
+                            <div class="sidebar-item categories">
+                                <ul>
+                                    {% for cat in category_count %}
+                                        <li><a href="#">{{ cat.categories__title }} <span>({{ cat.categories__count }})</span></a></li>
+                                    {% endfor %}
+                                </ul>
+
+                            </div><!-- End sidebar categories-->
+
+                            <h3 class="sidebar-title">Recent Posts</h3>
+                            <div class="sidebar-item recent-posts">
+                                {% for post in most_recent %}
+                                    <div class="post-item clearfix">
+                                        <img src="{{ post.thumbnail.url }}" alt="">
+                                        <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+                                        <time datetime="2020-01-01">{{post.timestamp | date}}</time>
+                                    </div>
+                                {% endfor %}
+                            </div><!-- End sidebar recent posts-->
+                        </div><!-- End sidebar -->
+
+                    </div><!-- End blog sidebar -->
+
+                </div>
+
+            </div>
+        </section><!-- End Blog Section -->
+
+
+    </main>
+
+{% endblock content %}

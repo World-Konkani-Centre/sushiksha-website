@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    {% block main_style %}
+    {% endblock main_style %}
+
+    {% include "head.html" %}
+
+    {% block style %}
+    {% endblock style %}
+
+<body>
+
+    {% include "header.html" %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% include "footer.html" %}
+    {% include "scripts.html" %}
+
+    {% block script %}
+    {% endblock script %}
+
+      <script type="text/javascript">
+    $(document).ready(function() {
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "6000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+      {% if messages %}
+            {% for message in messages %}
+                toastr["{{message.tags}}"]("{{ message }}");
+            {% endfor %}
+      {% endif %}
+
+  });
+  </script>
+
+</body>
+</html>

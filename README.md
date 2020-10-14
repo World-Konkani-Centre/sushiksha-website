@@ -5,7 +5,7 @@
 #####2.Backend Framework: Django
 #####3.Front-end Framework: Bootstrap
 
-## Installation
+## Installation 
 
 1. Create a virtual env
 

@@ -1,9 +1,10 @@
 # Sushiksha-website
 
 #### Project description
-###1.language used: Python
-###2.Backend Framework: Django
-###3.Front-end Framework: Bootstrap
+
+1. language used: Python
+2. Backend Framework: Django
+3. Front-end Framework: Bootstrap
 
 ## Installation 
 

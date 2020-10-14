@@ -6,17 +6,17 @@ from django.shortcuts import get_object_or_404
 
 def index(request):
     faqs = Faq.objects.all()
+    testimonial = Testimonial.objects.all()
     context = {
         'faqs': faqs,
+        'testimonial': testimonial,
         'title': 'Home'
     }
     return render(request, 'index.html', context=context)
 
 
 def about(request):
-    testimonial = Testimonial.objects.all()
     context = {
-        'testimonial': testimonial,
         'title': 'About US'
     }
     return render(request, 'about.html', context=context)

@@ -16,10 +16,10 @@
 
                 <div class="row">
 
-                                <div class="col-lg-6 video-box align-self-baseline" data-aos="fade-right" data-aos-delay="100">
+                    <div class="col-lg-6 video-box align-self-baseline" data-aos="fade-right" data-aos-delay="100">
                         <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid" alt="">
                         <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
-                      </div>
+                    </div>
 
                     <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
                         <h3>SUSHIKSHA, Mentorship Programme.</h3>
@@ -42,66 +42,9 @@
             </div>
         </section><!-- End About Section -->
 
-        <!-- ======= Counts Section ======= -->
-        <section id="counts" class="counts section-bg">
-            <div class="container">
 
-                <div class="row counters">
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">1232</span>
-                        <p>Students</p>
-                    </div>
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">64</span>
-                        <p>Courses</p>
-                    </div>
-
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">42</span>
-                        <p>Events</p>
-                    </div>
-
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">15</span>
-                        <p>Trainers</p>
-                    </div>
-
-                </div>
-
-            </div>
-        </section><!-- End Counts Section -->
-
-        <!-- ======= Testimonials Section ======= -->
-        <section id="testimonials" class="testimonials">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-title">
-                    <h2>Testimonials</h2>
-                    <p>What are they saying</p>
-                </div>
-
-                <div class="owl-carousel testimonials-carousel" data-aos="zoom-in" data-aos-delay="100">
-                   {% for data in testimonial %}
-                    <div class="testimonial-wrap">
-                        <div class="testimonial-item">
-                            <img src="{{ data.image.url }}" title="{{ data.name }} Testimonial" class="testimonial-img" alt="">
-                            <h3>{{ data.name }}</h3>
-                            <h4>{{ data.role }}</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                {{ data.testimonial }}
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                {% endfor %}
-
-                </div>
-
-            </div>
-        </section>
     </main>
 
 {% endblock content %}

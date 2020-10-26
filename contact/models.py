@@ -44,6 +44,7 @@ class Testimonial(models.Model):
 
 class Gallery(models.Model):
     name = models.CharField(max_length=30)
+    feature = models.BooleanField(default=False)
     image = models.ImageField(upload_to='gallery')
 
     def __str__(self):

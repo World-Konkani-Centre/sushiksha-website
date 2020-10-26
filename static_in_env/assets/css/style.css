@@ -1991,6 +1991,25 @@ section {
 }
 
 
+#gallery .venue-gallery-container {
+  padding-right: 12px;
+}
+
+#gallery .venue-gallery {
+  overflow: hidden;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+}
+
+#gallery .venue-gallery img {
+  transition: all ease-in-out 0.4s;
+}
+
+#gallery .venue-gallery:hover img {
+  transform: scale(1.1);
+}
+
+
 /*--------------------------------------------------------------
 # F.A.Q
 --------------------------------------------------------------*/

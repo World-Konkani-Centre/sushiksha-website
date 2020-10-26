@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-lg-6 video-box align-self-baseline order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
                         <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid" alt="">
-                         <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
                     </div>
 
                     <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
@@ -40,7 +40,7 @@
                             <li><i class="icofont-check-circled"></i>Safeguarding our Heritage</li>
                             <li><i class="icofont-check-circled"></i>Our Language our Bond</li>
                             <li><i class="icofont-check-circled"></i>Growing Together</li>
-                            </ul>
+                        </ul>
                         <a href="{% url 'about' %}" class="get-started-btn-special">Learn More</a>
                     </div>
                 </div>
@@ -106,36 +106,73 @@
         </section><!-- End F.A.Q Section -->
 
 
-            <!-- ======= Testimonials Section ======= -->
+        <section id="blog" class="blog">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Featured Blogs</h2>
+                    <p>Latest Update</p>
+                </div>
+                <div class="row">
+                    <div class="entries">
+                        <div class="row">
+                            {% for post in featured %}
+                                <div class="col-md-4 d-flex align-items-stretch" data-aos="fade-up">
+                                    <article class="entry">
+                                        <div class="entry-img">
+                                            <img src="{{ post.thumbnail.url }}" alt="" class="img-fluid">
+                                        </div>
+                                        <h2 class="entry-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h2>
+                                        <div class="entry-meta">
+                                            <ul>
+                                                <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
+                                                <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i><a>{{ post.timestamp | timesince }} ago</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="entry-content">
+                                            <p>
+                                                {{ post.overview }}.
+                                            </p>
+                                            <div class="read-more">
+                                                <a href="{{ post.get_absolute_url }}">Read More</a>
+                                            </div>
+                                        </div>
+                                    </article><!-- End blog entry -->
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div><!-- End blog entries list -->
+                </div>
+            </div>
+        </section><!-- End Blog Section -->
+
+
+        <!-- ======= Testimonials Section ======= -->
         <section id="testimonials" class="testimonials">
             <div class="container" data-aos="fade-in">
-
                 <div class="section-title">
                     <h2>Testimonials</h2>
                     <p>What are they saying</p>
                 </div>
-
                 <div class="owl-carousel testimonials-carousel" data-aos="zoom-in" data-aos-delay="100">
-                   {% for data in testimonial %}
-                    <div class="testimonial-wrap">
-                        <div class="testimonial-item">
-                            <img src="{{ data.image.url }}" title="{{ data.name }} Testimonial" class="testimonial-img" alt="">
-                            <h3>{{ data.name }}</h3>
-                            <h4>{{ data.role }}</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                {{ data.testimonial }}
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
+                    {% for data in testimonial %}
+                        <div class="testimonial-wrap">
+                            <div class="testimonial-item">
+                                <img src="{{ data.image.url }}" title="{{ data.name }} Testimonial" class="testimonial-img" alt="">
+                                <h3>{{ data.name }}</h3>
+                                <h4>{{ data.role }}</h4>
+                                <p>
+                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                    {{ data.testimonial }}
+                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-
+                    {% endfor %}
                 </div>
-
             </div>
         </section>
-
     </main><!-- End #main -->
 
 

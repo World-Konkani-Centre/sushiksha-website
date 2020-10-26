@@ -17,6 +17,7 @@ class Post(models.Model):
     overview = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     content = HTMLField()
+    featured = models.BooleanField(default=False)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     thumbnail = models.ImageField(upload_to='blog-post-thumbnail')
     categories = models.ManyToManyField(Categories)

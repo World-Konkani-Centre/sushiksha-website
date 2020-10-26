@@ -41,3 +41,12 @@ class Testimonial(models.Model):
     def __str__(self):
         return f'{self.name} Testimonial'
 
+
+class Gallery(models.Model):
+    name = models.CharField(max_length=30)
+    image = models.ImageField(upload_to='gallery')
+
+    def __str__(self):
+        return f'{self.name} Image'
+
+

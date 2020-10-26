@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from contact.models import Testimonial, Faq
 from users.models import House, Teams
+from blog.models import Post
 from django.shortcuts import get_object_or_404
 
 
 def index(request):
+    featured = Post.objects.filter(featured=True)
     faqs = Faq.objects.all()
     testimonial = Testimonial.objects.all()
     context = {
         'faqs': faqs,
         'testimonial': testimonial,
+        'featured': featured,
         'title': 'Home'
     }
     return render(request, 'index.html', context=context)

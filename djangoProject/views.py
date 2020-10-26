@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from contact.models import Testimonial, Faq
+from contact.models import Testimonial, Faq, Gallery
 from users.models import House, Teams
 from blog.models import Post
 from django.shortcuts import get_object_or_404
@@ -19,8 +19,12 @@ def index(request):
 
 
 def about(request):
+    featured = Gallery.objects.filter(featured=True)
+    common = Gallery.objects.filter(featured=False)
     context = {
-        'title': 'About US'
+        'title': 'About US',
+        'featured': featured,
+        'common': common
     }
     return render(request, 'about.html', context=context)
 

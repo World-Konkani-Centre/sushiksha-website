@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Events, Testimonial, Faq
+from .models import Contact, Events, Testimonial, Faq, Gallery
 
 
 @admin.register(Contact)
@@ -20,4 +20,9 @@ class TestimonialAdmin(admin.ModelAdmin):
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ("short_title", "question")
+
+
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ("name", "image", "user", "featured")
 

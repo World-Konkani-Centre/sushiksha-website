@@ -20,6 +20,7 @@
                 {% if not user.is_authenticated %}
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                 {% endif %}
+
             {% if user.is_authenticated %}
 
                 <li class="drop-down"><a href="{% url 'profile' %}">Account</a>
@@ -39,6 +40,7 @@
                         {% if user.is_superuser %}
                             <li><a href="/admin">Admin page</a></li>
                         {% endif %}
+                        <li><a href="{% url 'gallery' %}">Submit a Photo</a> </li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     </ul>
                 </li>

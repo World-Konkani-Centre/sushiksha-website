@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% block content %}
+
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>Submit a Photo</h2>
+            </div>
+        </div><!-- End Breadcrumbs -->
+
+        <section id="about" class="container">
+            <div class="col-lg-8 offset-lg-2 col-12">
+                <form method="POST"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy}}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block get-started-btn-special btn-lg">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </section><!-- End About Section -->
+
+    </main>
+
+{% endblock content %}

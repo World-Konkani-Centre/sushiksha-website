@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Contact, Events
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
+from .forms import GalleryForm
 
 
 def contact(request):
@@ -52,3 +54,17 @@ def events(request):
     else:
         return render(request, 'events.html', context=context)
 
+
+@login_required
+def gallery(request):
+    form = GalleryForm(request.POST, request.FILES)
+    if request.POST:
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            messages.success(request, 'Image added')
+            return redirect('about')
+    context = {
+        'form': form
+    }
+    return render(request, 'gallery_photo_submit.html', context=context)

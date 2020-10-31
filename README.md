@@ -29,7 +29,7 @@ python manage.py migrate
 
 4. Run server
 ```bash
-python manage.py runserver
+python manage.py runserver 80
 ```
 
 ## Contributing

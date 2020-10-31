@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>{{ error_no }}</h2>
+                <h3>{{ error_detail }}</h3>
+                <p class="mb-3 mt-1">It looks like you found a glitch in the matrix...</p>
+
+                <hr>
+
+                <a href="{% url 'home' %}">&larr; Back to Home page</a>
+
+            </div>
+        </div><!-- End Breadcrumbs -->
+
+    </main>
+
+{% endblock content %}

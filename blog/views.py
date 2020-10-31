@@ -102,7 +102,7 @@ def blog_create(request):
         if form.is_valid():
             form.instance.author = author
             form.save()
-            messages.info(request, "Your Post has created!")
+            messages.info(request, "Your Post has been created!")
             return redirect(reverse("blog-detail", kwargs={'id': form.instance.id}))
     context = {
         "title": title,
@@ -138,5 +138,5 @@ def blog_delete(request, id):
         messages.success(request, "Your Post has been deleted")
         return redirect(reverse("blog"))
     else:
-        messages.error(request, "Your not authorised to delete others Post")
+        messages.error(request, "You are not authorised to delete others Post")
         return redirect(reverse("blog"))

@@ -34,7 +34,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, f'{username} have logged into your Account')
+            messages.success(request, 'You have logged into your account!')
             return redirect('home')
 
         else:
@@ -86,7 +86,7 @@ def log_pomodoro(request):
         pomodoro.energy = (pomodoro.energy + energy)/2
         pomodoro.productivity = (pomodoro.productivity + productivity)/2
         pomodoro.save()
-        messages.success(request, f'Good Going, Data is recorded')
+        messages.success(request, f'Your data has been recorded.')
         return redirect(request.META['HTTP_REFERER'])
     else:
         data = Pomodoro.objects.all().order_by('-count')
@@ -144,7 +144,7 @@ def create_badge(request, id):
     if request.POST:
         if form.is_valid():
             if user.id == request.user.id:
-                messages.error(request, 'You cannot give a badge to yourself :)')
+                messages.error(request, 'You cannot give a badge to yourself!')
             else:
                 if form.instance.badges.featured:
                     if request.user.profile.role:

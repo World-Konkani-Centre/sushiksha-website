@@ -3,12 +3,19 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from .views import index, about, house, team
+from . import views
+
+
+handler404 = 'djangoProject.views.handler404'
+handler500 = 'djangoProject.views.handler500'
+handler400 = 'djangoProject.views.handler400'
+handler403 = 'djangoProject.views.handler403'
+
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('house/<int:id>', house, name='house'),
-    path('team/<int:id>', team, name='team'),
+    path('house/<int:id>', views.house, name='house'),
+    path('team/<int:id>', views.team, name='team'),
     path('grappelli/', include('grappelli.urls')),
     path('logout/', auth_views.LogoutView.as_view(template_name='index.html'), name='logout'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'),
@@ -21,11 +28,11 @@ urlpatterns = [
     path('password-reset-complete/',
          auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
-    path('', index, name='home'),
+    path('', views.index, name='home'),
     path('user/', include('users.urls')),
     path('', include('contact.urls')),
     path('blog/', include('blog.urls')),
-    path('about/', about, name='about'),
+    path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),
 ]
 

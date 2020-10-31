@@ -1,14 +1,13 @@
 /*global gettext, interpolate, ngettext*/
-'use strict';
-{
-    const $ = django.jQuery;
-    let lastChecked;
+(function($) {
+    'use strict';
+    var lastChecked;
 
     $.fn.actions = function(opts) {
-        const options = $.extend({}, $.fn.actions.defaults, opts);
-        const actionCheckboxes = $(this);
-        let list_editable_changed = false;
-        const showQuestion = function() {
+        var options = $.extend({}, $.fn.actions.defaults, opts);
+        var actionCheckboxes = $(this);
+        var list_editable_changed = false;
+        var showQuestion = function() {
                 $(options.acrossClears).hide();
                 $(options.acrossQuestions).show();
                 $(options.allContainer).hide();
@@ -41,17 +40,17 @@
                     .parent().parent().toggleClass(options.selectedClass, checked);
             },
             updateCounter = function() {
-                const sel = $(actionCheckboxes).filter(":checked").length;
+                var sel = $(actionCheckboxes).filter(":checked").length;
                 // data-actions-icnt is defined in the generated HTML
                 // and contains the total amount of objects in the queryset
-                const actions_icnt = $('.action-counter').data('actionsIcnt');
+                var actions_icnt = $('.action-counter').data('actionsIcnt');
                 $(options.counterContainer).html(interpolate(
                     ngettext('%(sel)s of %(cnt)s selected', '%(sel)s of %(cnt)s selected', sel), {
                         sel: sel,
                         cnt: actions_icnt
                     }, true));
                 $(options.allToggle).prop("checked", function() {
-                    let value;
+                    var value;
                     if (sel === actionCheckboxes.length) {
                         value = true;
                         showQuestion();
@@ -91,9 +90,9 @@
         lastChecked = null;
         $(actionCheckboxes).on('click', function(event) {
             if (!event) { event = window.event; }
-            const target = event.target ? event.target : event.srcElement;
+            var target = event.target ? event.target : event.srcElement;
             if (lastChecked && $.data(lastChecked) !== $.data(target) && event.shiftKey === true) {
-                let inrange = false;
+                var inrange = false;
                 $(lastChecked).prop("checked", target.checked)
                     .parent().parent().toggleClass(options.selectedClass, target.checked);
                 $(actionCheckboxes).each(function() {
@@ -119,7 +118,7 @@
             }
         });
         $('form#changelist-form input[name="_save"]').on('click', function(event) {
-            let action_changed = false;
+            var action_changed = false;
             $('select option:selected', options.actionContainer).each(function() {
                 if ($(this).val()) {
                     action_changed = true;
@@ -127,28 +126,29 @@
             });
             if (action_changed) {
                 if (list_editable_changed) {
-                    return confirm(gettext("You have selected an action, but you haven’t saved your changes to individual fields yet. Please click OK to save. You’ll need to re-run the action."));
+                    return confirm(gettext("You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."));
                 } else {
-                    return confirm(gettext("You have selected an action, and you haven’t made any changes on individual fields. You’re probably looking for the Go button rather than the Save button."));
+                    return confirm(gettext("You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."));
                 }
             }
         });
     };
     /* Setup plugin defaults */
     $.fn.actions.defaults = {
-        actionContainer: "div.actions",
-        counterContainer: "span.action-counter",
-        allContainer: "div.actions span.all",
-        acrossInput: "div.actions input.select-across",
-        acrossQuestions: "div.actions span.question",
-        acrossClears: "div.actions span.clear",
+        actionContainer: "div.grp-changelist-actions",
+        counterContainer: "li.grp-action-counter span.grp-action-counter",
+        allContainer: "div.grp-changelist-actions li.grp-all",
+        acrossInput: "div.grp-changelist-actions input.select-across",
+        acrossQuestions: "div.grp-changelist-actions li.grp-question",
+        acrossClears: "div.grp-changelist-actions li.grp-clear-selection",
         allToggle: "#action-toggle",
-        selectedClass: "selected"
+        actionSelect: "div.grp-changelist-actions select",
+        selectedClass: "grp-selected"
     };
     $(document).ready(function() {
-        const $actionsEls = $('tr input.action-select');
+        var $actionsEls = $('tr input.action-select');
         if ($actionsEls.length > 0) {
             $actionsEls.actions();
         }
     });
-}
+})(grp.jQuery);

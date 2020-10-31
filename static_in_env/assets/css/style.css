@@ -350,7 +350,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav a:hover, .mobile-nav .active > a, .mobile-nav li:hover > a {
-  color: #fff;
+  color: #e41749;
   text-decoration: none;
 }
 
@@ -402,7 +402,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav-active .mobile-nav-toggle i {
-  color: #fff;
+  color: #e41749;
 }
 
 /*--------------------------------------------------------------
@@ -1873,7 +1873,7 @@ section {
   float: left;
   width: 44px;
   height: 44px;
-  background: #ecf9f0;
+  background: #f5587b;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1901,7 +1901,7 @@ section {
 }
 
 .contact .info .email:hover i, .contact .info .address:hover i, .contact .info .phone:hover i {
-  background: #fff;
+  background: #e41749;
   color: #fff;
 }
 
@@ -1922,7 +1922,7 @@ section {
 }
 
 .contact .contact-form input:focus, .contact .contact-form textarea:focus {
-  border-color: #fff;
+  border-color: #e41749;
 }
 
 .contact .contact-form input {
@@ -1934,7 +1934,7 @@ section {
 }
 
 .contact .contact-form button[type="submit"] {
-  background: #fff;
+  background: #f5587b;
   border: 0;
   padding: 10px 35px;
   color: #fff;
@@ -1943,13 +1943,13 @@ section {
 }
 
 .contact .contact-form button[type="submit"]:hover {
-  background: #3ac162;
+  background: #e41749;
 }
 
 /*--------------------------------------------------------------
 # Gallery Section
 --------------------------------------------------------------*/
-#gallery {
+#gallery .gallery-carousel{
   padding: 60px;
   overflow: hidden;
 }

@@ -79,31 +79,31 @@
             </div>
         </section><!-- End Counts Section -->
 
-        <!-- ======= F.A.Q Section ======= -->
-        <section id="faq" class="faq">
-            <div class="container" data-aos="fade-in">
-
-                <div class="section-title">
-                    <h2>F.A.Q</h2>
-                    <p>Frequently Asked questions</p>
-                </div>
-
-                <ul class="faq-list">
-                    {% for faq in faqs %}
-                        <li>
-                            <a data-toggle="collapse" class="collapsed" href="#faq{{ forloop.counter }}">{{ faq.question }}<i class="icofont-simple-up"></i></a>
-                            <div id="faq{{ forloop.counter }}" class="collapse" data-parent=".faq-list">
-                                <p>
-                                    {{ faq.answer }}
-                                </p>
-                            </div>
-                        </li>
-                    {% endfor %}
-
-                </ul>
-
-            </div>
-        </section><!-- End F.A.Q Section -->
+{#        <!-- ======= F.A.Q Section ======= -->#}
+{#        <section id="faq" class="faq">#}
+{#            <div class="container" data-aos="fade-in">#}
+{##}
+{#                <div class="section-title">#}
+{#                    <h2>F.A.Q</h2>#}
+{#                    <p>Frequently Asked questions</p>#}
+{#                </div>#}
+{##}
+{#                <ul class="faq-list">#}
+{#                    {% for faq in faqs %}#}
+{#                        <li>#}
+{#                            <a data-toggle="collapse" class="collapsed" href="#faq{{ forloop.counter }}">{{ faq.question }}<i class="icofont-simple-up"></i></a>#}
+{#                            <div id="faq{{ forloop.counter }}" class="collapse" data-parent=".faq-list">#}
+{#                                <p>#}
+{#                                    {{ faq.answer }}#}
+{#                                </p>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{##}
+{#                </ul>#}
+{##}
+{#            </div>#}
+{#        </section><!-- End F.A.Q Section -->#}
 
 
         <section id="blog" class="blog">

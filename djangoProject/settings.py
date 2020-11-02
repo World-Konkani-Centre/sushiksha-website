@@ -25,7 +25,7 @@ SECRET_KEY = '4t5a^fxy%ntiqxx10xq&6)+rk^_q2*o#nuuoh6#$6j^xp7#w@_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['15.206.157.116']
+ALLOWED_HOSTS = ['15.206.157.116', 'sushiksha.konkanischolarship.com']
 # Application definition
 
 INSTALLED_APPS = [

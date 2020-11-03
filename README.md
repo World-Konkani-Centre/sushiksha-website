@@ -10,11 +10,20 @@
 
 1. Create a virtual env
 
+In Windows
 ```bash
-virtualenv myenv
+python -m venv myenv
 
 myenv\Scripts\activate
 ```
+
+In Ubuntu/MacOS
+```bash
+python -m virtualenv myenv
+
+source myenv/bin/activate
+```
+
 2. Install all the requirements
 
 ```bash
@@ -29,7 +38,7 @@ python manage.py migrate
 
 4. Run server
 ```bash
-python manage.py runserver 80
+python manage.py runserver
 ```
 
 ## Contributing

@@ -1,9 +1,11 @@
-/**
-* Template Name: Mentor - v2.1.0
-* Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+/*Selecion*/
+::-moz-selection { /* Code for Firefox */
+  background: #fa1616b8;
+}
+
+::selection {
+  background: #fa1616b8;
+}
 
 /*--------------------------------------------------------------
 # General
@@ -446,7 +448,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero h2 {
-  color: #eee;
+  color: #fff;
   margin: 10px 0 0 0;
   font-size: 24px;
 }

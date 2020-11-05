@@ -18,22 +18,53 @@
 
                     <div class="col-lg-6 video-box align-self-baseline" data-aos="fade-right" data-aos-delay="100">
                         <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid" alt="">
-                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+{#                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>#}
                     </div>
 
                     <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                        <h3>SUSHIKSHA, Mentorship Programme.</h3>
-                        <p class="font-italic">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </p>
-                        <ul>
-                            <li><i class="icofont-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                            <li><i class="icofont-check-circled"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                            <li><i class="icofont-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
-                        </ul>
+                        <h3>SUSHIKSHA</h3>
+                         <p>
+                            Sushiksha Mentoring Program is organized for scholars of VKSSF by members of VAA. Sushiksha was started in 2018 by Royal Denzil Sequeira, a member of VAA since 2015, with 20 mentees. Since then Sushiksha has grown to be family of 170 mentees and 20 mentors. Mentees of Sushiksha are undergraduate scholars of VKSSF who are determined to thrive and be successful in their area of study and career. Mentors of Sushiksha Program are experienced professionals who were once the scholars of VKSSF and have lived through their own share of successes and failures but believe in empowering the scholars early on in their career path.</p>
                         <p>
-                            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                            Sushiksha thrives because of the dedication of its active mentees and mentors – who have contributed countless hours of work to shape their future and make it a highly productive and focused workspace.
+                        </p>
+
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+
+                    <div class="col-lg-6 video-box align-self-baseline" data-aos="fade-right" data-aos-delay="100">
+                        <img src="{% static 'assets/img/about-1.jpg' %}" class="img-fluid" alt="">
+{#                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>#}
+                    </div>
+
+                    <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+                        <h3>VKSSF Alumni Association (VAA)</h3>
+                         <p>
+                            VKSSF Alumni Association are young and vibrant group of alumni VKSSF scholars who have successfully thrived through their undergraduate and graduate studies and are now on their path to be successful professionals. VAA envisions a community that empowers all its people to live with dignity and fulfillment and be active contributors to society.
+                         </p>
+
+
+
+                    </div>
+                </div>
+                <br>
+
+
+                <div class="row">
+
+                    <div class="col-lg-6 video-box align-self-baseline" data-aos="fade-right" data-aos-delay="100">
+                        <img src="{% static 'assets/img/about-2.jpg' %}" class="img-fluid" alt="">
+{#                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>#}
+                    </div>
+
+                    <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+                        <h3>Vishwa Konkani Student Scholarship Fund (VKSSF)</h3>
+                        <p>
+                        'Vishwa Konkani Student Scholarship Fund (VKSSF)’ envisages grant of Merit Cum Means scholarship for students having Konkani language as their mother tongue. Instituted World Konkani Centre in the year 2010 as envisioned by the eminent thinker and corporate leader T.V.Mohandas Pai, the VKSSF has since then successfully grown in to a large programme.
+
                         </p>
 
                     </div>
@@ -43,42 +74,42 @@
         </section><!-- End About Section -->
 
         <!-- ======= Gallery Section ======= -->
-        <section id="gallery" class="venue">
-
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-title">
-                    <h2>Gallery</h2>
-                    <p>Check photos from the recent events</p>
-                </div>
-
-            </div>
-
-            <div class="container-fluid venue-gallery-container" data-aos="fade-up" data-aos-delay="100">
-                <div class="row no-gutters">
-
-                    {% for photo in featured %}
-                        <div class="col-lg-3 col-md-4">
-                            <div class="venue-gallery">
-                                <a href="{{ photo.image.url }}" class="venobox" data-gall="venue-gallery">
-                                    <img src="{{ photo.image.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" class="img-fluid">
-                                </a>
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                </div>
-            </div>
-
-        <hr class="m-3">
-
-            <div class="owl-carousel gallery-carousel" data-aos="fade-up" data-aos-delay="100">
-                {% for photos in common %}
-                    <a href="{{ photos.image.url }}" class="venobox" data-gall="gallery-carousel"><img src="{{ photos.image.url }}" alt="{{ photos.name }}" title="{{ photos.name }}"></a>
-                {% endfor %}
-            </div>
-
-        </section><!-- End Gallery Section -->
+{#        <section id="gallery" class="venue">#}
+{##}
+{#            <div class="container" data-aos="fade-up">#}
+{##}
+{#                <div class="section-title">#}
+{#                    <h2>Gallery</h2>#}
+{#                    <p>Check photos from the recent events</p>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="container-fluid venue-gallery-container" data-aos="fade-up" data-aos-delay="100">#}
+{#                <div class="row no-gutters">#}
+{##}
+{#                    {% for photo in featured %}#}
+{#                        <div class="col-lg-3 col-md-4">#}
+{#                            <div class="venue-gallery">#}
+{#                                <a href="{{ photo.image.url }}" class="venobox" data-gall="venue-gallery">#}
+{#                                    <img src="{{ photo.image.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" class="img-fluid">#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        <hr class="m-3">#}
+{##}
+{#            <div class="owl-carousel gallery-carousel" data-aos="fade-up" data-aos-delay="100">#}
+{#                {% for photos in common %}#}
+{#                    <a href="{{ photos.image.url }}" class="venobox" data-gall="gallery-carousel"><img src="{{ photos.image.url }}" alt="{{ photos.name }}" title="{{ photos.name }}"></a>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{##}
+{#        </section><!-- End Gallery Section -->#}
     </main>
 
 {% endblock content %}

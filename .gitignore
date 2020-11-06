@@ -2,6 +2,11 @@
 .DS_Store
 .idea
 media
+db.sqlite3
+djangoProject/settings.py
+static
+static_in_env/assets/js
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

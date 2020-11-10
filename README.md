@@ -6,6 +6,7 @@
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
+<a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangopowered126x54.gif" border="0" alt="Powered by Django." title="Powered by Django." /></a>
 
 #### Project description
 
@@ -73,7 +74,13 @@
     python manage.py makemigrations
     python manage.py migrate
     ```
-
+7. Create a super user.
+    In django if you want to access admin page, you need to create an account first.
+    ```djangotemplate
+    python manage.py createsuperuser
+    ```
+   Then select your username and password.
+   
 7. Run server
     ```bash
     python manage.py runserver

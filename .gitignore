@@ -7,7 +7,6 @@ myenv
 venv
 djangoProject/settings.py
 static
-static_in_env/assets/js
 
 
 # Byte-compiled / optimized / DLL files

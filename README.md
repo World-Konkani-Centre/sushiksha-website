@@ -1,39 +1,88 @@
 # Sushiksha-website
 
+<a href="https://github.com/18praneeth/sushiksha-website/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/18praneeth/sushiksha-website?style=for-the-badge"></a>
+<a href="https://github.com/18praneeth/sushiksha-website/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/18praneeth/sushiksha-website?style=for-the-badge"></a>
+<a href="https://github.com/18praneeth/sushiksha-website/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/18praneeth/sushiksha-website?style=for-the-badge"></a>
+
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
+
 #### Project description
 
-1. language used: Python
-2. Backend Framework: Django
-3. Front-end Framework: Bootstrap
+1. Backend Framework: **Django**
+2. Front-end Framework: **Bootstrap**
 
 ## Installation 
 
-1. Create a virtual env
+1. Fork and Clone
+    <ol>
+    <li>Fork sushiksha-website the Repo</li>
+    <li>Clone the repo to you computer.</li>
+    </ol>
 
-```bash
-virtualenv myenv
+2. Create a Virtual Environment for the Project
 
-myenv\Scripts\activate
-```
-2. Install all the requirements
+    In Windows
+    ```bash
+    python -m venv venv
+    
+    venv\Scripts\activate
+    ```
 
-```bash
-pip install -r requirements.txt
-```
-3. Make migrations
+    In Ubuntu/MacOS
+    ```bash
+    python -m virtualenv venv
+    
+    source venv/bin/activate
+    ```
+   
+   If you are giving a different name then `venv`, then please mention it in `.gitigonre` first
 
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
+3. Install all the requirements
 
-4. Run server
-```bash
-python manage.py runserver 80
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
+   
+4. Checkout to develop branch
+     ```git
+    git status
+    git pull
+    git branch
+    git checkout develop
+    ```
+   
+5. Create a `setting.py` in `sushiksha-website/djangoProject/`
+
+    Copy paste the code from below document to `settings.py`
+    
+    settings.py
+    
+    Change the config parameters,
+    ```python
+   
+   SECRET_KEY = 'Enter random character string'
+   EMAIL_USER = 'your email username'
+   EMAIL_PASS = 'Enter you email password'
+
+    ```
+
+6. Make migrations/ Create db.sqlite3
+
+    ```bash
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+7. Run server
+    ```bash
+    python manage.py runserver
+    ```
+8. Do the Development and send me a PR refrencing the issue.
+   
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+   Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

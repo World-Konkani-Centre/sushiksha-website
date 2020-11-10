@@ -78,7 +78,7 @@
     ```bash
     python manage.py runserver
     ```
-8. Do the Development and send me a PR refrencing the issue.
+8. Do the Development and send me a PR referencing the issue.
    
 
 ## Contributing

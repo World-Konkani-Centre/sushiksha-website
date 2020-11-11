@@ -1032,8 +1032,9 @@ section {
 # Pricing
 --------------------------------------------------------------*/
 .pricing .box {
-  padding: 10px;
-  margin: 5px;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   background: #fff;
   text-align: center;
   border: 1px solid #eef0ef;
@@ -1052,8 +1053,8 @@ section {
 }
 
 .pricing h4 {
-  font-size: 36px;
-  color: #fff;
+  font-size: 25px;
+  color: #f82249;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
 }

@@ -93,7 +93,6 @@ def blog_single(request, id):
         'meta_description': post.overview,
         'meta_image_url': post.thumbnail.url
     }
-    print(post.thumbnail.url)
     return render(request, 'blog-single.html', context=context)
 
 

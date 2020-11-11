@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block content %}
     <main id="main">
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs" data-aos="fade-in">
@@ -56,7 +57,7 @@
                         <div class="sharethis-inline-reaction-buttons"></div>
                         </article><!-- End blog entry -->
 
-
+                        <div class="sharethis-inline-share-buttons"></div>
                         <div class="blog-comments">
 
                             <h4 class="comments-count">{{ post.comments.count }} Comments</h4>

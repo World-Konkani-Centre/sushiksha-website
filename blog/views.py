@@ -88,9 +88,12 @@ def blog_single(request, id):
         'post': post,
         'most_recent': most_recent,
         'category_count': category_count,
-        'form': form
+        'form': form,
+        'meta_title': post.title,
+        'meta_description': post.overview,
+        'meta_image_url': post.thumbnail.url
     }
-
+    print(post.thumbnail.url)
     return render(request, 'blog-single.html', context=context)
 
 

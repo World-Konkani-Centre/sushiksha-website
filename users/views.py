@@ -99,6 +99,7 @@ def log_pomodoro(request):
         return render(request, 'leaderboard.html', context=context)
 
 
+@login_required
 def search(request):
     queryset = User.objects.all()
     query = request.GET.get('q')

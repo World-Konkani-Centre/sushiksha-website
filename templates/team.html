@@ -20,7 +20,7 @@
                                         <div class="speaker">
                                             <img src="{{ member.image.url }}" alt="{{ member.user.username }}" title="{{ member.user.username }}">
                                         </div>
-                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.username }} <span>{{ member.get_role }}</span></h4></a>
+                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.profile.name }} <span>{{ member.get_role }}</span></h4></a>
                                         <p>{{ member.batch }} VKSSF Scholar</p>
                                     </div>
                                 <div class="col-md-2">

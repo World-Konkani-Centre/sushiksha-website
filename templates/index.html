@@ -11,7 +11,7 @@
             {% if user.is_authenticated %}
                 <a href="https://sophists-workspace.slack.com/ssb/redirect" class="btn-get-started" target="_blank">Go to Sophists</a>
                 <a href="https://us02web.zoom.us/j/89238479481?pwd=VG5SRzZlUjBWQUpBd1NEbm4yS2Z1Zz09" target="_blank" class="btn-get-started">Go to Pair</a>
-                <a href="{% url 'profile' %}" class="btn-get-started">Go to Profile</a>
+                <a href="{% url 'leaderboard' %}" class="btn-get-started">Go to Leaderboard</a>
 
             {% else %}
                 <a href="{% url 'about' %}" class="btn-get-started">Know more</a>

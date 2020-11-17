@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.generic import ListView
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm
+from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams
 from .utils import collect_badges, get_house_data, get_team_data
 
@@ -169,6 +169,36 @@ def create_badge(request, id):
         'badges': badges
     }
     return render(request, 'badge-create.html', context=context)
+
+
+@login_required()
+def badge(request):
+    form = BadgeForm(request.POST or None)
+    badges = Badge.objects.all()
+    if request.POST:
+        if form.is_valid():
+            if form.instance.user.id == request.user.id:
+                messages.error(request, 'You cannot give a badge to yourself!')
+            else:
+                if form.instance.badges.featured:
+                    if request.user.profile.role:
+                        form.instance.awarded_by = request.user.username
+                        form.save()
+                        messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                        return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
+                    else:
+                        messages.error(request, 'The badge that you have chosen can only be given by mentor')
+                else:
+                    form.instance.awarded_by = request.user.username
+                    form.save()
+                    messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                    return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
+
+    context = {
+        'form': form,
+        'badges': badges
+    }
+    return render(request, 'badge.html', context=context)
 
 
 @login_required

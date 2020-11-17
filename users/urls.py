@@ -12,5 +12,6 @@ urlpatterns = [
     path('trainer/', UserListView.as_view(), name='trainers'),
     path('search/', views.search, name='user-search'),
     path('badge/<int:id>/', views.create_badge, name='new-badge'),
+    path('badge/', views.badge, name='badge'),
     path('<int:pk>/', views.user_detail_view, name='user-detail'),
 ]

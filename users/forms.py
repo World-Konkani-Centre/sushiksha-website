@@ -3,15 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, Reward
 
-#
-# def get_user_list(user):
-#     CHOICE = []
-#     for i in user.objects.all():
-#         print(type(i))
-#         user_set = (i.username, i)
-#         CHOICE.append(user_set)
-#     return CHOICE
-
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -69,5 +60,5 @@ class BadgeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BadgeForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            print(visible.form)
-            visible.field.widget.attrs['class'] = 'fstdropdown-select'
+            if visible.html_name == 'user' or visible.html_name == 'badges':
+                visible.field.widget.attrs['class'] = 'fstdropdown-select'

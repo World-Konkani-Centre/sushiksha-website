@@ -2273,7 +2273,7 @@ section {
 
 .search-form form {
   background: #fff;
-  border: 1px solid #d3cacb;
+  border: 3px solid #d3cacb;
   padding: 3px 10px;
   position: relative;
   border-radius: 50px;
@@ -2283,6 +2283,7 @@ section {
   border: 0;
   padding: 4px;
   width: calc(100% - 42px);
+  outline: none;
 }
 
 .search-form form button {

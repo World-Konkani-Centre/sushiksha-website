@@ -30,12 +30,12 @@
 
                             <div class="entry-meta">
                                 <ul>
-                                    <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
-                                    <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time datetime="2020-01-01">{{ post.timestamp| date }}</time></a></li>
-                                    <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="">{{ post.comments.count }}</a></li>
+                                    <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
+                                    <li class="d-flex align-items-center"><i class="bx bx-time"></i> <a href=""><time datetime="2020-01-01">{{ post.timestamp| date }}</time></a></li>
+                                    <li class="d-flex align-items-center"><i class="bx bxs-comment"></i> <a href="">{{ post.comments.count }}</a></li>
                                     {% if post.author == request.user.profile %}
-                                        <li class="d-flex align-items-center"><i class="icofont-edit"></i> <a href="{% url 'blog-update' id=post.id %}">Update</a></li>
-                                        <li class="d-flex align-items-center"><i class="icofont-delete"></i> <a href="{% url 'blog-delete' id=post.id %}">Delete</a></li>
+                                        <li class="d-flex align-items-center"><i class="bx bx-edit"></i> <a href="{% url 'blog-update' id=post.id %}">Update</a></li>
+                                        <li class="d-flex align-items-center"><i class="bx bx-x"></i> <a href="{% url 'blog-delete' id=post.id %}">Delete</a></li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -46,10 +46,10 @@
 
                             <div class="entry-footer clearfix">
                                 <div class="float-left">
-                                    <i class="icofont-folder"></i>
+                                    <i class="bx bxs-folder"></i>
                                     <ul class="cats">
                                         {% for cat in post.categories.all %}
-                                            <li><a href=".">{{ cat }}</a></li>
+                                            <li><a href="#">{{ cat }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -101,7 +101,7 @@
                             <div class="sidebar-item search-form">
                                 <form action="{% url 'search' %}">
                                     <input type="text" name="q">
-                                    <button type="submit"><i class="icofont-search"></i></button>
+                                    <button type="submit"><i class="bx bx-search"></i></button>
                                 </form>
 
                             </div><!-- End sidebar search formn-->

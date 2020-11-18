@@ -33,8 +33,8 @@
 
                                         <div class="entry-meta">
                                             <ul>
-                                                <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
-                                                <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i><a>{{ post.timestamp | timesince }} ago</a></li>
+                                                <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
+                                                <li class="d-flex align-items-center"><i class="bx bxs-time"></i><a>{{ post.timestamp | timesince }} ago</a></li>
                                             </ul>
                                         </div>
 
@@ -83,7 +83,7 @@
                             <div class="sidebar-item search-form">
                                 <form action="{% url 'search' %}">
                                     <input type="text" name="q">
-                                    <button type="submit"><i class="icofont-search"></i></button>
+                                    <button type="submit"><i class="bx bx-search"></i></button>
                                 </form>
 
                             </div><!-- End sidebar search formn-->

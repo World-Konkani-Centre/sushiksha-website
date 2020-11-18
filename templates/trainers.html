@@ -14,7 +14,7 @@
                         <div class="search-form ">
                             <form action="{% url 'user-search' %}">
                                 <input type="text" name="q">
-                                <button type="submit"><i class="icofont-search"></i></button>
+                                <button type="submit"><i class="bx bx-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -33,16 +33,16 @@
                                     <img src="{{ user.profile.image.url }}" class="img-fluid" alt="{{ user.username }}">
                                     <div class="social">
                                         {% if user.profile.twitter %}
-                                            <a href="{{ user.profile.twitter}}" target="_blank"><i class="icofont-twitter"></i></a>
+                                            <a href="{{ user.profile.twitter}}" target="_blank"><i class="bx bxl-twitter"></i></a>
                                         {% endif %}
                                         {% if user.profile.facebook %}
-                                            <a href="{{ user.profile.facebook }}" target="_blank"><i class="icofont-facebook"></i></a>
+                                            <a href="{{ user.profile.facebook }}" target="_blank"><i class="bx bxl-facebook"></i></a>
                                         {% endif %}
                                         {% if user.profile.instagram %}
-                                            <a href="{{ user.profile.instagram }}" target="_blank"><i class="icofont-instagram"></i></a>
+                                            <a href="{{ user.profile.instagram }}" target="_blank"><i class="bx bxl-instagram"></i></a>
                                         {% endif %}
                                         {% if user.profile.linkedin %}
-                                            <a href="{{ user.profile.linkedin }}" target="_blank"><i class="icofont-linkedin"></i></a>
+                                            <a href="{{ user.profile.linkedin }}" target="_blank"><i class="bx bxl-linkedin"></i></a>
                                         {% endif %}
                                     </div>
                                 </div>

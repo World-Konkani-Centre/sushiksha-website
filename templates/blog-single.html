@@ -12,7 +12,7 @@
 
         <!-- ======= Blog Section ======= -->
         <section id="blog" class="blog">
-            <div class="container" width="100%">
+            <div class="container">
 
                 <div class="row" >
 
@@ -20,8 +20,8 @@
 
                         <article class="entry entry-single">
 
-                            <div class="entry-img">
-                                <img src="{{post.thumbnail.url}}" alt="" class="img-fluid">
+                            <div class="entry-img text-center">
+                                <img src="{{post.thumbnail.url}}" alt="{{ post.title }}" title="{{ post.title }}" class="img-fluid">
                             </div>
 
                             <h2 class="entry-title">
@@ -122,7 +122,7 @@
                                     <div class="post-item clearfix">
                                         <img src="{{ post.thumbnail.url }}" alt="">
                                         <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                                        <time datetime="2020-01-01">{{post.timestamp | date}}</time>
+                                        <time datetime="{{ post.timestamp | date }}">{{post.timestamp | date}}</time>
                                     </div>
                                 {% endfor %}
                             </div><!-- End sidebar recent posts-->

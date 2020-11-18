@@ -8,7 +8,27 @@
   color: #fff;
   background: #fa1616b8;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f5587b;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e41749;
+}
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/

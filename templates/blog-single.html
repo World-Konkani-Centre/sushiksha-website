@@ -122,7 +122,7 @@
                                     <div class="post-item clearfix">
                                         <img src="{{ post.thumbnail.url }}" alt="">
                                         <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                                        <time datetime="2020-01-01">{{post.timestamp | date}}</time>
+                                        <time datetime="{{ post.timestamp | date }}">{{post.timestamp | date}}</time>
                                     </div>
                                 {% endfor %}
                             </div><!-- End sidebar recent posts-->

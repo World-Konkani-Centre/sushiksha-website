@@ -1251,6 +1251,10 @@ section {
   font-size: 15px;
 }
 
+.blog .entry .entry-content img {
+  max-width: 100%;
+}
+
 .blog .entry .entry-content .read-more {
   -moz-text-align-last: right;
   text-align-last: right;

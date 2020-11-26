@@ -869,10 +869,9 @@ section {
 
 #schedule .nav-tabs {
   text-align: center;
-  margin: auto;
   display: block;
   border-bottom: 0;
-  margin-bottom: 30px;
+  margin: auto auto 30px;
 }
 
 #schedule .nav-tabs li {

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams
-from .utils import collect_badges, get_house_data, get_team_data
+from .utils import collect_badges, get_house_data, get_team_data, email_check
 
 
 def register(request):
@@ -29,9 +29,13 @@ def register(request):
 
 def user_login(request):
     if request.POST:
-        username = request.POST['username']
+        user_cred = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        if email_check(user_cred):
+            username = User.objects.get(email=user_cred).username
+            user = authenticate(request, username=username, password=password)
+        else:
+            user = authenticate(request, username=user_cred, password=password)
         if user is not None:
             login(request, user)
             messages.success(request, 'You have logged into your account!')

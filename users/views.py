@@ -128,9 +128,11 @@ def search(request):
 
 
 def user_list_view(request):
-    users = Profile.objects.filter(role=True)
+    mentors = Profile.objects.filter(role=True)
+    mentee = Profile.objects.filter(role=False)
     context = {
-        'users': users,
+        'mentors': mentors,
+        'mentee': mentee,
         'title': "Members"
     }
     return render(request, 'trainers.html', context=context)

@@ -128,7 +128,7 @@ def search(request):
 
 
 def user_list_view(request):
-    users = User.objects.all()
+    users = Profile.objects.get(role=True)
     context = {
         'users': users,
         'title': "Members"

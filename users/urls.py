@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import UserListView
 
 urlpatterns = [
     path('login/', views.user_login, name='login'),
@@ -9,7 +8,7 @@ urlpatterns = [
     path('', views.profile, name='profile'),
     path('analytics/', views.log_pomodoro, name='analytics'),
     path('leaderboard/', views.leader, name='leaderboard'),
-    path('trainer/', UserListView.as_view(), name='trainers'),
+    path('members/', views.user_list_view, name='trainers'),
     path('search/', views.search, name='user-search'),
     path('badge/<int:id>/', views.create_badge, name='new-badge'),
     path('badge/', views.badge, name='badge'),

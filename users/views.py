@@ -121,10 +121,19 @@ def search(request):
     return render(request, 'trainers.html', context=context)
 
 
-class UserListView(ListView):
-    model = User
-    template_name = 'trainers.html'
-    context_object_name = 'users'
+# class UserListView(ListView):
+#     model = User
+#     template_name = 'trainers.html'
+#     context_object_name = 'users'
+
+
+def user_list_view(request):
+    users = User.objects.all()
+    context = {
+        'users': users,
+        'title': "Members"
+    }
+    return render(request, 'trainers.html', context=context)
 
 
 @login_required

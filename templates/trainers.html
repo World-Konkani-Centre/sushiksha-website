@@ -54,7 +54,9 @@
                                     {% else %}
                                         <h4><a href="{% url 'user-detail' user.user.id %}">{{ user.user.username }}</a></h4>
                                     {% endif %}
-                                    <span>{{ user.profession }}</span>
+                                    {% if user.profession %}
+                                        <span>{{ user.profession }}</span>
+                                    {% endif %}
                                     {% if request.user.is_authenticated %}
                                         <p>
                                             <strong>VKSSF Batch: </strong>{{ user.batch }}

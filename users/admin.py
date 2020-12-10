@@ -23,12 +23,12 @@ class RewardAdmin(admin.ModelAdmin):
 
     @staticmethod
     def badge_photo(obj):
-        return format_html('<img src="{}" width="40" height="40" class="rounded-corners"/> <span>{}</span>'.format(obj.badges.logo.url, obj.badges.title))
+        return format_html('<img src="{}" width="40"  class="rounded-corners"/> <span>{}</span>'.format(obj.badges.logo.url, obj.badges.title))
 
     @staticmethod
     def user_photo(object):
         return format_html(
-            '<img src="{}" width="40"/>'.format(object.user.profile.image.url))
+            '<img src="{}" width="40" height="40"/>'.format(object.user.profile.image.url))
 
     list_display = ("id", "user_photo", "user", "awarded_by", "badge_photo", "badges", "timestamp", "description")
     list_display_links = ("id", "user_photo", "user")

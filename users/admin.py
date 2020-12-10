@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import (Profile, Pomodoro, Badge, Reward, House, Teams )
+from .models import (Profile, Pomodoro, Badge, Reward, House, Teams)
+from django.utils.html import format_html
 
 
 @admin.register(Profile)
@@ -19,7 +20,17 @@ class BadgeAdmin(admin.ModelAdmin):
 
 @admin.register(Reward)
 class RewardAdmin(admin.ModelAdmin):
-    list_display = ("user", "awarded_by", "decision", "timestamp")
+
+    def user_photo(self, object):
+        return format_html('<img src="{}" width="40"/> <span>{}</span>'.format(object.user.profile.image.url, object.user))
+
+    def badge_photo(self, object):
+        return format_html('<img src="{}" width="40"/> <span>{}</span>'.format(object.badges.logo.url, object.badges.title))
+
+    list_display = ("id", "user_photo", "awarded_by", "badge_photo", "timestamp", "description")
+    list_display_links = ("id", "user_photo",)
+    search_fields = ("user", "badges", "awarded_by")
+    list_filter = ("badges",)
 
 
 @admin.register(House)

@@ -34,7 +34,8 @@ class RewardForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Describe why your are giving the badge',
-        'rows': 4
+        'rows': 4,
+        'minlength': 25,
     }))
     badges = forms.Select(attrs={
         'class': 'form-control'

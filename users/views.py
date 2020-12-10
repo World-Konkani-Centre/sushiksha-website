@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
-from .models import Pomodoro, Badge, Profile, House, Teams
+from .models import Pomodoro, Badge, Profile, House, Teams, Reward
 from .utils import collect_badges, get_house_data, get_team_data, email_check
+from django.views.generic import ListView
 
 
 def register(request):
@@ -231,3 +232,13 @@ def leader(request):
         'title': 'Leaderboard'
     }
     return render(request, 'leader.html', context=context)
+
+
+# @login_required
+# def reward_table(request):
+#     reward = Reward.objects.all()
+#     return render(request, 'reward.html', locals())
+
+class RewardListView(ListView):
+    model = Reward
+    template_name = 'reward.html'

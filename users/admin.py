@@ -21,15 +21,18 @@ class BadgeAdmin(admin.ModelAdmin):
 @admin.register(Reward)
 class RewardAdmin(admin.ModelAdmin):
 
-    def user_photo(self, object):
-        return format_html('<img src="{}" width="40"/> <span>{}</span>'.format(object.user.profile.image.url, object.user))
+    @staticmethod
+    def badge_photo(obj):
+        return format_html('<img src="{}" width="40" height="40" class="rounded-corners"/> <span>{}</span>'.format(obj.badges.logo.url, obj.badges.title))
 
-    def badge_photo(self, object):
-        return format_html('<img src="{}" width="40"/> <span>{}</span>'.format(object.badges.logo.url, object.badges.title))
+    @staticmethod
+    def user_photo(object):
+        return format_html(
+            '<img src="{}" width="40"/>'.format(object.user.profile.image.url))
 
-    list_display = ("id", "user_photo", "awarded_by", "badge_photo", "timestamp", "description")
-    list_display_links = ("id", "user_photo",)
-    search_fields = ("user", "badges", "awarded_by")
+    list_display = ("id", "user_photo", "user", "awarded_by", "badge_photo", "badges", "timestamp", "description")
+    list_display_links = ("id", "user_photo", "user")
+    search_fields = ("awarded_by", "user__username")
     list_filter = ("badges",)
 
 

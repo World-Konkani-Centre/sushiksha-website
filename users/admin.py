@@ -5,17 +5,24 @@ from django.utils.html import format_html
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "role", "batch", "phone")
-
-
-@admin.register(Pomodoro)
-class PomodoroAdmin(admin.ModelAdmin):
-    list_display = ("user", "count", "energy", "productivity")
+    list_display = ("id", "user", "role", "batch", "phone", "name", "college")
+    search_fields = ("user__username", "role", "batch")
+    list_filter = ("role", "batch")
+    list_display_links = ("user", "id")
 
 
 @admin.register(Badge)
 class BadgeAdmin(admin.ModelAdmin):
-    list_display = ("title", "points", "description")
+
+    @staticmethod
+    def badge_photo(obj):
+        return format_html('<img src="{}" width="50" /> <span>{}</span>'.format(obj.logo.url, obj.title))
+
+    list_display = ("id", "badge_photo", "featured", "title", "points", "description")
+    list_display_links = ("id", "title")
+    list_filter = ("points", "featured")
+    search_fields = ("title",)
+    list_editable = ("featured", "points", "description")
 
 
 @admin.register(Reward)

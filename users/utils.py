@@ -58,6 +58,7 @@ def email_check(email):
 
 
 def send_reward_mail(array):
+    print("it works")
     email = array[0]
     timestamp = array[1]
     awarded_by = array[2]
@@ -66,3 +67,4 @@ def send_reward_mail(array):
     subject = f'A {badge} Badge from {awarded_by}'
     comment = f'{description}'
     send_mail(subject, comment, None, [email])
+    print("End")

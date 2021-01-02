@@ -164,7 +164,10 @@ def create_badge(request, id):
                 if form.instance.badges.featured:
                     if request.user.profile.role:
                         form.instance.user = user
-                        form.instance.awarded_by = request.user.username
+                        if request.user.profile.name:
+                            form.instance.awarded_by = request.user.profile.name
+                        else:
+                            form.instance.awarded_by = request.user.username
                         form.save()
                         messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
                         return redirect(reverse('user-detail', kwargs={'pk': user.id}))

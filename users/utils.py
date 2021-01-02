@@ -1,4 +1,5 @@
 import re
+from django.core.mail import send_mail
 
 
 def collect_titles(badges):
@@ -54,3 +55,14 @@ def email_check(email):
         return True
     else:
         return None
+
+
+def send_reward_mail(array):
+    email = array[0]
+    timestamp = array[1]
+    awarded_by = array[2]
+    description = array[3]
+    badge = array[4]
+    subject = f'A {badge} Badge from {awarded_by}'
+    comment = f'{description}'
+    send_mail(subject, comment, None, [email])

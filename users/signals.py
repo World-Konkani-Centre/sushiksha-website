@@ -27,6 +27,9 @@ def send_mail(sender, instance, created, **kwargs):
         awarded_by = instance.awarded_by
         timestamp = instance.timestamp
         array = [email, timestamp, awarded_by, description, badge]
-        x = threading.Thread(target=send_reward_mail, args=(array,))
-        x.start()
+        # x = threading.Thread(target=send_reward_mail, args=(array,))
+        # x.start()
+        print(array)
+        send_reward_mail(array)
+        print("success")
         # send_reward_mail(array)

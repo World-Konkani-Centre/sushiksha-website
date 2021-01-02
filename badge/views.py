@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def badge_list(request):
     query = Reward.objects.order_by('-timestamp')
-    paginator = Paginator(query, 15)
+    paginator = Paginator(query, 25)
 
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -36,7 +36,7 @@ def badge_search(request):
             Q(badges__title__icontains=query)
         ).distinct()
 
-    paginator = Paginator(queryset, 15)
+    paginator = Paginator(queryset, 30)
 
     page_request_var = 'page'
     page = request.GET.get(page_request_var)

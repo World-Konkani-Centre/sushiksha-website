@@ -45,10 +45,10 @@
                                     <table class="table  table-hover table-striped">
                                         <thead>
                                         <tr class="font-weight-bold">
-                                            <th>Badge Number</th>
+                                            <th>Date and Time</th>
                                             <th style="min-width:200px">Badge</th>
                                             <th style="min-width:200px">User</th>
-                                            <th style="min-width:200px">Awarded by</th>
+                                            <th style="min-width:150px">Awarded by</th>
                                             <th style="min-width:350px">Description</th>
                                         </tr>
                                         </thead>
@@ -56,7 +56,7 @@
                                         {% for reward in query %}
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                    {{ reward.id }}
+                                                    {{ reward.timestamp }}
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">

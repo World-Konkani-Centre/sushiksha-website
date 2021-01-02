@@ -42,13 +42,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table  table-hover table-striped">
+                                    <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
                                         <thead>
                                         <tr class="font-weight-bold">
-                                            <th>Date and Time</th>
-                                            <th style="min-width:200px">Badge</th>
-                                            <th style="min-width:200px">User</th>
-                                            <th style="min-width:150px">Awarded by</th>
+                                            <th style="min-width:150px;">Date and Time</th>
+                                            <th style="min-width:180px">Badge</th>
+                                            <th style="min-width:180px">User</th>
+                                            <th style="min-width:100px">Awarded by</th>
                                             <th style="min-width:350px">Description</th>
                                         </tr>
                                         </thead>
@@ -84,11 +84,15 @@
                                                     </div>
                                                 </td>
 
-                                                <td>{{ reward.awarded_by }}</td>
-                                                <td style="min-width:350px">
-                                                    <p class="text-body">
-                                                        {{ reward.description }}
-                                                    </p>
+                                                <td><p>{{ reward.awarded_by }}</p></td>
+                                                <td>
+                                                    <details>
+                                                      <summary>{{ reward.badges.title }}</summary>
+                                                      <p>{{ reward.description }}</p>
+                                                    </details>
+{#                                                    <p class="text-body">#}
+{#                                                        {{ reward.description }}#}
+{#                                                    </p>#}
                                                 </td>
                                             </tr>
                                         {% endfor %}

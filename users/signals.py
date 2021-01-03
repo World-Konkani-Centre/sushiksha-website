@@ -22,11 +22,12 @@ def save_profile(sender, instance, **kwargs):
 def send_mail(sender, instance, created, **kwargs):
     if created:
         email = instance.user.email
+        name = instance.user.profile.name
         badge = instance.badges.title
         description = instance.description
         awarded_by = instance.awarded_by
         timestamp = instance.timestamp
-        array = [email, timestamp, awarded_by, description, badge]
+        array = [email, timestamp, awarded_by, description, badge, name]
 
         # print(array)
         # x = threading.Thread(target=send_reward_mail, args=(array,))

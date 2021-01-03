@@ -45,18 +45,18 @@
                                     <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
                                         <thead>
                                         <tr class="font-weight-bold">
-                                            <th style="min-width:150px;">Date and Time</th>
-                                            <th style="min-width:180px">Badge</th>
-                                            <th style="min-width:180px">User</th>
+                                            <th style="min-width:150px">Date and Time</th>
+                                            <th style="min-width:160px">Badge</th>
+                                            <th style="min-width:160px">User</th>
                                             <th style="min-width:100px">Awarded by</th>
-                                            <th style="min-width:350px">Description</th>
+                                            <th style="min-width:200px">Description</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for reward in query %}
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                    {{ reward.timestamp }}
+                                                    {{ reward.timestamp | date:"d-M f a"}}
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">
@@ -90,9 +90,6 @@
                                                       <summary>{{ reward.badges.title }}</summary>
                                                       <p>{{ reward.description }}</p>
                                                     </details>
-{#                                                    <p class="text-body">#}
-{#                                                        {{ reward.description }}#}
-{#                                                    </p>#}
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -117,7 +114,6 @@
                                 <li><a href="?{{ page_request_var }}={{ query.next_page_number }}"> <i class="icofont-rounded-right"></i></a></li>
                             {% else %}
                                 <li class="disabled"> <i class="icofont-rounded-right"></i></li>
-
                             {% endif %}
                         </ul>
                     </div>

@@ -58,13 +58,27 @@ def email_check(email):
 
 
 def send_reward_mail(array):
-    # print("it works")
     email = array[0]
     timestamp = array[1]
     awarded_by = array[2]
     description = array[3]
     badge = array[4]
+    name = array[5]
     subject = f'A {badge} Badge from {awarded_by}'
-    comment = f'{description}'
+
+    comment = f'''
+    Dear {name},
+    Congratulations.
+    You have been awarded with {badge} by {awarded_by} for {description}. Please visit your profile page on 
+    Sushiksha Website to see the badge. Badges are an amazing way to express your feelings to fellow sophists.
+
+    Congrats once again,
+
+    Best Wishes,
+    Convener
+    Sushiksha
+    Alumni Mentoring Programme
+    World Konkani Centre
+    '''
+
     send_mail(subject, comment, None, [email])
-    # print("End")

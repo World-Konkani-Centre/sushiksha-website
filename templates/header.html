@@ -13,7 +13,7 @@
             {% endif %}
 {#                <li><a href="{% url 'events' %}">Events</a></li>#}
             {% if user.is_authenticated %}
-                    <li><a href="{% url 'reward-search' %}">Badge activity</a></li>
+                    <li><a href="{% url 'reward' %}">Badge activity</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>

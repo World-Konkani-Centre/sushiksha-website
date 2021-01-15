@@ -11,7 +11,7 @@ def badge_list(request):
     f = RewardFilter(request.GET, queryset=query)
     paginated_queryset = f.qs
 
-    paginator = Paginator(paginated_queryset, 10)
+    paginator = Paginator(paginated_queryset, 30)
 
     page_request_var = 'page'
     page = request.GET.get(page_request_var)

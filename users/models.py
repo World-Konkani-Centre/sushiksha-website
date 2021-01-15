@@ -74,6 +74,11 @@ class Profile(models.Model):
         else:
             return ''
 
+    def get_team_url(self):
+        team = self.teams_set.first()
+        if team:
+            return team.get_absolute_url()
+
     def get_house_name(self):
         team = self.teams_set.first()
         if team:
@@ -84,6 +89,13 @@ class Profile(models.Model):
                 return ''
         else:
             return ''
+
+    def get_house_url(self):
+        team = self.teams_set.first()
+        if team:
+            team = team.house_set.first()
+            if team:
+                return team.get_absolute_url()
 
     @property
     def get_number_of_badges(self):

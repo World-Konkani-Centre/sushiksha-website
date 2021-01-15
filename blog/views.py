@@ -67,7 +67,8 @@ def blog(request):
         'queryset': paginated_queryset,
         'most_recent': most_recent,
         'page_request_var': page_request_var,
-        'category_count': category_count
+        'category_count': category_count,
+        'title': 'Blogs'
     }
     return render(request, 'blog.html', context)
 
@@ -91,7 +92,8 @@ def blog_single(request, id):
         'form': form,
         'meta_title': post.title,
         'meta_description': post.overview,
-        'meta_image_url': post.thumbnail.url
+        'meta_image_url': post.thumbnail.url,
+        'title': f'A blog by {post.author.user.profile.name}: {post.title}'
     }
     return render(request, 'blog-single.html', context=context)
 

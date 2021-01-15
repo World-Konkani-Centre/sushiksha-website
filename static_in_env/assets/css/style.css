@@ -8,7 +8,27 @@
   color: #fff;
   background: #fa1616b8;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f5587b;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e41749;
+}
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -123,7 +143,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
-  box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);
+  box-shadow: 0 0 18px rgba(55, 66, 59, 0.08);
 }
 
 #header .logo {
@@ -843,24 +863,23 @@ section {
 /*--------------------------------------------------------------
 # Schedule Section
 --------------------------------------------------------------*/
-#schedule {
+.section-with-bg {
   padding: 60px 0 60px 0;
 }
 
-#schedule .nav-tabs {
+.section-with-bg .nav-tabs {
   text-align: center;
-  margin: auto;
   display: block;
   border-bottom: 0;
-  margin-bottom: 30px;
+  margin: auto auto 30px;
 }
 
-#schedule .nav-tabs li {
+.section-with-bg .nav-tabs li {
   display: inline-block;
   margin-bottom: 0;
 }
 
-#schedule .nav-tabs a {
+.section-with-bg .nav-tabs a {
   border: none;
   border-radius: 50px;
   font-weight: 600;
@@ -870,29 +889,29 @@ section {
 }
 
 @media (max-width: 991px) {
-  #schedule .nav-tabs a {
+  .section-with-bg .nav-tabs a {
     padding: 8px 60px;
   }
 }
 
 @media (max-width: 767px) {
-  #schedule .nav-tabs a {
+  .section-with-bg .nav-tabs a {
     padding: 8px 50px;
   }
 }
 
 @media (max-width: 480px) {
-  #schedule .nav-tabs a {
+  .section-with-bg .nav-tabs a {
     padding: 8px 30px;
   }
 }
 
-#schedule .nav-tabs a.active {
+.section-with-bg .nav-tabs a.active {
   background-color: #f82249;
   color: #fff;
 }
 
-#schedule .sub-heading {
+.section-with-bg .sub-heading {
   text-align: center;
   font-size: 18px;
   font-style: italic;
@@ -900,32 +919,32 @@ section {
 }
 
 @media (min-width: 991px) {
-  #schedule .sub-heading {
+  .section-with-bg .sub-heading {
     width: 75%;
   }
 }
 
-#schedule .tab-pane {
+.section-with-bg .tab-pane {
   transition: ease-in-out .2s;
 }
 
-#schedule .schedule-item {
+.section-with-bg .schedule-item {
   border-bottom: 1px solid #cad4f6;
   padding-top: 15px;
   padding-bottom: 15px;
   transition: background-color ease-in-out 0.3s;
 }
 
-#schedule .schedule-item:hover {
+.section-with-bg .schedule-item:hover {
   background-color: #fff;
 }
 
-#schedule .schedule-item time {
+.section-with-bg .schedule-item time {
   padding-bottom: 5px;
   display: inline-block;
 }
 
-#schedule .schedule-item .speaker {
+.section-with-bg .schedule-item .speaker {
   width: 60px;
   height: 60px;
   overflow: hidden;
@@ -934,27 +953,27 @@ section {
   margin: 0 10px 10px 0;
 }
 
-#schedule .schedule-item .speaker img {
+.section-with-bg .schedule-item .speaker img {
   height: 100%;
   transform: translateX(-50%);
   margin-left: 50%;
   transition: all ease-in-out 0.3s;
 }
 
-#schedule .schedule-item h4 {
+.section-with-bg .schedule-item h4 {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
-#schedule .schedule-item h4 span {
+.section-with-bg .schedule-item h4 span {
   font-style: italic;
   color: #19328e;
   font-weight: normal;
   font-size: 16px;
 }
 
-#schedule .schedule-item p {
+.section-with-bg .schedule-item p {
   font-style: italic;
   color: #152b79;
   margin-bottom: 0;
@@ -1229,6 +1248,10 @@ section {
 .blog .entry .entry-content p {
   line-height: 24px;
   font-size: 15px;
+}
+
+.blog .entry .entry-content img {
+  max-width: 100%;
 }
 
 .blog .entry .entry-content .read-more {
@@ -2283,6 +2306,7 @@ section {
   border: 0;
   padding: 4px;
   width: calc(100% - 42px);
+  outline: none;
 }
 
 .search-form form button {
@@ -2365,7 +2389,7 @@ section {
   }
 }
 
-@media (max-width: 1199.98px) {
+@media (max-width: 1200px) {
   .table-responsive-xl {
     display: block;
     width: 100%;

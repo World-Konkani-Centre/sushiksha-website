@@ -1,3 +1,7 @@
+import re
+from django.core.mail import send_mail
+
+
 def collect_titles(badges):
     titles = []
     for badge in badges:
@@ -43,3 +47,38 @@ def get_team_data(teams):
     for team in teams:
         team.points = get_team_points(team)
         team.save()
+
+
+def email_check(email):
+    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    if re.search(regex, email):
+        return True
+    else:
+        return None
+
+
+def send_reward_mail(array):
+    email = array[0]
+    timestamp = array[1]
+    awarded_by = array[2]
+    description = array[3]
+    badge = array[4]
+    name = array[5]
+    subject = f'A {badge} Badge from {awarded_by}'
+
+    comment = f'''
+    Dear {name},
+    Congratulations.
+    You have been awarded with {badge} by {awarded_by} for {description}. Please visit your profile page on 
+    Sushiksha Website to see the badge. Badges are an amazing way to express your feelings to fellow sophists.
+
+    Congrats once again,
+
+    Best Wishes,
+    Convener
+    Sushiksha
+    Alumni Mentoring Programme
+    World Konkani Centre
+    '''
+
+    send_mail(subject, comment, None, [email])

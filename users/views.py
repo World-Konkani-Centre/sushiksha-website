@@ -2,12 +2,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib import messages
-from django.views.generic import ListView
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm
+from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams
-from .utils import collect_badges, get_house_data, get_team_data
+from .utils import collect_badges, get_house_data, get_team_data, email_check
 
 
 def register(request):
@@ -29,12 +28,16 @@ def register(request):
 
 def user_login(request):
     if request.POST:
-        username = request.POST['username']
+        user_cred = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        if email_check(user_cred):
+            username = User.objects.get(email=user_cred).username
+            user = authenticate(request, username=username, password=password)
+        else:
+            user = authenticate(request, username=user_cred, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, 'You have logged into your account!')
+            messages.success(request, 'You have logged into your account!!')
             return redirect('home')
 
         else:
@@ -117,10 +120,21 @@ def search(request):
     return render(request, 'trainers.html', context=context)
 
 
-class UserListView(ListView):
-    model = User
-    template_name = 'trainers.html'
-    context_object_name = 'users'
+# class UserListView(ListView):
+#     model = User
+#     template_name = 'trainers.html'
+#     context_object_name = 'users'
+
+
+def user_list_view(request):
+    mentors = Profile.objects.filter(role=True)
+    mentee = Profile.objects.filter(role=False)
+    context = {
+        'mentors': mentors,
+        'mentee': mentee,
+        'title': "Members"
+    }
+    return render(request, 'trainers.html', context=context)
 
 
 @login_required
@@ -150,7 +164,10 @@ def create_badge(request, id):
                 if form.instance.badges.featured:
                     if request.user.profile.role:
                         form.instance.user = user
-                        form.instance.awarded_by = request.user.username
+                        if request.user.profile.name:
+                            form.instance.awarded_by = request.user.profile.name
+                        else:
+                            form.instance.awarded_by = request.user.username
                         form.save()
                         messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
                         return redirect(reverse('user-detail', kwargs={'pk': user.id}))
@@ -169,6 +186,36 @@ def create_badge(request, id):
         'badges': badges
     }
     return render(request, 'badge-create.html', context=context)
+
+
+@login_required()
+def badge(request):
+    form = BadgeForm(request.POST or None)
+    badges = Badge.objects.all()
+    if request.POST:
+        if form.is_valid():
+            if form.instance.user.id == request.user.id:
+                messages.error(request, 'You cannot give a badge to yourself!')
+            else:
+                if form.instance.badges.featured:
+                    if request.user.profile.role:
+                        form.instance.awarded_by = request.user.username
+                        form.save()
+                        messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                        return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
+                    else:
+                        messages.error(request, 'The badge that you have chosen can only be given by mentor')
+                else:
+                    form.instance.awarded_by = request.user.username
+                    form.save()
+                    messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                    return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
+
+    context = {
+        'form': form,
+        'badges': badges
+    }
+    return render(request, 'badge.html', context=context)
 
 
 @login_required

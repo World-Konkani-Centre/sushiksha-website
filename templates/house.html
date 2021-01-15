@@ -26,7 +26,7 @@
 {#                <h3>{{ query_set.bio }}</h3>#}
                 <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     {% for team in query_set.teams.all %}
-                        <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="team-{{ forloop.counter }}">
+                        <div role="tabpanel" class="col-lg-9 tab-pane fade" id="team-{{ forloop.counter }}">
                             {% for member in team.members.all %}
                                 <div class="row schedule-item">
                                     <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>

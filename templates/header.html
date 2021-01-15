@@ -8,12 +8,17 @@
         <nav class="nav-menu d-none d-lg-block">
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
+            {% if not user.is_authenticated %}
                 <li><a href="{% url 'about' %}">About</a></li>
+            {% endif %}
 {#                <li><a href="{% url 'events' %}">Events</a></li>#}
+            {% if user.is_authenticated %}
+                    <li><a href="{% url 'reward-search' %}">Badge activity</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
                 {% endif %}
-                <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'blog' %}">Blogs</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'trainers' %}">Members</a></li>
                 {% endif %}

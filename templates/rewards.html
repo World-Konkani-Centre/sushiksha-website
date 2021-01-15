@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_style %}
+    <link href="{% static 'assets/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'assets/js/utils.js' %}"></script>
+{% endblock main_style %}
+
+{% block content %}
+
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>Badges</h2>
+                <div class="row">
+                    <div class="col-lg-8 col-md-7">
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-11">
+                        <div class="search-form ">
+                            <form action="{% url 'reward-search' %}">
+                                <input type="text" name="q">
+                                <button type="submit"><i class="bx bx-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Breadcrumbs -->
+
+
+
+        <section id="" class="profile blog">
+            <div class="container" data-aos="fade-up">
+                <div class="row" data-aos="zoom-in" data-aos-delay="100">
+
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">Rewards</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
+                                        <thead>
+                                        <tr class="font-weight-bold">
+                                            <th style="min-width:150px">Date and Time</th>
+                                            <th style="min-width:160px">Badge</th>
+                                            <th style="min-width:160px">User</th>
+                                            <th style="min-width:100px">Awarded by</th>
+                                            <th style="min-width:200px">Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for reward in query %}
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                    {{ reward.timestamp | date:"d-M f a"}}
+                                                </td>
+                                                <td>
+                                                    <div class="media align-items-center">
+                                                        <img src="{{reward.badges.logo.url }}" width="50" alt="" title="{{ reward.badges.title }}">
+                                                        <div class="media-body">
+                                                            <span class="mb-0 text-sm font-weight-bold"> {{ reward.badges.title }}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="media align-items-center">
+                                                        <a href="{{ reward.user.profile.get_absolute_url }}" class="avatar rounded-circle mr-3">
+                                                            <img src="{{ reward.user.profile.image.url }}" alt="{{ reward.user.username }}" title="{{ reward.user.username }}">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <a href="{{ reward.user.profile.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">
+                                                                {% if reward.user.profile.name %}
+                                                                    {{ reward.user.profile.name }}
+                                                                {% else %}
+                                                                    {{ reward.user.username }}
+                                                                {% endif %}
+                                                            </span></a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td><p>{{ reward.awarded_by }}</p></td>
+                                                <td>
+                                                    <details>
+                                                      <summary>{{ reward.badges.title }}</summary>
+                                                      <p>{{ reward.description }}</p>
+                                                    </details>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="blog-pagination">
+                        <ul class="justify-content-center">
+                            {% if query.has_previous %}
+                                <li><a href="?{{ page_request_var }}={{ query.previous_page_number }}"> <i class="icofont-rounded-left"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-left"></i></li>
+                            {% endif %}
+                            <li class="active"><a href="?{{ page_request_var }}={{ query.number }}">{{ query.number }}</a></li>
+
+                            {% if query.has_next %}
+                                <li><a href="?{{ page_request_var }}={{ query.next_page_number }}"> <i class="icofont-rounded-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"> <i class="icofont-rounded-right"></i></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main><!-- End #main -->
+
+
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'assets/js/sb-admin-2.min.js' %}"></script>
+{% endblock %}

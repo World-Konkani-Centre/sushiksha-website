@@ -144,3 +144,25 @@ def blog_delete(request, id):
     else:
         messages.error(request, "You are not authorised to delete others Post")
         return redirect(reverse("blog"))
+
+
+def categories_view(request,category):
+    post = Post.objects.filter(categories__title=category)
+    category_count = get_category_count()
+    most_recent = Post.objects.order_by('-timestamp')[:4]
+    paginator = Paginator(post, 4)
+    page_request_var = 'page'
+    page = request.GET.get(page_request_var)
+    try:
+        paginated_queryset = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_queryset = paginator.page(1)
+    except EmptyPage:
+        paginated_queryset = paginator.page(paginator.num_pages)
+    context = {
+        'queryset': paginated_queryset,
+        'most_recent': most_recent,
+        'page_request_var': page_request_var,
+        'category_count': category_count
+    }
+    return render(request, 'blog.html', context)

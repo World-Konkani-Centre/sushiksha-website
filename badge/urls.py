@@ -3,10 +3,11 @@ from . import views
 
 urlpatterns = [
     path('donut/', views.donut_form, name='donut_badge_claim'),
-    path('one_one/', views.donut_form, name='one_one_badge_claim'),
-    path('book_reading/', views.donut_form, name='book_reading_claim'),
-    path('kt_attendee/', views.donut_form, name='kt_attendee_claim'),
-    path('kt_giver/', views.donut_form, name='kt_giver_claim'),
-    path('kt_session/', views.donut_form, name='kt_session_claim'),
-    path('initiator/', views.donut_form, name='initiator_claim')
+    path('1:1/', views.one_one, name='one_one_badge_claim'),
+    path('book_reading/', views.book_reading, name='book_reading_claim'),
+    path('kt_attendee_feedback/', views.kt_attendee, name='kt_attendee_claim'),
+    path('kt_giver/', views.kt_giver, name='kt_giver_claim'),
+    # path('kt_session/', views.kt_session, name='kt_session_claim'),
+    path('initiator/', views.intiator, name='initiator_claim'),
+    path('blogger/', views.blog, name='blogger_claim')
 ]

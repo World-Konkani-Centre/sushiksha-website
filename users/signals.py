@@ -26,7 +26,7 @@ def send_mail(sender, instance, created, **kwargs):
         description = instance.description
         awarded_by = instance.awarded_by
         timestamp = instance.timestamp
-        image = instance.badges.logo.url
+        image = instance.badges.logo.file
         array = [email, timestamp, awarded_by, description, badge, name, image]
 
         send_reward_mail(array)

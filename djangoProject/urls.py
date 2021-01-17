@@ -31,6 +31,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('user/', include('users.urls')),
     path('', include('contact.urls')),
+    path('badge/', include('badge.urls')),
     path('blog/', include('blog.urls')),
     path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),

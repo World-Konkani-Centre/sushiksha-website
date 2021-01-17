@@ -92,7 +92,7 @@
                             <div class="sidebar-item categories">
                                 <ul>
                                     {% for cat in category_count %}
-                                        <li><a href="#">{{ cat.categories__title }} <span>({{ cat.categories__count }})</span></a></li>
+                                        <li><a href="{% url 'category' category=cat.categories__title %}">{{ cat.categories__title }} <span>({{ cat.categories__count }})</span></a></li>
                                     {% endfor %}
                                 </ul>
 

@@ -41,7 +41,7 @@
                         <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
                             <div class="member ">
                                 <div class="member-img">
-                                    <img src="{{ user.image.url }}" class="img-fluid" alt="{{ user.user.username }}">
+                                    <img src="{{ user.image.url }}" loading="lazy" class="img-fluid" alt="{{ user.user.username }}">
                                     <div class="social">
                                         {% if user.twitter %}
                                             <a href="{{ user.twitter}}" target="_blank"><i class="bx bxl-twitter"></i></a>

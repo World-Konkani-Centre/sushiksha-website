@@ -127,8 +127,8 @@ def search(request):
 
 
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=True)
-    mentee = Profile.objects.filter(role=False)
+    mentors = Profile.objects.filter(role=True).order_by('user__username')
+    mentee = Profile.objects.filter(role=False).order_by('user__username')
     context = {
         'mentors': mentors,
         'mentee': mentee,

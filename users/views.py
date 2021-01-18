@@ -156,6 +156,8 @@ def user_detail_view(request, pk):
 def create_badge(request, id):
     user = get_object_or_404(User, id=id)
     form = RewardForm(request.POST or None)
+    if not request.user.profile.role:
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
     badges = Badge.objects.all()
     if request.POST:
         if form.is_valid():

@@ -48,7 +48,7 @@
                                                 <td>
                                                     <div class="media align-items-center">
                                                         <a href="{{ team.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{team.image.url }}" alt="{{ team.name }}" title="{{ team.name }}">
+                                                            <img src="{{team.image.url }}" loading="lazy" alt="{{ team.name }}" title="{{ team.name }}">
                                                         </a>
                                                         <div class="media-body">
                                                             <a href="{{ team.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
@@ -89,7 +89,7 @@
                                                 <td>
                                                     <div class="media align-items-center">
                                                         <a href="{{ team.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{team.image.url }}" alt="{{ team.name }}" title="{{ team.name }}">
+                                                            <img src="{{team.image.url }}" loading="lazy" alt="{{ team.name }}" title="{{ team.name }}">
                                                         </a>
                                                         <div class="media-body">
                                                             <a href="{{ team.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
@@ -132,7 +132,7 @@
                                                 <td >
                                                     <div class="media align-items-center">
                                                         <a href="{{ entry.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{ entry.image.url }}" alt="{{ entry.user.username }}" title="{{ entry.user.username }}">
+                                                            <img src="{{ entry.image.url }}" loading="lazy" alt="{{ entry.user.username }}" title="{{ entry.user.username }}">
                                                         </a>
                                                         <div class="media-body">
                                                             <a href="{{ entry.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">

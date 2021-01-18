@@ -1,6 +1,6 @@
 import re
 from django.core.mail import send_mail
-
+from django.template import loader
 
 def collect_titles(badges):
     titles = []
@@ -64,21 +64,33 @@ def send_reward_mail(array):
     description = array[3]
     badge = array[4]
     name = array[5]
+    logo = array[6]
+
+    html_message = loader.render_to_string(
+        'email/message.html',
+        {
+            'image': logo,
+            'name':  name,
+            'badge': badge,
+            'awarded': awarded_by,
+            'reason': description,
+        })
+
     subject = f'A {badge} Badge from {awarded_by}'
 
     comment = f'''
-    Dear {name},
-    Congratulations.
-    You have been awarded with {badge} by {awarded_by} for {description}. Please visit your profile page on 
-    Sushiksha Website to see the badge. Badges are an amazing way to express your feelings to fellow sophists.
+Dear {name},
+Congratulations.
+You have been awarded with {badge} by {awarded_by} for {description}. Please visit your profile page on 
+Sushiksha Website to see the badge. Badges are an amazing way to express your feelings to fellow sophists.
 
-    Congrats once again,
+Congrats once again,
 
-    Best Wishes,
-    Convener
-    Sushiksha
-    Alumni Mentoring Programme
-    World Konkani Centre
+Best Wishes,
+Convener
+Sushiksha
+Alumni Mentoring Programme
+World Konkani Centre
     '''
 
-    send_mail(subject, comment, None, [email])
+    send_mail(subject, comment, None, [email], html_message=html_message)

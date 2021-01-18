@@ -148,6 +148,7 @@ def user_detail_view(request, pk):
         'user': user,
         'badges': zipped_data,
     }
+
     return render(request, 'profile-detail.html', context=context)
 
 

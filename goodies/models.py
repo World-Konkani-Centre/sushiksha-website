@@ -7,6 +7,7 @@ class Goodie(models.Model):
     is_shown = models.BooleanField(default=True)
     thumbline = models.ImageField(upload_to='goodies')
     is_link = models.BooleanField(default=False)
+    description = models.TextField()
     is_image = models.BooleanField(default=True)
     hd_image = models.ImageField(upload_to='goodies', blank=True, null=True)
     link = models.URLField(blank=True, null=True)

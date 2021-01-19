@@ -85,7 +85,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
-                                            <button class="btn collapsed" data-toggle="collapse" data-target="#Profile" aria-expanded="false" aria-controls="Profile">
+                                            <button class="btn btn-outline-danger collapsed" data-toggle="collapse" data-target="#Profile" aria-expanded="false" aria-controls="Profile">
                                                 View Profile
                                             </button>
                                         </h5>
@@ -197,7 +197,7 @@
                                             {% for badge, count in badges %}
                                                 <div class="col-lg-3 col-4 box">
                                                     <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}" title="{{ badge.badges.title }}" alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
+                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy" title="{{ badge.badges.title }}" alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
                                                     <h4>{{ count }}</h4>
                                                 </div>
                                             {% endfor %}

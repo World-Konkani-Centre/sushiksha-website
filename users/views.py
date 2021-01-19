@@ -9,6 +9,7 @@ from .models import Pomodoro, Badge, Profile, House, Teams
 from .utils import collect_badges, get_house_data, get_team_data, email_check
 from django.db.models.functions import Lower
 
+
 def register(request):
     if request.POST:
         form = UserRegisterForm(request.POST)

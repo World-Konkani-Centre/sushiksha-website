@@ -127,8 +127,8 @@ def search(request):
 
 
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=True)
-    mentee = Profile.objects.filter(role=False)
+    mentors = Profile.objects.filter(role=True).order_by('user__username')
+    mentee = Profile.objects.filter(role=False).order_by('user__username')
     context = {
         'mentors': mentors,
         'mentee': mentee,
@@ -148,6 +148,7 @@ def user_detail_view(request, pk):
         'user': user,
         'badges': zipped_data,
     }
+
     return render(request, 'profile-detail.html', context=context)
 
 
@@ -155,6 +156,8 @@ def user_detail_view(request, pk):
 def create_badge(request, id):
     user = get_object_or_404(User, id=id)
     form = RewardForm(request.POST or None)
+    if not request.user.profile.role:
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
     badges = Badge.objects.all()
     if request.POST:
         if form.is_valid():

@@ -35,6 +35,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),
+    path('goodies/', include('goodies.urls')),
 ]
 
 if settings.DEBUG:

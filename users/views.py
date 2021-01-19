@@ -124,6 +124,7 @@ def search(request):
         queryset = queryset.filter(
             Q(username__icontains=query) |
             Q(profile__batch__icontains=query) |
+            Q(profile__name__icontains=query) |
             Q(profile__guidance__icontains=query) |
             Q(email__icontains=query)
         ).distinct()
@@ -135,7 +136,9 @@ def search(request):
         'title': 'Members'
     }
     for user in mentees:
-        print(user.profile.name)
+        print(user)
+    for user in mentors:
+        print(user)
     return render(request, 'search.html', context=context)
 
 

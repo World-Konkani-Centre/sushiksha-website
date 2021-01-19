@@ -37,6 +37,7 @@
             <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
                 <div role="tabpanel" class="tab-pane fade show active" id="mentors">
                     <div class="row">
+                    {% if mentors.count != 0 %}
                     {% for user in mentors %}
                         <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
                             <div class="member ">
@@ -77,11 +78,15 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {% else %}
+                    <h2>No mentors found with this match</h2>
+                    {% endif %}
                 </div>
                 </div>
 
                 <div role="tabpanel" class="tab-pane fade" id="mentee">
                     <div class="row">
+                    {% if mentee.count != 0 %}
                     {% for user in mentee %}
                         <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
                             <div class="member ">
@@ -122,6 +127,9 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {% else %}
+                    <h2>No mentees found with this match</h2>
+                    {% endif %}
                 </div>
 
                 </div>

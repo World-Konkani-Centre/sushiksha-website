@@ -39,22 +39,28 @@
                         <div class="card-footer">
                             <div class="social-links text-center  pt-1 pt-md-0 text-center">
                                 {% if user.profile.instagram %}
-                                    <a href="{{ user.profile.instagram }}" target="_blank"><i class="bx bxl-instagram bx-burst-hover bx-lg"></i></a>
+                                    <a href="{{ user.profile.instagram }}" target="_blank"><i
+                                            class="bx bxl-instagram bx-burst-hover bx-lg"></i></a>
                                 {% endif %}
                                 {% if user.profile.twitter %}
-                                    <a href="{{ user.profile.twitter }}" target="_blank"><i class="bx bxl-twitter bx-burst-hover bx-lg"></i></a>
+                                    <a href="{{ user.profile.twitter }}" target="_blank"><i
+                                            class="bx bxl-twitter bx-burst-hover bx-lg"></i></a>
                                 {% endif %}
                                 {% if user.profile.linkedin %}
-                                    <a href="{{ user.profile.linkedin }}" target="_blank"><i class="bx bxl-linkedin bx-burst-hover bx-lg"></i></a>
+                                    <a href="{{ user.profile.linkedin }}" target="_blank"><i
+                                            class="bx bxl-linkedin bx-burst-hover bx-lg"></i></a>
                                 {% endif %}
                                 {% if user.profile.github %}
-                                    <a href="{{ user.profile.github }}" target="_blank"><i class="bx bxl-github bx-burst-hover bx-lg"></i></a>
+                                    <a href="{{ user.profile.github }}" target="_blank"><i
+                                            class="bx bxl-github bx-burst-hover bx-lg"></i></a>
                                 {% endif %}
                                 {% if user.email %}
-                                    <a href="mailto:{{ user.email }}"><i class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
+                                    <a href="mailto:{{ user.email }}"><i
+                                            class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
                                 {% endif %}
                                 {% if user.profile.okr %}
-                                    <a href="{{ user.profile.okr }}" target="_blank"><i class="bx bx-table bx-burst-hover bx-lg"></i></a>
+                                    <a href="{{ user.profile.okr }}" target="_blank"><i
+                                            class="bx bx-table bx-burst-hover bx-lg"></i></a>
                                 {% endif %}
                             </div>
                         </div>
@@ -66,12 +72,15 @@
                                 <div class="card mb-3">
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
-                                            <button class="btn  btn-outline-danger collapsed item-collapse" data-toggle="collapse" data-target="#Profile" aria-expanded="false" aria-controls="Profile">
+                                            <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
+                                                    data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
+                                                    aria-controls="Profile">
                                                 Edit Your Profile
                                             </button>
                                         </h5>
                                     </div>
-                                    <div id="Profile" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <div id="Profile1" class="collapse" aria-labelledby="headingTwo"
+                                         data-parent="#accordion">
                                         <div class="card-body">
 
                                             <form method="POST" enctype="multipart/form-data">
@@ -80,10 +89,28 @@
                                                 {{ u_form|crispy }}
                                                 {{ p_form|crispy }}
                                                 <div class="form-group">
-                                                    <button class="btn btn-block get-started-btn-special" type="submit">Submit</button>
+                                                    <button class="btn btn-block get-started-btn-special" type="submit">
+                                                        Submit
+                                                    </button>
                                                 </div>
 
                                             </form>
+                                        </div>
+                                    </div>
+
+                                    <div id="Profile">
+                                        <div class="card-body">
+                                            {% for i,j in profile_details.items %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">{{ i }}</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{j}}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +122,8 @@
                                             {% for badge, count in badges %}
                                                 <div class="col-lg-3 col-4 box">
                                                     <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}" alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
+                                                    <img src="{{ badge.badges.logo.url }}"
+                                                         alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
                                                     <h4>{{ count }}</h4>
                                                 </div>
                                             {% endfor %}
@@ -117,3 +145,20 @@
 
 {% endblock content %}
 
+{% block script %}
+    <script>
+
+    $i = 0
+    $("#swap").click(function (){
+        $("#Profile").toggle()
+        if ($i === 0) {
+            $(this).text("View Profile");
+            $i = 1;
+        } else {
+            $(this).text("Update Profile");
+            $i = 0;
+        }
+    });
+
+    </script>
+{% endblock script %}

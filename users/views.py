@@ -7,7 +7,7 @@ from django.db.models import Q
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams
 from .utils import collect_badges, get_house_data, get_team_data, email_check
-
+from django.db.models.functions import Lower
 
 def register(request):
     if request.POST:
@@ -141,8 +141,8 @@ def search(request):
 
 
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=True).order_by('user__username')
-    mentee = Profile.objects.filter(role=False).order_by('user__username')
+    mentors = Profile.objects.filter(role=True).order_by(Lower('user__username'))
+    mentee = Profile.objects.filter(role=False).order_by(Lower('user__username'))
     context = {
         'mentors': mentors,
         'mentee': mentee,

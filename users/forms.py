@@ -28,6 +28,9 @@ class ProfileUpdateForm(forms.ModelForm):
                   'linkedin', 'instagram', 'twitter',
                   'github', 'okr', 'facebook',
                   'image']
+        labels = {
+            "okr": "OKR"
+        }
 
 
 class RewardForm(forms.ModelForm):

@@ -127,11 +127,16 @@ def search(request):
             Q(profile__guidance__icontains=query) |
             Q(email__icontains=query)
         ).distinct()
-
+    mentors = queryset.filter(profile__role=True)
+    mentees = queryset.filter(profile__role=False)
     context = {
-        'users': queryset
+        'mentee': mentees,
+        'mentors': mentors,
+        'title': 'Members'
     }
-    return render(request, 'trainers.html', context=context)
+    for user in mentees:
+        print(user.profile.name)
+    return render(request, 'search.html', context=context)
 
 
 # class UserListView(ListView):

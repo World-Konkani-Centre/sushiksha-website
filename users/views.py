@@ -79,7 +79,6 @@ def profile(request):
             'address': query.address,
             'guidance': query.guidance,
         }
-    print(profile_details)
     context = {
         'u_form': u_form,
         'p_form': p_form,

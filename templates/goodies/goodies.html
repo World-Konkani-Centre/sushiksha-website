@@ -22,24 +22,19 @@
                                 <span class="advanced">{{ query.tag }}</span>
                                 <h3>{{ query.title }}</h3>
                                 <img src="{{ query.thumbline.url }}" loading="lazy" class="img-fluid rounded" alt="" title="">
-                                <ul>
+                                <ul class="mt-3">
                                     <li>{{ query.description }}</li>
                                 </ul>
                                 {% if query.is_image %}
                                     <div class="btn-wrap">
-                                        <a href="{{ query.hd_image.url }}" download="w3logo">
-                                            <a href="" class="btn-buy">Download</a>
-                                        </a>
+                                        <a href="{{ query.hd_image.url }}" class="btn-buy" download="{{ query.title }}">Download</a>
                                     </div>
                                 {% else %}
-
+                                    <a href="{{ query.link }}" class="btn-buy" target="_blank">Download</a>
                                 {% endif %}
-
                             </div>
                         </div>
                     {% endfor %}
-
-
                 </div>
 
             </div>

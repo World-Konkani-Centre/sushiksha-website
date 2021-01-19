@@ -40,7 +40,6 @@ def house(request, id):
 
 def team(request, id):
     team_set = get_object_or_404(Teams, id=id)
-    team_set
     context = {
         'query_set': team_set
     }

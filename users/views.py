@@ -49,6 +49,7 @@ def user_login(request):
 
 @login_required
 def profile(request):
+    profile_details = {}
     reward, count = collect_badges(request.user)
     zipped_data = zip(reward, count)
     if request.POST:
@@ -67,11 +68,24 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
+        query = Profile.objects.filter(user__id=request.user.id).first()
+        profile_details = {
+            'username': query.user.username,
+            'batch': query.batch,
+            'name': query.name,
+            'phone': query.phone,
+            'college': query.college,
+            'profession': query.profession,
+            'address': query.address,
+            'guidance': query.guidance,
+        }
+    print(profile_details)
     context = {
         'u_form': u_form,
         'p_form': p_form,
         'title': "Profile",
         'badges': zipped_data,
+        'profile_details': profile_details
     }
     return render(request, 'profile.html', context=context)
 
@@ -86,8 +100,8 @@ def log_pomodoro(request):
         productivity = round((productivity * 0.05), 2)
         energy = round((energy * 0.05), 2)
         pomodoro.count += 1
-        pomodoro.energy = (pomodoro.energy + energy)/2
-        pomodoro.productivity = (pomodoro.productivity + productivity)/2
+        pomodoro.energy = (pomodoro.energy + energy) / 2
+        pomodoro.productivity = (pomodoro.productivity + productivity) / 2
         pomodoro.save()
         messages.success(request, f'Your data has been recorded.')
         return redirect(request.META['HTTP_REFERER'])

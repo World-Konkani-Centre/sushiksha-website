@@ -1,5 +1,6 @@
 import django_filters
-from users.models import Reward, User
+from users.models import Reward
+from django.contrib.auth.models import User
 from django_filters import CharFilter, ModelChoiceFilter
 from django.db.models.functions import Lower
 

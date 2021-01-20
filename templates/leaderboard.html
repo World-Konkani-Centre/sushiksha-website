@@ -54,7 +54,7 @@
                                                 <td >
                                                     <div class="media align-items-center">
                                                         <a href="{{ member.user.profile.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{ member.user.profile.image.url }}" alt="{{ member.user.username }}">
+                                                            <img src="{{ member.user.profile.image.url }}" loading="lazy" alt="{{ member.user.username }}">
                                                         </a>
                                                         <div class="media-body">
                                                             <span class="mb-0 text-sm">{{ member.user.username }}</span>

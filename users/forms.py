@@ -54,7 +54,7 @@ class BadgeForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Describe why your are giving the badge',
-        'rows': 2
+        'rows': 4
     }))
 
     class Meta:
@@ -63,6 +63,6 @@ class BadgeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BadgeForm, self).__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            if visible.html_name == 'user' or visible.html_name == 'badges':
-                visible.field.widget.attrs['class'] = 'fstdropdown-select'
+        # for visible in self.visible_fields():
+        #     if visible.html_name == 'user' or visible.html_name == 'badges':
+        #         visible.field.widget.attrs['class'] = 'fstdropdown-select'

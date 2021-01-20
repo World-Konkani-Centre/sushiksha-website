@@ -216,29 +216,22 @@ def create_badge(request, id):
 @login_required()
 def badge(request):
     form = BadgeForm(request.POST or None)
+    if not request.user.profile.role:
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
     badges = Badge.objects.all()
     if request.POST:
         if form.is_valid():
             if form.instance.user.id == request.user.id:
                 messages.error(request, 'You cannot give a badge to yourself!')
             else:
-                if form.instance.badges.featured:
-                    if request.user.profile.role:
-                        if request.user.profile.name:
-                            form.instance.awarded_by = request.user.profile.name
-                        else:
-                            form.instance.awarded_by = request.user.username
-                        form.save()
-                        messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
-                        return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
-                    else:
-                        messages.error(request, 'The badge that you have chosen can only be given by mentor')
+                row = form.save(commit=False)
+                if request.user.profile.name:
+                    row.awarded_by = request.user.profile.name
                 else:
-                    form.instance.awarded_by = request.user.username
-                    form.save()
-                    messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
-                    return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
-
+                    row.awarded_by = request.user.username
+                row.save()
+                messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
     context = {
         'form': form,
         'badges': badges

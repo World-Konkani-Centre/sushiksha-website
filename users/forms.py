@@ -63,6 +63,6 @@ class BadgeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BadgeForm, self).__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            if visible.html_name == 'user' or visible.html_name == 'badges':
-                visible.field.widget.attrs['class'] = 'fstdropdown-select'
+        # for visible in self.visible_fields():
+        #     if visible.html_name == 'user' or visible.html_name == 'badges':
+        #         visible.field.widget.attrs['class'] = 'fstdropdown-select'

@@ -57,7 +57,7 @@
 
     Copy paste the code from below document to `settings.py`
     
-    settings.py
+    [settings.py](https://github.com/18praneeth/sushiksha-website/blob/test/djangoProject/settings.py)
     
     Change the config parameters,
     ```python

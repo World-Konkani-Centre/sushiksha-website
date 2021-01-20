@@ -74,6 +74,8 @@ def blog(request):
 
 
 def blog_single(request, id):
+    id = id.split("--",1)
+    id = id[0]
     post = get_object_or_404(Post, id=id)
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]

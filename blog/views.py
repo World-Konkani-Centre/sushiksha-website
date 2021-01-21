@@ -32,7 +32,7 @@ def search(request):
 
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
-    paginator = Paginator(queryset, 6)
+    paginator = Paginator(queryset, 10)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
     try:
@@ -54,7 +54,7 @@ def blog(request):
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
     post = Post.objects.order_by('-timestamp')
-    paginator = Paginator(post, 4)
+    paginator = Paginator(post, 8)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
     try:

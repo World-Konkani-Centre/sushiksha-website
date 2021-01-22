@@ -2,8 +2,7 @@ import re
 from django.core.mail import send_mail
 from django.template import loader
 import slack
-
-SLACK_TOKEN = "GET FROM CONFIG.JSON"
+from djangoProject.settings import SLACK_TOKEN
 
 
 def collect_titles(badges):

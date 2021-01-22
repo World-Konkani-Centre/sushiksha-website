@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from users.tasks import send_email
+from users.tasks import send_email,send_in_slack
 from .models import Profile, Pomodoro, Reward
 
 
@@ -32,4 +32,6 @@ def send_mail(sender, instance, created, **kwargs):
         image = 'https://sushiksha.konkanischolarship.com' + str(instance.badges.logo.url)
         array = [email, timestamp, awarded_by, description, badge, name, image]
         send_email.delay(array)
+        send_in_slack.delay(array)
+        return True
 

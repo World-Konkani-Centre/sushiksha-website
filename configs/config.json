@@ -2,5 +2,5 @@
 "SECRET_KEY": "Enter your secret key here",
 "MAIL_USER": "Your mail username",
 "MAIL_PASS": "enter your password",
-"SLACK_AUTH_TOKEN": "xoxb-1658112963093-1646460182647-PaX7PYwoY7NZBj7ZXCzoE8Rl"
+"SLACK_AUTH_TOKEN": "secret key here"
 }

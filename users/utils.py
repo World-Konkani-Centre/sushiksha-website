@@ -105,6 +105,7 @@ def send_reward_slack(array):
     name = array[5]
     image = array[6]
     message = {
+        'username': 'Sushiksha Badge Bot!',
         'channel': '#sushiksha-badges',
         "blocks": [
             {

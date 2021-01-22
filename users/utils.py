@@ -105,8 +105,7 @@ def send_reward_slack(array):
     name = array[5]
     image = array[6]
     message = {
-        'username': 'Badge Bot!',
-        'channel': '#slack-bot',
+        'channel': '#sushiksha-badges',
         "blocks": [
             {
                 "type": "divider"
@@ -115,7 +114,7 @@ def send_reward_slack(array):
                 "type": "header",
                 "text": {
                     "type": "plain_text",
-                    "text": "congradulations " + name + " 🎉"
+                    "text": "Congratulation " + name + " 🎉"
                 }
             },
             {

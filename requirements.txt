@@ -10,8 +10,18 @@ django-tinymce4-lite==1.8.0
 djangocms-admin-style==2.0.2
 gunicorn==20.0.4
 jsmin==2.2.2
-Pillow==7.2.0
+Pillow~=8.1.0
 psycopg2==2.8.6
 pytz==2020.1
 sqlparse==0.3.1
 whitenoise==5.2.0
+slackclient==2.9.3
+
+celery==5.0.0
+kombu==5.0.2
+vine==5.0.0
+
+
+#required rabbitmq version  3.8.10 https://www.rabbitmq.com/install-windows.html
+#required erlang version 23.2.3 https://erlang.org/download/otp_versions_tree.html
+

@@ -5,7 +5,7 @@ media
 db.sqlite3
 myenv
 venv
-djangoProject/settings.py
+
 static
 
 

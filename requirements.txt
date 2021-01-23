@@ -20,5 +20,3 @@ slackclient==2.9.3
 celery==5.0.0
 kombu==5.0.2
 vine==5.0.0
-
-

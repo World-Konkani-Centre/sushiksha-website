@@ -20,8 +20,3 @@ slackclient==2.9.3
 celery==5.0.0
 kombu==5.0.2
 vine==5.0.0
-
-
-#required rabbitmq version  3.8.10 https://www.rabbitmq.com/install-windows.html
-#required erlang version 23.2.3 https://erlang.org/download/otp_versions_tree.html
-

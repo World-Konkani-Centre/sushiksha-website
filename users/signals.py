@@ -32,4 +32,4 @@ def send_mail(sender, instance, created, **kwargs):
         image = 'https://sushiksha.konkanischolarship.com' + str(instance.badges.logo.url)
         array = [email, timestamp, awarded_by, description, badge, name, image]
         send_email.delay(array)
-
+        return True

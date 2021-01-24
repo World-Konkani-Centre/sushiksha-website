@@ -95,6 +95,7 @@ Alumni Mentoring Programme
 World Konkani Centre
     '''
     send_mail(subject, comment, None, [email], html_message=html_message)
+    print("email sent")
 
 
 def send_reward_slack(array):
@@ -105,7 +106,6 @@ def send_reward_slack(array):
     name = array[5]
     image = array[6]
     message = {
-        'username': 'Sushiksha Badge Bot!',
         'channel': '#sushiksha-badges',
         "blocks": [
             {
@@ -135,5 +135,6 @@ def send_reward_slack(array):
             }
         ]
     }
-    client = slack.WebClient(token=SLACK_TOKEN)
-    client.chat_postMessage(**message)
+    client_obj = slack.WebClient(token=SLACK_TOKEN)
+    client_obj.chat_postMessage(**message)
+    print("slack message sent")

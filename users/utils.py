@@ -1,6 +1,9 @@
 import re
 from django.core.mail import send_mail
 from django.template import loader
+import slack
+from djangoProject.settings import SLACK_TOKEN
+
 
 def collect_titles(badges):
     titles = []
@@ -65,12 +68,11 @@ def send_reward_mail(array):
     badge = array[4]
     name = array[5]
     logo = array[6]
-
     html_message = loader.render_to_string(
         'email/message.html',
         {
             'image': logo,
-            'name':  name,
+            'name': name,
             'badge': badge,
             'awarded': awarded_by,
             'reason': description,
@@ -92,5 +94,47 @@ Sushiksha
 Alumni Mentoring Programme
 World Konkani Centre
     '''
-
     send_mail(subject, comment, None, [email], html_message=html_message)
+    print("email sent")
+
+
+def send_reward_slack(array):
+    timestamp = array[1]
+    awarded_by = array[2]
+    description = array[3]
+    badge = array[4]
+    name = array[5]
+    image = array[6]
+    message = {
+        'channel': '#sushiksha-badges',
+        "blocks": [
+            {
+                "type": "divider"
+            },
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Congratulation " + name + " 🎉"
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Badge Given by : " + awarded_by + " *\n*Badge Given : " + badge + " *\n " + description
+                },
+                "accessory": {
+                    "type": "image",
+                    "image_url": image,
+                    "alt_text": "badge image"
+                }
+            },
+            {
+                "type": "divider"
+            }
+        ]
+    }
+    client_obj = slack.WebClient(token=SLACK_TOKEN)
+    client_obj.chat_postMessage(**message)
+    print("slack message sent")

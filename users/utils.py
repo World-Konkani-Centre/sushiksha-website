@@ -115,24 +115,30 @@ def send_reward_slack(array):
                 "type": "header",
                 "text": {
                     "type": "plain_text",
-                    "text": "Congratulation " + name + " 🎉"
+                    "text": "Congratulations " + name + " 🎉"
                 }
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*Badge Given by : " + awarded_by + " *\n*Badge Given : " + badge + " *\n " + description
+                    "text": "*From:* " + awarded_by + "\n*Badge Given:* " + badge + "\n*Message:*\n" + description
                 },
                 "accessory": {
                     "type": "image",
                     "image_url": image,
-                    "alt_text": "badge image"
+                    "alt_text": badge
                 }
             },
             {
-                "type": "divider"
-            }
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": "<https://sushiksha.konkanischolarship.com/user/rewards/|Sushksha Badges>"
+				}
+			]
+		},
         ]
     }
     client_obj = slack.WebClient(token=SLACK_TOKEN)

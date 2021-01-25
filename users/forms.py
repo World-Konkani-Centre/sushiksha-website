@@ -54,7 +54,8 @@ class BadgeForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Describe why your are giving the badge',
-        'rows': 4
+        'rows': 5,
+        'minlength': 125,
     }))
 
     class Meta:

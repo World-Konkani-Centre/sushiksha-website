@@ -16,33 +16,61 @@
                     {% for team in query_set.teams.all %}
                         <li class="nav-item">
                             {% if forloop.counter == 1 %}
-                                <a class="nav-link active" href="#team-{{ forloop.counter }}" role="tab" data-toggle="tab">{{ team.name }}</a>
+                                <a class="nav-link active" href="#team-{{ forloop.counter }}" role="tab"
+                                   data-toggle="tab">{{ team.name }}</a>
                             {% else %}
-                                <a class="nav-link" href="#team-{{ forloop.counter }}" role="tab" data-toggle="tab">{{ team.name }}</a>
+                                <a class="nav-link" href="#team-{{ forloop.counter }}" role="tab"
+                                   data-toggle="tab">{{ team.name }}</a>
                             {% endif %}
                         </li>
                     {% endfor %}
                 </ul>
-{#                <h3>{{ query_set.bio }}</h3>#}
+                {#                <h3>{{ query_set.bio }}</h3>#}
                 <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     {% for team in query_set.teams.all %}
-                        <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="team-{{ forloop.counter }}">
-                            {% for member in team.members.all %}
-                                <div class="row schedule-item">
-                                    <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
-                                    <div class="col-md-8">
-                                        <div class="speaker">
-                                            <img src="{{ member.image.url }}" alt="{{ member.user.username }}" title="{{ member.user.username }}">
+                        {% if forloop.counter == 1 %}
+                            <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="team-{{ forloop.counter }}">
+                                {% for member in team.members.all %}
+                                    {{ team }}
+                                    <div class="row schedule-item">
+                                        <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
+                                        <div class="col-md-8">
+                                            <div class="speaker">
+                                                <img src="{{ member.image.url }}" alt="{{ member.user.username }}"
+                                                     title="{{ member.user.username }}">
+                                            </div>
+                                            <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.username }}
+                                                <span>{{ member.get_role }}</span></h4></a>
+                                            <p>{{ member.batch }} VKSSF Scholar</p>
                                         </div>
-                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.username }} <span>{{ member.get_role }}</span></h4></a>
-                                        <p>{{ member.batch }} VKSSF Scholar</p>
+                                        <div class="col-md-2">
+                                            <h4>Points: {{ member.get_point }}</h4>
+                                        </div>
                                     </div>
-                                <div class="col-md-2">
-                                    <h4>Points: {{ member.get_point }}</h4>
-                                </div>
-                                </div>
-                            {% endfor %}
-                        </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div role="tabpanel" class="col-lg-9 tab-pane fade show" id="team-{{ forloop.counter }}">
+                                {% for member in team.members.all %}
+                                    {{ team }}
+                                    <div class="row schedule-item">
+                                        <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
+                                        <div class="col-md-8">
+                                            <div class="speaker">
+                                                <img src="{{ member.image.url }}" alt="{{ member.user.username }}"
+                                                     title="{{ member.user.username }}">
+                                            </div>
+                                            <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.username }}
+                                                <span>{{ member.get_role }}</span></h4></a>
+                                            <p>{{ member.batch }} VKSSF Scholar</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Points: {{ member.get_point }}</h4>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

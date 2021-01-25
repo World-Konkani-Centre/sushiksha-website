@@ -37,91 +37,99 @@
             <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
                 <div role="tabpanel" class="tab-pane fade show active" id="mentors">
                     <div class="row">
+                    {% if mentors.count != 0 %}
                     {% for user in mentors %}
                         <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
                             <div class="member ">
                                 <div class="member-img">
-                                    <img src="{{ user.image.url }}" loading="lazy" class="img-fluid" alt="{{ user.user.username }}">
+                                    <img src="{{ user.profile.image.url }}" loading="lazy" class="img-fluid" alt="{{ user.user.username }}">
                                     <div class="social">
                                         {% if user.twitter %}
-                                            <a href="{{ user.twitter}}" target="_blank"><i class="bx bxl-twitter"></i></a>
+                                            <a href="{{ user.profile.twitter}}" target="_blank"><i class="bx bxl-twitter"></i></a>
                                         {% endif %}
                                         {% if user.facebook %}
-                                            <a href="{{ user.facebook }}" target="_blank"><i class="bx bxl-facebook"></i></a>
+                                            <a href="{{ user.profile.facebook }}" target="_blank"><i class="bx bxl-facebook"></i></a>
                                         {% endif %}
                                         {% if user.instagram %}
-                                            <a href="{{ user.instagram }}" target="_blank"><i class="bx bxl-instagram"></i></a>
+                                            <a href="{{ user.profile.instagram }}" target="_blank"><i class="bx bxl-instagram"></i></a>
                                         {% endif %}
                                         {% if user.linkedin %}
-                                            <a href="{{ user.linkedin }}" target="_blank"><i class="bx bxl-linkedin"></i></a>
+                                            <a href="{{ user.profile.linkedin }}" target="_blank"><i class="bx bxl-linkedin"></i></a>
                                         {% endif %}
                                     </div>
                                 </div>
 
                                 <div class="member-info">
-                                    {% if user.name %}
-                                        <h4><a href="{% url 'user-detail' user.user.id %}">{{ user.name }}</a></h4>
+                                    {% if user.profile.name %}
+                                        <h4><a href="{% url 'user-detail' user.id %}">{{ user.profile.name }}</a></h4>
 
                                     {% else %}
-                                        <h4><a href="{% url 'user-detail' user.user.id %}">{{ user.user.username }}</a></h4>
+                                        <h4><a href="{% url 'user-detail' user.id %}">{{ user.username }}</a></h4>
                                     {% endif %}
                                     {% if user.profession %}
-                                        <span>{{ user.profession }}</span>
+                                        <span>{{ user.profile.profession }}</span>
                                     {% endif %}
                                     {% if request.user.is_authenticated %}
                                         <p>
-                                            <strong>VKSSF Batch: </strong>{{ user.batch }}
+                                            <strong>VKSSF Batch: </strong>{{ user.profile.batch }}
                                         </p>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
+                    {% else %}
+                    <h2>No mentors found with this match</h2>
+                    {% endif %}
                 </div>
                 </div>
 
                 <div role="tabpanel" class="tab-pane fade" id="mentee">
                     <div class="row">
+                    {% if mentee.count != 0 %}
                     {% for user in mentee %}
                         <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
                             <div class="member ">
                                 <div class="member-img">
-                                    <img src="{{ user.image.url }}" class="img-fluid" alt="{{ user.user.username }}">
+                                    <img src="{{ user.profile.image.url }}" class="img-fluid" alt="{{ user.user.username }}">
                                     <div class="social">
                                         {% if user.twitter %}
-                                            <a href="{{ user.twitter}}" target="_blank"><i class="bx bxl-twitter"></i></a>
+                                            <a href="{{ user.profile.twitter}}" target="_blank"><i class="bx bxl-twitter"></i></a>
                                         {% endif %}
                                         {% if user.facebook %}
-                                            <a href="{{ user.facebook }}" target="_blank"><i class="bx bxl-facebook"></i></a>
+                                            <a href="{{ user.profile.facebook }}" target="_blank"><i class="bx bxl-facebook"></i></a>
                                         {% endif %}
                                         {% if user.instagram %}
-                                            <a href="{{ user.instagram }}" target="_blank"><i class="bx bxl-instagram"></i></a>
+                                            <a href="{{ user.profile.instagram }}" target="_blank"><i class="bx bxl-instagram"></i></a>
                                         {% endif %}
                                         {% if user.linkedin %}
-                                            <a href="{{ user.linkedin }}" target="_blank"><i class="bx bxl-linkedin"></i></a>
+                                            <a href="{{ user.profile.linkedin }}" target="_blank"><i class="bx bxl-linkedin"></i></a>
                                         {% endif %}
                                     </div>
                                 </div>
 
                                 <div class="member-info">
-                                    {% if user.name %}
-                                        <h4><a href="{% url 'user-detail' user.user.id %}">{{ user.name }}</a></h4>
+                                    {% if user.profile.name %}
+                                        <h4><a href="{% url 'user-detail' user.id %}">{{ user.profile.name }}</a></h4>
 
                                     {% else %}
-                                        <h4><a href="{% url 'user-detail' user.user.id %}">{{ user.user.username }}</a></h4>
+                                        <h4><a href="{% url 'user-detail' user.id %}">{{ user.username }}</a></h4>
                                     {% endif %}
                                     {% if user.profession %}
-                                        <span>{{ user.profession }}</span>
+                                        <span>{{ user.profile.profession }}</span>
                                     {% endif %}
                                     {% if request.user.is_authenticated %}
                                         <p>
-                                            <strong>VKSSF Batch: </strong>{{ user.batch }}
+                                            <strong>VKSSF Batch: </strong>{{ user.profile.batch }}
                                         </p>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
+                    {% else %}
+                    <h2>No mentees found with this match</h2>
+                    {% endif %}
                 </div>
 
                 </div>

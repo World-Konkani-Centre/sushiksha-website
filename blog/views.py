@@ -32,7 +32,7 @@ def search(request):
 
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
-    paginator = Paginator(queryset, 6)
+    paginator = Paginator(queryset, 10)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
     try:
@@ -47,14 +47,14 @@ def search(request):
         'page_request_var': page_request_var,
         'category_count': category_count
     }
-    return render(request, 'blog.html', context=context)
+    return render(request, 'blog/blog.html', context=context)
 
 
 def blog(request):
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
     post = Post.objects.order_by('-timestamp')
-    paginator = Paginator(post, 4)
+    paginator = Paginator(post, 8)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
     try:
@@ -70,10 +70,12 @@ def blog(request):
         'category_count': category_count,
         'title': 'Blogs'
     }
-    return render(request, 'blog.html', context)
+    return render(request, 'blog/blog.html', context)
 
 
 def blog_single(request, id):
+    id = id.split("--",1)
+    id = id[0]
     post = get_object_or_404(Post, id=id)
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
@@ -95,7 +97,7 @@ def blog_single(request, id):
         'meta_image_url': post.thumbnail.url,
         'title': f'A blog by {post.author.user.profile.name}: {post.title}'
     }
-    return render(request, 'blog-single.html', context=context)
+    return render(request, 'blog/blog-single.html', context=context)
 
 
 def blog_create(request):
@@ -112,7 +114,7 @@ def blog_create(request):
         "title": title,
         'form': form
     }
-    return render(request, "post-create.html", context)
+    return render(request, "blog/post-create.html", context)
 
 
 def blog_update(request, id):
@@ -132,7 +134,7 @@ def blog_update(request, id):
             "title": title,
             'form': form
         }
-        return render(request, "post-create.html", context)
+        return render(request, "blog/post-create.html", context)
 
 
 def blog_delete(request, id):
@@ -165,4 +167,4 @@ def categories_view(request,category):
         'page_request_var': page_request_var,
         'category_count': category_count
     }
-    return render(request, 'blog.html', context)
+    return render(request, 'blog/blog.html', context)

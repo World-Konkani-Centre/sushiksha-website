@@ -35,6 +35,23 @@
 
                                 </div>
                             </div>
+                            <div class="row">
+                                {% if user.profile.teams_set.first %}
+                                <div class="col-6 mt-1 mb-0 text-justify">
+                                    <p class="font-weight-bold">Team: <a href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name  }}</a></p>
+                                </div>
+                                <div class="col-6 text-justify">
+                                    <p class="font-weight-bold">House: <a href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name  }}</a></p>
+                                </div>
+                                {% endif %}
+
+                                <div class="col-6 mt-1 text-justify">
+                                    <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
+                                </div>
+                                <div class="col-6 mt-1 text-justify">
+                                    <p class="font-weight-bold">Points: {{ user.profile.get_point }}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <div class="social-links text-center  pt-1 pt-md-0 text-center">
@@ -75,7 +92,7 @@
                                             <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
                                                     data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
                                                     aria-controls="Profile">
-                                                Edit Your Profile
+                                                Update Profile
                                             </button>
                                         </h5>
                                     </div>
@@ -122,7 +139,7 @@
                                             {% for badge, count in badges %}
                                                 <div class="col-lg-3 col-4 box">
                                                     <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}"
+                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy"
                                                          alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
                                                     <h4>{{ count }}</h4>
                                                 </div>

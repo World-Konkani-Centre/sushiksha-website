@@ -4,9 +4,9 @@
 {% load crispy_forms_filters %}
 
 {% block style %}
-    <head>
-        <link href="{% static 'assets/vendor/fstdropdown/fstdropdown.css' %}" rel="stylesheet">
-    </head>
+{#    <head>#}
+{#        <link href="{% static 'assets/vendor/fstdropdown/fstdropdown.css' %}" rel="stylesheet">#}
+{#    </head>#}
 {% endblock style %}
 
 {% block content %}
@@ -57,7 +57,7 @@
                                 {% for badge in badges %}
                                     <div class="col-xl-4 col-6 d-flex align-items-stretch">
                                         <div class="icon-box mt-4 mt-xl-0">
-                                            <img class="rounded" width="90%" src="{{ badge.logo.url }}" alt="{{ badge.title }}" title="{{ badge.title }}">
+                                            <img class="rounded" width="90%" src="{{ badge.logo.url }}" loading="lazy" alt="{{ badge.title }}" title="{{ badge.title }}">
                                             <hr>
                                             <h4 class="h4">{{ badge.title }}
                                             {% if badge.featured %}

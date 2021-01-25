@@ -137,9 +137,9 @@
                                                         <div class="media-body">
                                                             <a href="{{ entry.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">
                                                                 {% if entry.user.profile.name %}
-                                                                {{ entry.user.profile.name }}
+                                                                    {{ entry.user.profile.name }}
                                                                 {% else %}
-                                                                {{ entry.user.username }}
+                                                                    {{ entry.user.username }}
                                                                 {% endif %}
                                                             </span></a>
                                                         </div>
@@ -147,8 +147,8 @@
                                                 </td>
                                                 <td>{{ entry.get_number_of_badges }}</td>
                                                 <td>{{ entry.get_point }}</td>
-                                            <td>{{ entry.get_team_name }}</td>
-                                            <td>{{ entry.get_house_name }}</td>
+                                                <td>{{ entry.get_team_name }}</td>
+                                                <td>{{ entry.get_house_name }}</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>

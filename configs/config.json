@@ -1,6 +1,6 @@
 {
-"SECRET_KEY": "Enter your secret key here",
-"MAIL_USER": "Your mail username",
-"MAIL_PASS": "enter your password",
-"SLACK_AUTH_TOKEN": "token here"
+  "SECRET_KEY": "Enter your secret key here",
+  "MAIL_USER": "Your mail username",
+  "MAIL_PASS": "enter your password",
+  "SLACK_AUTH_TOKEN": "token here"
 }

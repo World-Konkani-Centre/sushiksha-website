@@ -58,20 +58,25 @@
                         <div class="blog-pagination">
                             <ul class="justify-content-center">
                                 {% if queryset.has_previous %}
-                                    <li><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}"> <i class="icofont-rounded-left"></i></a></li>
-                                {% else %}
-                                    <li class="disabled"><i class="icofont-rounded-left"></i></li>
+                                    <li><a href="?page=1">First</a> </li>
+                                    <li><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">Previous</a></li>
                                 {% endif %}
-                                <li class="active"><a href="?{{ page_request_var }}={{ queryset.number }}">{{ queryset.number }}</a></li>
+
+                                {% for num in queryset.paginator.page_range %}
+                                    {% if queryset.number == num %}
+                                        <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% elif num > queryset.number|add:'-3' and num < queryset.number|add:'3' %}
+                                        <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
 
                                 {% if queryset.has_next %}
-                                    <li><a href="?{{ page_request_var }}={{ queryset.next_page_number }}"> <i class="icofont-rounded-right"></i></a></li>
-                                {% else %}
-                                    <li class="disabled"> <i class="icofont-rounded-right"></i></li>
-
+                                    <li><a href="?page={{ queryset.next_page_number }}">Next</a></li>
+                                    <li><a href="?page={{ queryset.paginator.num_pages }}">Last</a></li>
                                 {% endif %}
                             </ul>
                         </div>
+
 
                     </div><!-- End blog entries list -->
 

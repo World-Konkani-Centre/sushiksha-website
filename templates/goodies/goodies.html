@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>Goodies</h2>
+            </div>
+        </div>
+
+        <!-- ======= Pricing Section ======= -->
+        <section id="pricing" class="pricing">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    {% for query in queryset %}
+                        <div class="col-lg-3 col-md-6 mt-4 mt-lg-0 mb-3">
+                            <div class="box">
+                                <span class="advanced">{{ query.tag }}</span>
+                                <h3>{{ query.title }}</h3>
+                                <img src="{{ query.thumbline.url }}" loading="lazy" class="img-fluid rounded" alt="" title="">
+                                <ul class="mt-3">
+                                    <li>{{ query.description }}</li>
+                                </ul>
+                                {% if query.is_image %}
+                                    <div class="btn-wrap">
+                                        <a href="{{ query.hd_image.url }}" class="btn-buy" download="{{ query.title }}">Download</a>
+                                    </div>
+                                {% else %}
+                                    <a href="{{ query.link }}" class="btn-buy" target="_blank">Download</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section><!-- End Pricing Section -->
+
+
+    </main><!-- End #main -->
+
+{% endblock content %}

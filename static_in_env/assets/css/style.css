@@ -1051,9 +1051,7 @@ section {
 # Pricing
 --------------------------------------------------------------*/
 .pricing .box {
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  padding: 20px;
   background: #fff;
   text-align: center;
   border: 1px solid #eef0ef;
@@ -1063,19 +1061,21 @@ section {
 }
 
 .pricing h3 {
+  font-weight: 400;
   margin: -20px -20px 20px -20px;
   padding: 20px 15px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   color: #777777;
   background: #f8f8f8;
 }
 
 .pricing h4 {
-  font-size: 25px;
-  color: #f82249;
+  font-size: 36px;
+  color: #e41749;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
 }
 
 .pricing h4 sup {
@@ -1090,9 +1090,71 @@ section {
   font-weight: 300;
 }
 
+.pricing ul {
+  padding: 0;
+  list-style: none;
+  color: #444444;
+  text-align: center;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.pricing ul li {
+  padding-bottom: 16px;
+}
+
+.pricing ul i {
+  color: #e41749;
+  font-size: 18px;
+  padding-right: 4px;
+}
+
+.pricing ul .na {
+  color: #ccc;
+  text-decoration: line-through;
+}
+
+.pricing .btn-wrap {
+  margin: 20px -20px -20px -20px;
+  padding: 20px 15px;
+  background: #f8f8f8;
+  text-align: center;
+}
+
+.pricing .btn-buy {
+  background: #f5587b;
+  display: inline-block;
+  padding: 8px 35px;
+  border-radius: 50px;
+  color: #fff;
+  transition: none;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.pricing .btn-buy:hover {
+  background: #e41749;
+}
+
 .pricing .featured h3 {
   color: #fff;
-  background: #fff;
+  background: #e41749;
+}
+
+.pricing .advanced {
+  width: 200px;
+  position: absolute;
+  top: 18px;
+  right: -68px;
+  transform: rotate(45deg);
+  z-index: 1;
+  font-size: 14px;
+  padding: 1px 0 3px 0;
+  background: #e41749;
+  color: #fff;
 }
 
 /*--------------------------------------------------------------

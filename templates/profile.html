@@ -139,7 +139,7 @@
                                             {% for badge, count in badges %}
                                                 <div class="col-lg-3 col-4 box">
                                                     <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}"
+                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy"
                                                          alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
                                                     <h4>{{ count }}</h4>
                                                 </div>

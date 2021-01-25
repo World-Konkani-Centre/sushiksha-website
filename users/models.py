@@ -119,9 +119,17 @@ class Pomodoro(models.Model):
         return f'{self.user.username} - Pomodoro Count : {self.count}'
 
 
+class BadgeCategory(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class Badge(models.Model):
     points = models.IntegerField(default=1)
     title = models.CharField(max_length=30)
+    category = models.ForeignKey(BadgeCategory,on_delete=models.SET_NULL,null=True)
     description = models.CharField(max_length=500)
     logo = models.ImageField(upload_to='badges')
     featured = models.BooleanField(default=False)

@@ -1,9 +1,9 @@
-from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .utils import send_reward_mail
+
+from users.tasks import send_email
 from .models import Profile, Pomodoro, Reward
-import threading
 
 
 @receiver(post_save, sender=User)
@@ -27,11 +27,9 @@ def send_mail(sender, instance, created, **kwargs):
         description = instance.description
         awarded_by = instance.awarded_by
         timestamp = instance.timestamp
-        array = [email, timestamp, awarded_by, description, badge, name]
-
-        # print(array)
-        # x = threading.Thread(target=send_reward_mail, args=(array,))
-        # x.start()
-        send_reward_mail(array)
-        # print("success")
-        # send_reward_mail(array)
+        image = 'https://sushiksha.konkanischolarship.com' + str(instance.badges.logo.url)
+        array = [email, timestamp, awarded_by, description, badge, name, image]
+        send_email.delay(array)
+        # do not uncomment
+        # uncomment above line only if you have celery, rabbitmq setup and know the implementation
+        return True

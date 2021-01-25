@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load my_tags %}
 
 {% block main_style %}
     <link href="{% static 'assets/css/sb-admin-2.min.css' %}" rel="stylesheet">
@@ -14,31 +17,36 @@
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
                 <h2>Badges</h2>
-                <div class="row">
-                    <div class="col-lg-8 col-md-7">
-                    </div>
-                    <div class="col-lg-4 col-md-5 col-11">
-                        <div class="search-form ">
-                            <form action="{% url 'reward-search' %}">
-                                <input type="text" name="q">
-                                <button type="submit"><i class="bx bx-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div><!-- End Breadcrumbs -->
 
 
-
         <section id="" class="profile blog">
             <div class="container" data-aos="fade-up">
+                <p class="mb-2">
+                    <button class="btn get-started-btn-special" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filter options &#8681;
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-3">
+                        <form method="GET" class="mb-3" class="form-inline">
+
+                            {{ reward_filter.form | crispy }}
+
+                            <button class="btn btn-block get-started-btn-special" type="submit">Filter</button>
+                        </form>
+                    </div>
+                </div>
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
 
                     <div class="col-lg-12">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">Rewards</p>
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Rewards</p>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -46,10 +54,10 @@
                                         <thead>
                                         <tr class="font-weight-bold">
                                             <th style="min-width:150px">Date and Time</th>
-                                            <th style="min-width:160px">Badge</th>
+                                            <th>Badge</th>
+                                            <th style="min-width:200px">Description</th>
                                             <th style="min-width:160px">User</th>
                                             <th style="min-width:100px">Awarded by</th>
-                                            <th style="min-width:200px">Description</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -60,20 +68,30 @@
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">
-                                                        <img src="{{reward.badges.logo.url }}" width="50" alt="" title="{{ reward.badges.title }}">
-                                                        <div class="media-body">
-                                                            <span class="mb-0 text-sm font-weight-bold"> {{ reward.badges.title }}</span>
-                                                        </div>
+                                                        <img src="{{ reward.badges.logo.url }}" loading="lazy"
+                                                             width="50" alt="" title="{{ reward.badges.title }}">
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <details>
+                                                        <summary
+                                                                class="font-weight-bold">{{ reward.badges.title }}</summary>
+                                                        <p>{{ reward.description }}</p>
+                                                    </details>
+                                                </td>
+
 
                                                 <td>
                                                     <div class="media align-items-center">
-                                                        <a href="{{ reward.user.profile.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{ reward.user.profile.image.url }}" alt="{{ reward.user.username }}" title="{{ reward.user.username }}">
+                                                        <a href="{{ reward.user.profile.get_absolute_url }}"
+                                                           class="avatar rounded-circle mr-3">
+                                                            <img src="{{ reward.user.profile.image.url }}"
+                                                                 alt="{{ reward.user.username }}"
+                                                                 title="{{ reward.user.username }}">
                                                         </a>
                                                         <div class="media-body">
-                                                            <a href="{{ reward.user.profile.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">
+                                                            <a href="{{ reward.user.profile.get_absolute_url }}"><span
+                                                                    class="mb-0 text-sm font-weight-bold">
                                                                 {% if reward.user.profile.name %}
                                                                     {{ reward.user.profile.name }}
                                                                 {% else %}
@@ -85,12 +103,6 @@
                                                 </td>
 
                                                 <td><p>{{ reward.awarded_by }}</p></td>
-                                                <td>
-                                                    <details>
-                                                      <summary>{{ reward.badges.title }}</summary>
-                                                      <p>{{ reward.description }}</p>
-                                                    </details>
-                                                </td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -104,19 +116,45 @@
                     <div class="blog-pagination">
                         <ul class="justify-content-center">
                             {% if query.has_previous %}
-                                <li><a href="?{{ page_request_var }}={{ query.previous_page_number }}"> <i class="icofont-rounded-left"></i></a></li>
-                            {% else %}
-                                <li class="disabled"><i class="icofont-rounded-left"></i></li>
+                                <li><a href="?page=1">First</a></li>
+                                <li><a href="?{{ page_request_var }}={{ query.previous_page_number }}">Previous</a></li>
                             {% endif %}
-                            <li class="active"><a href="?{{ page_request_var }}={{ query.number }}">{{ query.number }}</a></li>
+
+                            {% for num in query.paginator.page_range %}
+                                {% if query.number == num %}
+                                    <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                                {% elif num > query.number|add:'-3' and num < query.number|add:'3' %}
+                                    <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
 
                             {% if query.has_next %}
-                                <li><a href="?{{ page_request_var }}={{ query.next_page_number }}"> <i class="icofont-rounded-right"></i></a></li>
-                            {% else %}
-                                <li class="disabled"> <i class="icofont-rounded-right"></i></li>
+                                <li><a href="?page={{ query.next_page_number }}">Next</a></li>
+                                <li><a href="?page={{ query.paginator.num_pages }}">Last</a></li>
                             {% endif %}
                         </ul>
                     </div>
+
+
+                    {#                    {% if is_paginated %}#}
+                    {#                        {% if page_obj.has_previous %}#}
+                    {#                            <a href="?{% param_replace page=1 %}">First</a>#}
+                    {#                            {% if page_obj.previous_page_number != 1 %}#}
+                    {#                                <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>#}
+                    {#                            {% endif %}#}
+                    {#                        {% endif %}#}
+                    {##}
+                    {#                        Page {{ page_obj.number }} of {{ paginator.num_pages }}#}
+                    {##}
+                    {#                        {% if page_obj.has_next %}#}
+                    {#                            {% if page_obj.next_page_number != paginator.num_pages %}#}
+                    {#                                <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>#}
+                    {#                            {% endif %}#}
+                    {#                            <a href="?{% param_replace page=paginator.num_pages %}">Last</a>#}
+                    {#                        {% endif %}#}
+                    {##}
+                    {#                        <p>Objects {{ page_obj.start_index }}—{{ page_obj.end_index }}</p>#}
+                    {#                    {% endif %}#}
 
                 </div>
             </div>

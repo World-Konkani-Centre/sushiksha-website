@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from users.models import Reward
-from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .filters import RewardFilter
 
 
 def badge_list(request):
     query = Reward.objects.order_by('-timestamp')
-    paginator = Paginator(query, 30)
+
+    f = RewardFilter(request.GET, queryset=query)
+    paginated_queryset = f.qs
+
+    paginator = Paginator(paginated_queryset, 30)
 
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -19,38 +23,40 @@ def badge_list(request):
 
     context = {
         'query': paginated_queryset,
+        'reward_filter': f,
         'page_request_var': page_request_var,
         'title': "Badges awarded"
     }
     return render(request, 'rewards.html', context=context)
 
 
-def badge_search(request):
-    queryset = Reward.objects.order_by('-timestamp')
-    query = request.GET.get('q')
-    if query:
-        queryset = queryset.filter(
-            Q(user__username__icontains=query) |
-            Q(user__profile__name__icontains=query) |
-            Q(awarded_by=query) |
-            Q(badges__title__icontains=query)
-        ).distinct()
+def donut_form(request):
+    return render(request, 'badge_claim/donut.html')
 
-    paginator = Paginator(queryset, 40)
 
-    page_request_var = 'page'
-    page = request.GET.get(page_request_var)
-    try:
-        paginated_queryset = paginator.page(page)
-    except PageNotAnInteger:
-        paginated_queryset = paginator.page(1)
-    except EmptyPage:
-        paginated_queryset = paginator.page(paginator.num_pages)
+def blog(request):
+    return render(request, 'badge_claim/blog.html')
 
-    context = {
-        'query': paginated_queryset,
-        'page_request_var': page_request_var,
-        'title': "Badges awarded"
-    }
 
-    return render(request, 'rewards.html', context=context)
+def book_reading(request):
+    return render(request, 'badge_claim/book_reading.html')
+
+
+def one_one(request):
+    return render(request, 'badge_claim/one_one.html')
+
+
+def kt_session(request):
+    return render(request, 'badge_claim/kt_session.html')
+
+
+def kt_giver(request):
+    return render(request, 'badge_claim/kt_giver.html')
+
+
+def kt_attendee(request):
+    return render(request, 'badge_claim/kt_attendee.html')
+
+
+def intiator(request):
+    return render(request, 'badge_claim/intiator.html')

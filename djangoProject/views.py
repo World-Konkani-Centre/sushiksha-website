@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from contact.models import Testimonial, Faq
 from users.models import House, Teams
 from blog.models import Post
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import logout
 
 
 def index(request):
@@ -39,7 +40,6 @@ def house(request, id):
 
 def team(request, id):
     team_set = get_object_or_404(Teams, id=id)
-    team_set
     context = {
         'query_set': team_set
     }
@@ -76,3 +76,8 @@ def handler403(request, exception):
         'error_detail': 'Permission Denied'
     }
     return render(request, '404.html', context)
+
+
+def my_logout(request):
+    logout(request)
+    return redirect('home')

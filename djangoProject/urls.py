@@ -17,7 +17,7 @@ urlpatterns = [
     path('house/<int:id>', views.house, name='house'),
     path('team/<int:id>', views.team, name='team'),
     path('grappelli/', include('grappelli.urls')),
-    path('logout/', auth_views.LogoutView.as_view(template_name='index.html'), name='logout'),
+    path('logout/', views.my_logout, name='logout'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'),
          name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),
@@ -31,9 +31,11 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('user/', include('users.urls')),
     path('', include('contact.urls')),
+    path('badge/', include('badge.urls')),
     path('blog/', include('blog.urls')),
     path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),
+    path('goodies/', include('goodies.urls')),
 ]
 
 if settings.DEBUG:

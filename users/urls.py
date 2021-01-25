@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from badge.views import badge_list, badge_search
+from badge.views import badge_list
 
 urlpatterns = [
     path('login/', views.user_login, name='login'),
@@ -14,6 +14,5 @@ urlpatterns = [
     path('badge/<int:id>/', views.create_badge, name='new-badge'),
     path('badge/', views.badge, name='badge'),
     path('rewards/', badge_list, name='reward'),
-    path('rewards/search/', badge_search, name='reward-search'),
     path('<int:pk>/', views.user_detail_view, name='user-detail'),
 ]

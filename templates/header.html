@@ -8,16 +8,36 @@
         <nav class="nav-menu d-none d-lg-block">
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
-            {% if not user.is_authenticated %}
-                <li><a href="{% url 'about' %}">About</a></li>
-            {% endif %}
-{#                <li><a href="{% url 'events' %}">Events</a></li>#}
-            {% if user.is_authenticated %}
-                    <li><a href="{% url 'reward-search' %}">Badge activity</a></li>
+                {% if not user.is_authenticated %}
+                    <li><a href="{% url 'about' %}">About</a></li>
                 {% endif %}
+
+                {% if user.is_authenticated %}
+
+                    <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>
+                        <ul>
+                            <li><a href="{% url 'reward' %}">Badge activity</a></li>
+                            <li><a href="{% url 'badge' %}">Give a badge</a></li>
+                            <li class="drop-down"><a href="#">Badge claim forms</a>
+                                <ul>
+                                    <li><a href="{% url 'one_one_badge_claim' %}">1:1 with Mentors</a></li>
+                                    <li><a href="{% url 'donut_badge_claim' %}">Donuts</a></li>
+                                    <li><a href="{% url 'blogger_claim' %}">Blogger</a></li>
+                                    <li><a href="{% url 'book_reading_claim' %}">Book Lovers</a></li>
+                                    <li><a href="{% url 'kt_giver_claim' %}">KT Giver</a></li>
+                                    <li><a href="{% url 'kt_attendee_claim' %}">KT Attendee Feedback Form</a></li>
+                                    <li><a href="{% url 'initiator_claim' %}">Initiator</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
                 {% endif %}
+
                 <li><a href="{% url 'blog' %}">Blogs</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'trainers' %}">Members</a></li>
@@ -41,11 +61,10 @@
                             {#                </ul>#}
                             {#              </li>#}
                             <li><a href="{% url 'blog-create' %}">Create a Post</a></li>
-                            <li><a href="{% url 'analytics' %}">Pomodoro leaderboard</a></li>
+                            {#                            <li><a href="{% url 'analytics' %}">Pomodoro leaderboard</a></li>#}
                             {% if user.is_superuser %}
                                 <li><a href="/sushiksha/admin">Admin page</a></li>
                             {% endif %}
-{#                            <li><a href="{% url 'gallery' %}">Submit a Photo</a> </li>#}
                             <li><a href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>

@@ -5,7 +5,9 @@ media
 db.sqlite3
 myenv
 venv
+
 configs/config.json
+
 static
 
 

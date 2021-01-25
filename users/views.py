@@ -8,6 +8,7 @@ from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterFo
 from .models import Pomodoro, Badge, Profile, House, Teams
 from .utils import collect_badges, get_house_data, get_team_data, email_check
 from django.db.models.functions import Lower
+from djqscsv import render_to_csv_response
 
 
 def register(request):
@@ -265,4 +266,31 @@ def leader(request):
 @login_required
 def get_logs(request):
     if request.user.is_superuser:
-        return render(request,'logs.html',context=None)
+        return render(request, 'logs.html', context=None)
+
+
+@login_required
+def get_profile_file(request):
+    if request.user.is_superuser:
+        queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
+                                                , 'phone', 'college', 'profession', 'linkedin',
+                                                'github', 'okr', 'points', 'stars')
+        return render_to_csv_response(queryset, filename='Sushiksha-Members-Details',
+                                      field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
+                                                        'user__email': 'email', 'phone': 'phone number',
+                                                        'college': 'college',
+                                                        'profession': 'profession', 'linkedin': 'linked in',
+                                                        'github': 'github',
+                                                        'okr': 'OKR', 'points': 'points', 'stars': 'stars'})
+
+# @login_required
+# def get_team_file(request):
+#     if request.user.is_superuser:
+#         queryset  =
+#
+# @login_required
+# def get_user_file(request):
+#
+#
+# @login_required
+# def get_house_file(request):

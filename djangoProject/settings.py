@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['sushiksha.konkanischolarship.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'badge',
+    'goodies',
     'grappelli',
     'django.contrib.admin',
     'crispy_forms',

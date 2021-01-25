@@ -5,7 +5,7 @@ media
 db.sqlite3
 myenv
 venv
-
+configs/config.json
 static
 
 
@@ -68,7 +68,6 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-
 
 # Flask stuff:
 instance/

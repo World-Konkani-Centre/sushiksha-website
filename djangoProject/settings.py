@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
-    'goodies',
     'tinymce',
 ]
 

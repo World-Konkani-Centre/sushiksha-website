@@ -255,3 +255,9 @@ def leader(request):
         'title': 'Leaderboard'
     }
     return render(request, 'leader.html', context=context)
+
+
+@login_required
+def get_logs(request):
+    if request.user.is_superuser:
+        return render(request,'logs.html',context=None)

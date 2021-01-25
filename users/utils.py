@@ -131,14 +131,14 @@ def send_reward_slack(array):
                 }
             },
             {
-			"type": "context",
-			"elements": [
-				{
-					"type": "mrkdwn",
-					"text": "<https://sushiksha.konkanischolarship.com/user/rewards/|Sushksha Badges>"
-				}
-			]
-		},
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "<https://sushiksha.konkanischolarship.com/user/rewards/|Sushksha Badges>"
+                    }
+                ]
+            },
         ]
     }
     client_obj = slack.WebClient(token=SLACK_TOKEN)

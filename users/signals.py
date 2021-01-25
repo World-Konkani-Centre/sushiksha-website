@@ -29,7 +29,7 @@ def send_mail(sender, instance, created, **kwargs):
         timestamp = instance.timestamp
         image = 'https://sushiksha.konkanischolarship.com' + str(instance.badges.logo.url)
         array = [email, timestamp, awarded_by, description, badge, name, image]
-        send_email.delay(array)
+        # send_email.delay(array)
         # do not uncomment
         # uncomment above line only if you have celery, rabbitmq setup and know the implementation
         return True

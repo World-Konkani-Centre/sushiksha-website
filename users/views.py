@@ -178,9 +178,11 @@ def user_detail_view(request, pk):
 def create_badge(request, id):
     user = get_object_or_404(User, id=id)
     form = RewardForm(request.POST or None)
+    badges = Badge.objects.all().order_by(Lower('title'))
     if not request.user.profile.role:
-        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
-    badges = Badge.objects.all()
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False).order_by(Lower('title'))
+    else:
+        form.fields['badges'].queryset = badges
     if request.POST:
         if form.is_valid():
             if user.id == request.user.id:
@@ -216,9 +218,12 @@ def create_badge(request, id):
 @login_required()
 def badge(request):
     form = BadgeForm(request.POST or None)
+    badges = Badge.objects.all().order_by(Lower('title'))
     if not request.user.profile.role:
-        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
-    badges = Badge.objects.all()
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False).order_by(Lower('title'))
+    else:
+        form.fields['badges'].queryset = badges
+    form.fields['user'].queryset = User.objects.all().order_by(Lower('username'))
     if request.POST:
         if form.is_valid():
             if form.instance.user.id == request.user.id:

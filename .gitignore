@@ -6,6 +6,7 @@ db.sqlite3
 myenv
 venv
 djangoProject/settings.py
+users/signals.py
 
 configs/config.json
 

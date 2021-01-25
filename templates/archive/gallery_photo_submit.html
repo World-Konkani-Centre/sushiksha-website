@@ -13,9 +13,9 @@
 
         <section id="about" class="container">
             <div class="col-lg-8 offset-lg-2 col-12">
-                <form method="POST"  enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form | crispy}}
+                    {{ form | crispy }}
                     <div class="form-group">
                         <button type="submit" class="btn btn-block get-started-btn-special btn-lg">Submit</button>
                     </div>

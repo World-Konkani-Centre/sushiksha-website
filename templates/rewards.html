@@ -22,11 +22,11 @@
         </div><!-- End Breadcrumbs -->
 
 
-
         <section id="" class="profile blog">
             <div class="container" data-aos="fade-up">
                 <p class="mb-2">
-                    <button class="btn get-started-btn-special" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn get-started-btn-special" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         Filter options &#8681;
                     </button>
                 </p>
@@ -34,7 +34,7 @@
                     <div class="card card-body mb-3">
                         <form method="GET" class="mb-3" class="form-inline">
 
-                            {{reward_filter.form | crispy}}
+                            {{ reward_filter.form | crispy }}
 
                             <button class="btn btn-block get-started-btn-special" type="submit">Filter</button>
                         </form>
@@ -45,7 +45,8 @@
                     <div class="col-lg-12">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">Rewards</p>
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Rewards</p>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -67,25 +68,30 @@
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">
-                                                        <img src="{{reward.badges.logo.url }}" loading="lazy" width="50" alt="" title="{{ reward.badges.title }}">
+                                                        <img src="{{ reward.badges.logo.url }}" loading="lazy"
+                                                             width="50" alt="" title="{{ reward.badges.title }}">
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <details>
-                                                        <summary class="font-weight-bold">{{ reward.badges.title }}</summary>
+                                                        <summary
+                                                                class="font-weight-bold">{{ reward.badges.title }}</summary>
                                                         <p>{{ reward.description }}</p>
                                                     </details>
                                                 </td>
 
 
-
                                                 <td>
                                                     <div class="media align-items-center">
-                                                        <a href="{{ reward.user.profile.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{ reward.user.profile.image.url }}" alt="{{ reward.user.username }}" title="{{ reward.user.username }}">
+                                                        <a href="{{ reward.user.profile.get_absolute_url }}"
+                                                           class="avatar rounded-circle mr-3">
+                                                            <img src="{{ reward.user.profile.image.url }}"
+                                                                 alt="{{ reward.user.username }}"
+                                                                 title="{{ reward.user.username }}">
                                                         </a>
                                                         <div class="media-body">
-                                                            <a href="{{ reward.user.profile.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">
+                                                            <a href="{{ reward.user.profile.get_absolute_url }}"><span
+                                                                    class="mb-0 text-sm font-weight-bold">
                                                                 {% if reward.user.profile.name %}
                                                                     {{ reward.user.profile.name }}
                                                                 {% else %}
@@ -110,7 +116,7 @@
                     <div class="blog-pagination">
                         <ul class="justify-content-center">
                             {% if query.has_previous %}
-                                <li><a href="?page=1">First</a> </li>
+                                <li><a href="?page=1">First</a></li>
                                 <li><a href="?{{ page_request_var }}={{ query.previous_page_number }}">Previous</a></li>
                             {% endif %}
 
@@ -130,25 +136,25 @@
                     </div>
 
 
-{#                    {% if is_paginated %}#}
-{#                        {% if page_obj.has_previous %}#}
-{#                            <a href="?{% param_replace page=1 %}">First</a>#}
-{#                            {% if page_obj.previous_page_number != 1 %}#}
-{#                                <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>#}
-{#                            {% endif %}#}
-{#                        {% endif %}#}
-{##}
-{#                        Page {{ page_obj.number }} of {{ paginator.num_pages }}#}
-{##}
-{#                        {% if page_obj.has_next %}#}
-{#                            {% if page_obj.next_page_number != paginator.num_pages %}#}
-{#                                <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>#}
-{#                            {% endif %}#}
-{#                            <a href="?{% param_replace page=paginator.num_pages %}">Last</a>#}
-{#                        {% endif %}#}
-{##}
-{#                        <p>Objects {{ page_obj.start_index }}—{{ page_obj.end_index }}</p>#}
-{#                    {% endif %}#}
+                    {#                    {% if is_paginated %}#}
+                    {#                        {% if page_obj.has_previous %}#}
+                    {#                            <a href="?{% param_replace page=1 %}">First</a>#}
+                    {#                            {% if page_obj.previous_page_number != 1 %}#}
+                    {#                                <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>#}
+                    {#                            {% endif %}#}
+                    {#                        {% endif %}#}
+                    {##}
+                    {#                        Page {{ page_obj.number }} of {{ paginator.num_pages }}#}
+                    {##}
+                    {#                        {% if page_obj.has_next %}#}
+                    {#                            {% if page_obj.next_page_number != paginator.num_pages %}#}
+                    {#                                <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>#}
+                    {#                            {% endif %}#}
+                    {#                            <a href="?{% param_replace page=paginator.num_pages %}">Last</a>#}
+                    {#                        {% endif %}#}
+                    {##}
+                    {#                        <p>Objects {{ page_obj.start_index }}—{{ page_obj.end_index }}</p>#}
+                    {#                    {% endif %}#}
 
                 </div>
             </div>

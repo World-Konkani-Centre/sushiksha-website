@@ -24,7 +24,7 @@ with open(BASE_DIR / 'configs/config.json') as config_file:
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config['SECRET_KEY']
+SECRET_KEY = config.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['sushiksha.konkanischolarship.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'badge',
+    'goodies',
     'grappelli',
     'django.contrib.admin',
     'crispy_forms',
@@ -44,7 +45,6 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
-    'goodies',
     'tinymce',
 ]
 

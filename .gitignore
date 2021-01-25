@@ -6,7 +6,9 @@ db.sqlite3
 myenv
 venv
 djangoProject/settings.py
-users/signals.py
+
+configs/config.json
+
 static
 
 
@@ -69,7 +71,6 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-
 
 # Flask stuff:
 instance/

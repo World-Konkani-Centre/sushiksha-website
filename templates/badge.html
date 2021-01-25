@@ -4,9 +4,9 @@
 {% load crispy_forms_filters %}
 
 {% block style %}
-{#    <head>#}
-{#        <link href="{% static 'assets/vendor/fstdropdown/fstdropdown.css' %}" rel="stylesheet">#}
-{#    </head>#}
+    {#    <head>#}
+    {#        <link href="{% static 'assets/vendor/fstdropdown/fstdropdown.css' %}" rel="stylesheet">#}
+    {#    </head>#}
 {% endblock style %}
 
 {% block content %}
@@ -25,7 +25,7 @@
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <form method="POST" action="">
                         {% csrf_token %}
-                        {{ form | crispy}}
+                        {{ form | crispy }}
                         <button type="submit" class="btn btn-block get-started-btn-special">Submit</button>
                     </form>
                 </div>
@@ -34,21 +34,24 @@
 
         <!-- ======= Why Us Section ======= -->
         <section id="why-us" class="why-us" data-aos="fade-in">
-            <div class="container" >
+            <div class="container">
 
                 <div class="row">
                     <div class="col-lg-4 d-flex align-items-stretch">
                         <div class="content">
                             <h3>Why give a badge?</h3>
                             <p>
-                                Badges are a symbol of recognition for a work done. It signifies the amount of hard work one has put behind a particular task and hence plays a crucial role in uplifting the efforts. Give badges as small token of gestures to those hard working members of Sushiksha
+                                Badges are a symbol of recognition for a work done. It signifies the amount of hard work
+                                one has put behind a particular task and hence plays a crucial role in uplifting the
+                                efforts. Give badges as small token of gestures to those hard working members of
+                                Sushiksha
                             </p>
                             <h3>Rules for giving badge</h3>
                             <ul>
                                 <li>You cannot give a badge to yourself.</li>
                                 <li>Give badge only when you feel the person deserves it.</li>
                                 <li>The badges with '*' can be given only by the mentors.</li>
-                      </ul>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-lg-8 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
@@ -57,12 +60,13 @@
                                 {% for badge in badges %}
                                     <div class="col-xl-4 col-6 d-flex align-items-stretch">
                                         <div class="icon-box mt-4 mt-xl-0">
-                                            <img class="rounded" width="90%" src="{{ badge.logo.url }}" loading="lazy" alt="{{ badge.title }}" title="{{ badge.title }}">
+                                            <img class="rounded" width="90%" src="{{ badge.logo.url }}" loading="lazy"
+                                                 alt="{{ badge.title }}" title="{{ badge.title }}">
                                             <hr>
                                             <h4 class="h4">{{ badge.title }}
-                                            {% if badge.featured %}
-                                                <span class="text-muted">* Mentors only</span>
-                                            {% endif %}
+                                                {% if badge.featured %}
+                                                    <span class="text-muted">* Mentors only</span>
+                                                {% endif %}
                                             </h4>
 
                                             <p>{{ badge.description }}</p>
@@ -76,8 +80,6 @@
 
             </div>
         </section><!-- End Why Us Section -->
-
-
 
 
     </main>

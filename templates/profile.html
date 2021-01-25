@@ -37,12 +37,16 @@
                             </div>
                             <div class="row">
                                 {% if user.profile.teams_set.first %}
-                                <div class="col-6 mt-1 mb-0 text-justify">
-                                    <p class="font-weight-bold">Team: <a href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name  }}</a></p>
-                                </div>
-                                <div class="col-6 text-justify">
-                                    <p class="font-weight-bold">House: <a href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name  }}</a></p>
-                                </div>
+                                    <div class="col-6 mt-1 mb-0 text-justify">
+                                        <p class="font-weight-bold">Team: <a
+                                                href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name }}</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-6 text-justify">
+                                        <p class="font-weight-bold">House: <a
+                                                href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name }}</a>
+                                        </p>
+                                    </div>
                                 {% endif %}
 
                                 <div class="col-6 mt-1 text-justify">
@@ -123,7 +127,7 @@
                                                         <h6 class="mb-0">{{ i }}</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
-                                                        {{j}}
+                                                        {{ j }}
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -165,17 +169,17 @@
 {% block script %}
     <script>
 
-    $i = 0
-    $("#swap").click(function (){
-        $("#Profile").toggle()
-        if ($i === 0) {
-            $(this).text("View Profile");
-            $i = 1;
-        } else {
-            $(this).text("Update Profile");
-            $i = 0;
-        }
-    });
+        $i = 0
+        $("#swap").click(function () {
+            $("#Profile").toggle()
+            if ($i === 0) {
+                $(this).text("View Profile");
+                $i = 1;
+            } else {
+                $(this).text("Update Profile");
+                $i = 0;
+            }
+        });
 
     </script>
 {% endblock script %}

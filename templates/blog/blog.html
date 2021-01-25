@@ -24,7 +24,8 @@
                                     <article class="entry">
 
                                         <div class="entry-img">
-                                            <img src="{{ post.thumbnail.url }}" loading="lazy" alt="{{ post.title }}" title="{{ post.title }}" class="img-fluid">
+                                            <img src="{{ post.thumbnail.url }}" loading="lazy" alt="{{ post.title }}"
+                                                 title="{{ post.title }}" class="img-fluid">
                                         </div>
 
                                         <h2 class="entry-title">
@@ -33,8 +34,12 @@
 
                                         <div class="entry-meta">
                                             <ul>
-                                                <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
-                                                <li class="d-flex align-items-center"><i class="bx bxs-time"></i><a>{{ post.timestamp | timesince }} ago</a></li>
+                                                <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a
+                                                        href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a>
+                                                </li>
+                                                <li class="d-flex align-items-center"><i
+                                                        class="bx bxs-time"></i><a>{{ post.timestamp | timesince }}
+                                                    ago</a></li>
                                             </ul>
                                         </div>
 
@@ -58,8 +63,10 @@
                         <div class="blog-pagination">
                             <ul class="justify-content-center">
                                 {% if queryset.has_previous %}
-                                    <li><a href="?page=1">First</a> </li>
-                                    <li><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">Previous</a></li>
+                                    <li><a href="?page=1">First</a></li>
+                                    <li>
+                                        <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">Previous</a>
+                                    </li>
                                 {% endif %}
 
                                 {% for num in queryset.paginator.page_range %}
@@ -97,7 +104,9 @@
                             <div class="sidebar-item categories">
                                 <ul>
                                     {% for cat in category_count %}
-                                        <li><a href="{% url 'category' category=cat.categories__title %}">{{ cat.categories__title }} <span>({{ cat.categories__count }})</span></a></li>
+                                        <li>
+                                            <a href="{% url 'category' category=cat.categories__title %}">{{ cat.categories__title }}
+                                                <span>({{ cat.categories__count }})</span></a></li>
                                     {% endfor %}
                                 </ul>
 
@@ -109,7 +118,7 @@
                                     <div class="post-item clearfix">
                                         <img src="{{ post.thumbnail.url }}" alt="">
                                         <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                                        <time datetime="2020-01-01">{{post.timestamp | date}}</time>
+                                        <time datetime="2020-01-01">{{ post.timestamp | date }}</time>
                                     </div>
                                 {% endfor %}
                             </div><!-- End sidebar recent posts-->

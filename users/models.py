@@ -43,8 +43,8 @@ class Profile(models.Model):
     github = models.URLField(default=None, blank=True, null=True)
     okr = models.URLField(default=None, blank=True, null=True)
     facebook = models.URLField(default=None, blank=True, null=True)
-    points = models.DecimalField(default=0,max_digits=6,decimal_places=0)
-    stars = models.DecimalField(default=0,max_digits=2,decimal_places=0)
+    points = models.IntegerField(default=0)
+    stars = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user.username} Profile'

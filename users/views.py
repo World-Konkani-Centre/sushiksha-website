@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
@@ -5,10 +7,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
-from .models import Pomodoro, Badge, Profile, House, Teams
+from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory
 from .utils import collect_badges, get_house_data, get_team_data, email_check
 from django.db.models.functions import Lower
 from djqscsv import render_to_csv_response
+from django.db.models import Count
+import csv
+from django.http import HttpResponse
 
 
 def register(request):
@@ -283,14 +288,103 @@ def get_profile_file(request):
                                                         'github': 'github',
                                                         'okr': 'OKR', 'points': 'points', 'stars': 'stars'})
 
-# @login_required
-# def get_team_file(request):
-#     if request.user.is_superuser:
-#         queryset  =
-#
-# @login_required
-# def get_user_file(request):
-#
-#
-# @login_required
-# def get_house_file(request):
+
+@login_required
+def get_team_file(request):
+    if request.user.is_superuser:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=Team-Points-Details' + str(
+            datetime.date.today()) + '.csv'
+        writer = csv.writer(response)
+        headers = ['Team Name', 'Total Points']
+        badge_category_start = 2
+        category_points = []
+        categories = BadgeCategory.objects.all().order_by('name')
+        for category in categories:
+            headers.append(category.name)
+            category_points.append(0)
+        writer.writerow(headers)
+
+        teams = Teams.objects.all().order_by('name')
+
+        for team in teams:
+            members = team.members.all()
+            for i in range(0, len(category_points)):
+                category_points[i] = 0
+            for member in members:
+                badges_received = Reward.objects.filter(user=member.user)
+                for _badge in badges_received:
+                    category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
+                        category_points[
+                            headers.index(
+                                _badge.badges.category.name) - badge_category_start] + _badge.badges.points
+            row_of_team = [team.name, team.points] + category_points
+            writer.writerow(row_of_team)
+        return response
+
+
+@login_required
+def get_user_file(request):
+    if request.user.is_superuser:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=Member-Points-Details' + str(
+            datetime.date.today()) + '.csv'
+        writer = csv.writer(response)
+        headers = ['Username', 'Name', 'Batch', 'Points', 'Stars']
+        badge_category_start = 5
+        category_points = []
+        categories = BadgeCategory.objects.all().order_by('name')
+        for category in categories:
+            headers.append(category.name)
+            category_points.append(0)
+        writer.writerow(headers)
+
+        users = User.objects.all().order_by('username')
+
+        for user in users:
+            badges_received = Reward.objects.filter(user=user)
+            for i in range(0, len(category_points)):
+                category_points[i] = 0
+            for _badge in badges_received:
+                category_points[headers.index(_badge.badges.category.name) - badge_category_start] = category_points[
+                                                                                                         headers.index(
+                                                                                                             _badge.badges.category.name) - badge_category_start] + _badge.badges.points
+            row_of_user = [user.username, user.profile.name, user.profile.batch, user.profile.points,
+                           user.profile.stars] + category_points
+            writer.writerow(row_of_user)
+        return response
+
+
+@login_required
+def get_house_file(request):
+    if request.user.is_superuser:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=House-Points-Details' + str(
+            datetime.date.today()) + '.csv'
+        writer = csv.writer(response)
+        headers = ['House Name', 'House Points']
+        badge_category_start = 2
+        category_points = []
+        categories = BadgeCategory.objects.all().order_by('name')
+        for category in categories:
+            headers.append(category.name)
+            category_points.append(0)
+        writer.writerow(headers)
+
+        houses = House.objects.all().order_by('name')
+
+        for house in houses:
+            teams = house.teams.all()
+            for i in range(0, len(category_points)):
+                category_points[i] = 0
+            for team in teams:
+                members = team.members.all()
+                for member in members:
+                    badges_received = Reward.objects.filter(user=member.user)
+                    for _badge in badges_received:
+                        category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
+                            category_points[headers.index(
+                                _badge.badges.category.name) - badge_category_start] + _badge.badges.points
+            row_of_house = [house.name, house.points] + category_points
+            writer.writerow(row_of_house)
+        return response

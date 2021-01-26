@@ -31,20 +31,43 @@
                                         <thead>
                                         <tr class="font-weight-bold">
                                             <th style="min-width:150px">Description</th>
-                                            <th style="min-width:200px">Download</th>
+                                            <th style="min-width:200px">File</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Download the profiles of the users
+                                                   Profiles of the users
                                                 </td>
                                                 <td>
-                                                    <div class="media align-items-center">
-                                                        <a href="{% url 'logs-profile' %}"><button>Download</button></a>
-                                                    </div>
+                                                    <a href="{% url 'logs-profile' %}"><button>Profile</button></a>
                                                 </td>
-                                                </tr>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Points Distribution of users
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-user' %}"><button>User Points</button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Points of team
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-team'%}"><button>Team Points</button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Points of house
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-house' %}"><button>House Points</button></a>
+
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

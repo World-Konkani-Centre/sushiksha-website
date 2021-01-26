@@ -1,19 +1,19 @@
+import csv
 import datetime
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.db.models.functions import Lower
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from djqscsv import render_to_csv_response
+
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory
 from .utils import collect_badges, get_house_data, get_team_data, email_check
-from django.db.models.functions import Lower
-from djqscsv import render_to_csv_response
-from django.db.models import Count
-import csv
-from django.http import HttpResponse
 
 
 def register(request):
@@ -280,7 +280,7 @@ def get_profile_file(request):
         queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
                                                 , 'phone', 'college', 'profession', 'linkedin',
                                                 'github', 'okr', 'points', 'stars')
-        return render_to_csv_response(queryset, filename='Sushiksha-Members-Details',
+        return render_to_csv_response(queryset, filename='Sushiksha-Members-Details'+str(datetime.date.today()),
                                       field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
                                                         'user__email': 'email', 'phone': 'phone number',
                                                         'college': 'college',

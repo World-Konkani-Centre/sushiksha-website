@@ -294,6 +294,7 @@ def get_profile_file(request):
 def get_team_file(request):
     date = timezone.now()
     date_7 = date - datetime.timedelta(days=7)
+    date_7 = date_7.date()
     if request.user.is_superuser:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=Team-Points-Details' + str(
@@ -317,7 +318,7 @@ def get_team_file(request):
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for member in members:
-                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date,timestamp__gte=date_7)
+                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date,timestamp__gt=date_7)
                 for _badge in badges_received:
                     category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                         category_points[
@@ -333,6 +334,7 @@ def get_team_file(request):
 def get_user_file(request):
     date = timezone.now()
     date_7 = date - datetime.timedelta(days=7)
+    date_7 = date_7.date()
     if request.user.is_superuser:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=Member-Points-Details' + str(
@@ -352,7 +354,7 @@ def get_user_file(request):
 
         for user in users:
             points = 0
-            badges_received = Reward.objects.filter(user=user, timestamp__lte=date,timestamp__gte=date_7)
+            badges_received = Reward.objects.filter(user=user, timestamp__lte=date,timestamp__gt=date_7)
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for _badge in badges_received:
@@ -370,6 +372,7 @@ def get_user_file(request):
 def get_house_file(request):
     date = timezone.now()
     date_7 = date - datetime.timedelta(days=7)
+    date_7 = date_7.date()
     if request.user.is_superuser:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=House-Points-Details' + str(
@@ -395,7 +398,7 @@ def get_house_file(request):
             for team in teams:
                 members = team.members.all()
                 for member in members:
-                    badges_received = Reward.objects.filter(user=member.user,timestamp__lte=date,timestamp__gte=date_7)
+                    badges_received = Reward.objects.filter(user=member.user,timestamp__lte=date,timestamp__gt=date_7)
                     for _badge in badges_received:
                         category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                             category_points[headers.index(

@@ -7,6 +7,7 @@ from django.db.models import Q
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams
 from .utils import collect_badges, get_house_data, get_team_data, email_check
+from django.db.models.functions import Lower
 
 
 def register(request):
@@ -49,6 +50,7 @@ def user_login(request):
 
 @login_required
 def profile(request):
+    profile_details = {}
     reward, count = collect_badges(request.user)
     zipped_data = zip(reward, count)
     if request.POST:
@@ -67,11 +69,23 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
+        query = Profile.objects.filter(user__id=request.user.id).first()
+        profile_details = {
+            'username': query.user.username,
+            'batch': query.batch,
+            'name': query.name,
+            'phone': query.phone,
+            'college': query.college,
+            'profession': query.profession,
+            'address': query.address,
+            'guidance': query.guidance,
+        }
     context = {
         'u_form': u_form,
         'p_form': p_form,
         'title': "Profile",
         'badges': zipped_data,
+        'profile_details': profile_details
     }
     return render(request, 'profile.html', context=context)
 
@@ -86,8 +100,8 @@ def log_pomodoro(request):
         productivity = round((productivity * 0.05), 2)
         energy = round((energy * 0.05), 2)
         pomodoro.count += 1
-        pomodoro.energy = (pomodoro.energy + energy)/2
-        pomodoro.productivity = (pomodoro.productivity + productivity)/2
+        pomodoro.energy = (pomodoro.energy + energy) / 2
+        pomodoro.productivity = (pomodoro.productivity + productivity) / 2
         pomodoro.save()
         messages.success(request, f'Your data has been recorded.')
         return redirect(request.META['HTTP_REFERER'])
@@ -110,14 +124,22 @@ def search(request):
         queryset = queryset.filter(
             Q(username__icontains=query) |
             Q(profile__batch__icontains=query) |
+            Q(profile__name__icontains=query) |
             Q(profile__guidance__icontains=query) |
             Q(email__icontains=query)
         ).distinct()
-
+    mentors = queryset.filter(profile__role=True)
+    mentees = queryset.filter(profile__role=False)
     context = {
-        'users': queryset
+        'mentee': mentees,
+        'mentors': mentors,
+        'title': 'Members'
     }
-    return render(request, 'trainers.html', context=context)
+    for user in mentees:
+        print(user)
+    for user in mentors:
+        print(user)
+    return render(request, 'search.html', context=context)
 
 
 # class UserListView(ListView):
@@ -127,8 +149,8 @@ def search(request):
 
 
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=True)
-    mentee = Profile.objects.filter(role=False)
+    mentors = Profile.objects.filter(role=True).order_by(Lower('user__username'))
+    mentee = Profile.objects.filter(role=False).order_by(Lower('user__username'))
     context = {
         'mentors': mentors,
         'mentee': mentee,
@@ -148,6 +170,7 @@ def user_detail_view(request, pk):
         'user': user,
         'badges': zipped_data,
     }
+
     return render(request, 'profile-detail.html', context=context)
 
 
@@ -155,6 +178,8 @@ def user_detail_view(request, pk):
 def create_badge(request, id):
     user = get_object_or_404(User, id=id)
     form = RewardForm(request.POST or None)
+    if not request.user.profile.role:
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
     badges = Badge.objects.all()
     if request.POST:
         if form.is_valid():
@@ -191,26 +216,22 @@ def create_badge(request, id):
 @login_required()
 def badge(request):
     form = BadgeForm(request.POST or None)
+    if not request.user.profile.role:
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
     badges = Badge.objects.all()
     if request.POST:
         if form.is_valid():
             if form.instance.user.id == request.user.id:
                 messages.error(request, 'You cannot give a badge to yourself!')
             else:
-                if form.instance.badges.featured:
-                    if request.user.profile.role:
-                        form.instance.awarded_by = request.user.username
-                        form.save()
-                        messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
-                        return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
-                    else:
-                        messages.error(request, 'The badge that you have chosen can only be given by mentor')
+                row = form.save(commit=False)
+                if request.user.profile.name:
+                    row.awarded_by = request.user.profile.name
                 else:
-                    form.instance.awarded_by = request.user.username
-                    form.save()
-                    messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
-                    return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
-
+                    row.awarded_by = request.user.username
+                row.save()
+                messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
     context = {
         'form': form,
         'badges': badges

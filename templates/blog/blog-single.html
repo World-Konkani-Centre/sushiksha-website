@@ -14,14 +14,15 @@
         <section id="blog" class="blog">
             <div class="container">
 
-                <div class="row" >
+                <div class="row">
 
                     <div class="col-lg-8 entries" data-aos="fade-up">
 
                         <article class="entry entry-single">
 
                             <div class="entry-img text-center">
-                                <img src="{{post.thumbnail.url}}" alt="{{ post.title }}" title="{{ post.title }}" class="img-fluid">
+                                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" title="{{ post.title }}"
+                                     class="img-fluid">
                             </div>
 
                             <h2 class="entry-title">
@@ -30,12 +31,19 @@
 
                             <div class="entry-meta">
                                 <ul>
-                                    <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a></li>
-                                    <li class="d-flex align-items-center"><i class="bx bx-time"></i> <a href=""><time datetime="2020-01-01">{{ post.timestamp| date }}</time></a></li>
-                                    <li class="d-flex align-items-center"><i class="bx bxs-comment"></i> <a href="">{{ post.comments.count }}</a></li>
+                                    <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a
+                                            href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a>
+                                    </li>
+                                    <li class="d-flex align-items-center"><i class="bx bx-time"></i> <a href="">
+                                        <time datetime="2020-01-01">{{ post.timestamp| date }}</time>
+                                    </a></li>
+                                    <li class="d-flex align-items-center"><i class="bx bxs-comment"></i> <a
+                                            href="">{{ post.comments.count }}</a></li>
                                     {% if post.author == request.user.profile %}
-                                        <li class="d-flex align-items-center"><i class="bx bx-edit"></i> <a href="{% url 'blog-update' id=post.id %}">Update</a></li>
-                                        <li class="d-flex align-items-center"><i class="bx bx-x"></i> <a href="{% url 'blog-delete' id=post.id %}">Delete</a></li>
+                                        <li class="d-flex align-items-center"><i class="bx bx-edit"></i> <a
+                                                href="{% url 'blog-update' id=post.id %}">Update</a></li>
+                                        <li class="d-flex align-items-center"><i class="bx bx-x"></i> <a
+                                                href="{% url 'blog-delete' id=post.id %}">Delete</a></li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -50,7 +58,7 @@
                                     <ul class="cats">
                                         {% for cat in post.categories.all %}
 
-                                            <li><a href="{% url 'category' category=cat%}">{{ cat }}</a></li>
+                                            <li><a href="{% url 'category' category=cat %}">{{ cat }}</a></li>
 
                                         {% endfor %}
                                     </ul>
@@ -65,7 +73,8 @@
                             <h4 class="comments-count">{{ post.comments.count }} Comments</h4>
                             {% for comment in post.get_comments %}
                                 <div id="comment-1" class="comment clearfix">
-                                    <img src="{{ comment.user.profile.image.url }}" class="comment-img  float-left" alt="">
+                                    <img src="{{ comment.user.profile.image.url }}" class="comment-img  float-left"
+                                         alt="">
                                     <h5><a href="">{{ comment.user.username }}</a></h5>
                                     <time datetime="2020-01-01">{{ comment.timestamp | timesince }} ago</time>
                                     <p>
@@ -112,7 +121,9 @@
                             <div class="sidebar-item categories">
                                 <ul>
                                     {% for cat in category_count %}
-                                        <li><a href="{% url 'category' category=cat.categories__title%}">{{ cat.categories__title }} <span>({{ cat.categories__count }})</span></a></li>
+                                        <li>
+                                            <a href="{% url 'category' category=cat.categories__title %}">{{ cat.categories__title }}
+                                                <span>({{ cat.categories__count }})</span></a></li>
                                     {% endfor %}
                                 </ul>
 
@@ -124,7 +135,7 @@
                                     <div class="post-item clearfix">
                                         <img src="{{ post.thumbnail.url }}" alt="">
                                         <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                                        <time datetime="{{ post.timestamp | date }}">{{post.timestamp | date}}</time>
+                                        <time datetime="{{ post.timestamp | date }}">{{ post.timestamp | date }}</time>
                                     </div>
                                 {% endfor %}
                             </div><!-- End sidebar recent posts-->
@@ -143,5 +154,7 @@
 {% endblock content %}
 
 {% block script %}
-    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5fabf3b1413ed100120cd977&product=sop' async='async'></script>
+    <script type='text/javascript'
+            src='https://platform-api.sharethis.com/js/sharethis.js#property=5fabf3b1413ed100120cd977&product=sop'
+            async='async'></script>
 {% endblock %}

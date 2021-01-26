@@ -1,4 +1,4 @@
-# Sushiksha-website
+# Sushiksha-website 
 
 <a href="https://github.com/18praneeth/sushiksha-website/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/18praneeth/sushiksha-website?style=for-the-badge"></a>
 <a href="https://github.com/18praneeth/sushiksha-website/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/18praneeth/sushiksha-website?style=for-the-badge"></a>
@@ -57,7 +57,7 @@
 
     Copy paste the code from below document to `settings.py`
     
-    settings.py
+    [settings.py](https://github.com/18praneeth/sushiksha-website/blob/test/djangoProject/settings.py)
     
     Change the config parameters,
     ```python

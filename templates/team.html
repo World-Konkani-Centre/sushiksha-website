@@ -18,13 +18,16 @@
                                 <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                 <div class="col-md-8">
                                     <div class="speaker">
-                                        <img src="{{ member.image.url }}" alt="{{ member.user.username }}" title="{{ member.user.username }}">
+                                        <img src="{{ member.image.url }}" alt="{{ member.user.username }}"
+                                             title="{{ member.user.username }}">
                                     </div>
                                     {% if member.user.profile.name %}
-                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.profile.name }} <span>{{ member.get_role }}</span></h4></a>
+                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.profile.name }}
+                                            <span>{{ member.get_role }}</span></h4></a>
 
                                     {% else %}
-                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.username }} <span>{{ member.get_role }}</span></h4></a>
+                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.username }}
+                                            <span>{{ member.get_role }}</span></h4></a>
 
                                     {% endif %}
                                     <p>{{ member.batch }} VKSSF Scholar</p>

@@ -31,7 +31,8 @@
                                         <h6 class="m-0 font-weight-bold  align-middle">Leaderboard</h6>
                                     </div>
                                     <div class="col-lg-3 col-5">
-                                        <button type="button" class="btn get-started-btn" data-toggle="modal" data-target="#logPomodoro">
+                                        <button type="button" class="btn get-started-btn" data-toggle="modal"
+                                                data-target="#logPomodoro">
                                             Log Pomodoro
                                         </button>
                                     </div>
@@ -51,10 +52,12 @@
                                         <tbody>
                                         {% for member in leaderboard %}
                                             <tr>
-                                                <td >
+                                                <td>
                                                     <div class="media align-items-center">
-                                                        <a href="{{ member.user.profile.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{ member.user.profile.image.url }}" alt="{{ member.user.username }}">
+                                                        <a href="{{ member.user.profile.get_absolute_url }}"
+                                                           class="avatar rounded-circle mr-3">
+                                                            <img src="{{ member.user.profile.image.url }}"
+                                                                 loading="lazy" alt="{{ member.user.username }}">
                                                         </a>
                                                         <div class="media-body">
                                                             <span class="mb-0 text-sm">{{ member.user.username }}</span>
@@ -83,7 +86,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="logPomodoro" tabindex="-1" aria-labelledby="logPomodoroLabel"  aria-hidden="true">
+    <div class="modal fade" id="logPomodoro" tabindex="-1" aria-labelledby="logPomodoroLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form action="" class="user" method="POST">
                 {% csrf_token %}
@@ -98,12 +101,18 @@
                         <div class="form-group">
                             <div class="card-body">
                                 <div class="slidecontainer">
-                                    <label for="myRange1" class="text-info font-weight-bold">Productivity </label><input type="range" min="1" max="100" value="50" name="productivity" class="slider" id="myRange1">
-                                    <p class="text-muted"><span id="demomyRange1" class="m-0 font-weight-light"></span></p>
+                                    <label for="myRange1" class="text-info font-weight-bold">Productivity </label><input
+                                        type="range" min="1" max="100" value="50" name="productivity" class="slider"
+                                        id="myRange1">
+                                    <p class="text-muted"><span id="demomyRange1" class="m-0 font-weight-light"></span>
+                                    </p>
                                 </div>
                                 <div class="slidecontainer">
-                                    <label for="myRange2" class="text-info font-weight-bold">Energy </label><input type="range" min="1" max="100" value="50" name="energy"  class="slider" id="myRange2">
-                                    <p class="text-muted"><span id="demomyRange2" class="m-0 font-weight-light"></span></p>
+                                    <label for="myRange2" class="text-info font-weight-bold">Energy </label><input
+                                        type="range" min="1" max="100" value="50" name="energy" class="slider"
+                                        id="myRange2">
+                                    <p class="text-muted"><span id="demomyRange2" class="m-0 font-weight-light"></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -134,12 +143,12 @@
         var output2 = document.getElementById("demomyRange2");
         output1.innerHTML = (slider1.value * 0.05).toFixed(2);
 
-        slider1.oninput = function() {
+        slider1.oninput = function () {
             output1.innerHTML = (this.value * 0.05).toFixed(2);
         }
         output2.innerHTML = (slider2.value * 0.05).toFixed(2);
 
-        slider2.oninput = function() {
+        slider2.oninput = function () {
             output2.innerHTML = (this.value * 0.05).toFixed(2);
         }
     </script>

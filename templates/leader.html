@@ -19,7 +19,6 @@
         </div><!-- End Breadcrumbs -->
 
 
-
         <section id="" class="profile">
             <div class="container" data-aos="fade-up">
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
@@ -27,7 +26,8 @@
                     <div class="col-lg-7">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">Team Leaderboard</p>
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Team Leaderboard</p>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -47,11 +47,14 @@
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">
-                                                        <a href="{{ team.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{team.image.url }}" alt="{{ team.name }}" title="{{ team.name }}">
+                                                        <a href="{{ team.get_absolute_url }}"
+                                                           class="avatar rounded-circle mr-3">
+                                                            <img src="{{ team.image.url }}" loading="lazy"
+                                                                 alt="{{ team.name }}" title="{{ team.name }}">
                                                         </a>
                                                         <div class="media-body">
-                                                            <a href="{{ team.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
+                                                            <a href="{{ team.get_absolute_url }}"><span
+                                                                    class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -68,7 +71,8 @@
                     <div class="col-lg-5">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">House Leaderboard</p>
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    House Leaderboard</p>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -88,11 +92,14 @@
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">
-                                                        <a href="{{ team.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{team.image.url }}" alt="{{ team.name }}" title="{{ team.name }}">
+                                                        <a href="{{ team.get_absolute_url }}"
+                                                           class="avatar rounded-circle mr-3">
+                                                            <img src="{{ team.image.url }}" loading="lazy"
+                                                                 alt="{{ team.name }}" title="{{ team.name }}">
                                                         </a>
                                                         <div class="media-body">
-                                                            <a href="{{ team.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
+                                                            <a href="{{ team.get_absolute_url }}"><span
+                                                                    class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -107,12 +114,11 @@
                     </div>
 
 
-
-
                     <div class="col-lg-12">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">Individual Leaderboard</p>
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Individual Leaderboard</p>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -129,17 +135,21 @@
                                         <tbody>
                                         {% for entry in data %}
                                             <tr>
-                                                <td >
+                                                <td>
                                                     <div class="media align-items-center">
-                                                        <a href="{{ entry.get_absolute_url }}" class="avatar rounded-circle mr-3">
-                                                            <img src="{{ entry.image.url }}" alt="{{ entry.user.username }}" title="{{ entry.user.username }}">
+                                                        <a href="{{ entry.get_absolute_url }}"
+                                                           class="avatar rounded-circle mr-3">
+                                                            <img src="{{ entry.image.url }}" loading="lazy"
+                                                                 alt="{{ entry.user.username }}"
+                                                                 title="{{ entry.user.username }}">
                                                         </a>
                                                         <div class="media-body">
-                                                            <a href="{{ entry.get_absolute_url }}"><span class="mb-0 text-sm font-weight-bold">
+                                                            <a href="{{ entry.get_absolute_url }}"><span
+                                                                    class="mb-0 text-sm font-weight-bold">
                                                                 {% if entry.user.profile.name %}
-                                                                {{ entry.user.profile.name }}
+                                                                    {{ entry.user.profile.name }}
                                                                 {% else %}
-                                                                {{ entry.user.username }}
+                                                                    {{ entry.user.username }}
                                                                 {% endif %}
                                                             </span></a>
                                                         </div>
@@ -147,8 +157,8 @@
                                                 </td>
                                                 <td>{{ entry.get_number_of_badges }}</td>
                                                 <td>{{ entry.get_point }}</td>
-                                            <td>{{ entry.get_team_name }}</td>
-                                            <td>{{ entry.get_house_name }}</td>
+                                                <td>{{ entry.get_team_name }}</td>
+                                                <td>{{ entry.get_house_name }}</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>

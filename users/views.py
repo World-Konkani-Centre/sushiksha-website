@@ -71,14 +71,14 @@ def profile(request):
 
         query = Profile.objects.filter(user__id=request.user.id).first()
         profile_details = {
-            'username': query.user.username,
-            'batch': query.batch,
-            'name': query.name,
-            'phone': query.phone,
-            'college': query.college,
-            'profession': query.profession,
-            'address': query.address,
-            'guidance': query.guidance,
+            'Username': query.user.username,
+            'Batch': query.batch,
+            'Name': query.name,
+            'Phone': query.phone,
+            'College': query.college,
+            'Profession': query.profession,
+            'Address': query.address,
+            'Guidance': query.guidance,
         }
     context = {
         'u_form': u_form,

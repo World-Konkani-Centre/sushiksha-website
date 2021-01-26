@@ -9,13 +9,13 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.utils import timezone
 from djqscsv import render_to_csv_response
 
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
 from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory
 from .utils import collect_badges, get_house_data, get_team_data, email_check
-from djangoProject.downloadconfig import Config
-
+from django.utils.timezone import make_aware
 
 def register(request):
     if request.POST:
@@ -281,7 +281,6 @@ def get_profile_file(request):
         queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
                                                 , 'phone', 'college', 'profession', 'linkedin',
                                                 'github', 'okr', 'points', 'stars')
-        Config.prev_profile_time = datetime.datetime.now()
         return render_to_csv_response(queryset, filename='Sushiksha-Members-Details' + str(datetime.date.today()),
                                       field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
                                                         'user__email': 'email', 'phone': 'phone number',
@@ -314,8 +313,7 @@ def get_team_file(request):
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for member in members:
-                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=datetime.datetime.now(),
-                                                        timestamp__gte=Config.prev_team_time)
+                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=timezone.now())
                 for _badge in badges_received:
                     category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                         category_points[
@@ -323,7 +321,6 @@ def get_team_file(request):
                                 _badge.badges.category.name) - badge_category_start] + _badge.badges.points
             row_of_team = [team.name, team.points] + category_points
             writer.writerow(row_of_team)
-        Config.prev_team_time = datetime.datetime.now()
         return response
 
 
@@ -346,8 +343,7 @@ def get_user_file(request):
         users = User.objects.all().order_by('username')
 
         for user in users:
-            badges_received = Reward.objects.filter(user=user, timestamp__lte=datetime.datetime.now(),
-                                                    timestamp__gte=Config.prev_profile_point_time)
+            badges_received = Reward.objects.filter(user=user, timestamp__lte=timezone.now())
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for _badge in badges_received:
@@ -357,7 +353,6 @@ def get_user_file(request):
             row_of_user = [user.username, user.profile.name, user.email, user.profile.batch, user.profile.points,
                            user.profile.stars] + category_points
             writer.writerow(row_of_user)
-        Config.prev_profile_point_time = datetime.datetime.now()
         return response
 
 
@@ -386,12 +381,11 @@ def get_house_file(request):
             for team in teams:
                 members = team.members.all()
                 for member in members:
-                    badges_received = Reward.objects.filter(user=member.user,timestamp__lte=datetime.datetime.now(), timestamp__gte = Config.prev_house_time)
+                    badges_received = Reward.objects.filter(user=member.user,timestamp__lte=timezone.now())
                     for _badge in badges_received:
                         category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                             category_points[headers.index(
                                 _badge.badges.category.name) - badge_category_start] + _badge.badges.points
             row_of_house = [house.name, house.points] + category_points
             writer.writerow(row_of_house)
-        Config.prev_house_time = datetime.datetime.now()
         return response

@@ -281,7 +281,7 @@ def get_profile_file(request):
         queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
                                                 , 'phone', 'college', 'profession', 'linkedin',
                                                 'github', 'okr', 'points', 'stars')
-        return render_to_csv_response(queryset, filename='Sushiksha-Members-Details' + str(datetime.date.today()),
+        return render_to_csv_response(queryset, filename='Sushiksha-Profiles' + str(datetime.date.today()),
                                       field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
                                                         'user__email': 'email', 'phone': 'phone number',
                                                         'college': 'college',
@@ -297,7 +297,7 @@ def get_team_file(request):
     date_7 = date_7.date()
     if request.user.is_superuser:
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=Team-Points-Details' + str(
+        response['Content-Disposition'] = 'attachment; filename=Sushiksha-Team-Points' + str(
             datetime.date.today()) + '.csv'
         writer = csv.writer(response)
         headers = ['Team Name', 'Total Points']
@@ -337,7 +337,7 @@ def get_user_file(request):
     date_7 = date_7.date()
     if request.user.is_superuser:
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=Member-Points-Details' + str(
+        response['Content-Disposition'] = 'attachment; filename=Sushiksha-User-Points' + str(
             datetime.date.today()) + '.csv'
         writer = csv.writer(response)
         headers = ['Username', 'Name', 'Email', 'Batch', 'Total Points', 'Stars']
@@ -375,7 +375,7 @@ def get_house_file(request):
     date_7 = date_7.date()
     if request.user.is_superuser:
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=House-Points-Details' + str(
+        response['Content-Disposition'] = 'attachment; filename=Sushiksha-House-Points' + str(
             datetime.date.today()) + '.csv'
         writer = csv.writer(response)
         headers = ['House Name', 'House Points']

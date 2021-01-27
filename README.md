@@ -65,8 +65,11 @@
    SECRET_KEY = 'Enter random character string'
    EMAIL_USER = 'your email username'
    EMAIL_PASS = 'Enter you email password'
+   SLACK_AUTH_TOKEN: "token here"
 
     ```
+   
+   comment line #44 of users/signals.py (send_email.delay(array)) during development and uncomment before sending PR
 
 6. Make migrations/ Create db.sqlite3
 

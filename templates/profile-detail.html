@@ -146,6 +146,28 @@
                                                 </div>
                                                 <hr>
                                             {% endif %}
+                                        {% if user.profile.degree %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Degree</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{ user.profile.degree }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endif %}
+                                        {% if user.profile.branch %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Branch</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{ user.profile.branch }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endif %}
                                             {% if user.profile.phone %}
                                                 <div class="row">
                                                     <div class="col-sm-3">

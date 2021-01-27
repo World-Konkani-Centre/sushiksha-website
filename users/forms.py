@@ -23,7 +23,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'batch', 'phone', 'college',
+        fields = ['name', 'batch', 'phone', 'college','degree','branch',
                   'profession', 'address', 'guidance',
                   'linkedin', 'instagram', 'twitter',
                   'github', 'okr', 'facebook',
@@ -54,7 +54,8 @@ class BadgeForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Describe why your are giving the badge',
-        'rows': 4
+        'rows': 5,
+        'minlength': 125,
     }))
 
     class Meta:

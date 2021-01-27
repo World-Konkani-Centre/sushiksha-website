@@ -34,6 +34,8 @@ class Profile(models.Model):
     name = models.CharField(max_length=100, default=None, blank=True, null=True)
     phone = models.PositiveBigIntegerField(default=None, blank=True, null=True)
     college = models.CharField(max_length=300, default=None, blank=True, null=True)
+    degree = models.CharField(max_length=100, default=None, blank=True, null=True)
+    branch = models.CharField(max_length=100, default=None, blank=True, null=True)
     profession = models.CharField(max_length=100, default=None, blank=True, null=True)
     address = models.TextField(default=None, blank=True, null=True)
     guidance = models.TextField(default=None, blank=True, null=True)
@@ -43,6 +45,8 @@ class Profile(models.Model):
     github = models.URLField(default=None, blank=True, null=True)
     okr = models.URLField(default=None, blank=True, null=True)
     facebook = models.URLField(default=None, blank=True, null=True)
+    points = models.IntegerField(default=0)
+    stars = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -63,8 +67,12 @@ class Profile(models.Model):
     def get_point(self):
         point = self.user.reward_set.aggregate(Sum('badges__points'))['badges__points__sum']
         if point:
-            return point
+            self.points = point
+            self.save()
+            return self.points
         else:
+            self.points = 0
+            self.save()
             return 0
 
     def get_team_name(self):
@@ -119,9 +127,17 @@ class Pomodoro(models.Model):
         return f'{self.user.username} - Pomodoro Count : {self.count}'
 
 
+class BadgeCategory(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class Badge(models.Model):
     points = models.IntegerField(default=1)
     title = models.CharField(max_length=30)
+    category = models.ForeignKey(BadgeCategory,on_delete=models.SET_NULL,null=True)
     description = models.CharField(max_length=500)
     logo = models.ImageField(upload_to='badges')
     featured = models.BooleanField(default=False)

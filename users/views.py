@@ -12,8 +12,8 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
 from djqscsv import render_to_csv_response
 
-from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
-from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory
+from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, MentionUpdateForm
+from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import collect_badges, get_house_data, get_team_data, email_check
 
 
@@ -83,8 +83,8 @@ def profile(request):
             'name': query.name,
             'phone': query.phone,
             'college': query.college,
-            'degree':query.degree,
-            'branch':query.branch,
+            'degree': query.degree,
+            'branch': query.branch,
             'profession': query.profession,
             'address': query.address,
             'guidance': query.guidance,
@@ -137,29 +137,19 @@ def search(request):
             Q(profile__guidance__icontains=query) |
             Q(email__icontains=query)
         ).distinct()
-    mentors = queryset.filter(profile__role=True)
-    mentees = queryset.filter(profile__role=False)
+    mentors = queryset.filter(profile__role=True).order_by(Lower('profile__name'))
+    mentees = queryset.filter(profile__role=False).order_by(Lower('profile__name'))
     context = {
         'mentee': mentees,
         'mentors': mentors,
         'title': 'Members'
     }
-    for user in mentees:
-        print(user)
-    for user in mentors:
-        print(user)
     return render(request, 'search.html', context=context)
 
 
-# class UserListView(ListView):
-#     model = User
-#     template_name = 'trainers.html'
-#     context_object_name = 'users'
-
-
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=True).order_by(Lower('user__username'))
-    mentee = Profile.objects.filter(role=False).order_by(Lower('user__username'))
+    mentors = Profile.objects.filter(role=True).order_by(Lower('name'))
+    mentee = Profile.objects.filter(role=False).order_by(Lower('name'))
     context = {
         'mentors': mentors,
         'mentee': mentee,
@@ -173,7 +163,6 @@ def user_detail_view(request, pk):
     user = get_object_or_404(User, id=pk)
     reward, count = collect_badges(user)
     zipped_data = zip(reward, count)
-
     context = {
         'title': f"{user.username}",
         'user': user,
@@ -258,15 +247,15 @@ def leader(request):
     data = Profile.objects.all()
     house = House.objects.all()
     team = Teams.objects.all()
-    get_house_data(houses=house)
-    get_team_data(teams=team)
     team = team.order_by('-points')
     house = house.order_by('-points')
+    mentions = Mentions.objects.all().order_by(Lower('title'))
     context = {
         'data': data,
         'house': house,
         'teams': team,
-        'title': 'Leaderboard'
+        'title': 'Leaderboard',
+        'mentions': mentions
     }
     return render(request, 'leader.html', context=context)
 
@@ -282,7 +271,7 @@ def get_profile_file(request):
     if request.user.is_superuser:
         queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
                                                 , 'phone', 'college', 'profession', 'linkedin',
-                                                'github', 'okr', 'points', 'stars')
+                                                'github', 'okr', 'points', 'stars').order_by('name')
         return render_to_csv_response(queryset, filename='Sushiksha-Profiles' + str(datetime.date.today()),
                                       field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
                                                         'user__email': 'email', 'phone': 'phone number',
@@ -320,7 +309,7 @@ def get_team_file(request):
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for member in members:
-                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date,timestamp__gt=date_7)
+                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7)
                 for _badge in badges_received:
                     category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                         category_points[
@@ -352,11 +341,11 @@ def get_user_file(request):
         headers.append('Points This Week')
         writer.writerow(headers)
 
-        users = User.objects.all().order_by('username')
+        users = User.objects.all().order_by('profile__name')
 
         for user in users:
             points = 0
-            badges_received = Reward.objects.filter(user=user, timestamp__lte=date,timestamp__gt=date_7)
+            badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for _badge in badges_received:
@@ -400,7 +389,7 @@ def get_house_file(request):
             for team in teams:
                 members = team.members.all()
                 for member in members:
-                    badges_received = Reward.objects.filter(user=member.user,timestamp__lte=date,timestamp__gt=date_7)
+                    badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7)
                     for _badge in badges_received:
                         category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                             category_points[headers.index(

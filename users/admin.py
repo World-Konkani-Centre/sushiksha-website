@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import (Profile, Pomodoro, Badge, Reward, House, Teams, BadgeCategory)
+from .models import (Profile, Pomodoro, Badge, Reward, House, Teams, BadgeCategory, Mentions)
 from django.utils.html import format_html
 
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "role", "batch", "phone", "name", "college","points","stars")
+    list_display = ("id", "user", "role", "batch", "phone", "name", "college", "points", "stars")
     search_fields = ("user__username", "role", "batch")
     list_filter = ("role", "batch")
     list_display_links = ("user", "id")
@@ -51,6 +51,13 @@ class BadgeCategoryAdmin(admin.ModelAdmin):
     list_display_links = ("id", "name")
     list_filter = ("id", "name")
     search_fields = ("name",)
+
+
+@admin.register(Mentions)
+class MentionAdmin(admin.ModelAdmin):
+    list_display = ("id", "title", "team", "house", "house")
+    list_display_links = ("id", "title", "house", "house")
+    search_fields = ("title",)
 
 
 @admin.register(House)

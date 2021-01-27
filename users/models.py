@@ -137,7 +137,7 @@ class BadgeCategory(models.Model):
 class Badge(models.Model):
     points = models.IntegerField(default=1)
     title = models.CharField(max_length=30)
-    category = models.ForeignKey(BadgeCategory,on_delete=models.SET_NULL,null=True)
+    category = models.ForeignKey(BadgeCategory, on_delete=models.SET_NULL, null=True)
     description = models.CharField(max_length=500)
     logo = models.ImageField(upload_to='badges')
     featured = models.BooleanField(default=False)
@@ -187,3 +187,15 @@ class House(models.Model):
 
     def get_absolute_url(self):
         return reverse('house', kwargs={'id': self.pk})
+
+
+class Mentions(models.Model):
+    image = models.ImageField(upload_to='mentions')
+    title = models.CharField(max_length=100)
+    team = models.ForeignKey(Teams, null=True, blank=True, on_delete=models.CASCADE)
+    house = models.ForeignKey(House, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500, default='description', null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.title}'

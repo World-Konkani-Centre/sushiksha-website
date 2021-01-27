@@ -35,6 +35,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% if user.is_superuser %}
                                             <tr>
                                                 <td class="font-weight-bold">
                                                    Profiles of the users
@@ -43,6 +44,7 @@
                                                     <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Profiles</button></a>
                                                 </td>
                                             </tr>
+                                        {% endif %}
                                             <tr>
                                                 <td class="font-weight-bold">
                                                    Points Distribution of users

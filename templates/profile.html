@@ -53,8 +53,12 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.get_point }}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points }}</p>
                                 </div>
+
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                </div>-->
                             </div>
                         </div>
                         <div class="card-footer">

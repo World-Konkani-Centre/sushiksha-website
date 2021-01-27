@@ -22,7 +22,7 @@ class BadgeAdmin(admin.ModelAdmin):
     list_display_links = ("id", "title")
     list_filter = ("points", "featured")
     search_fields = ("title", "category")
-    list_editable = ("featured", "points", "description")
+    list_editable = ("featured", "points", "description", "category")
 
 
 @admin.register(Reward)

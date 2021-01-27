@@ -12,8 +12,8 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
 from djqscsv import render_to_csv_response
 
-from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
-from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory
+from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, MentionUpdateForm
+from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import collect_badges, get_house_data, get_team_data, email_check
 
 
@@ -83,8 +83,8 @@ def profile(request):
             'name': query.name,
             'phone': query.phone,
             'college': query.college,
-            'degree':query.degree,
-            'branch':query.branch,
+            'degree': query.degree,
+            'branch': query.branch,
             'profession': query.profession,
             'address': query.address,
             'guidance': query.guidance,
@@ -145,7 +145,6 @@ def search(request):
         'title': 'Members'
     }
     return render(request, 'search.html', context=context)
-
 
 
 def user_list_view(request):
@@ -250,11 +249,13 @@ def leader(request):
     team = Teams.objects.all()
     team = team.order_by('-points')
     house = house.order_by('-points')
+    mentions = Mentions.objects.all().order_by(Lower('title'))
     context = {
         'data': data,
         'house': house,
         'teams': team,
-        'title': 'Leaderboard'
+        'title': 'Leaderboard',
+        'mentions': mentions
     }
     return render(request, 'leader.html', context=context)
 
@@ -308,7 +309,7 @@ def get_team_file(request):
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for member in members:
-                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date,timestamp__gt=date_7)
+                badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7)
                 for _badge in badges_received:
                     category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                         category_points[
@@ -344,7 +345,7 @@ def get_user_file(request):
 
         for user in users:
             points = 0
-            badges_received = Reward.objects.filter(user=user, timestamp__lte=date,timestamp__gt=date_7)
+            badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             for _badge in badges_received:
@@ -388,7 +389,7 @@ def get_house_file(request):
             for team in teams:
                 members = team.members.all()
                 for member in members:
-                    badges_received = Reward.objects.filter(user=member.user,timestamp__lte=date,timestamp__gt=date_7)
+                    badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7)
                     for _badge in badges_received:
                         category_points[headers.index(_badge.badges.category.name) - badge_category_start] = \
                             category_points[headers.index(

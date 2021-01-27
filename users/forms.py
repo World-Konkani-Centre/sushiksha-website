@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Reward
+from .models import Profile, Reward, Mentions
 
 
 class UserRegisterForm(UserCreationForm):
@@ -23,7 +23,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'batch', 'phone', 'college','degree','branch',
+        fields = ['name', 'batch', 'phone', 'college', 'degree', 'branch',
                   'profession', 'address', 'guidance',
                   'linkedin', 'instagram', 'twitter',
                   'github', 'okr', 'facebook',
@@ -58,6 +58,11 @@ class BadgeForm(forms.ModelForm):
         'minlength': 125,
     }))
 
+    badges = forms.Select(attrs={
+        'class': 'form-control'
+    }
+    )
+
     class Meta:
         model = Reward
         fields = ['user', 'description', 'badges']
@@ -67,3 +72,25 @@ class BadgeForm(forms.ModelForm):
         # for visible in self.visible_fields():
         #     if visible.html_name == 'user' or visible.html_name == 'badges':
         #         visible.field.widget.attrs['class'] = 'fstdropdown-select'
+
+
+class MentionUpdateForm(forms.ModelForm):
+    team = forms.Select(attrs={
+        'class': 'form-control'
+    })
+    house = forms.Select(attrs={
+        'class': 'form-control'
+    })
+    user = forms.Select(attrs={
+        'class': 'form-control'
+    })
+
+    class Meta:
+        model = Mentions
+        fields = ['title', 'team', 'house', 'user', 'image']
+
+    # def clean(self):
+    #     form_data = self.cleaned_data
+    #     team = form_data['team']
+    #     house = form_data['house']
+    #     user = form_data['user']

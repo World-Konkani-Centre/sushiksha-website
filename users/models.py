@@ -34,6 +34,8 @@ class Profile(models.Model):
     name = models.CharField(max_length=100, default=None, blank=True, null=True)
     phone = models.PositiveBigIntegerField(default=None, blank=True, null=True)
     college = models.CharField(max_length=300, default=None, blank=True, null=True)
+    degree = models.CharField(max_length=100, default=None, blank=True, null=True)
+    branch = models.CharField(max_length=100, default=None, blank=True, null=True)
     profession = models.CharField(max_length=100, default=None, blank=True, null=True)
     address = models.TextField(default=None, blank=True, null=True)
     guidance = models.TextField(default=None, blank=True, null=True)

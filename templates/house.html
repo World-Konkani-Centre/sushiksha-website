@@ -33,7 +33,6 @@
                             <div role="tabpanel" class="col-lg-9 tab-pane fade show active"
                                  id="team-{{ forloop.counter }}">
                                 {% for member in team.members.all %}
-                                    {{ team }}
                                     <div class="row schedule-item">
                                         <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                         <div class="col-md-8">
@@ -55,7 +54,6 @@
                         {% else %}
                             <div role="tabpanel" class="col-lg-9 tab-pane fade show" id="team-{{ forloop.counter }}">
                                 {% for member in team.members.all %}
-                                    {{ team }}
                                     <div class="row schedule-item">
                                         <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                         <div class="col-md-8">

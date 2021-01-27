@@ -192,9 +192,10 @@ class House(models.Model):
 class Mentions(models.Model):
     image = models.ImageField(upload_to='mentions')
     title = models.CharField(max_length=100)
-    team = models.ForeignKey(Teams, null=True,  blank=True,on_delete=models.CASCADE)
-    house = models.ForeignKey(House, null=True,  blank=True,on_delete=models.CASCADE)
-    user = models.ForeignKey(User, null=True,  blank=True,on_delete=models.CASCADE)
-    description = models.CharField(max_length=500,default='description',null=True,blank=True)
+    team = models.ForeignKey(Teams, null=True, blank=True, on_delete=models.CASCADE)
+    house = models.ForeignKey(House, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500, default='description', null=True, blank=True)
+
     def __str__(self):
         return f'{self.title}'

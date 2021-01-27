@@ -83,6 +83,8 @@ def profile(request):
             'name': query.name,
             'phone': query.phone,
             'college': query.college,
+            'degree':query.degree,
+            'branch':query.branch,
             'profession': query.profession,
             'address': query.address,
             'guidance': query.guidance,

@@ -65,8 +65,12 @@ class Profile(models.Model):
     def get_point(self):
         point = self.user.reward_set.aggregate(Sum('badges__points'))['badges__points__sum']
         if point:
-            return point
+            self.points = point
+            self.save()
+            return self.points
         else:
+            self.points = 0
+            self.save()
             return 0
 
     def get_team_name(self):

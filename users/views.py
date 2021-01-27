@@ -99,30 +99,30 @@ def profile(request):
     return render(request, 'profile.html', context=context)
 
 
-@login_required
-def log_pomodoro(request):
-    pomodoro = Pomodoro.objects.filter(user=request.user).first()
-
-    if request.POST:
-        productivity = int(request.POST['productivity'])
-        energy = int(request.POST['energy'])
-        productivity = round((productivity * 0.05), 2)
-        energy = round((energy * 0.05), 2)
-        pomodoro.count += 1
-        pomodoro.energy = (pomodoro.energy + energy) / 2
-        pomodoro.productivity = (pomodoro.productivity + productivity) / 2
-        pomodoro.save()
-        messages.success(request, f'Your data has been recorded.')
-        return redirect(request.META['HTTP_REFERER'])
-    else:
-        data = Pomodoro.objects.all().order_by('-count')
-        context = {
-            'leaderboard': data,
-            'title': "Analytics",
-        }
-        for i in data:
-            print(i, i.id, i.count, i.user.profile.image.url)
-        return render(request, 'leaderboard.html', context=context)
+# @login_required
+# def log_pomodoro(request):
+#     pomodoro = Pomodoro.objects.filter(user=request.user).first()
+#
+#     if request.POST:
+#         productivity = int(request.POST['productivity'])
+#         energy = int(request.POST['energy'])
+#         productivity = round((productivity * 0.05), 2)
+#         energy = round((energy * 0.05), 2)
+#         pomodoro.count += 1
+#         pomodoro.energy = (pomodoro.energy + energy) / 2
+#         pomodoro.productivity = (pomodoro.productivity + productivity) / 2
+#         pomodoro.save()
+#         messages.success(request, f'Your data has been recorded.')
+#         return redirect(request.META['HTTP_REFERER'])
+#     else:
+#         data = Pomodoro.objects.all().order_by('-count')
+#         context = {
+#             'leaderboard': data,
+#             'title': "Analytics",
+#         }
+#         for i in data:
+#             print(i, i.id, i.count, i.user.profile.image.url)
+#         return render(request, 'leaderboard.html', context=context)
 
 
 @login_required

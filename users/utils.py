@@ -135,7 +135,7 @@ def send_reward_slack(array):
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "<https://sushiksha.konkanischolarship.com/user/rewards/|Sushksha Badges>"
+                        "text": ":wkc-badge1: <https://sushiksha.konkanischolarship.com/user/rewards/|Sushiksha Badges>"
                     }
                 ]
             },

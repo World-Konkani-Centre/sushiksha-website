@@ -7,7 +7,7 @@
     <main id="main">
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
-                <h2>LOGS</h2>
+                <h2>Analytics</h2>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Profiles of the users
+                                                   Profiles of the all users
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Profiles</button></a>
@@ -45,7 +45,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Points Distribution of users
+                                                   Your Point Distribution
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'logs-user' %}"><button class="btn get-started-btn-special col-12">User Points</button></a>
@@ -53,10 +53,26 @@
                                             </tr>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Points of team
+                                                   Points of Your Team for a week
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'logs-team'%}"><button class="btn get-started-btn-special col-12">Team Points</button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Get Overall Members Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-users'%}"><button class="btn get-started-btn-special col-12">All Member Points</button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Get Overall Teams Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-users'%}"><button class="btn get-started-btn-special col-12">All Teams Points</button></a>
                                                 </td>
                                             </tr>
                                         </tbody>

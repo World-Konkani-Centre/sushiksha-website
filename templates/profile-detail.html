@@ -2,6 +2,13 @@
 {% load static %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
+
+
+{% block main_style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+{% endblock main_style %}
+
+
 {% block content %}
 
     <main id="main">
@@ -256,6 +263,13 @@
                                     </div>
                                 {% endif %}
                             </div>
+
+                            <div class="card mb-4">
+                            <div class="card-body">
+                            <canvas id="myChart"></canvas>
+                            </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -265,3 +279,63 @@
     </main><!-- End #main -->
 
 {% endblock content %}
+
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+
+
+    <script>
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 1-7', 'Jan 7-14', 'Jan 14-21', 'Jan 24-31', 'Feb 1-7', 'Feb 7-14'],
+                datasets: [{
+                    label: 'Productivity',
+                    data: [120, 190, 30, 50, 20, 30],
+                    borderColor: [
+                        '#c70039',
+                    ],
+                    fill: false,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Bonding',
+                    data: [50, 80, 80, 60, 10, 20],
+                    borderColor: [
+                        '#111d5e',
+                    ],
+                    borderWidth: 1,
+                    fill: false,
+                },
+
+                ]
+            },
+            options: {
+                responsive: true,
+				title: {
+					display: true,
+					text: 'User Perfomance'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+</script>
+
+
+{% endblock %}

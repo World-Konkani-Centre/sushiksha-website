@@ -1,6 +1,6 @@
 {
   "SECRET_KEY": "Enter your secret key here",
-  "MAIL_USER": "swasthik0304@gmail.com",
-  "MAIL_PASS": "swasthik2001",
-  "SLACK_AUTH_TOKEN": "xoxb-1658112963093-1646460182647-CvzyvHK0eoki9Xhf2yqjKCWf"
+  "MAIL_USER": "Your mail username",
+  "MAIL_PASS": "enter your password",
+  "SLACK_AUTH_TOKEN": "token here"
 }

@@ -269,10 +269,11 @@ def get_logs(request):
 
 @login_required
 def get_profile_file(request):
-    queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
+    if request.user.is_superuser:
+        queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
                                             , 'phone', 'college', 'profession', 'linkedin',
                                             'github', 'okr', 'points', 'stars').order_by('name')
-    return render_to_csv_response(queryset, filename='Sushiksha-Profiles' + str(datetime.date.today()),
+        return render_to_csv_response(queryset, filename='Sushiksha-Profiles' + str(datetime.date.today()),
                                   field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
                                                     'user__email': 'email', 'phone': 'phone number',
                                                     'college': 'college',
@@ -383,7 +384,10 @@ def get_team_file(request):
     writer.writerow(headers)
 
     team = Teams.objects.filter(members__user__id=request.user.id).first()
-    members = team.members.all().order_by('name')
+    if team is not None:
+        members = team.members.all().order_by('name')
+    else:
+        return redirect('logs')
     for member in members:
         points = 0
         for i in range(0, len(category_points)):
@@ -417,7 +421,7 @@ def get_user_file_large(request):
             for category in categories:
                 headers.append(category.name)
                 category_points.append(0)
-            headers.append('Points In Interval - ' + str(beginning) + '-' + str(end))
+            headers.append('Points In Interval - ' + beginning.strftime("%d/%b/%Y %H:%M") + '---' + end.strftime("%d/%b/%Y %H:%M"))
             writer.writerow(headers)
 
             users = User.objects.all().order_by('username')
@@ -464,7 +468,7 @@ def get_team_file_large(request):
             for category in categories:
                 headers.append(category.name)
                 category_points.append(0)
-            headers.append('Points In Interval - ' + str(beginning) + '-' + str(end))
+            headers.append('Points In Interval - ' + beginning.strftime("%d/%b/%Y %H:%M") + '---' + end.strftime("%d/%b/%Y %H:%M"))
             writer.writerow(headers)
 
             teams = Teams.objects.all().order_by('name')

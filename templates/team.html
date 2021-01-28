@@ -14,7 +14,7 @@
             <div class="container" data-aos="fade-up">
                 <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="team-{{ forloop.counter }}">
-                        {% for member in query_set.members.all %}
+                        {% for member in query_set.members.all|dictsortreversed:"points" %}
                             <div class="row schedule-item">
                                 <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                 <div class="col-md-8">

@@ -36,7 +36,7 @@ def get_team_file_weekly():
     filepath = os.path.join(FILE_PATH_FIELD_DIRECTORY, filename)
     if not os.path.exists(FILE_PATH_FIELD_DIRECTORY):
         os.makedirs(FILE_PATH_FIELD_DIRECTORY)
-    with open(filepath, 'w+') as response:
+    with open(filepath, 'w+', newline='') as response:
         writer = csv.writer(response)
         headers = ['Team Name', 'Total Points']
         badge_category_start = 2
@@ -87,7 +87,7 @@ def get_team_file_monthly():
     filepath = os.path.join(FILE_PATH_FIELD_DIRECTORY, filename)
     if not os.path.exists(FILE_PATH_FIELD_DIRECTORY):
         os.makedirs(FILE_PATH_FIELD_DIRECTORY)
-    with open(filepath, 'w+') as response:
+    with open(filepath, 'w+', newline='') as response:
         writer = csv.writer(response)
         headers = ['Team Name', 'Total Points']
         badge_category_start = 2
@@ -96,7 +96,7 @@ def get_team_file_monthly():
         for category in categories:
             headers.append(category.name)
             category_points.append(0)
-        headers.append('Points of '+str(last_month)+'-'+str(year))
+        headers.append('Points of ' + str(last_month) + '-' + str(year))
         writer.writerow(headers)
 
         teams = Teams.objects.all().order_by('name')
@@ -116,7 +116,7 @@ def get_team_file_monthly():
                     points = points + _badge.badges.points
             row_of_team = [team.name, team.points] + category_points + [points]
             writer.writerow(row_of_team)
-    AnalyticsReport.objects.create(title='Team-Monthly-Report-' + str(last_month) + '-' + str(year) ,file=filepath)
+    AnalyticsReport.objects.create(title='Team-Monthly-Report-' + str(last_month) + '-' + str(year), file=filepath)
     return True
 
 
@@ -132,7 +132,7 @@ def get_user_file_weekly():
     filepath = os.path.join(FILE_PATH_FIELD_DIRECTORY, filename)
     if not os.path.exists(FILE_PATH_FIELD_DIRECTORY):
         os.makedirs(FILE_PATH_FIELD_DIRECTORY)
-    with open(filepath, 'w+') as response:
+    with open(filepath, 'w+', newline='') as response:
         writer = csv.writer(response)
         headers = ['Username', 'Name', 'Email', 'Batch', 'Total Points', 'Stars']
         badge_category_start = 6
@@ -183,7 +183,7 @@ def get_user_file_monthly():
     filepath = os.path.join(FILE_PATH_FIELD_DIRECTORY, filename)
     if not os.path.exists(FILE_PATH_FIELD_DIRECTORY):
         os.makedirs(FILE_PATH_FIELD_DIRECTORY)
-    with open(filepath, 'w+') as response:
+    with open(filepath, 'w+', newline='') as response:
         writer = csv.writer(response)
         headers = ['Username', 'Name', 'Email', 'Batch', 'Total Points', 'Stars']
         badge_category_start = 6
@@ -192,7 +192,7 @@ def get_user_file_monthly():
         for category in categories:
             headers.append(category.name)
             category_points.append(0)
-        headers.append('Points of '+str(last_month)+'-'+str(year))
+        headers.append('Points of ' + str(last_month) + '-' + str(year))
         writer.writerow(headers)
 
         users = User.objects.all().order_by('profile__name')
@@ -212,5 +212,6 @@ def get_user_file_monthly():
                            user.profile.stars] + category_points + [points]
             writer.writerow(row_of_user)
 
-        AnalyticsReport.objects.create(title='Members-Monthly-Report-' + str(last_month) + '-' + str(year), file=filepath)
+        AnalyticsReport.objects.create(title='Members-Monthly-Report-' + str(last_month) + '-' + str(year),
+                                       file=filepath)
         return True

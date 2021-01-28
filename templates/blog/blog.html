@@ -7,10 +7,12 @@
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
                 <h2>Blogs</h2>
+                {% if user.is_authenticated %}
                 <a href="{% url 'blog-create' %}">
                     <button class="btn get-started-btn-special mt-2" type="button">
                         Create a Post
                     </button></a>
+                {% endif %}
             </div>
         </div><!-- End Breadcrumbs -->
 

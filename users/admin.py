@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (Profile, Pomodoro, Badge, Reward, House, Teams, BadgeCategory, Mentions)
+from .models import (Profile, Pomodoro, Badge, Reward, House, Teams, BadgeCategory, Mentions, AnalyticsReport)
 from django.utils.html import format_html
 
 
@@ -68,3 +68,10 @@ class HouseAdmin(admin.ModelAdmin):
 @admin.register(Teams)
 class TeamsAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(AnalyticsReport)
+class AnalyticsAdmin(admin.ModelAdmin):
+    list_display = ("id", "timestamp" ,"title", "file")
+    list_display_links = ("id", "title", "timestamp")
+    search_fields = ("title", "timestamp")

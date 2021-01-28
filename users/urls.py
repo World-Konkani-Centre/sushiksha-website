@@ -18,6 +18,5 @@ urlpatterns = [
     path('logs/',views.get_logs , name='logs'),
     path('logs/profiles',views.get_profile_file , name='logs-profile'),
     path('logs/team/',views.get_team_file , name='logs-team'),
-    path('logs/house/',views.get_house_file,name='logs-house'),
     path('logs/points',views.get_user_file,name='logs-user'),
 ]

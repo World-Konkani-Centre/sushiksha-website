@@ -32,7 +32,7 @@
                         {% if forloop.counter == 1 %}
                             <div role="tabpanel" class="col-lg-9 tab-pane fade show active"
                                  id="team-{{ forloop.counter }}">
-                                {% for member in team.members.all %}
+                                {% for member in team.members.all|dictsortreversed:"points" %}
                                     <div class="row schedule-item">
                                         <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                         <div class="col-md-8">
@@ -53,7 +53,7 @@
                             </div>
                         {% else %}
                             <div role="tabpanel" class="col-lg-9 tab-pane fade show" id="team-{{ forloop.counter }}">
-                                {% for member in team.members.all %}
+                                {% for member in team.members.all|dictsortreversed:"points" %}
                                     <div class="row schedule-item">
                                         <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                         <div class="col-md-8">

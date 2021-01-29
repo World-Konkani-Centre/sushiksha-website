@@ -89,8 +89,13 @@ class MentionUpdateForm(forms.ModelForm):
         model = Mentions
         fields = ['title', 'team', 'house', 'user', 'image']
 
-    # def clean(self):
-    #     form_data = self.cleaned_data
-    #     team = form_data['team']
-    #     house = form_data['house']
-    #     user = form_data['user']
+
+class RangeRequestForm(forms.Form):
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")
+
+
+class UserRangeRequestForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all().order_by('profile__user'),label="Seect the user")
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")

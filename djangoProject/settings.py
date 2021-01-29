@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'tinymce',
-    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -184,5 +183,3 @@ CELERY_TASK_TRACK_STARTED = True
 
 SLACK_TOKEN = config.get('SLACK_AUTH_TOKEN')
 CELERY_TASK_TIME_LIMIT = 30 * 60
-
-FILE_PATH_FIELD_DIRECTORY = BASE_DIR / 'media/analytics-data'

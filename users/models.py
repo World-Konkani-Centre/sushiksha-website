@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.db.models import Sum
 from PIL import Image
 
-from djangoProject import settings
 
 ROLE = (
     ('Mentee', "Mentee"),
@@ -201,12 +200,3 @@ class Mentions(models.Model):
 
     def __str__(self):
         return f'{self.title}'
-
-
-class AnalyticsReport(models.Model):
-    title = models.CharField(max_length=100)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    file = models.FileField(upload_to='analytics-data')
-
-    def __str__(self):
-        return f'{self.title+str(self.timestamp)}'

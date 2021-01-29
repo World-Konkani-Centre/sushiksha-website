@@ -6,8 +6,6 @@ from celery import shared_task
 from celery.utils.log import get_task_logger
 from django.utils import timezone
 
-from djangoProject.settings import FILE_PATH_FIELD_DIRECTORY
-from users.models import BadgeCategory, Teams, Reward, AnalyticsReport
 from users.utils import send_reward_mail, send_reward_slack
 from django.contrib.auth.models import User
 

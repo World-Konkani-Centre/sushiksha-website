@@ -10,6 +10,7 @@ from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
+from django.utils.timezone import make_aware
 from djqscsv import render_to_csv_response
 
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, MentionUpdateForm, \
@@ -286,7 +287,8 @@ def get_profile_file(request):
 def get_user_file(request):
     date = timezone.now()
     date_7 = date - datetime.timedelta(days=7)
-    date_7 = date_7.date()
+    print(date)
+    print(date_7)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=Sushiksha-User-Points' + str(
         datetime.date.today()) + '.csv'
@@ -314,7 +316,7 @@ def get_user_file(request):
                                                             index - badge_category_start] + category[
                                                             'badges__points__sum']
         points = points + category['badges__points__sum']
-    row_of_user = ["Week 1 " + str(date.date()) + ' -- ' + str(date_7)] + category_points + [points]
+    row_of_user = ["Week 1 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
     writer.writerow(row_of_user)
 
     # week 2
@@ -331,7 +333,7 @@ def get_user_file(request):
                                                             index - badge_category_start] + category[
                                                             'badges__points__sum']
         points = points + category['badges__points__sum']
-    row_of_user = ["Week 2 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
+    row_of_user = ["Week 2 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
     writer.writerow(row_of_user)
 
     # week 3
@@ -348,7 +350,7 @@ def get_user_file(request):
                                                             index - badge_category_start] + category[
                                                             'badges__points__sum']
         points = points + category['badges__points__sum']
-    row_of_user = ["Week 3 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
+    row_of_user = ["Week 3 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
     writer.writerow(row_of_user)
 
     # week 4
@@ -365,7 +367,7 @@ def get_user_file(request):
                                                             index - badge_category_start] + category[
                                                             'badges__points__sum']
         points = points + category['badges__points__sum']
-    row_of_user = ["Week 4 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
+    row_of_user = ["Week 4 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
     writer.writerow(row_of_user)
 
     return response

@@ -287,8 +287,6 @@ def get_profile_file(request):
 def get_user_file(request):
     date = timezone.now()
     date_7 = date - datetime.timedelta(days=7)
-    print(date)
-    print(date_7)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=Sushiksha-User-Points' + str(
         datetime.date.today()) + '.csv'
@@ -377,7 +375,6 @@ def get_user_file(request):
 def get_team_file(request):
     date = timezone.now()
     date_7 = date - datetime.timedelta(days=7)
-    date_7 = date_7.date()
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=Sushiksha-Team-Points' + str(
         datetime.date.today()) + '.csv'

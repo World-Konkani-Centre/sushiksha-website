@@ -305,7 +305,6 @@ def get_user_file(request):
     # week 1
     points = 0
     badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values('badges__category__name').annotate(Sum('badges__points'))
-    print(badges_received)
     for i in range(0, len(category_points)):
         category_points[i] = 0
     for category in badges_received:
@@ -530,8 +529,6 @@ def get_single_user_file_large(request):
             next = end - delta
             while next >= beginning:
                 points = 0
-                print(end)
-                print(next)
                 for i in range(0, len(category_points)):
                     category_points[i] = 0
                 badges_received = Reward.objects.filter(user=user, timestamp__lte=end,

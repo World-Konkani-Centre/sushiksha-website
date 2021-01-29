@@ -183,12 +183,6 @@ timezone = "Asia/Kolkata"
 CELERY_TASK_TRACK_STARTED = True
 
 SLACK_TOKEN = config.get('SLACK_AUTH_TOKEN')
-
-CELERY_BEAT_SCHEDULE = {
-    "user_file_weekly": {
-        "task": "users.tasks.get_team_file_weekly",
-        "schedule": 20.0,
-    }
-}
+CELERY_TASK_TIME_LIMIT = 30 * 60
 
 FILE_PATH_FIELD_DIRECTORY = BASE_DIR / 'media/analytics-data'

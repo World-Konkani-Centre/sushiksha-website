@@ -41,7 +41,7 @@
                                                    Profiles of the all users
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Export Member List</button></a>
+                                                    <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Export Member List<span class="icofont-arrow-down"></span></button></a>
                                                 </td>
                                             </tr>
                                         {% endif %}
@@ -62,12 +62,20 @@
                                                 </td>
                                             </tr>
                                         {% if user.is_superuser %}
+                                              <tr>
+                                                <td class="font-weight-bold">
+                                                   Get Individual User Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-user-selected' %}"><button class="btn get-started-btn-special col-12">Individual member<span class="icofont-arrow-down"></span></button></a>
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td class="font-weight-bold">
                                                    Get Overall Members Data
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-users'%}"><button class="btn get-started-btn-special col-12">All Member Points</button></a>
+                                                    <a href="{% url 'logs-users'%}"><button class="btn get-started-btn-special col-12">All Member Points<span class="icofont-arrow-down"></span></button></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -75,7 +83,7 @@
                                                    Get Overall Teams Data
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-teams' %}"><button class="btn get-started-btn-special col-12">All Teams Points</button></a>
+                                                    <a href="{% url 'logs-teams' %}"><button class="btn get-started-btn-special col-12">All Teams Points<span class="icofont-arrow-down"></span></button></a>
                                                 </td>
                                             </tr>
                                         {% endif %}
@@ -86,7 +94,9 @@
                         </div>
                     </div>
                 </div>
+            {% if not user.is_superuser %}
             *If you need more data please contact ADMIN
+            {% endif %}
             </div>
         </section>
 

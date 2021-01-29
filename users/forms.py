@@ -93,3 +93,9 @@ class MentionUpdateForm(forms.ModelForm):
 class RangeRequestForm(forms.Form):
     beginning = forms.DateTimeField(label="Start Date Time")
     end = forms.DateTimeField(label="End Date Time")
+
+
+class UserRangeRequestForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all().order_by('profile__user'),label="Seect the user")
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")

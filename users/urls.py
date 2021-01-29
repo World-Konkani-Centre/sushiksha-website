@@ -21,5 +21,6 @@ urlpatterns = [
     path('logs/user/',views.get_user_file,name='logs-user'),
     path('logs/teams/', views.get_team_file_large, name='logs-teams'),
     path('logs/users/', views.get_user_file_large, name='logs-users'),
+    path('logs/selecteduser/', views.get_single_user_file_large, name='logs-user-selected'),
 
 ]

@@ -252,16 +252,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% if not user.id == request.user.id %}
+                                
                                     <div class="card-footer">
                                         <div class="row badge-row">
-
-                                            <h1 class="lead font-weight-bold text-center">Badges : <a
-                                                    href="{% url 'new-badge' user.id %}">Give a Badge</a></h1>
-
+                                            <div class='col-6'>
+                                            {% if not user.id == request.user.id %}
+                                            <h1 class="lead font-weight-bold text-start">Badges : <a
+                                                    href="{% url 'new-badge' user.id %}">Give a Badge to {{user.profile.name}}</a></h1>
+                                            {% endif %}
+                                            </div>
+                                            <div class='col-6'>
+                                            <h1 class="lead font-weight-bold text-end">Blogs : <a href="{% url 'user-posts' id=user.id %}">{{user.profile.name}}'s Blog Posts<a></h1>
+                                            </div>
                                         </div>
                                     </div>
-                                {% endif %}
+                                
+
+
                             </div>
 
                             <div class="card mb-4">

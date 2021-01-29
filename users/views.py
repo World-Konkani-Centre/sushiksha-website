@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Count, Sum
 from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
@@ -302,18 +302,17 @@ def get_user_file(request):
     writer.writerow(headers)
 
     user = User.objects.filter(id=request.user.id).first()
-    print(date)
-    print(date_7)
     # week 1
     points = 0
-    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values('badges__category__name').annotate(Sum('badges__points'))
+    print(badges_received)
     for i in range(0, len(category_points)):
         category_points[i] = 0
-    for _badge in badges_received:
-        index = headers.index(_badge.badges.category.name)
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
         category_points[index - badge_category_start] = category_points[
-                                                            index - badge_category_start] + _badge.badges.points
-        points = points + _badge.badges.points
+                                                            index - badge_category_start] + category['badges__points__sum']
+        points = points + category['badges__points__sum']
     row_of_user = ["Week 1 " + str(date.date()) + ' -- ' + str(date_7)] + category_points + [points]
     writer.writerow(row_of_user)
 
@@ -321,16 +320,15 @@ def get_user_file(request):
     date = date_7
     date_7 = date - datetime.timedelta(days=7)
     points = 0
-    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
-    print(date)
-    print(date_7)
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values('badges__category__name').annotate(Sum('badges__points'))
     for i in range(0, len(category_points)):
         category_points[i] = 0
-    for _badge in badges_received:
-        index = headers.index(_badge.badges.category.name)
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
         category_points[index - badge_category_start] = category_points[
-                                                            index - badge_category_start] + _badge.badges.points
-        points = points + _badge.badges.points
+                                                            index - badge_category_start] + category[
+                                                            'badges__points__sum']
+        points = points + category['badges__points__sum']
     row_of_user = ["Week 2 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
     writer.writerow(row_of_user)
 
@@ -338,16 +336,15 @@ def get_user_file(request):
     date = date_7
     date_7 = date - datetime.timedelta(days=7)
     points = 0
-    print(date)
-    print(date_7)
-    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values('badges__category__name').annotate(Sum('badges__points'))
     for i in range(0, len(category_points)):
         category_points[i] = 0
-    for _badge in badges_received:
-        index = headers.index(_badge.badges.category.name)
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
         category_points[index - badge_category_start] = category_points[
-                                                            index - badge_category_start] + _badge.badges.points
-        points = points + _badge.badges.points
+                                                            index - badge_category_start] + category[
+                                                            'badges__points__sum']
+        points = points + category['badges__points__sum']
     row_of_user = ["Week 3 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
     writer.writerow(row_of_user)
 
@@ -355,16 +352,14 @@ def get_user_file(request):
     date = date_7
     date_7 = date - datetime.timedelta(days=7)
     points = 0
-    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
-    print(date)
-    print(date_7)
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values('badges__category__name').annotate(Sum('badges__points'))
     for i in range(0, len(category_points)):
         category_points[i] = 0
-    for _badge in badges_received:
-        index = headers.index(_badge.badges.category.name)
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
         category_points[index - badge_category_start] = category_points[
-                                                            index - badge_category_start] + _badge.badges.points
-        points = points + _badge.badges.points
+                                                            index - badge_category_start] + category['badges__points__sum']
+        points = points + category['badges__points__sum']
     row_of_user = ["Week 4 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
     writer.writerow(row_of_user)
 
@@ -399,12 +394,12 @@ def get_team_file(request):
         points = 0
         for i in range(0, len(category_points)):
             category_points[i] = 0
-        badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7)
-        for _badge in badges_received:
-            index = headers.index(_badge.badges.category.name)
+        badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7).values('badges__category__name').annotate(Sum('badges__points'))
+        for category in badges_received:
+            index = headers.index(category['badges__category__name'])
             category_points[index - badge_category_start] = category_points[
-                                                                index - badge_category_start] + _badge.badges.points
-            points = points + _badge.badges.points
+                                                                index - badge_category_start] + category['badges__points__sum']
+            points = points + category['badges__points__sum']
         row_of_team = [member.name] + category_points + [points]
         writer.writerow(row_of_team)
     return response
@@ -436,14 +431,14 @@ def get_user_file_large(request):
 
             for user in users:
                 points = 0
-                badges_received = Reward.objects.filter(user=user, timestamp__lte=end, timestamp__gte=beginning)
+                badges_received = Reward.objects.filter(user=user, timestamp__lte=end, timestamp__gte=beginning).values('badges__category__name').annotate(Sum('badges__points'))
                 for i in range(0, len(category_points)):
                     category_points[i] = 0
-                for _badge in badges_received:
-                    index = headers.index(_badge.badges.category.name)
+                for category in badges_received:
+                    index = headers.index(category['badges__category__name'])
                     category_points[index - badge_category_start] = category_points[
-                                                                        index - badge_category_start] + _badge.badges.points
-                    points = points + _badge.badges.points
+                                                                        index - badge_category_start] + category['badges__points__sum']
+                    points = points + category['badges__points__sum']
                 row_of_user = [user.username, user.profile.name, user.email, user.profile.batch, user.profile.points,
                                user.profile.stars] + category_points + [points]
                 writer.writerow(row_of_user)
@@ -489,12 +484,12 @@ def get_team_file_large(request):
                     category_points[i] = 0
                 for member in members:
                     badges_received = Reward.objects.filter(user=member.user, timestamp__lte=end,
-                                                            timestamp__gte=beginning)
-                    for _badge in badges_received:
-                        index = headers.index(_badge.badges.category.name)
+                                                            timestamp__gte=beginning).values('badges__category__name').annotate(Sum('badges__points'))
+                    for category in badges_received:
+                        index = headers.index(category['badges__category__name'])
                         category_points[index - badge_category_start] = category_points[
-                                                                            index - badge_category_start] + _badge.badges.points
-                        points = points + _badge.badges.points
+                                                                            index - badge_category_start] + category['badges__points__sum']
+                        points = points + category['badges__points__sum']
                 row_of_team = [team.name, team.points] + category_points + [points]
                 writer.writerow(row_of_team)
             return response
@@ -540,12 +535,12 @@ def get_single_user_file_large(request):
                 for i in range(0, len(category_points)):
                     category_points[i] = 0
                 badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
-                                                        timestamp__gt=next)
-                for _badge in badges_received:
-                    index = headers.index(_badge.badges.category.name)
+                                                        timestamp__gt=next).values('badges__category__name').annotate(Sum('badges__points'))
+                for category in badges_received:
+                    index = headers.index(category['badges__category__name'])
                     category_points[index - badge_category_start] = category_points[
-                                                                        index - badge_category_start] + _badge.badges.points
-                    points = points + _badge.badges.points
+                                                                        index - badge_category_start] + category['badges__points__sum']
+                    points = points + category['badges__points__sum']
                 row_of_team = ["Week " + str(week_counter) + '--' + str(end.date()) + ' -- ' + str(
                     next.date())] + category_points + [points]
                 writer.writerow(row_of_team)
@@ -557,12 +552,12 @@ def get_single_user_file_large(request):
             for i in range(0, len(category_points)):
                 category_points[i] = 0
             badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
-                                                    timestamp__gt=beginning)
-            for _badge in badges_received:
-                index = headers.index(_badge.badges.category.name)
+                                                    timestamp__gt=beginning).values('badges__category__name').annotate(Sum('badges__points'))
+            for category in badges_received:
+                index = headers.index(category['badges__category__name'])
                 category_points[index - badge_category_start] = category_points[
-                                                                    index - badge_category_start] + _badge.badges.points
-                points = points + _badge.badges.points
+                                                                    index - badge_category_start] + category['badges__points__sum']
+                points = points + category['badges__points__sum']
             row_of_team = ["Week " + str(week_counter) + '--' + str(end.date()) + ' -- ' + str(beginning.date())] + category_points + [
                 points]
             writer.writerow(row_of_team)

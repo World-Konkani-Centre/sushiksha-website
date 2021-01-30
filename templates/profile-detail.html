@@ -240,13 +240,13 @@
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
                                         <div class="row pricing">
-                                            {% for badge, count in badges %}
+                                            {% for badge in badges %}
                                                 <div class="col-lg-3 col-4 box">
-                                                    <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy"
-                                                         title="{{ badge.badges.title }}" alt="{{ badge.badges.title }}"
+                                                    <h3>{{ badge.badges__title }}</h3>
+                                                    <img src="/media/{{badge.badges__logo}}" loading="lazy"
+                                                         title="{{ badge.badges__title }}" alt="{{ badge.badges__title }}"
                                                          width="80%" class="img-rounded">
-                                                    <h4>{{ count }}</h4>
+                                                    <h4>{{ badge.badges__title__count }}</h4>
                                                 </div>
                                             {% endfor %}
                                         </div>
@@ -289,33 +289,30 @@
 
 
 {% block script %}
+<script src="{% static 'assets/js/utils.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
 
     <script>
+    
+        
         var ctx = document.getElementById('myChart');
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Jan 1-7', 'Jan 7-14', 'Jan 14-21', 'Jan 24-31', 'Feb 1-7', 'Feb 7-14'],
-                datasets: [{
-                    label: 'Productivity',
-                    data: [120, 190, 30, 50, 20, 30],
-                    borderColor: [
-                        '#c70039',
-                    ],
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [
+
+                {% for category, data in data_query %}
+                {
+                    label: '{{category}}',
+                    data: {{data}},
+                    backgroundColor: {{color|random }},
+                    borderColor: {{color|random }},
                     fill: false,
                     borderWidth: 1
                 },
-                {
-                    label: 'Bonding',
-                    data: [50, 80, 80, 60, 10, 20],
-                    borderColor: [
-                        '#111d5e',
-                    ],
-                    borderWidth: 1,
-                    fill: false,
-                },
+                {% endfor %}
 
                 ]
             },

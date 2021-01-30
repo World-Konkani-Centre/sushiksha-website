@@ -157,7 +157,6 @@ def format_result(result, headers):
     array = np.array(result)
     for i in range(len(headers)):
         output.append(array[:, i].tolist())
-    print("output", output)
     return output
 
 
@@ -169,7 +168,6 @@ def user_chart_data(user):
     for category in categories:
         headers.append(category.name)
         category_points.append(0)
-    week_counter = 1
     end = timezone.now()
     delta = datetime.timedelta(days=7)
     for week in range(1,5):

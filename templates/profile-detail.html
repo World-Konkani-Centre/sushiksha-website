@@ -2,6 +2,13 @@
 {% load static %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
+
+
+{% block main_style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+{% endblock main_style %}
+
+
 {% block content %}
 
     <main id="main">
@@ -55,8 +62,11 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.get_point }}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points}}</p>
                                 </div>
+                            <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                </div>-->
                             </div>
                         </div>
                         <div class="card-footer">
@@ -230,29 +240,43 @@
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
                                         <div class="row pricing">
-                                            {% for badge, count in badges %}
+                                            {% for badge in badges %}
                                                 <div class="col-lg-3 col-4 box">
-                                                    <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy"
-                                                         title="{{ badge.badges.title }}" alt="{{ badge.badges.title }}"
+                                                    <h3>{{ badge.badges__title }}</h3>
+                                                    <img src="/media/{{badge.badges__logo}}" loading="lazy"
+                                                         title="{{ badge.badges__title }}" alt="{{ badge.badges__title }}"
                                                          width="80%" class="img-rounded">
-                                                    <h4>{{ count }}</h4>
+                                                    <h4>{{ badge.badges__title__count }}</h4>
                                                 </div>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </div>
-                                {% if not user.id == request.user.id %}
+                                
                                     <div class="card-footer">
                                         <div class="row badge-row">
-
-                                            <h1 class="lead font-weight-bold text-center">Badges : <a
-                                                    href="{% url 'new-badge' user.id %}">Give a Badge</a></h1>
-
+                                            <div class='col-6'>
+                                            {% if not user.id == request.user.id %}
+                                            <h1 class="lead font-weight-bold text-start">Badges : <a
+                                                    href="{% url 'new-badge' user.id %}">Give a badge to {{user.profile.name}}</a></h1>
+                                            {% endif %}
+                                            </div>
+                                            <div class='col-6'>
+                                            <h1 class="lead font-weight-bold text-end">Blogs : <a href="{% url 'user-posts' id=user.id %}">{{user.profile.name}}'s Blog Posts<a></h1>
+                                            </div>
                                         </div>
                                     </div>
-                                {% endif %}
+                                
+
+
                             </div>
+
+                            <div class="card mb-4">
+                            <div class="card-body">
+                            <canvas id="myChart"></canvas>
+                            </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -262,3 +286,60 @@
     </main><!-- End #main -->
 
 {% endblock content %}
+
+
+{% block script %}
+<script src="{% static 'assets/js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+
+
+    <script>
+    
+        
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [
+
+                {% for category, data in data_query %}
+                {
+                    label: '{{category}}',
+                    data: {{data}},
+                    backgroundColor: {{color|random }},
+                    borderColor: {{color|random }},
+                    fill: false,
+                    borderWidth: 1
+                },
+                {% endfor %}
+
+                ]
+            },
+            options: {
+                responsive: true,
+				title: {
+					display: true,
+					text: 'User Perfomance'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+</script>
+
+
+{% endblock %}

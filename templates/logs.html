@@ -7,7 +7,7 @@
     <main id="main">
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
-                <h2>LOGS</h2>
+                <h2>Analytics</h2>
             </div>
         </div>
 
@@ -35,39 +35,58 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% if user.is_superuser %}
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Profiles of the users
+                                                   Profiles of the all users
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Profiles</button></a>
+                                                    <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Export Member List<span class="icofont-arrow-down"></span></button></a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                    Point Distribution
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-user' %}"><button class="btn get-started-btn-special col-12">Export Data <span class="icofont-arrow-down"></span></button></a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Points Distribution of users
+                                                   Points of Your Team for a week
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-user' %}"><button class="btn get-started-btn-special col-12">User Points</button></a>
+                                                    <a href="{% url 'logs-team'%}"><button class="btn get-started-btn-special col-12">Export Team Data <span class="icofont-arrow-down"></span></button></a>
+                                                </td>
+                                            </tr>
+                                        {% if user.is_superuser %}
+                                              <tr>
+                                                <td class="font-weight-bold">
+                                                   Get Individual User Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-user-selected' %}"><button class="btn get-started-btn-special col-12">Individual User Data<span class="icofont-arrow-right"></span></button></a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Points of team
+                                                   Get All Members Data
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-team'%}"><button class="btn get-started-btn-special col-12">Team Points</button></a>
+                                                    <a href="{% url 'logs-users'%}"><button class="btn get-started-btn-special col-12">All Member Data<span class="icofont-arrow-right"></span></button></a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                   Points of house
+                                                   Get All Teams Data
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'logs-house' %}"><button class="btn get-started-btn-special col-12">House Points</button></a>
-
+                                                    <a href="{% url 'logs-teams' %}"><button class="btn get-started-btn-special col-12">All Teams Data<span class="icofont-arrow-right"></span></button></a>
                                                 </td>
                                             </tr>
+                                        {% endif %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -75,6 +94,10 @@
                         </div>
                     </div>
                 </div>
+            {% if not user.is_superuser %}
+            *If you need more data please contact ADMIN
+            {% endif %}
             </div>
         </section>
+
 {% endblock content %}

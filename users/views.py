@@ -16,7 +16,7 @@ from djqscsv import render_to_csv_response
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, MentionUpdateForm, \
     RangeRequestForm, UserRangeRequestForm
 from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
-from .utils import collect_badges, get_house_data, get_team_data, email_check
+from .utils import collect_badges, get_house_data, get_team_data, email_check, user_chart_data
 
 
 def register(request):
@@ -137,13 +137,18 @@ def user_list_view(request):
 @login_required
 def user_detail_view(request, pk):
     user = get_object_or_404(User, id=pk)
-    reward, count = collect_badges(user)
-    zipped_data = zip(reward, count)
+    badges = Reward.objects.filter(user=user).values('badges__title','badges__logo').annotate(Count('badges__title'))
+    categories, data = user_chart_data(user)
+    zipped_data = zip(categories, data)
+    color = ['window.chartColors.red', 'window.chartColors.orange', 'window.chartColors.yellow', 'window.chartColors.green', 'window.chartColors.blue', 'window.chartColors.purple', 'window.chartColors.grey', 'window.chartColors.red', 'window.chartColors.orange', 'window.chartColors.yellow', 'window.chartColors.green', 'window.chartColors.blue', 'window.chartColors.purple']
     context = {
         'title': f"{user.username}",
         'user': user,
-        'badges': zipped_data,
+        'badges': badges,
+        'data_query': zipped_data,
+        'color': color
     }
+
 
     return render(request, 'profile-detail.html', context=context)
 
@@ -393,7 +398,7 @@ def get_user_file_large(request):
             beginning = form.cleaned_data['beginning']
             end = form.cleaned_data['end']
             response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename=Sushiksha-All-Users-Points' + str(
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-All-Users-Points ' + str(
                 datetime.date.today()) + '.csv'
             writer = csv.writer(response)
             headers = ['Username', 'Name', 'Email', 'Batch', 'Total Points', 'Stars']

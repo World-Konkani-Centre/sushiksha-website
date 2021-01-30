@@ -53,8 +53,12 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.get_point }}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points }}</p>
                                 </div>
+
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                </div>-->
                             </div>
                         </div>
                         <div class="card-footer">
@@ -140,12 +144,13 @@
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
                                         <div class="row pricing">
-                                            {% for badge, count in badges %}
+                                            {% for badge in badges %}
                                                 <div class="col-lg-3 col-4 box">
-                                                    <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy"
-                                                         alt="{{ badge.badges.title }}" width="80%" class="img-rounded">
-                                                    <h4>{{ count }}</h4>
+                                                    <h3>{{ badge.badges__title }}</h3>
+                                                    <img src="/media/{{badge.badges__logo}}" loading="lazy"
+                                                         title="{{ badge.badges__title }}" alt="{{ badge.badges__title }}"
+                                                         width="80%" class="img-rounded">
+                                                    <h4>{{ badge.badges__title__count }}</h4>
                                                 </div>
                                             {% endfor %}
                                         </div>

@@ -60,8 +60,7 @@ def user_login(request):
 @login_required
 def profile(request):
     profile_details = {}
-    reward, count = collect_badges(request.user)
-    zipped_data = zip(reward, count)
+    badges = Reward.objects.filter(user=request.user).values('badges__title','badges__logo').annotate(Count('badges__title'))
     if request.POST:
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -95,7 +94,7 @@ def profile(request):
         'u_form': u_form,
         'p_form': p_form,
         'title': "Profile",
-        'badges': zipped_data,
+        'badges': badges,
         'profile_details': profile_details
     }
     return render(request, 'profile.html', context=context)

@@ -9,170 +9,232 @@
 
 {% block content %}
 
-    <main id="main">
+<main id="main">
 
-        <!-- ======= Breadcrumbs ======= -->
-        <div class="breadcrumbs" data-aos="fade-in">
-            <div class="container">
-                <h2>Leaderboard</h2>
-            </div>
-        </div><!-- End Breadcrumbs -->
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs" data-aos="fade-in">
+        <div class="container">
+            <h2>Leaderboard</h2>
+        </div>
+    </div><!-- End Breadcrumbs -->
 
 
-        <section id="" class="profile">
-            <div class="container" data-aos="fade-up">
-                <div class="row" data-aos="zoom-in" data-aos-delay="100">
+    <section id="" class="profile">
+        <div class="container" data-aos="fade-up">
+            <div class="row" data-aos="zoom-in" data-aos-delay="100">
 
-                    <div class="col-lg-7">
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
-                                    Team Leaderboard</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                        <tr class="font-weight-bold">
-                                            <th>Rank</th>
-                                            <th>Team</th>
-                                            <th>Points</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for team in teams %}
-                                            <tr>
-                                                <td class="font-weight-bold">
-                                                    {{ forloop.counter }}
-                                                </td>
-                                                <td>
-                                                    <div class="media align-items-center">
-                                                        <a href="{{ team.get_absolute_url }}"
-                                                           class="avatar rounded-circle mr-3">
-                                                            <img src="{{ team.image.url }}" loading="lazy"
-                                                                 alt="{{ team.name }}" title="{{ team.name }}">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <a href="{{ team.get_absolute_url }}"><span
-                                                                    class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ team.points }} </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                <div class="col-lg-7">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                Team Leaderboard</p>
                         </div>
-                    </div>
-
-                    <div class="col-lg-5">
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
-                                    House Leaderboard</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                        <tr class="font-weight-bold">
-                                            <th>Rank</th>
-                                            <th>House</th>
-                                            <th>Points</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for team in house %}
-                                            <tr>
-                                                <td class="font-weight-bolder">
-                                                    {{ forloop.counter }}
-                                                </td>
-                                                <td>
-                                                    <div class="media align-items-center">
-                                                        <a href="{{ team.get_absolute_url }}"
-                                                           class="avatar rounded-circle mr-3">
-                                                            <img src="{{ team.image.url }}" loading="lazy"
-                                                                 alt="{{ team.name }}" title="{{ team.name }}">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <a href="{{ team.get_absolute_url }}"><span
-                                                                    class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ team.points }} </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-12">
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
-                                    Individual Leaderboard</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr class="font-weight-bold">
+                                        <th>Rank</th>
+                                        <th>Team</th>
+                                        <th>Points</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for team in teams %}
                                         <tr>
-                                            <th>User</th>
-                                            <th>Badge Count</th>
-                                            <th>Points</th>
-                                            <th>Team</th>
-                                            <th>House</th>
+                                            <td class="font-weight-bold">
+                                                {{ forloop.counter }}
+                                            </td>
+                                            <td>
+                                                <div class="media align-items-center">
+                                                    <a href="{{ team.get_absolute_url }}"
+                                                       class="avatar rounded-circle mr-3">
+                                                        <img src="{{ team.image.url }}" loading="lazy"
+                                                             alt="{{ team.name }}" title="{{ team.name }}">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a href="{{ team.get_absolute_url }}"><span
+                                                                class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ team.points }} </td>
                                         </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for entry in data %}
-                                            <tr>
-                                                <td>
-                                                    <div class="media align-items-center">
-                                                        <a href="{{ entry.get_absolute_url }}"
-                                                           class="avatar rounded-circle mr-3">
-                                                            <img src="{{ entry.image.url }}" loading="lazy"
-                                                                 alt="{{ entry.user.username }}"
-                                                                 title="{{ entry.user.username }}">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <a href="{{ entry.get_absolute_url }}"><span
-                                                                    class="mb-0 text-sm font-weight-bold">
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                House Leaderboard</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr class="font-weight-bold">
+                                        <th>Rank</th>
+                                        <th>House</th>
+                                        <th>Points</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for team in house %}
+                                        <tr>
+                                            <td class="font-weight-bolder">
+                                                {{ forloop.counter }}
+                                            </td>
+                                            <td>
+                                                <div class="media align-items-center">
+                                                    <a href="{{ team.get_absolute_url }}"
+                                                       class="avatar rounded-circle mr-3">
+                                                        <img src="{{ team.image.url }}" loading="lazy"
+                                                             alt="{{ team.name }}" title="{{ team.name }}">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a href="{{ team.get_absolute_url }}"><span
+                                                                class="mb-0 text-sm font-weight-bold">{{ team.name }}</span></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ team.points }} </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                Top Mentions</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr class="font-weight-bold">
+                                        <th>Title</th>
+                                        <th>Receiver</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for mention in mentions %}
+                                        <tr>
+                                        <td class="font-weight-bolder">
+
+                                        <details>
+                                                        <summary
+                                                                class="font-weight-bold"><img src="{{ mention.image.url }}" class="avatar rounded-circle mr-3" loading="lazy"
+                                                     alt="{{ mention.title }}"
+                                                     title="{{ mention.title }}">
+                                            {{ mention.title }}</summary>
+                                                        <p>{{ mention.description }}</p>
+                                                    </details>
+
+                                        </td>
+                                        <td>
+                                        <div class="media align-items-center">
+                                        {% if mention.user %}
+                                            <div class="media-body">
+                                                <a href="{{ mention.user.profile.get_absolute_url }}"><span
+                                                        class="mb-0 text-sm font-weight-bold">{{ mention.user.profile.name }}</span></a>
+                                            </div>
+                                        {% elif mention.team %}
+                                            <div class="media-body">
+                                                <a href="{{ mention.team.get_absolute_url }}"><span
+                                                        class="mb-0 text-sm font-weight-bold">{{ mention.team.name }}</span></a>
+                                            </div>
+                                        {% else %}
+                                            <a href="{{ mention.house.get_absolute_url }}"
+                                               class="avatar rounded-circle mr-3">
+                                                <img src="{{ mention.house.image.url }}" loading="lazy"
+                                                     alt="{{ mention.house.name }}"
+                                                     title="{{ mention.house.name }}">
+                                            </a>
+                                            <div class="media-body">
+                                                <a href="{{ mention.house.get_absolute_url }}"><span
+                                                        class="mb-0 text-sm font-weight-bold">{{ mention.house.name }}</span></a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </div>
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                Individual Leaderboard</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Badge Count</th>
+                                        <th>Points</th>
+                                        <th>Team</th>
+                                        <th>House</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for entry in data %}
+                                        <tr>
+                                            <td>
+                                                <div class="media align-items-center">
+                                                    <a href="{{ entry.get_absolute_url }}"
+                                                       class="avatar rounded-circle mr-3">
+                                                        <img src="{{ entry.image.url }}" loading="lazy"
+                                                             alt="{{ entry.user.username }}"
+                                                             title="{{ entry.user.username }}">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a href="{{ entry.get_absolute_url }}"><span
+                                                                class="mb-0 text-sm font-weight-bold">
                                                                 {% if entry.user.profile.name %}
                                                                     {{ entry.user.profile.name }}
                                                                 {% else %}
                                                                     {{ entry.user.username }}
                                                                 {% endif %}
                                                             </span></a>
-                                                        </div>
                                                     </div>
-                                                </td>
-                                                <td>{{ entry.get_number_of_badges }}</td>
-                                                <td>{{ entry.get_point }}</td>
-                                                <td>{{ entry.get_team_name }}</td>
-                                                <td>{{ entry.get_house_name }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ entry.get_number_of_badges }}</td>
+                                            <td>{{ entry.points }}</td>
+                                            <td>{{ entry.get_team_name }}</td>
+                                            <td>{{ entry.get_house_name }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
-        </section>
 
-    </main><!-- End #main -->
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
 
 
 {% endblock content %}

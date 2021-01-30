@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Reward
+from .models import Profile, Reward, Mentions
 
 
 class UserRegisterForm(UserCreationForm):
@@ -23,7 +23,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'batch', 'phone', 'college',
+        fields = ['name', 'batch', 'phone', 'college', 'degree', 'branch',
                   'profession', 'address', 'guidance',
                   'linkedin', 'instagram', 'twitter',
                   'github', 'okr', 'facebook',
@@ -54,8 +54,14 @@ class BadgeForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Describe why your are giving the badge',
-        'rows': 4
+        'rows': 5,
+        'minlength': 125,
     }))
+
+    badges = forms.Select(attrs={
+        'class': 'form-control'
+    }
+    )
 
     class Meta:
         model = Reward
@@ -66,3 +72,30 @@ class BadgeForm(forms.ModelForm):
         # for visible in self.visible_fields():
         #     if visible.html_name == 'user' or visible.html_name == 'badges':
         #         visible.field.widget.attrs['class'] = 'fstdropdown-select'
+
+
+class MentionUpdateForm(forms.ModelForm):
+    team = forms.Select(attrs={
+        'class': 'form-control'
+    })
+    house = forms.Select(attrs={
+        'class': 'form-control'
+    })
+    user = forms.Select(attrs={
+        'class': 'form-control'
+    })
+
+    class Meta:
+        model = Mentions
+        fields = ['title', 'team', 'house', 'user', 'image']
+
+
+class RangeRequestForm(forms.Form):
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")
+
+
+class UserRangeRequestForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all().order_by('profile__user'),label="Seect the user")
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")

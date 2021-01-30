@@ -1,13 +1,22 @@
+import csv
+import datetime
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.contrib import messages
 from django.contrib.auth.models import User
-from django.db.models import Q
-from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm
-from .models import Pomodoro, Badge, Profile, House, Teams
-from .utils import collect_badges, get_house_data, get_team_data, email_check
+from django.db.models import Q, Count, Sum
 from django.db.models.functions import Lower
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.utils import timezone
+from django.utils.timezone import make_aware
+from djqscsv import render_to_csv_response
+
+from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, MentionUpdateForm, \
+    RangeRequestForm, UserRangeRequestForm
+from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
+from .utils import collect_badges, get_house_data, get_team_data, email_check, user_chart_data
 
 
 def register(request):
@@ -51,8 +60,7 @@ def user_login(request):
 @login_required
 def profile(request):
     profile_details = {}
-    reward, count = collect_badges(request.user)
-    zipped_data = zip(reward, count)
+    badges = Reward.objects.filter(user=request.user).values('badges__title','badges__logo').annotate(Count('badges__title'))
     if request.POST:
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -76,6 +84,8 @@ def profile(request):
             'name': query.name,
             'phone': query.phone,
             'college': query.college,
+            'degree': query.degree,
+            'branch': query.branch,
             'profession': query.profession,
             'address': query.address,
             'guidance': query.guidance,
@@ -84,37 +94,11 @@ def profile(request):
         'u_form': u_form,
         'p_form': p_form,
         'title': "Profile",
-        'badges': zipped_data,
+        'badges': badges,
         'profile_details': profile_details
     }
     return render(request, 'profile.html', context=context)
-
-
-@login_required
-def log_pomodoro(request):
-    pomodoro = Pomodoro.objects.filter(user=request.user).first()
-
-    if request.POST:
-        productivity = int(request.POST['productivity'])
-        energy = int(request.POST['energy'])
-        productivity = round((productivity * 0.05), 2)
-        energy = round((energy * 0.05), 2)
-        pomodoro.count += 1
-        pomodoro.energy = (pomodoro.energy + energy) / 2
-        pomodoro.productivity = (pomodoro.productivity + productivity) / 2
-        pomodoro.save()
-        messages.success(request, f'Your data has been recorded.')
-        return redirect(request.META['HTTP_REFERER'])
-    else:
-        data = Pomodoro.objects.all().order_by('-count')
-        context = {
-            'leaderboard': data,
-            'title': "Analytics",
-        }
-        for i in data:
-            print(i, i.id, i.count, i.user.profile.image.url)
-        return render(request, 'leaderboard.html', context=context)
-
+    
 
 @login_required
 def search(request):
@@ -128,29 +112,19 @@ def search(request):
             Q(profile__guidance__icontains=query) |
             Q(email__icontains=query)
         ).distinct()
-    mentors = queryset.filter(profile__role=True)
-    mentees = queryset.filter(profile__role=False)
+    mentors = queryset.filter(profile__role=True).order_by(Lower('profile__name'))
+    mentees = queryset.filter(profile__role=False).order_by(Lower('profile__name'))
     context = {
         'mentee': mentees,
         'mentors': mentors,
         'title': 'Members'
     }
-    for user in mentees:
-        print(user)
-    for user in mentors:
-        print(user)
     return render(request, 'search.html', context=context)
 
 
-# class UserListView(ListView):
-#     model = User
-#     template_name = 'trainers.html'
-#     context_object_name = 'users'
-
-
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=True).order_by(Lower('user__username'))
-    mentee = Profile.objects.filter(role=False).order_by(Lower('user__username'))
+    mentors = Profile.objects.filter(role=True).order_by(Lower('name'))
+    mentee = Profile.objects.filter(role=False).order_by(Lower('name'))
     context = {
         'mentors': mentors,
         'mentee': mentee,
@@ -162,14 +136,18 @@ def user_list_view(request):
 @login_required
 def user_detail_view(request, pk):
     user = get_object_or_404(User, id=pk)
-    reward, count = collect_badges(user)
-    zipped_data = zip(reward, count)
-
+    badges = Reward.objects.filter(user=user).values('badges__title','badges__logo').annotate(Count('badges__title'))
+    categories, data = user_chart_data(user)
+    zipped_data = zip(categories, data)
+    color = ['window.chartColors.red', 'window.chartColors.orange', 'window.chartColors.yellow', 'window.chartColors.green', 'window.chartColors.blue', 'window.chartColors.purple', 'window.chartColors.grey', 'window.chartColors.red', 'window.chartColors.orange', 'window.chartColors.yellow', 'window.chartColors.green', 'window.chartColors.blue', 'window.chartColors.purple']
     context = {
         'title': f"{user.username}",
         'user': user,
-        'badges': zipped_data,
+        'badges': badges,
+        'data_query': zipped_data,
+        'color': color
     }
+
 
     return render(request, 'profile-detail.html', context=context)
 
@@ -178,9 +156,11 @@ def user_detail_view(request, pk):
 def create_badge(request, id):
     user = get_object_or_404(User, id=id)
     form = RewardForm(request.POST or None)
+    badges = Badge.objects.all().order_by(Lower('title'))
     if not request.user.profile.role:
-        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
-    badges = Badge.objects.all()
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False).order_by(Lower('title'))
+    else:
+        form.fields['badges'].queryset = badges
     if request.POST:
         if form.is_valid():
             if user.id == request.user.id:
@@ -203,7 +183,7 @@ def create_badge(request, id):
                     form.instance.awarded_by = request.user.username
                     form.save()
                     messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
-                    return redirect(reverse('user-detail', kwargs={'pk': user.id}))
+                    return redirect('trainers')
 
     context = {
         'heading': f'Give a badge to {user.username}',
@@ -216,9 +196,12 @@ def create_badge(request, id):
 @login_required()
 def badge(request):
     form = BadgeForm(request.POST or None)
+    badges = Badge.objects.all().order_by(Lower('title'))
     if not request.user.profile.role:
-        form.fields['badges'].queryset = Badge.objects.filter(featured=False)
-    badges = Badge.objects.all()
+        form.fields['badges'].queryset = Badge.objects.filter(featured=False).order_by(Lower('title'))
+    else:
+        form.fields['badges'].queryset = badges
+    form.fields['user'].queryset = User.objects.all().order_by(Lower('username'))
     if request.POST:
         if form.is_valid():
             if form.instance.user.id == request.user.id:
@@ -231,7 +214,7 @@ def badge(request):
                     row.awarded_by = request.user.username
                 row.save()
                 messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
-                return redirect(reverse('user-detail', kwargs={'pk': form.instance.user.id}))
+                return redirect('trainers')
     context = {
         'form': form,
         'badges': badges
@@ -244,14 +227,627 @@ def leader(request):
     data = Profile.objects.all()
     house = House.objects.all()
     team = Teams.objects.all()
-    get_house_data(houses=house)
-    get_team_data(teams=team)
     team = team.order_by('-points')
     house = house.order_by('-points')
+    mentions = Mentions.objects.all().order_by(Lower('title'))
     context = {
         'data': data,
         'house': house,
         'teams': team,
-        'title': 'Leaderboard'
+        'title': 'Leaderboard',
+        'mentions': mentions
     }
     return render(request, 'leader.html', context=context)
+
+
+@login_required
+def get_logs(request):
+    if request.user.is_authenticated:
+        return render(request, 'logs.html', context=None)
+
+
+@login_required
+def get_profile_file(request):
+    if request.user.is_superuser:
+        queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
+                                                , 'phone', 'college', 'profession', 'linkedin',
+                                                'github', 'okr', 'points', 'stars').order_by('name')
+        return render_to_csv_response(queryset, filename='Sushiksha-Profiles' + str(datetime.date.today()),
+                                      field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
+                                                        'user__email': 'email', 'phone': 'phone number',
+                                                        'college': 'college',
+                                                        'profession': 'profession', 'linkedin': 'linked in',
+                                                        'github': 'github',
+                                                        'okr': 'OKR', 'points': 'Total Points', 'stars': 'Stars'})
+
+
+@login_required
+def get_user_file(request):
+    date = timezone.now()
+    date_7 = date - datetime.timedelta(days=7)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=Sushiksha-User-Points' + str(
+        datetime.date.today()) + '.csv'
+    writer = csv.writer(response)
+    headers = ["WEEK "]
+    badge_category_start = 1
+    category_points = []
+    categories = BadgeCategory.objects.all().order_by('name')
+    for category in categories:
+        headers.append(category.name)
+        category_points.append(0)
+    headers.append('Points this week')
+    writer.writerow(headers)
+
+    user = User.objects.filter(id=request.user.id).first()
+    # week 1
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values(
+        'badges__category__name').annotate(Sum('badges__points'))
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + category[
+                                                            'badges__points__sum']
+        points = points + category['badges__points__sum']
+    row_of_user = ["Week 1 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    # week 2
+    date = date_7
+    date_7 = date - datetime.timedelta(days=7)
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values(
+        'badges__category__name').annotate(Sum('badges__points'))
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + category[
+                                                            'badges__points__sum']
+        points = points + category['badges__points__sum']
+    row_of_user = ["Week 2 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    # week 3
+    date = date_7
+    date_7 = date - datetime.timedelta(days=7)
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values(
+        'badges__category__name').annotate(Sum('badges__points'))
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + category[
+                                                            'badges__points__sum']
+        points = points + category['badges__points__sum']
+    row_of_user = ["Week 3 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    # week 4
+    date = date_7
+    date_7 = date - datetime.timedelta(days=7)
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7).values(
+        'badges__category__name').annotate(Sum('badges__points'))
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for category in badges_received:
+        index = headers.index(category['badges__category__name'])
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + category[
+                                                            'badges__points__sum']
+        points = points + category['badges__points__sum']
+    row_of_user = ["Week 4 " + str(date.date()) + ' -- ' + str(date_7.date())] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    return response
+
+
+@login_required
+def get_team_file(request):
+    date = timezone.now()
+    date_7 = date - datetime.timedelta(days=7)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=Sushiksha-Team-Points' + str(
+        datetime.date.today()) + '.csv'
+    writer = csv.writer(response)
+    headers = ['Member Name']
+    badge_category_start = 1
+    category_points = []
+    categories = BadgeCategory.objects.all().order_by('name')
+    for category in categories:
+        headers.append(category.name)
+        category_points.append(0)
+    headers.append('Points This Week')
+    writer.writerow(headers)
+
+    team = Teams.objects.filter(members__user__id=request.user.id).first()
+    if team is not None:
+        members = team.members.all().order_by('name')
+    else:
+        return redirect('logs')
+    for member in members:
+        points = 0
+        for i in range(0, len(category_points)):
+            category_points[i] = 0
+        badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7).values(
+            'badges__category__name').annotate(Sum('badges__points'))
+        for category in badges_received:
+            index = headers.index(category['badges__category__name'])
+            category_points[index - badge_category_start] = category_points[
+                                                                index - badge_category_start] + category[
+                                                                'badges__points__sum']
+            points = points + category['badges__points__sum']
+        row_of_team = [member.name] + category_points + [points]
+        writer.writerow(row_of_team)
+    return response
+
+
+@login_required
+def get_user_file_large(request):
+    if request.POST:
+        form = RangeRequestForm(request.POST)
+        if form.is_valid():
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-All-Users-Points ' + str(
+                datetime.date.today()) + '.csv'
+            writer = csv.writer(response)
+            headers = ['Username', 'Name', 'Email', 'Batch', 'Total Points', 'Stars']
+            badge_category_start = 6
+            category_points = []
+            categories = BadgeCategory.objects.all().order_by('name')
+            for category in categories:
+                headers.append(category.name)
+                category_points.append(0)
+            headers.append(
+                'Points In Interval - ' + beginning.strftime("%d/%b/%Y %H:%M") + '---' + end.strftime("%d/%b/%Y %H:%M"))
+            writer.writerow(headers)
+
+            users = User.objects.all().order_by('username')
+
+            for user in users:
+                points = 0
+                badges_received = Reward.objects.filter(user=user, timestamp__lte=end, timestamp__gte=beginning).values(
+                    'badges__category__name').annotate(Sum('badges__points'))
+                for i in range(0, len(category_points)):
+                    category_points[i] = 0
+                for category in badges_received:
+                    index = headers.index(category['badges__category__name'])
+                    category_points[index - badge_category_start] = category_points[
+                                                                        index - badge_category_start] + category[
+                                                                        'badges__points__sum']
+                    points = points + category['badges__points__sum']
+                row_of_user = [user.username, user.profile.name, user.email, user.profile.batch, user.profile.points,
+                               user.profile.stars] + category_points + [points]
+                writer.writerow(row_of_user)
+            return response
+    else:
+        form = RangeRequestForm()
+        heading = "User Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'logs-users.html', context=context)
+
+
+@login_required
+def get_team_file_large(request):
+    if request.POST:
+        form = RangeRequestForm(request.POST)
+        if form.is_valid():
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-All-Teams-Points' + str(
+                datetime.date.today()) + '.csv'
+            writer = csv.writer(response)
+            headers = ['Team Name', 'Total Points']
+            badge_category_start = 2
+            category_points = []
+            categories = BadgeCategory.objects.all().order_by('name')
+            for category in categories:
+                headers.append(category.name)
+                category_points.append(0)
+            headers.append(
+                'Points In Interval - ' + beginning.strftime("%d/%b/%Y %H:%M") + '---' + end.strftime("%d/%b/%Y %H:%M"))
+            writer.writerow(headers)
+
+            teams = Teams.objects.all().order_by('name')
+
+            for team in teams:
+                members = team.members.all()
+                points = 0
+                for i in range(0, len(category_points)):
+                    category_points[i] = 0
+                for member in members:
+                    badges_received = Reward.objects.filter(user=member.user, timestamp__lte=end,
+                                                            timestamp__gte=beginning).values(
+                        'badges__category__name').annotate(Sum('badges__points'))
+                    for category in badges_received:
+                        index = headers.index(category['badges__category__name'])
+                        category_points[index - badge_category_start] = category_points[
+                                                                            index - badge_category_start] + category[
+                                                                            'badges__points__sum']
+                        points = points + category['badges__points__sum']
+                row_of_team = [team.name, team.points] + category_points + [points]
+                writer.writerow(row_of_team)
+            return response
+    else:
+        form = RangeRequestForm()
+        heading = "Team Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'logs-users.html', context=context)
+
+
+@login_required
+def get_single_user_file_large(request):
+    if request.POST:
+        form = UserRangeRequestForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-' + str(user) + '-Points' + str(
+                datetime.date.today()) + '.csv'
+            writer = csv.writer(response)
+            headers = ['WEEK']
+            badge_category_start = 1
+            category_points = []
+            categories = BadgeCategory.objects.all().order_by('name')
+            for category in categories:
+                headers.append(category.name)
+                category_points.append(0)
+            headers.append('Points this week')
+            writer.writerow(headers)
+
+            delta = datetime.timedelta(days=7)
+            week_counter = 1
+            next = end - delta
+            while next >= beginning:
+                points = 0
+                for i in range(0, len(category_points)):
+                    category_points[i] = 0
+                badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
+                                                        timestamp__gt=next).values('badges__category__name').annotate(
+                    Sum('badges__points'))
+                for category in badges_received:
+                    index = headers.index(category['badges__category__name'])
+                    category_points[index - badge_category_start] = category_points[
+                                                                        index - badge_category_start] + category[
+                                                                        'badges__points__sum']
+                    points = points + category['badges__points__sum']
+                row_of_team = ["Week " + str(week_counter) + '--' + str(end.date()) + ' -- ' + str(
+                    next.date())] + category_points + [points]
+                writer.writerow(row_of_team)
+                end = next
+                next -= delta
+                week_counter += 1
+
+            points = 0
+            for i in range(0, len(category_points)):
+                category_points[i] = 0
+            badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
+                                                    timestamp__gt=beginning).values('badges__category__name').annotate(
+                Sum('badges__points'))
+            for category in badges_received:
+                index = headers.index(category['badges__category__name'])
+                category_points[index - badge_category_start] = category_points[
+                                                                    index - badge_category_start] + category[
+                                                                    'badges__points__sum']
+                points = points + category['badges__points__sum']
+            row_of_team = ["Week " + str(week_counter) + '--' + str(end.date()) + ' -- ' + str(
+                beginning.date())] + category_points + [
+                              points]
+            writer.writerow(row_of_team)
+            return response
+
+    else:
+        form = UserRangeRequestForm()
+        heading = "Single User Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'logs-users.html', context=context)
+
+
+"""
+## UNOptimized
+
+
+@login_required
+def get_user_file(request):
+    date = timezone.now()
+    date_7 = date - datetime.timedelta(days=7)
+    date_7 = date_7.date()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=Sushiksha-User-Points' + str(
+        datetime.date.today()) + '.csv'
+    writer = csv.writer(response)
+    headers = ["WEEK "]
+    badge_category_start = 1
+    category_points = []
+    categories = BadgeCategory.objects.all().order_by('name')
+    for category in categories:
+        headers.append(category.name)
+        category_points.append(0)
+    headers.append('Points this week')
+    writer.writerow(headers)
+
+    user = User.objects.filter(id=request.user.id).first()
+    # week 1
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for _badge in badges_received:
+        index = headers.index(_badge.badges.category.name)
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + _badge.badges.points
+        points = points + _badge.badges.points
+    row_of_user = ["Week 1 " + str(date.date()) + ' -- ' + str(date_7)] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    # week 2
+    date = date_7
+    date_7 = date - datetime.timedelta(days=7)
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for _badge in badges_received:
+        index = headers.index(_badge.badges.category.name)
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + _badge.badges.points
+        points = points + _badge.badges.points
+    row_of_user = ["Week 2 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    # week 3
+    date = date_7
+    date_7 = date - datetime.timedelta(days=7)
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for _badge in badges_received:
+        index = headers.index(_badge.badges.category.name)
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + _badge.badges.points
+        points = points + _badge.badges.points
+    row_of_user = ["Week 3 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    # week 4
+    date = date_7
+    date_7 = date - datetime.timedelta(days=7)
+    points = 0
+    badges_received = Reward.objects.filter(user=user, timestamp__lte=date, timestamp__gt=date_7)
+    for i in range(0, len(category_points)):
+        category_points[i] = 0
+    for _badge in badges_received:
+        index = headers.index(_badge.badges.category.name)
+        category_points[index - badge_category_start] = category_points[
+                                                            index - badge_category_start] + _badge.badges.points
+        points = points + _badge.badges.points
+    row_of_user = ["Week 4 " + str(date) + ' -- ' + str(date_7)] + category_points + [points]
+    writer.writerow(row_of_user)
+
+    return response
+
+@login_required
+def get_team_file(request):
+    date = timezone.now()
+    date_7 = date - datetime.timedelta(days=7)
+    date_7 = date_7.date()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=Sushiksha-Team-Points' + str(
+        datetime.date.today()) + '.csv'
+    writer = csv.writer(response)
+    headers = ['Member Name']
+    badge_category_start = 1
+    category_points = []
+    categories = BadgeCategory.objects.all().order_by('name')
+    for category in categories:
+        headers.append(category.name)
+        category_points.append(0)
+    headers.append('Points This Week')
+    writer.writerow(headers)
+
+    team = Teams.objects.filter(members__user__id=request.user.id).first()
+    if team is not None:
+        members = team.members.all().order_by('name')
+    else:
+        return redirect('logs')
+    for member in members:
+        points = 0
+        for i in range(0, len(category_points)):
+            category_points[i] = 0
+        badges_received = Reward.objects.filter(user=member.user, timestamp__lte=date, timestamp__gt=date_7)
+        for _badge in badges_received:
+            index = headers.index(_badge.badges.category.name)
+            category_points[index - badge_category_start] = category_points[
+                                                                index - badge_category_start] + _badge.badges.points
+            points = points + _badge.badges.points
+        row_of_team = [member.name] + category_points + [points]
+        writer.writerow(row_of_team)
+    return response
+
+
+@login_required
+def get_user_file_large(request):
+    if request.POST:
+        form = RangeRequestForm(request.POST)
+        if form.is_valid():
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-All-Users-Points' + str(
+                datetime.date.today()) + '.csv'
+            writer = csv.writer(response)
+            headers = ['Username', 'Name', 'Email', 'Batch', 'Total Points', 'Stars']
+            badge_category_start = 6
+            category_points = []
+            categories = BadgeCategory.objects.all().order_by('name')
+            for category in categories:
+                headers.append(category.name)
+                category_points.append(0)
+            headers.append(
+                'Points In Interval - ' + beginning.strftime("%d/%b/%Y %H:%M") + '---' + end.strftime("%d/%b/%Y %H:%M"))
+            writer.writerow(headers)
+
+            users = User.objects.all().order_by('username')
+
+            for user in users:
+                points = 0
+                badges_received = Reward.objects.filter(user=user, timestamp__lte=end, timestamp__gte=beginning)
+                for i in range(0, len(category_points)):
+                    category_points[i] = 0
+                for _badge in badges_received:
+                    index = headers.index(_badge.badges.category.name)
+                    category_points[index - badge_category_start] = category_points[
+                                                                        index - badge_category_start] + _badge.badges.points
+                    points = points + _badge.badges.points
+                row_of_user = [user.username, user.profile.name, user.email, user.profile.batch, user.profile.points,
+                               user.profile.stars] + category_points + [points]
+                writer.writerow(row_of_user)
+            return response
+    else:
+        form = RangeRequestForm()
+        heading = "User Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'logs-users.html', context=context)
+
+@login_required
+def get_team_file_large(request):
+    if request.POST:
+        form = RangeRequestForm(request.POST)
+        if form.is_valid():
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-All-Teams-Points' + str(
+                datetime.date.today()) + '.csv'
+            writer = csv.writer(response)
+            headers = ['Team Name', 'Total Points']
+            badge_category_start = 2
+            category_points = []
+            categories = BadgeCategory.objects.all().order_by('name')
+            for category in categories:
+                headers.append(category.name)
+                category_points.append(0)
+            headers.append(
+                'Points In Interval - ' + beginning.strftime("%d/%b/%Y %H:%M") + '---' + end.strftime("%d/%b/%Y %H:%M"))
+            writer.writerow(headers)
+
+            teams = Teams.objects.all().order_by('name')
+
+            for team in teams:
+                members = team.members.all()
+                points = 0
+                for i in range(0, len(category_points)):
+                    category_points[i] = 0
+                for member in members:
+                    badges_received = Reward.objects.filter(user=member.user, timestamp__lte=end,
+                                                            timestamp__gte=beginning)
+                    for _badge in badges_received:
+                        index = headers.index(_badge.badges.category.name)
+                        category_points[index - badge_category_start] = category_points[
+                                                                            index - badge_category_start] + _badge.badges.points
+                        points = points + _badge.badges.points
+                row_of_team = [team.name, team.points] + category_points + [points]
+                writer.writerow(row_of_team)
+            return response
+    else:
+        form = RangeRequestForm()
+        heading = "Team Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'logs-users.html', context=context)
+
+
+@login_required
+def get_single_user_file_large(request):
+    if request.POST:
+        form = UserRangeRequestForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Sushiksha-'+str(user)+'-Points' + str(
+                datetime.date.today()) + '.csv'
+            writer = csv.writer(response)
+            headers = ['WEEK']
+            badge_category_start = 1
+            category_points = []
+            categories = BadgeCategory.objects.all().order_by('name')
+            for category in categories:
+                headers.append(category.name)
+                category_points.append(0)
+            headers.append('Points this week')
+            writer.writerow(headers)
+
+            delta = datetime.timedelta(days=7)
+            week_counter = 1
+            next = end - delta
+            while next >= beginning:
+                points = 0
+                for i in range(0, len(category_points)):
+                    category_points[i] = 0
+                badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
+                                                        timestamp__gt=next)
+                for _badge in badges_received:
+                    index = headers.index(_badge.badges.category.name)
+                    category_points[index - badge_category_start] = category_points[
+                                                                        index - badge_category_start] + _badge.badges.points
+                    points = points + _badge.badges.points
+                row_of_team = ["Week " + str(week_counter) + '--' + str(end.date()) + ' -- ' + str(
+                    next.date())] + category_points + [points]
+                writer.writerow(row_of_team)
+                end = next
+                next -= delta
+                week_counter += 1
+
+            points = 0
+            for i in range(0, len(category_points)):
+                category_points[i] = 0
+            badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
+                                                    timestamp__gt=beginning)
+            for _badge in badges_received:
+                index = headers.index(_badge.badges.category.name)
+                category_points[index - badge_category_start] = category_points[
+                                                                    index - badge_category_start] + _badge.badges.points
+                points = points + _badge.badges.points
+            row_of_team = ["Week " + str(week_counter) + '--' + str(end.date()) + ' -- ' + str(beginning.date())] + category_points + [
+                points]
+            writer.writerow(row_of_team)
+            return response
+
+    else:
+        form = UserRangeRequestForm()
+        heading = "Single User Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'logs-users.html', context=context)
+"""

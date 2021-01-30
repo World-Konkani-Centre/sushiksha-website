@@ -6,6 +6,7 @@
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
                 <h2>{{ query_set.name }}</h2>
+                 <h3>Points : {{ query_set.points }}</h3>
             </div>
         </div>
 
@@ -31,8 +32,7 @@
                         {% if forloop.counter == 1 %}
                             <div role="tabpanel" class="col-lg-9 tab-pane fade show active"
                                  id="team-{{ forloop.counter }}">
-                                {% for member in team.members.all %}
-                                    {{ team }}
+                                {% for member in team.members.all|dictsortreversed:"points" %}
                                     <div class="row schedule-item">
                                         <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                         <div class="col-md-8">
@@ -45,15 +45,15 @@
                                             <p>{{ member.batch }} VKSSF Scholar</p>
                                         </div>
                                         <div class="col-md-2">
-                                            <h4>Points: {{ member.get_point }}</h4>
+                                            <h4>Points: {{ member.points }}</h4>
+                                            <!--<h4>Stars: {{ member.stars }}</h4>-->
                                         </div>
                                     </div>
                                 {% endfor %}
                             </div>
                         {% else %}
                             <div role="tabpanel" class="col-lg-9 tab-pane fade show" id="team-{{ forloop.counter }}">
-                                {% for member in team.members.all %}
-                                    {{ team }}
+                                {% for member in team.members.all|dictsortreversed:"points" %}
                                     <div class="row schedule-item">
                                         <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
                                         <div class="col-md-8">
@@ -66,8 +66,10 @@
                                             <p>{{ member.batch }} VKSSF Scholar</p>
                                         </div>
                                         <div class="col-md-2">
-                                            <h4>Points: {{ member.get_point }}</h4>
+                                            <h4>Points: {{ member.points }}</h4>
+                                            <!--<h4>Stars: {{ member.stars }}</h4>-->
                                         </div>
+
                                     </div>
                                 {% endfor %}
                             </div>

@@ -2,6 +2,13 @@
 {% load static %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
+
+
+{% block main_style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+{% endblock main_style %}
+
+
 {% block content %}
 
     <main id="main">
@@ -55,8 +62,11 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.get_point }}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points}}</p>
                                 </div>
+                            <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                </div>-->
                             </div>
                         </div>
                         <div class="card-footer">
@@ -109,7 +119,7 @@
                                             {% if user.profile.name %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Full Name</h6>
+                                                        <h6 class="mb-0 text-capitalize">Full Name</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.name }}
@@ -119,7 +129,7 @@
                                             {% endif %}
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Username</h6>
+                                                    <h6 class="mb-0 text-capitalize">Username</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-dark">
                                                     {{ user.username }}
@@ -128,7 +138,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Email</h6>
+                                                    <h6 class="mb-0 text-capitalize" >Email</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-dark">
                                                     {{ user.email }}
@@ -138,7 +148,7 @@
                                             {% if user.profile.phone %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Mobile</h6>
+                                                        <h6 class="mb-0 text-capitalize">Mobile</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.phone }}
@@ -146,10 +156,32 @@
                                                 </div>
                                                 <hr>
                                             {% endif %}
+                                        {% if user.profile.degree %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0 text-capitalize">Degree</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{ user.profile.degree }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endif %}
+                                        {% if user.profile.branch %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0 text-capitalize">Branch</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{ user.profile.branch }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endif %}
                                             {% if user.profile.phone %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Profession</h6>
+                                                        <h6 class="mb-0 text-capitalize">Profession</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.profession }}
@@ -160,7 +192,7 @@
                                             {% if user.profile.address %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Address</h6>
+                                                        <h6 class="mb-0 text-capitalize">Address</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.address }}
@@ -171,7 +203,7 @@
                                             {% if user.profile.batch %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">VKSSF Batch</h6>
+                                                        <h6 class="mb-0 text-capitalize">VKSSF Batch</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.batch }}
@@ -182,7 +214,7 @@
                                             {% if user.profile.college %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">College</h6>
+                                                        <h6 class="mb-0 text-capitalize">College</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.college }}
@@ -193,7 +225,7 @@
                                             {% if user.profile.guidance %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <h6 class="mb-0">Guidance Fields</h6>
+                                                        <h6 class="mb-0 text-capitalize">Guidance Fields</h6>
                                                     </div>
                                                     <div class="col-sm-9 text-dark">
                                                         {{ user.profile.guidance }}
@@ -204,33 +236,48 @@
                                     </div>
                                 </div>
                             </div>
+                              <div class="card mb-4">
+                            <div class="card-body">
+                            <canvas id="myChart" height="180"></canvas>
+                            </div>
+                            </div>
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
                                         <div class="row pricing">
-                                            {% for badge, count in badges %}
+                                            {% for badge in badges %}
                                                 <div class="col-lg-3 col-4 box">
-                                                    <h3>{{ badge.badges.title }}</h3>
-                                                    <img src="{{ badge.badges.logo.url }}" loading="lazy"
-                                                         title="{{ badge.badges.title }}" alt="{{ badge.badges.title }}"
+                                                    <h3>{{ badge.badges__title }}</h3>
+                                                    <img src="/media/{{badge.badges__logo}}" loading="lazy"
+                                                         title="{{ badge.badges__title }}" alt="{{ badge.badges__title }}"
                                                          width="80%" class="img-rounded">
-                                                    <h4>{{ count }}</h4>
+                                                    <h4>{{ badge.badges__title__count }}</h4>
                                                 </div>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </div>
-                                {% if not user.id == request.user.id %}
+                                
                                     <div class="card-footer">
                                         <div class="row badge-row">
-
-                                            <h1 class="lead font-weight-bold text-center">Badges : <a
-                                                    href="{% url 'new-badge' user.id %}">Give a Badge</a></h1>
-
+                                            <div class='col-6'>
+                                            {% if not user.id == request.user.id %}
+                                            <h1 class="lead font-weight-bold text-start">Badges : <a
+                                                    href="{% url 'new-badge' user.id %}">Give a badge to {{user.profile.name}}</a></h1>
+                                            {% endif %}
+                                            </div>
+                                            <div class='col-6'>
+                                            <h1 class="lead font-weight-bold text-end">Blogs : <a href="{% url 'user-posts' id=user.id %}">{{user.profile.name}}'s Blog Posts<a></h1>
+                                            </div>
                                         </div>
                                     </div>
-                                {% endif %}
+                                
+
+
                             </div>
+
+                          
+
                         </div>
                     </div>
                 </div>
@@ -240,3 +287,63 @@
     </main><!-- End #main -->
 
 {% endblock content %}
+
+
+{% block script %}
+<script src="{% static 'assets/js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+
+
+    <script>
+    
+        
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['This week', 'Week 3', 'Week 2', 'Week 1'],
+                datasets: [
+
+                {% for category, data in data_query %}
+                {
+                    label: '{{category}}',
+                    data: {{data}},
+                    backgroundColor: {{color|random }},
+                    borderColor: {{color|random }},
+                    fill: false,
+                    borderWidth: 3
+                },
+                {% endfor %}
+
+                ]
+            },
+            options: {
+                responsive: true,
+				title: {
+					display: true,
+					text: 'User Perfomance'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+                animation: {
+                    duration: 8000
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+</script>
+
+
+{% endblock %}

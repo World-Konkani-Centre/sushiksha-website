@@ -6,7 +6,7 @@
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
-                <h2>Blogs</h2>
+                <h2>{{ heading }}</h2>
                 {% if user.is_authenticated %}
                 <a href="{% url 'blog-create' %}">
                     <button class="btn get-started-btn-special mt-2" type="button">
@@ -21,11 +21,11 @@
 
                 <div class="row">
 
-                    <div class="col-lg-8 entries">
+                    <div class="col-lg-12 entries">
 
                         <div class="row">
                             {% for post in queryset %}
-                                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                                <div class="col-md-4 d-flex align-items-stretch" data-aos="fade-up">
 
                                     <article class="entry">
 
@@ -92,45 +92,6 @@
 
 
                     </div><!-- End blog entries list -->
-
-                    <div class="col-lg-4" data-aos="fade-up">
-
-                        <div class="sidebar">
-
-                            <h3 class="sidebar-title">Search</h3>
-                            <div class="sidebar-item search-form">
-                                <form action="{% url 'search' %}">
-                                    <input type="text" name="q">
-                                    <button type="submit"><i class="bx bx-search"></i></button>
-                                </form>
-
-                            </div><!-- End sidebar search formn-->
-
-                            <h3 class="sidebar-title">Categories</h3>
-                            <div class="sidebar-item categories">
-                                <ul>
-                                    {% for cat in category_count %}
-                                        <li>
-                                            <a href="{% url 'category' category=cat.categories__title %}">{{ cat.categories__title }}
-                                                <span>({{ cat.categories__count }})</span></a></li>
-                                    {% endfor %}
-                                </ul>
-
-                            </div><!-- End sidebar categories-->
-
-                            <h3 class="sidebar-title">Recent Posts</h3>
-                            <div class="sidebar-item recent-posts">
-                                {% for post in most_recent %}
-                                    <div class="post-item clearfix">
-                                        <img src="{{ post.thumbnail.url }}" alt="">
-                                        <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                                        <time datetime="2020-01-01">{{ post.timestamp | date }}</time>
-                                    </div>
-                                {% endfor %}
-                            </div><!-- End sidebar recent posts-->
-                        </div><!-- End sidebar -->
-
-                    </div><!-- End blog sidebar -->
 
                 </div>
 

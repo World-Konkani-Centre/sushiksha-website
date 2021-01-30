@@ -65,6 +65,7 @@
                             {% if user.is_superuser %}
                                 <li><a href="/sushiksha/admin">Admin page</a></li>
                             {% endif %}
+                            <li><a href="{% url 'logs' %}">Analytics</a></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>

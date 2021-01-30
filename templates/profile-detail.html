@@ -236,6 +236,11 @@
                                     </div>
                                 </div>
                             </div>
+                              <div class="card mb-4">
+                            <div class="card-body">
+                            <canvas id="myChart" height="180"></canvas>
+                            </div>
+                            </div>
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
@@ -271,11 +276,7 @@
 
                             </div>
 
-                            <div class="card mb-4">
-                            <div class="card-body">
-                            <canvas id="myChart"></canvas>
-                            </div>
-                            </div>
+                          
 
                         </div>
                     </div>
@@ -300,7 +301,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                labels: ['This week', 'Week 3', 'Week 2', 'Week 1'],
                 datasets: [
 
                 {% for category, data in data_query %}
@@ -310,7 +311,7 @@
                     backgroundColor: {{color|random }},
                     borderColor: {{color|random }},
                     fill: false,
-                    borderWidth: 1
+                    borderWidth: 3
                 },
                 {% endfor %}
 
@@ -330,6 +331,9 @@
 					mode: 'nearest',
 					intersect: true
 				},
+                animation: {
+                    duration: 8000
+                },
                 scales: {
                     yAxes: [{
                         ticks: {

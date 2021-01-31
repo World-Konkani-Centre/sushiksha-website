@@ -75,7 +75,7 @@
                                                 <td>
                                                     <details>
                                                         <summary
-                                                                class="font-weight-bold">{{ reward.badges.title }}</summary>
+                                                                class="font-weight-bold">{{ reward.badges.title }} ({{reward.badges.points}})</summary>
                                                         <p>{{ reward.description }}</p>
                                                     </details>
                                                 </td>
@@ -134,28 +134,6 @@
                             {% endif %}
                         </ul>
                     </div>
-
-
-                    {#                    {% if is_paginated %}#}
-                    {#                        {% if page_obj.has_previous %}#}
-                    {#                            <a href="?{% param_replace page=1 %}">First</a>#}
-                    {#                            {% if page_obj.previous_page_number != 1 %}#}
-                    {#                                <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>#}
-                    {#                            {% endif %}#}
-                    {#                        {% endif %}#}
-                    {##}
-                    {#                        Page {{ page_obj.number }} of {{ paginator.num_pages }}#}
-                    {##}
-                    {#                        {% if page_obj.has_next %}#}
-                    {#                            {% if page_obj.next_page_number != paginator.num_pages %}#}
-                    {#                                <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>#}
-                    {#                            {% endif %}#}
-                    {#                            <a href="?{% param_replace page=paginator.num_pages %}">Last</a>#}
-                    {#                        {% endif %}#}
-                    {##}
-                    {#                        <p>Objects {{ page_obj.start_index }}—{{ page_obj.end_index }}</p>#}
-                    {#                    {% endif %}#}
-
                 </div>
             </div>
         </section>

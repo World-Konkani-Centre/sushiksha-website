@@ -20,6 +20,27 @@
 
 
 {% block content %}
+    <div class="modal fade" id="postdeletemodal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered" role="document" >
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Delete the Post - {{post.title}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure to delete the blog?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <a href="{% url 'blog-delete' id=post.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
     <main id="main">
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs" data-aos="fade-in">
@@ -74,29 +95,6 @@
                                         </li>
                                     {% endif %}
                                 </ul>
-                            </div>
-
-                            <!--modal-->
-                            <div class="modal fade" id="postdeletemodal" tabindex="-1" role="dialog" style="margin-top: 10000px"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog  modal-dialog-centered" role="document" >
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-info text-white">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Delete the Post - {{post.title}}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure to delete the blog?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                            </button>
-                                            <a href="{% url 'blog-delete' id=post.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="entry-content">
@@ -207,16 +205,18 @@
 {% block script %}
 
     <script>
-        // Get the modal
-        var modal = document.getElementById('id01');
+    $('#postdeletemodal').on('hide.bs.modal', function (e) {
+        console.log("hide called")
+        $('#main').css("opacity","1")
+        $("#footer").css("opacity","1")
+})
+    $('#postdeletemodal').on('show.bs.modal', function (e) {
+        console.log("show called")
+        $('#main').css("opacity","0.2")
+        $('#footer').css("opacity","0.2")
+})
+</script>
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 
     <script type='text/javascript'
             src='https://platform-api.sharethis.com/js/sharethis.js#property=5fabf3b1413ed100120cd977&product=sop'

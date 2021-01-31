@@ -3,11 +3,7 @@
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 
-{% block style %}
-    {#    <head>#}
-    {#        <link href="{% static 'assets/vendor/fstdropdown/fstdropdown.css' %}" rel="stylesheet">#}
-    {#    </head>#}
-{% endblock style %}
+
 
 {% block content %}
 
@@ -33,12 +29,12 @@
             </div>
         </section><!-- End About Section --> {% endcomment %}
 
-        <!-- ======= Why Us Section ======= -->
-        <section id="why-us" class="why-us" data-aos="fade-in">
+
+        <section id="why-us" class="profile blog why-us">
             <div class="container">
 
-                <div class="row">
-                    <div class="col-lg-12 d-flex align-items-stretch" data-aos="fade-in" data-aos-delay="50">
+                      <div class="row">
+                    <div class="col-lg-12 d-flex align-items-stretch">
                         <div class="content">
                             <h3>Why give a badge?</h3>
                             <p>
@@ -56,37 +52,64 @@
                         </div>
                     </div>
                 </div>
-                    <div class="col-lg-12 d-flex align-items-stretch" data-aos="zoom-in-up" data-aos-delay="100">
-                        <div class="icon-boxes d-flex flex-column justify-content-center">
-                            <div class="row">
-                                {% for badge in badges %}
-                                    <div class="col-xl-3 col-md-4 col-6 d-flex align-items-stretch">
-                                        <div class="icon-box mt-4 mt-xl-0">
-                                            <img class="rounded" width="90%" src="{{ badge.logo.url }}" loading="lazy"
-                                                 alt="{{ badge.title }}" title="{{ badge.title }}">
-                                            <hr>
-                                            <h4 class="fs-6">{{ badge.title }}
-                                                {% if badge.featured %}
-                                                    <span class="text-muted">* Mentors only</span>
-                                                {% endif %}
-                                            </h4>
 
-                                            <p>{{ badge.description }}</p>
-                                        </div>
-                                    </div>
-                                {% endfor %}
+                <div class="row mt-3" data-aos="zoom-in" data-aos-delay="10">
+
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Badges Available</p>
                             </div>
-                        </div><!-- End .content-->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
+                                       <thead>
+                                        <tr class="font-weight-bold">
+                                        <th>Index</th>
+                                            <th>Badge</th>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Points</th>
+                                            <th style="min-width:160px">Description</th>
+                                        </tr>
+                                        </thead> 
+                                        <tbody>
+                                    {% for badge in badges %}
+                                        <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                        <div class="media align-items-center">
+                                        <img class="rounded" width="80" src="{{ badge.logo.url }}" loading="lazy"
+                                                  title="{{ badge.title }}">
+                                        </div>
+                                        </td>
+                                        <td>
+                                        {{badge.title}} {% if badge.featured %}*{% else %} {% endif %}
+                                        </td>
+                                        <td>
+                                        {{badge.category}}
+                                        </td>
+                                        <td>
+                                        {{badge.points}}
+                                        </td>
+                                        <td>
+                                        {{badge.description}}
+                                        </td>
+                                        </tr>
+                                    {% endfor %}                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                </div>
             </div>
-        </section><!-- End Why Us Section -->
+        </section>
 
 
     </main>
 
 {% endblock content %}
 
-{% block script %}
-    <script src="{% static 'assets/vendor/fstdropdown/fstdropdown.js' %}"></script>
-{% endblock %}

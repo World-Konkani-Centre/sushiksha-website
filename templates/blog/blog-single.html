@@ -14,6 +14,7 @@
         .modal-backdrop {
         z-index: -1;
         }
+
     </style>
 {% endblock style %}
 
@@ -67,7 +68,7 @@
                                         <li class="d-flex align-items-center"><i class="bx bx-edit"></i> <a
                                                 href="{% url 'blog-update' id=post.id %}">Update</a></li>
                                         <li class="d-flex align-items-center">
-                                            <button type="reset" class="delete-button" data-toggle="modal"
+                                            <button type="button" class="delete-button" data-backdrop="false" data-toggle="modal"
                                                     data-target="#postdeletemodal"><i class="bx bx-x"></i>Delete
                                             </button>
                                         </li>
@@ -76,12 +77,12 @@
                             </div>
 
                             <!--modal-->
-                            <div class="modal animated--fade-in" id="postdeletemodal" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="postdeletemodal" tabindex="-1" role="dialog" style="margin-top: 10000px"
                                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document" >
+                                <div class="modal-dialog  modal-dialog-centered" role="document" >
                                     <div class="modal-content">
-                                        <div class="modal-header bg-danger text-white">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Delete the Post</h5>
+                                        <div class="modal-header bg-info text-white">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Delete the Post - {{post.title}}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>

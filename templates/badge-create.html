@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+
 {% block content %}
 
     <main id="main">
+
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
@@ -12,12 +15,11 @@
             </div>
         </div><!-- End Breadcrumbs -->
 
-
         <section id="about" class="container">
 
                 <h1 class="lead">Badge giving is temporarily  closed, come after the results are announced</h1>
 
-            {% comment %} <div class="container" data-aos="fade-down">
+             {% comment %} <div class="container" data-aos="zoom-in" data-aos-delay="10">
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <form method="POST" action="">
                         {% csrf_token %}
@@ -25,15 +27,17 @@
                         <button type="submit" class="btn btn-block get-started-btn-special">Submit</button>
                     </form>
                 </div>
-            </div> {% endcomment %}
+            </div>  {% endcomment %}
 
         </section><!-- End About Section -->
 
-        <section id="why-us" class="why-us" data-aos="fade-in">
+
+
+        <section id="why-us" class="profile blog why-us">
             <div class="container">
 
-                <div class="row">
-                    <div class="col-lg-12 d-flex align-items-stretch" data-aos="fade-in" data-aos-delay="50">
+                      <div class="row">
+                    <div class="col-lg-12 d-flex align-items-stretch">
                         <div class="content">
                             <h3>Why give a badge?</h3>
                             <p>
@@ -51,33 +55,63 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 d-flex align-items-stretch" data-aos="zoom-in-up" data-aos-delay="100">
-                        <div class="icon-boxes d-flex flex-column justify-content-center">
-                            <div class="row">
-                                {% for badge in badges %}
-                                    <div class="col-xl-4 col-6 d-flex align-items-stretch">
-                                        <div class="icon-box mt-4 mt-xl-0">
-                                            <img class="rounded" width="90%" src="{{ badge.logo.url }}" loading="lazy"
-                                                 alt="{{ badge.title }}" title="{{ badge.title }}">
-                                            <hr>
-                                            <h4 class="h4">{{ badge.title }}
-                                                {% if badge.featured %}
-                                                    <span class="text-muted">* Mentors only</span>
-                                                {% endif %}
-                                            </h4>
 
-                                            <p>{{ badge.description }}</p>
-                                        </div>
-                                    </div>
-                                {% endfor %}
+                <div class="row mt-3" data-aos="zoom-in" data-aos-delay="10" >
+
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Badges Available</p>
                             </div>
-                        </div><!-- End .content-->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
+                                       <thead>
+                                        <tr class="font-weight-bold">
+                                        <th>Index</th>
+                                            <th>Badge</th>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Points</th>
+                                            <th style="min-width:160px">Description</th>
+                                        </tr>
+                                        </thead> 
+                                        <tbody>
+                                    {% for badge in badges %}
+                                        <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                        <div class="media align-items-center">
+                                        <img class="rounded" width="80" src="{{ badge.logo.url }}" loading="lazy"
+                                                  title="{{ badge.title }}">
+                                        </div>
+                                        </td>
+                                        <td>
+                                        {{badge.title}} {% if badge.featured %}*{% else %} {% endif %}
+                                        </td>
+                                        <td>
+                                        {{badge.category}}
+                                        </td>
+                                        <td>
+                                        {{badge.points}}
+                                        </td>
+                                        <td>
+                                        {{badge.description}}
+                                        </td>
+                                        </tr>
+                                    {% endfor %}                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-        </section><!-- End Why Us Section -->
+        </section>
 
+    </main><!-- End #main -->
 
-    </main>
 
 {% endblock content %}

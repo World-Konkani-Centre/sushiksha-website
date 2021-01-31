@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+    <style>
+        .delete-button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+        .modal-backdrop {
+        z-index: -1;
+        }
+    </style>
+{% endblock style %}
+
 
 {% block content %}
     <main id="main">
@@ -8,10 +25,11 @@
             <div class="container">
                 <h2>Blog</h2>
                 {% if user.is_authenticated %}
-                <a href="{% url 'blog-create' %}">
-                    <button class="btn get-started-btn-special mt-2" type="button">
-                        Create a Post
-                    </button></a>
+                    <a href="{% url 'blog-create' %}">
+                        <button class="btn get-started-btn-special mt-2" type="button">
+                            Create a Post
+                        </button>
+                    </a>
                 {% endif %}
             </div>
         </div><!-- End Breadcrumbs -->
@@ -48,10 +66,36 @@
                                     {% if post.author == request.user.profile %}
                                         <li class="d-flex align-items-center"><i class="bx bx-edit"></i> <a
                                                 href="{% url 'blog-update' id=post.id %}">Update</a></li>
-                                        <li class="d-flex align-items-center"><i class="bx bx-x"></i> <a
-                                                href="{% url 'blog-delete' id=post.id %}">Delete</a></li>
+                                        <li class="d-flex align-items-center">
+                                            <button type="reset" class="delete-button" data-toggle="modal"
+                                                    data-target="#postdeletemodal"><i class="bx bx-x"></i>Delete
+                                            </button>
+                                        </li>
                                     {% endif %}
                                 </ul>
+                            </div>
+
+                            <!--modal-->
+                            <div class="modal animated--fade-in" id="postdeletemodal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document" >
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Delete the Post</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure to delete the blog?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <a href="{% url 'blog-delete' id=post.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="entry-content">
@@ -160,6 +204,19 @@
 {% endblock content %}
 
 {% block script %}
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
     <script type='text/javascript'
             src='https://platform-api.sharethis.com/js/sharethis.js#property=5fabf3b1413ed100120cd977&product=sop'
             async='async'></script>

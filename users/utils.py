@@ -154,7 +154,7 @@ def send_reward_slack(array):
 
 def format_result(result, headers):
     output = []
-    array = np.array(result)
+    array = np.array(result)[::-1]
     for i in range(len(headers)):
         output.append(array[:, i].tolist())
     return output

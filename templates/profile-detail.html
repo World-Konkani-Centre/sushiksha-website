@@ -129,9 +129,27 @@
                                 </div>
                             {% endif %}
                         </div>
-                    {% for cat,count in query_category %}
-                        <p>{{ cat }} --- {{ count }}</p>
-                    {% endfor %}
+                    <div class="card">
+                            <div class="card-header">Points Distribution</div>
+                            <div class="card-body">
+                                <table class="table table-borderless table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Points</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cat,count in query_category %}
+                                        <tr>
+                                            <td>{{ cat }}</td>
+                                            <td>{{ count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         </div>
 
                         <div class="col-md-8">
@@ -346,7 +364,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['This week', 'Week 3', 'Week 2', 'Week 1'],
+                labels: ['week 1', 'Week 2', 'Week 3', 'This week'],
                 datasets: [
 
                     {% for category, data, color in data_query %}

@@ -112,93 +112,112 @@
                                     Blog Posts</a></h4>
                             </div>
                         </div>
-                    {% for cat,count in query_category %}
-                        <p>{{ cat }} --- {{ count }}</p>
-                    {% endfor %}
-                    </div>
-                    <div class="col-md-8">
-                        <div id="accordion">
-                            <div class="card">
-                                <div class="card-body">
-                                    <canvas id="myChart" height="200"></canvas>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="card-header" id="headingTwo">
-                                    <h5 class="mb-0">
-                                        <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
-                                                data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
-                                                aria-controls="Profile">
-                                            Update Profile
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="Profile1" class="collapse" aria-labelledby="headingTwo"
-                                     data-parent="#accordion">
-                                    <div class="card-body">
-
-                                        <form method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-
-                                            {{ u_form|crispy }}
-                                            {{ p_form|crispy }}
-                                            <div class="form-group">
-                                                <button class="btn btn-block get-started-btn-special" type="submit">
-                                                    Submit
-                                                </button>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div id="Profile">
-                                    <div class="card-body">
-                                        {% for i,j in profile_details.items %}
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0 text-capitalize">{{ i }}</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-dark">
-                                                    {{ j }}
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                        <div class="card">
+                            <div class="card-header">Points Distribution</div>
+                            <div class="card-body">
+                                <table class="table table-borderless table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Points</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cat,count in query_category %}
+                                        <tr>
+                                            <td>{{ cat }}</td>
+                                            <td>{{ count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
+                        </div>
+                        <div class="col-md-8">
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <canvas id="myChart" height="200"></canvas>
+                                    </div>
+                                </div>
+                                <div class="card mb-3">
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
+                                                    data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
+                                                    aria-controls="Profile">
+                                                Update Profile
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Profile1" class="collapse" aria-labelledby="headingTwo"
+                                         data-parent="#accordion">
+                                        <div class="card-body">
 
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center wrapper">
-                                    <div class="badge-carousel pricing owl-carousel owl-theme"
-                                         data-aos="zoom-in"
-                                         data-aos-delay="100">
-                                        {% for badge in badges %}
-                                            <div class="box">
-                                                <h3>{{ badge.badges__title }}</h3>
-                                                <img src="/media/{{ badge.badges__logo }}" loading="lazy"
-                                                     title="{{ badge.badges__title }}"
-                                                     alt="{{ badge.badges__title }}"
-                                                     width="80%" class="img-rounded">
-                                                <h4>{{ badge.badges__title__count }}</h4>
-                                            </div>
-                                        {% endfor %}
+                                            <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                {{ u_form|crispy }}
+                                                {{ p_form|crispy }}
+                                                <div class="form-group">
+                                                    <button class="btn btn-block get-started-btn-special" type="submit">
+                                                        Submit
+                                                    </button>
+                                                </div>
+
+                                            </form>
+                                        </div>
                                     </div>
 
-
+                                    <div id="Profile">
+                                        <div class="card-body">
+                                            {% for i,j in profile_details.items %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0 text-capitalize">{{ i }}</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{ j }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <h1 class="lead text-center ">Badges</h1>
+
+
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center wrapper">
+                                        <div class="badge-carousel pricing owl-carousel owl-theme"
+                                             data-aos="zoom-in"
+                                             data-aos-delay="100">
+                                            {% for badge in badges %}
+                                                <div class="box">
+                                                    <h3>{{ badge.badges__title }}</h3>
+                                                    <img src="/media/{{ badge.badges__logo }}" loading="lazy"
+                                                         title="{{ badge.badges__title }}"
+                                                         alt="{{ badge.badges__title }}"
+                                                         width="80%" class="img-rounded">
+                                                    <h4>{{ badge.badges__title__count }}</h4>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h1 class="lead text-center ">Badges</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </section><!-- End Contact Section -->
 
@@ -239,7 +258,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['This week', 'Week 3', 'Week 2', 'Week 1'],
+                labels: ['week 1', 'Week 2', 'Week 3', 'This week'],
                 datasets: [
 
                     {% for category, data,color in data_query %}

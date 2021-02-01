@@ -17,6 +17,11 @@ from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterFo
 from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import email_check, user_chart_data, get_category_points_data
 
+color = ['window.chartColors.red', 'window.chartColors.purple',
+         'window.chartColors.green',
+         'window.chartColors.orange', 'window.chartColors.grey',
+         'window.chartColors.yellow', 'window.chartColors.blue']
+
 
 def register(request):
     if request.POST:
@@ -60,15 +65,7 @@ def user_login(request):
 def profile(request):
     user = get_object_or_404(User, id=request.user.id)
     categories, data = user_chart_data(user)
-    result = get_category_points_data(user,categories)
-    color = ['window.chartColors.red', 'window.chartColors.purple',
-             'window.chartColors.green',
-             'window.chartColors.orange', 'window.chartColors.grey',
-             'window.chartColors.yellow', 'window.chartColors.blue', 'window.chartColors.red',
-             'window.chartColors.purple',
-             'window.chartColors.green',
-             'window.chartColors.orange', 'window.chartColors.grey',
-             'window.chartColors.yellow', 'window.chartColors.blue']
+    result = get_category_points_data(user, categories)
     zipped_data = zip(categories, data, color)
     profile_details = {}
     badges = Reward.objects.filter(user=request.user).values('badges__title', 'badges__logo').annotate(
@@ -110,7 +107,7 @@ def profile(request):
         'profile_details': profile_details,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories,result)
+        'query_category': zip(categories, result)
     }
     return render(request, 'profile.html', context=context)
 
@@ -154,14 +151,6 @@ def user_detail_view(request, pk):
     badges = Reward.objects.filter(user=user).values('badges__title', 'badges__logo').annotate(Count('badges__title'))
     categories, data = user_chart_data(user)
     result = get_category_points_data(user, categories)
-    color = ['window.chartColors.red', 'window.chartColors.purple',
-             'window.chartColors.green',
-             'window.chartColors.orange', 'window.chartColors.grey',
-             'window.chartColors.yellow', 'window.chartColors.blue', 'window.chartColors.red',
-             'window.chartColors.purple',
-             'window.chartColors.green',
-             'window.chartColors.orange', 'window.chartColors.grey',
-             'window.chartColors.yellow', 'window.chartColors.blue']
     zipped_data = zip(categories, data, color)
     context = {
         'title': f"{user.username}",

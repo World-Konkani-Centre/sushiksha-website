@@ -112,10 +112,10 @@
                         <div class="row badge-row">
                             {% if not user.id == request.user.id %}
                                 <div class='col-12'>
-                                    <h1 class="lead font-weight-bold text-start">Badges: <a
+                                    <h1 class="lead font-weight-bold text-start"><a
                                             href="{% url 'new-badge' user.id %}" class="btn btn-outline-danger btn-sm">Give a
                                         badge
-                                        to {{ user.profile.name | truncatechars:10}}</a></h1>
+                                        to {{ user.profile.name | truncatechars:15}}</a></h1>
                                 </div>
                                 <div class='col-12'>
                                     <h1 class="lead font-weight-bold text-end"><a
@@ -127,7 +127,7 @@
                                 <div class='col-12'>
                                     <h1 class="lead font-weight-bold text-end"><a
                                             href="{% url 'user-posts' id=user.id %}"
-                                            class="btn btn-outline-danger">{{ user.profile.name | truncatechars:10}}'s
+                                            class="btn btn-outline-danger">{{ user.profile.name | truncatechars:15}}'s
                                         Blog Posts</a></h1>
                                 </div>
                             {% endif %}

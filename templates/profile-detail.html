@@ -106,29 +106,35 @@
                             </div>
                         </div>
                         </div>
+
+                        <div class="card mb-2">
+                        <div class="card-body">
                         <div class="row badge-row">
                             {% if not user.id == request.user.id %}
-                                <div class='col-6'>
-                                    <h1 class="lead font-weight-bold text-start">Badges : <a
-                                            href="{% url 'new-badge' user.id %}" class="btn btn-outline-danger">Give a
+                                <div class='col-12'>
+                                    <h1 class="lead font-weight-bold text-start">Badges: <a
+                                            href="{% url 'new-badge' user.id %}" class="btn btn-outline-danger btn-sm">Give a
                                         badge
-                                        to {{ user.profile.name }}</a></h1>
+                                        to {{ user.profile.name | truncatechars:10}}</a></h1>
                                 </div>
-                                <div class='col-6'>
-                                    <h1 class="lead font-weight-bold text-end">Blogs : <a
+                                <div class='col-12'>
+                                    <h1 class="lead font-weight-bold text-end">Blogs: <a
                                             href="{% url 'user-posts' id=user.id %}"
-                                            class="btn btn-outline-danger">{{ user.profile.name }}'s
+                                            class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:10}}'s
                                         Blog Posts</a></h1>
                                 </div>
                             {% else %}
                                 <div class='col-12'>
                                     <h1 class="lead font-weight-bold text-end">Blogs : <a
                                             href="{% url 'user-posts' id=user.id %}"
-                                            class="btn btn-outline-danger">{{ user.profile.name }}'s
+                                            class="btn btn-outline-danger">{{ user.profile.name | truncatechars:10}}'s
                                         Blog Posts</a></h1>
                                 </div>
                             {% endif %}
                         </div>
+                    </div>
+                    </div>
+
                     <div class="card">
                             <div class="card-header">Points Distribution</div>
                             <div class="card-body">
@@ -395,7 +401,7 @@
                     intersect: true
                 },
                 animation: {
-                    duration: 8000
+                    duration: 4000
                 },
                 scales: {
                     yAxes: [{

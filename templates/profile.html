@@ -104,14 +104,24 @@
                             </div>
                         </div>
                         </div>
+
+
+
+                         <div class="card mb-2">
+                        <div class="card-body">
+
                         <div class="row badge-row">
                             <div class='col-12'>
                                 <h4 class="lead font-weight-bold text-end">Blogs : <a
                                         href="{% url 'user-posts' id=user.id %}"
-                                        class="btn btn-outline-danger">{{ user.profile.name }}'s
+                                        class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:10}}'s
                                     Blog Posts</a></h4>
                             </div>
                         </div>
+
+                           </div>
+                    </div>
+
                         <div class="card">
                             <div class="card-header">Points Distribution</div>
                             <div class="card-body">
@@ -133,6 +143,7 @@
                                 </table>
                             </div>
                         </div>
+
 
                         </div>
                         <div class="col-md-8">
@@ -289,7 +300,7 @@
                     intersect: true
                 },
                 animation: {
-                    duration: 8000
+                    duration: 4000
                 },
                 scales: {
                     yAxes: [{

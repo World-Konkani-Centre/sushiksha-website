@@ -10,13 +10,17 @@ from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
-from django.utils.timezone import make_aware
 from djqscsv import render_to_csv_response
 
-from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, MentionUpdateForm, \
-    RangeRequestForm, UserRangeRequestForm
-from .models import Pomodoro, Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
-from .utils import collect_badges, get_house_data, get_team_data, email_check, user_chart_data
+from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, RangeRequestForm, \
+    UserRangeRequestForm
+from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
+from .utils import email_check, user_chart_data, get_category_points_data
+
+color = ['window.chartColors.red', 'window.chartColors.purple',
+         'window.chartColors.green',
+         'window.chartColors.orange', 'window.chartColors.grey',
+         'window.chartColors.yellow', 'window.chartColors.blue']
 
 
 def register(request):
@@ -59,8 +63,13 @@ def user_login(request):
 
 @login_required
 def profile(request):
+    user = get_object_or_404(User, id=request.user.id)
+    categories, data = user_chart_data(user)
+    result = get_category_points_data(user, categories)
+    zipped_data = zip(categories, data, color)
     profile_details = {}
-    badges = Reward.objects.filter(user=request.user).values('badges__title','badges__logo').annotate(Count('badges__title'))
+    badges = Reward.objects.filter(user=request.user).values('badges__title', 'badges__logo').annotate(
+        Count('badges__title'))
     if request.POST:
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -95,10 +104,13 @@ def profile(request):
         'p_form': p_form,
         'title': "Profile",
         'badges': badges,
-        'profile_details': profile_details
+        'profile_details': profile_details,
+        'data_query': zipped_data,
+        'color': color,
+        'query_category': zip(categories, result)
     }
     return render(request, 'profile.html', context=context)
-    
+
 
 @login_required
 def search(request):
@@ -136,18 +148,18 @@ def user_list_view(request):
 @login_required
 def user_detail_view(request, pk):
     user = get_object_or_404(User, id=pk)
-    badges = Reward.objects.filter(user=user).values('badges__title','badges__logo').annotate(Count('badges__title'))
+    badges = Reward.objects.filter(user=user).values('badges__title', 'badges__logo').annotate(Count('badges__title'))
     categories, data = user_chart_data(user)
-    zipped_data = zip(categories, data)
-    color = ['window.chartColors.red', 'window.chartColors.orange', 'window.chartColors.yellow', 'window.chartColors.green', 'window.chartColors.blue', 'window.chartColors.purple', 'window.chartColors.grey', 'window.chartColors.red', 'window.chartColors.orange', 'window.chartColors.yellow', 'window.chartColors.green', 'window.chartColors.blue', 'window.chartColors.purple']
+    result = get_category_points_data(user, categories)
+    zipped_data = zip(categories, data, color)
     context = {
         'title': f"{user.username}",
         'user': user,
         'badges': badges,
         'data_query': zipped_data,
-        'color': color
+        'color': color,
+        'query_category': zip(categories, result)
     }
-
 
     return render(request, 'profile-detail.html', context=context)
 
@@ -229,7 +241,7 @@ def leader(request):
     team = Teams.objects.all()
     team = team.order_by('-points')
     house = house.order_by('-points')
-    mentions = Mentions.objects.all().order_by(Lower('title'))
+    mentions = Mentions.objects.all().order_by('-id')[:6]
     context = {
         'data': data,
         'house': house,

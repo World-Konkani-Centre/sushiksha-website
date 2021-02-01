@@ -5,7 +5,9 @@
 
 
 {% block main_style %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
+          integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
+          crossorigin="anonymous"/>
 {% endblock main_style %}
 
 
@@ -62,9 +64,15 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.points}}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points }}</p>
                                 </div>
-                            <!--<div class="col-12 mt-1 text-justify">
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
+                                </div>-->
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
+                                </div>-->
+                                <!--<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
                                 </div>-->
                             </div>
@@ -98,12 +106,61 @@
                             </div>
                         </div>
                         </div>
+                        <div class="row badge-row">
+                            {% if not user.id == request.user.id %}
+                                <div class='col-6'>
+                                    <h1 class="lead font-weight-bold text-start">Badges : <a
+                                            href="{% url 'new-badge' user.id %}" class="btn btn-outline-danger">Give a
+                                        badge
+                                        to {{ user.profile.name }}</a></h1>
+                                </div>
+                                <div class='col-6'>
+                                    <h1 class="lead font-weight-bold text-end">Blogs : <a
+                                            href="{% url 'user-posts' id=user.id %}"
+                                            class="btn btn-outline-danger">{{ user.profile.name }}'s
+                                        Blog Posts</a></h1>
+                                </div>
+                            {% else %}
+                                <div class='col-12'>
+                                    <h1 class="lead font-weight-bold text-end">Blogs : <a
+                                            href="{% url 'user-posts' id=user.id %}"
+                                            class="btn btn-outline-danger">{{ user.profile.name }}'s
+                                        Blog Posts</a></h1>
+                                </div>
+                            {% endif %}
+                        </div>
+                    <div class="card">
+                            <div class="card-header">Points Distribution</div>
+                            <div class="card-body">
+                                <table class="table table-borderless table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Points</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cat,count in query_category %}
+                                        <tr>
+                                            <td>{{ cat }}</td>
+                                            <td>{{ count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         </div>
 
                         <div class="col-md-8">
                             <div id="accordion">
 
                                 <div class="card mb-3">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <canvas id="myChart" height="200"></canvas>
+                                        </div>
+                                    </div>
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
                                             <button class="btn btn-outline-danger collapsed" data-toggle="collapse"
@@ -138,7 +195,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0 text-capitalize" >Email</h6>
+                                                    <h6 class="mb-0 text-capitalize">Email</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-dark">
                                                     {{ user.email }}
@@ -156,7 +213,7 @@
                                                 </div>
                                                 <hr>
                                             {% endif %}
-                                        {% if user.profile.degree %}
+                                            {% if user.profile.degree %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <h6 class="mb-0 text-capitalize">Degree</h6>
@@ -167,7 +224,7 @@
                                                 </div>
                                                 <hr>
                                             {% endif %}
-                                        {% if user.profile.branch %}
+                                            {% if user.profile.branch %}
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <h6 class="mb-0 text-capitalize">Branch</h6>
@@ -236,47 +293,51 @@
                                     </div>
                                 </div>
                             </div>
-                              <div class="card mb-4">
-                            <div class="card-body">
-                            <canvas id="myChart" height="180"></canvas>
-                            </div>
-                            </div>
+
+
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <div class="row pricing">
+                                    <div class="d-flex flex-column align-items-center text-center wrapper">
+                                        <div class="badge-carousel pricing owl-carousel owl-theme"
+                                             data-aos="zoom-in"
+                                             data-aos-delay="100">
                                             {% for badge in badges %}
-                                                <div class="col-lg-3 col-4 box">
+                                                <div class="box">
                                                     <h3>{{ badge.badges__title }}</h3>
-                                                    <img src="/media/{{badge.badges__logo}}" loading="lazy"
-                                                         title="{{ badge.badges__title }}" alt="{{ badge.badges__title }}"
+                                                    <img src="/media/{{ badge.badges__logo }}" loading="lazy"
+                                                         title="{{ badge.badges__title }}"
+                                                         alt="{{ badge.badges__title }}"
                                                          width="80%" class="img-rounded">
                                                     <h4>{{ badge.badges__title__count }}</h4>
                                                 </div>
                                             {% endfor %}
                                         </div>
+
+
                                     </div>
                                 </div>
-                                
-                                    <div class="card-footer">
-                                        <div class="row badge-row">
-                                            <div class='col-6'>
+
+                                <div class="card-footer">
+                                    <h1 class="lead text-center ">Badges</h1>
+                                    <!--<div class="row badge-row">
+                                        <div class='col-6'>
                                             {% if not user.id == request.user.id %}
-                                            <h1 class="lead font-weight-bold text-start">Badges : <a
-                                                    href="{% url 'new-badge' user.id %}">Give a badge to {{user.profile.name}}</a></h1>
+                                                <h1 class="lead font-weight-bold text-start">Badges : <a
+                                                        href="{% url 'new-badge' user.id %}">Give a badge
+                                                    to {{ user.profile.name }}</a></h1>
                                             {% endif %}
-                                            </div>
-                                            <div class='col-6'>
-                                            <h1 class="lead font-weight-bold text-end">Blogs : <a href="{% url 'user-posts' id=user.id %}">{{user.profile.name}}'s Blog Posts<a></h1>
-                                            </div>
                                         </div>
-                                    </div>
-                                
+                                        <div class='col-6'>
+                                            <h1 class="lead font-weight-bold text-end">Blogs : <a
+                                                    href="{% url 'user-posts' id=user.id %}">{{ user.profile.name }}'s
+                                                Blog Posts</a></h1>
+                                        </div>
+                                    </div>-->
+                                </div>
 
 
                             </div>
 
-                          
 
                         </div>
                     </div>
@@ -290,47 +351,49 @@
 
 
 {% block script %}
-<script src="{% static 'assets/js/utils.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+            crossorigin="anonymous"></script>
 
 
     <script>
-    
-        
+
+
         var ctx = document.getElementById('myChart');
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['This week', 'Week 3', 'Week 2', 'Week 1'],
+                labels: ['week 1', 'Week 2', 'Week 3', 'This week'],
                 datasets: [
 
-                {% for category, data in data_query %}
-                {
-                    label: '{{category}}',
-                    data: {{data}},
-                    backgroundColor: {{color|random }},
-                    borderColor: {{color|random }},
-                    fill: false,
-                    borderWidth: 3
-                },
-                {% endfor %}
+                    {% for category, data, color in data_query %}
+                        {
+                            label: '{{category}}',
+                            data: {{data}},
+                            backgroundColor: {{color }},
+                            borderColor: {{color }},
+                            fill: false,
+                            borderWidth: 3
+                        },
+                    {% endfor %}
 
                 ]
             },
             options: {
                 responsive: true,
-				title: {
-					display: true,
-					text: 'User Perfomance'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
+                title: {
+                    display: true,
+                    text: 'User Performance'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
                 animation: {
                     duration: 8000
                 },
@@ -343,7 +406,24 @@
                 }
             }
         });
-</script>
+
+        $('.badge-carousel').owlCarousel({
+            loop: false,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        })
+
+    </script>
 
 
 {% endblock %}

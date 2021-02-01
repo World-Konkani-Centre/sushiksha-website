@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
-
+{% load humanize %}
 
 {% block main_style %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
@@ -62,7 +62,7 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.points }}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points |intcomma }}</p>
                                 </div>
                                 <!--<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
@@ -112,7 +112,7 @@
 
                         <div class="row badge-row">
                             <div class='col-12'>
-                                <h4 class="lead font-weight-bold text-end">Blogs : <a
+                                <h4 class="lead font-weight-bold text-end"><a
                                         href="{% url 'user-posts' id=user.id %}"
                                         class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:10}}'s
                                     Blog Posts</a></h4>
@@ -136,7 +136,7 @@
                                     {% for cat,count in query_category %}
                                         <tr>
                                             <td>{{ cat }}</td>
-                                            <td>{{ count }}</td>
+                                            <td>{{ count|intcomma  }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

@@ -19,6 +19,22 @@ Sushiksha Mentoring Program is organized for scholars of Vishwa Konkani Student 
 
 Sushiksha thrives because of the dedication of its active mentees and mentors â€“ who have contributed countless hours of work to shape their future and make it a highly productive and focused workspace.
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#development">Development</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing / Adding Features</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
+
+
 1. Backend Framework: **Django**
 2. Front-end Framework: **Bootstrap**
 
@@ -62,7 +78,7 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     git checkout develop
     ```
    
-5. Create a `setting.py` in `sushiksha-website/djangoProject/`
+5. Create a `settings.py` in `sushiksha-website/djangoProject/`
 
     Copy paste the code from below document to `settings.py`
     
@@ -93,15 +109,30 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     ```
    Then select your username and password.
    
-7. Run server
+8. Run server
     ```bash
     python manage.py runserver
     ```
-8. Do the Development and send me a PR referencing the issue.
+9. Do the Development and send me a PR referencing the issue.
+
+## Development
+
+    git checkout develop-<username>
+    //Create the changes and then commit
+    git add <filename>
+    git commit -m "<Message here>"
+    
+From your `master` branch or your main branch that you are working on, give a PR to our `develop` branch
+`!IMPORTANT`: Don't give a PR to the master branch
+We only accept PR's to `develop` branch.
+
    
 
 ## Contributing
    Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+   While sending the PR please mention the issue in the Comment.
+
+**Note: PR's are accepted that are sent only by Sushiksha members.**
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[Apache License 2.0](https://github.com/18praneeth/sushiksha-website#license)

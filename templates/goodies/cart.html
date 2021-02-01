@@ -25,7 +25,7 @@
                                 <div class="col-md-5 col-lg-3 col-xl-3">
                                     <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
                                         <img class="img-fluid w-100"
-                                             src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png"
+                                             src="{{ item.thumbnail.url }}"
                                              alt="Sample">
                                     </div>
                                 </div>
@@ -33,15 +33,16 @@
                                     <div>
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <h5>Title</h5>
-                                                <p class="mb-3 text-muted text-uppercase small">description</p>
+                                                <h5>{{ item.title }}</h5>
+                                                <p class="mb-3 text-muted text-uppercase small">{{ item.description }}</p>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span><strong id="summary">Points </strong></span>
                                         </div>
                                     </div>
-                                </div>s
+                                </div>
+                                s
                             </div>
                             <hr class="mb-4">
                         </div>
@@ -56,7 +57,8 @@
                             <p class="mb-0"> {{ user.profile.address }}</p>
                             <br>
                             <br>
-                            <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Check and update your details by
+                            <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Check and update your
+                                details by
                                 clicking <a href="{% url 'profile' %}">here</a></p>
                         </div>
                     </div>

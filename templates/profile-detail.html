@@ -129,6 +129,9 @@
                                 </div>
                             {% endif %}
                         </div>
+                    {% for cat,count in query_category %}
+                        <p>{{ cat }} --- {{ count }}</p>
+                    {% endfor %}
                         </div>
 
                         <div class="col-md-8">

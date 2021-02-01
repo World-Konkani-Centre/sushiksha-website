@@ -112,6 +112,9 @@
                                     Blog Posts</a></h4>
                             </div>
                         </div>
+                    {% for cat,count in query_category %}
+                        <p>{{ cat }} --- {{ count }}</p>
+                    {% endfor %}
                     </div>
                     <div class="col-md-8">
                         <div id="accordion">

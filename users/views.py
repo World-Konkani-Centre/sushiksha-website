@@ -244,7 +244,7 @@ def leader(request):
     team = Teams.objects.all()
     team = team.order_by('-points')
     house = house.order_by('-points')
-    mentions = Mentions.objects.all().order_by(Lower('title'))
+    mentions = Mentions.objects.all().order_by('-id')[:6]
     context = {
         'data': data,
         'house': house,

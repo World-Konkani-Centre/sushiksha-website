@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <main id="main">
+
+        <div class="breadcrumbs" data-aos="fade-in">
+           <img src="{% static 'assets/img/banner.png' %}" class="img-fluid"  loading="lazy" style="background-position: center;background-repeat: no-repeat; background-size: cover; margin-top: -35px">
+           </div>
+        <section class="about">
+            <div class="container" data-aos="fade-up">
+
+             <iframe style="border:0; width: 100%; height: 800px;"
+                        src="https://docs.google.com/forms/d/e/1FAIpQLSflMNHVVJXNVMJUnt-QI8XO056S10iPLBWHDXKuTI6PAbaJ8g/viewform?embedded=true"
+                        frameborder="0">Loading…
+                </iframe>
+
+            <h1 class="mt-3">PENTATHLON DAILY REPORT</h1>
+
+            <iframe class="primary bg-primary" style="border:0; width: 100%; height: 1111px;" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTeiEoUZ1-5NH0S7c479uc9D9asqWMmiXg2TQ0JeK7IMyDGOE4tdK0EfstISlizLItQwZWMWN0Lfmp8/pubhtml?widget=true&amp;headers=false"></iframe>
+            </div>
+            </section>
+
+    </main>
+
+
+
+{% endblock content %}

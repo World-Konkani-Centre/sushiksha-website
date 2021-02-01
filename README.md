@@ -1,9 +1,5 @@
 <p align="center"> 
- <img src="https://vkssfalumni.com/wp-content/uploads/2016/11/sushikshalogo-300x300.png" alt="Sushiksha-Logo" border="0" width=300 height=300/>&nbsp; </a></p>
-
-Sushiksha Mentoring Program is organized for scholars of Vishwa Konkani Student Scholarship Fund (VKSSF) by members of VKSSF Alumni Association (VAA). Sushiksha was started in 2018 by Royal Denzil Sequeira, a member of VAA since 2015, with 20 mentees. Since then Sushiksha has grown to be family of 170 mentees and 20 mentors. Mentees of Sushiksha are undergraduate scholars of VKSSF who are determined to thrive and be successful in their area of study and career. Mentors of Sushiksha Program are experienced professionals who were once the scholars of VKSSF and have lived through their own share of successes and failures but believe in empowering the scholars early on in their career path.
-
-Sushiksha thrives because of the dedication of its active mentees and mentors – who have contributed countless hours of work to shape their future and make it a highly productive and focused workspace.
+ <img src="https://vkssfalumni.com/wp-content/uploads/2016/11/sushikshalogo-300x300.png" alt="Sushiksha-lOGO" border="0" width=300 height=300/>&nbsp; </a></p>
 
 <p class="text-center mb-3" align="center">
 <a href="https://github.com/18praneeth/sushiksha-website/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/18praneeth/sushiksha-website?style=for-the-badge"></a>
@@ -19,7 +15,9 @@ Sushiksha thrives because of the dedication of its active mentees and mentors �
 <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangopowered126x54.gif" border="0" alt="Powered by Django." title="Powered by Django." /></a>
 </p>
 
-#### Project description
+Sushiksha Mentoring Program is organized for scholars of Vishwa Konkani Student Scholarship Fund (VKSSF) by members of VKSSF Alumni Association (VAA). Sushiksha was started in 2018 by Royal Denzil Sequeira, a member of VAA since 2015, with 20 mentees. Since then Sushiksha has grown to be family of 170 mentees and 20 mentors. Mentees of Sushiksha are undergraduate scholars of VKSSF who are determined to thrive and be successful in their area of study and career. Mentors of Sushiksha Program are experienced professionals who were once the scholars of VKSSF and have lived through their own share of successes and failures but believe in empowering the scholars early on in their career path.
+
+Sushiksha thrives because of the dedication of its active mentees and mentors – who have contributed countless hours of work to shape their future and make it a highly productive and focused workspace.
 
 1. Backend Framework: **Django**
 2. Front-end Framework: **Bootstrap**

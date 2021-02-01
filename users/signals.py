@@ -41,7 +41,7 @@ def send_mail(sender, instance, created, **kwargs):
         if house is not None:
             house.points = house.points + _badge.points
             house.save()
-        #send_email.delay(array)
+        send_email.delay(array)
         # comment during production to avoid unnecessary errors
         # uncomment above line only if you have celery, rabbitmq setup and know the implementation
         return True

@@ -55,8 +55,8 @@ class BadgeCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Mentions)
 class MentionAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "team", "house", "house")
-    list_display_links = ("id", "title", "house", "house")
+    list_display = ("id", "title", "team", "house", "user")
+    list_display_links = ("id", "title", "house", "user")
     search_fields = ("title",)
 
 

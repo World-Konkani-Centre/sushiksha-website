@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 
     <main id="main">
         <div class="breadcrumbs" data-aos="fade-in">
             <div class="container">
                 <h2>{{ query_set.name }}</h2>
-                <h3>Points : {{ query_set.points }}</h3>
+                <h3>Points : {{ query_set.points|intcomma  }}</h3>
             </div>
         </div>
 
@@ -34,7 +35,7 @@
                                     <p>{{ member.batch }} VKSSF Scholar</p>
                                 </div>
                                 <div class="col-md-2">
-                                    <h4>Points: {{ member.points }}</h4>
+                                    <h4>Points: {{ member.points |intcomma }}</h4>
                                     <!--<h4>Stars: {{ member.stars }}</h4>-->
                                 </div>
                             </div>

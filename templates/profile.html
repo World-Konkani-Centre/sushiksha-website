@@ -2,6 +2,15 @@
 {% load static %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block main_style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
+          integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
+          crossorigin="anonymous"/>
+{% endblock main_style %}
+
+
 {% block content %}
     <main id="main">
 
@@ -53,9 +62,14 @@
                                     <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
                                 </div>
                                 <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.points }}</p>
+                                    <p class="font-weight-bold">Points: {{ user.profile.points |intcomma }}</p>
                                 </div>
-
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
+                                </div>-->
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
+                                </div>-->
                                 <!--<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
                                 </div>-->
@@ -90,10 +104,55 @@
                             </div>
                         </div>
                         </div>
+
+
+
+                         <div class="card mb-2">
+                        <div class="card-body">
+
+                        <div class="row badge-row">
+                            <div class='col-12'>
+                                <h4 class="lead font-weight-bold text-end"><a
+                                        href="{% url 'user-posts' id=user.id %}"
+                                        class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:15}}'s
+                                    Blog Posts</a></h4>
+                            </div>
+                        </div>
+
+                           </div>
+                    </div>
+
+                        <div class="card">
+                            <div class="card-header">Points Distribution</div>
+                            <div class="card-body">
+                                <table class="table table-borderless table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Points</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cat,count in query_category %}
+                                        <tr>
+                                            <td>{{ cat }}</td>
+                                            <td>{{ count|intcomma  }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
                         </div>
                         <div class="col-md-8">
                             <div id="accordion">
-
+                                <div class="card">
+                                    <div class="card-body">
+                                        <canvas id="myChart" height="200"></canvas>
+                                    </div>
+                                </div>
                                 <div class="card mb-3">
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
@@ -140,20 +199,27 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <div class="row pricing">
+                                    <div class="d-flex flex-column align-items-center text-center wrapper">
+                                        <div class="badge-carousel pricing owl-carousel owl-theme"
+                                             data-aos="zoom-in"
+                                             data-aos-delay="100">
                                             {% for badge in badges %}
-                                                <div class="col-lg-3 col-4 box">
+                                                <div class="box">
                                                     <h3>{{ badge.badges__title }}</h3>
-                                                    <img src="/media/{{badge.badges__logo}}" loading="lazy"
-                                                         title="{{ badge.badges__title }}" alt="{{ badge.badges__title }}"
+                                                    <img src="/media/{{ badge.badges__logo }}" loading="lazy"
+                                                         title="{{ badge.badges__title }}"
+                                                         alt="{{ badge.badges__title }}"
                                                          width="80%" class="img-rounded">
                                                     <h4>{{ badge.badges__title__count }}</h4>
                                                 </div>
                                             {% endfor %}
                                         </div>
+
+
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -172,8 +238,13 @@
 {% endblock content %}
 
 {% block script %}
-    <script>
+    <script src="{% static 'assets/js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+            crossorigin="anonymous"></script>
 
+
+    <script>
         $i = 0
         $("#swap").click(function () {
             $("#Profile").toggle()
@@ -185,6 +256,78 @@
                 $i = 0;
             }
         });
+
+        var dynamicColors = function () {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        };
+
+
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['week 1', 'Week 2', 'Week 3', 'This week'],
+                datasets: [
+
+                    {% for category, data,color in data_query %}
+                        {
+                            label: '{{category}}',
+                            data: {{data}},
+                            backgroundColor: {{color}},
+                            borderColor: {{ color }},
+                            fill: false,
+                            borderWidth: 3
+                        },
+                    {% endfor %}
+
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'User Performance'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                animation: {
+                    duration: 4000
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        $('.badge-carousel').owlCarousel({
+            loop: false,
+            nav: true,
+            dots: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        })
 
     </script>
 {% endblock script %}

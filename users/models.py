@@ -47,6 +47,7 @@ class Profile(models.Model):
     okr = models.URLField(default=None, blank=True, null=True)
     facebook = models.URLField(default=None, blank=True, null=True)
     points = models.IntegerField(default=0)
+    total_points = models.IntegerField(default=0)
     stars = models.IntegerField(default=0)
 
     def __str__(self):

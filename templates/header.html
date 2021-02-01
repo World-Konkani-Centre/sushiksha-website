@@ -65,6 +65,7 @@
                             {#                            <li><a href="{% url 'analytics' %}">Pomodoro leaderboard</a></li>#}
                             {% if user.is_superuser %}
                                 <li><a href="/sushiksha/admin">Admin page</a></li>
+                                <li><a href="{% url 'goodies' %}">Goodies</a></li>
                             {% endif %}
                             <li><a href="{% url 'logs' %}">Analytics</a></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>

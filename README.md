@@ -7,7 +7,7 @@
 </p>
 
 <p class="text-center mb-3" align="center">
-<a href="https://tutorvita.herokuapp.com/"><img src="https://forthebadge.com/images/badges/made-with-python.svg" border="0" title="Made with Python" /></a>
+<a href="https://sushiksha.konkanischolarship.com/"><img src="https://forthebadge.com/images/badges/made-with-python.svg" border="0" title="Made with Python" /></a>
 </p>
 
 <p class="text-center mb-3" align="center">

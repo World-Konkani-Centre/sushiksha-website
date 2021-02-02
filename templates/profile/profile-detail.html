@@ -115,19 +115,19 @@
                                     <h1 class="lead font-weight-bold text-start"><a
                                             href="{% url 'new-badge' user.id %}" class="btn btn-outline-danger btn-sm">Give a
                                         badge
-                                        to {{ user.profile.name | truncatechars:15}}</a></h1>
+                                        to {{ user.profile.name | truncatechars:20}}</a></h1>
                                 </div>
                                 <div class='col-12'>
                                     <h1 class="lead font-weight-bold text-end"><a
                                             href="{% url 'user-posts' id=user.id %}"
-                                            class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:10}}'s
+                                            class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:20}}'s
                                         Blog Posts</a></h1>
                                 </div>
                             {% else %}
                                 <div class='col-12'>
                                     <h1 class="lead font-weight-bold text-end"><a
                                             href="{% url 'user-posts' id=user.id %}"
-                                            class="btn btn-outline-danger">{{ user.profile.name | truncatechars:15}}'s
+                                            class="btn btn-outline-danger">{{ user.profile.name | truncatechars:20}}'s
                                         Blog Posts</a></h1>
                                 </div>
                             {% endif %}
@@ -162,11 +162,11 @@
                             <div id="accordion">
 
                                 <div class="card mb-3">
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <canvas id="myChart" height="200"></canvas>
-                                        </div>
-                                    </div>
+                                    {% comment %} <div class="card mb-4"> {% endcomment %}
+                                        {% comment %} <div class="card-body"> {% endcomment %}
+                                            <canvas id="myChart" height="400" class="ml-1 mt-1"></canvas>
+                                        {% comment %} </div> {% endcomment %}
+                                    {% comment %} </div> {% endcomment %}
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
                                             <button class="btn btn-outline-danger collapsed" data-toggle="collapse"

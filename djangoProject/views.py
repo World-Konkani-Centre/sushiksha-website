@@ -4,6 +4,7 @@ from users.models import House, Teams
 from blog.models import Post
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout
+from djangoProject.forms import UrlRequestForm
 
 
 def index(request):
@@ -84,4 +85,12 @@ def my_logout(request):
 
 
 def timer(request):
-    return render(request,'timer/timer.html',context=None)
+    if request.POST:
+        form = UrlRequestForm(request.POST)
+        if form.is_valid():
+            url = form.cleaned_data['URL']
+            return render(request, 'timer/timer.html', context={'url': url,'form':form})
+        return render(request, 'timer/timer.html', context={'url': 'https://cuckoo.team/'})
+    else:
+        form = UrlRequestForm()
+        return render(request, 'timer/timer.html', context={'url': 'https://cuckoo.team/','form':form})

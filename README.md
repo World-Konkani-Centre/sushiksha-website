@@ -43,7 +43,7 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
 1. Fork and Clone
     <ol>
     <li>Fork sushiksha-website the Repo</li>
-    <li>Clone the repo to you computer.</li>
+    <li>Clone the repo to your computer.</li>
     </ol>
 
 2. Create a Virtual Environment for the Project
@@ -122,7 +122,10 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     git add <filename>
     git commit -m "<Message here>"
     
-From your `master` branch or your main branch that you are working on, give a PR to our `develop` branch
+From your `master` branch or your main branch that you are working on, give a PR to our `develop` branch.
+
+Developers should create a folder /media and put an image named `default.jpg` to avoid errors in creating superuser.
+
 `!IMPORTANT`: Don't give a PR to the master branch
 We only accept PR's to `develop` branch.
 

@@ -27,7 +27,7 @@ def badge_list(request):
         'page_request_var': page_request_var,
         'title': "Badges awarded"
     }
-    return render(request, 'rewards.html', context=context)
+    return render(request, 'badges/rewards.html', context=context)
 
 
 def donut_form(request):

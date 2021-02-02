@@ -35,7 +35,7 @@ def house(request, id):
     context = {
         'query_set': house_set
     }
-    return render(request, 'house.html', context=context)
+    return render(request, 'member-list/house.html', context=context)
 
 
 def team(request, id):
@@ -43,7 +43,7 @@ def team(request, id):
     context = {
         'query_set': team_set
     }
-    return render(request, 'team.html', context=context)
+    return render(request, 'member-list/team.html', context=context)
 
 
 def handler404(request, exception):

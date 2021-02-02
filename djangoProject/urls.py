@@ -5,12 +5,10 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from . import views
 
-
 handler404 = 'djangoProject.views.handler404'
 handler500 = 'djangoProject.views.handler500'
 handler400 = 'djangoProject.views.handler400'
 handler403 = 'djangoProject.views.handler403'
-
 
 urlpatterns = [
     path('sushiksha/admin/', admin.site.urls, name='admin'),
@@ -36,6 +34,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),
     path('goodies/', include('goodies.urls')),
+    path('timer', views.timer, name='timer')
 ]
 
 if settings.DEBUG:

@@ -81,3 +81,7 @@ def handler403(request, exception):
 def my_logout(request):
     logout(request)
     return redirect('home')
+
+
+def timer(request):
+    return render(request,'timer/timer.html',context=None)

@@ -29,7 +29,7 @@ def contact(request):
             pass
         return redirect(request.META['HTTP_REFERER'])
     else:
-        return render(request, 'contact.html', {})
+        return render(request, 'webpages/contact.html', {})
 
 
 # def events(request):

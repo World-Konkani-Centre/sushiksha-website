@@ -82,7 +82,7 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
 
     Copy paste the code from below document to `settings.py`
     
-    [settings.py](https://github.com/18praneeth/sushiksha-website/blob/test/djangoProject/settings.py)
+    [settings.py](https://github.com/18praneeth/sushiksha-website/blob/master/djangoProject/settings.py)
     
     Change the config parameters,
     ```python

@@ -1,8 +1,14 @@
 import re
+import numpy as np
 from django.core.mail import send_mail
+from django.db.models.functions import Lower
 from django.template import loader
 import slack
 from djangoProject.settings import SLACK_TOKEN
+from .models import BadgeCategory, Reward
+from django.db.models import Count, Sum
+import datetime
+from django.utils import timezone
 
 
 def collect_titles(badges):
@@ -131,16 +137,60 @@ def send_reward_slack(array):
                 }
             },
             {
-			"type": "context",
-			"elements": [
-				{
-					"type": "mrkdwn",
-					"text": "<https://sushiksha.konkanischolarship.com/user/rewards/|Sushksha Badges>"
-				}
-			]
-		},
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": ":wkc-badge1: <https://sushiksha.konkanischolarship.com/user/rewards/|Sushiksha Badges>"
+                    }
+                ]
+            },
         ]
     }
     client_obj = slack.WebClient(token=SLACK_TOKEN)
     client_obj.chat_postMessage(**message)
     print("slack message sent")
+
+
+def format_result(result, headers):
+    output = []
+    array = np.array(result)[::-1]
+    for i in range(len(headers)):
+        output.append(array[:, i].tolist())
+    return output
+
+
+def user_chart_data(user):
+    result = []
+    headers = []
+    category_points = []
+    categories = BadgeCategory.objects.all().order_by(Lower('name'))
+    for category in categories:
+        headers.append(category.name)
+        category_points.append(0)
+    end = timezone.now()
+    delta = datetime.timedelta(days=7)
+    for week in range(1, 5):
+        points = 0
+        for i in range(0, len(category_points)):
+            category_points[i] = 0
+        badges_received = Reward.objects.filter(user=user, timestamp__lte=end,
+                                                timestamp__gt=(end - delta)).values('badges__category__name').annotate(
+            Sum('badges__points'))
+        for category in badges_received:
+            index = headers.index(category['badges__category__name'])
+            category_points[index] += category['badges__points__sum']
+            points += category['badges__points__sum']
+        result.append(category_points + [points])
+        end -= delta
+    result = format_result(result, headers)
+    return headers, result
+
+
+def get_category_points_data(user, categories):
+    query_category = Reward.objects.filter(user=user).values('badges__category__name').annotate(
+        Sum('badges__points'))
+    result = [0] * len(categories)
+    for q in query_category:
+        result[categories.index(q['badges__category__name'])] = q['badges__points__sum']
+    return result

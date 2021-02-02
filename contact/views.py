@@ -68,3 +68,7 @@ def contact(request):
 #         'form': form
 #     }
 #     return render(request, 'gallery_photo_submit.html', context=context)
+
+
+def pentathlon(request):
+    return render(request, 'event/pentathlon.html')

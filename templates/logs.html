@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <main id="main">
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>Analytics</h2>
+            </div>
+        </div>
+
+
+    </main>
+
+
+<section id="" class="profile blog">
+            <div class="container" data-aos="fade-up">
+                <div class="row" data-aos="zoom-in" data-aos-delay="100">
+
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Get Data</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
+                                        <thead>
+                                        <tr class="font-weight-bold">
+                                            <th style="min-width:150px">Description</th>
+                                            <th style="min-width:200px">File</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if user.is_superuser %}
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Profiles of the all users
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-profile' %}"><button class="btn get-started-btn-special col-12">Export Member List<span class="icofont-arrow-down"></span></button></a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                    Point Distribution
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-user' %}"><button class="btn get-started-btn-special col-12">Export Data <span class="icofont-arrow-down"></span></button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Points of Your Team for a week
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-team'%}"><button class="btn get-started-btn-special col-12">Export Team Data <span class="icofont-arrow-down"></span></button></a>
+                                                </td>
+                                            </tr>
+                                        {% if user.is_superuser %}
+                                              <tr>
+                                                <td class="font-weight-bold">
+                                                   Get Individual User Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-user-selected' %}"><button class="btn get-started-btn-special col-12">Individual User Data<span class="icofont-arrow-right"></span></button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Get All Members Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-users'%}"><button class="btn get-started-btn-special col-12">All Member Data<span class="icofont-arrow-right"></span></button></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">
+                                                   Get All Teams Data
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'logs-teams' %}"><button class="btn get-started-btn-special col-12">All Teams Data<span class="icofont-arrow-right"></span></button></a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% if not user.is_superuser %}
+            *If you need more data please contact ADMIN
+            {% endif %}
+            </div>
+        </section>
+
+{% endblock content %}

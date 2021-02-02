@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import Post
 from .forms import CommentForm, PostForm
 from users.models import Profile
+from django.contrib.auth.models import User
 
 
 def get_category_count():
@@ -74,7 +75,7 @@ def blog(request):
 
 
 def blog_single(request, id):
-    id = id.split("--",1)
+    id = id.split("--", 1)
     id = id[0]
     post = get_object_or_404(Post, id=id)
     category_count = get_category_count()
@@ -148,7 +149,7 @@ def blog_delete(request, id):
         return redirect(reverse("blog"))
 
 
-def categories_view(request,category):
+def categories_view(request, category):
     post = Post.objects.filter(categories__title=category)
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
@@ -168,3 +169,24 @@ def categories_view(request,category):
         'category_count': category_count
     }
     return render(request, 'blog/blog.html', context)
+
+
+def user_post(request, id):
+    user = get_object_or_404(User, id=id)
+    post = Post.objects.filter(author=user.profile).order_by('-timestamp')
+    paginator = Paginator(post, 15)
+    page_request_var = 'page'
+    page = request.GET.get(page_request_var)
+    try:
+        paginated_queryset = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_queryset = paginator.page(1)
+    except EmptyPage:
+        paginated_queryset = paginator.page(paginator.num_pages)
+    context = {
+        'queryset': paginated_queryset,
+        'page_request_var': page_request_var,
+        'title': 'Blogs',
+        'heading': user.profile.name + ' Blogs'
+    }    
+    return render(request, 'blog/user-posts.html', context=context)

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'contact.apps.ContactConfig',
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -180,6 +181,7 @@ task_serializer = 'json'
 
 timezone = "Asia/Kolkata"
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
 
 SLACK_TOKEN = config.get('SLACK_AUTH_TOKEN')
+CELERY_TASK_TIME_LIMIT = 30 * 60
+ 

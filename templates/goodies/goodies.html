@@ -11,7 +11,7 @@
             }
         }
 
-        .wrapping{
+        .wrapping {
             word-wrap: break-word;
             word-break: break-all;
             white-space: pre-wrap;
@@ -19,7 +19,6 @@
     </style>
 {% endblock style %}
 {% block content %}
-
     <main id="main">
 
         <!-- ======= Breadcrumbs ======= -->
@@ -49,15 +48,7 @@
                                     </div>
 
                                     <h3>{{ query.title }}</h3>
-                                    <p class="wrapping" >{{ query.description|truncatechars:200 }}</p>
-                                    <!--<p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
-                                dolorem tempore.</p>-->
+                                    <p class="wrapping">{{ query.description|truncatechars:200 }}</p>
                                     <div class="trainer d-flex justify-content-between align-items-center">
                                         <div class="trainer-profile d-flex align-items-center">
                                             <div class="price text-success"><h5 class="mt-4">Price</h5></div>

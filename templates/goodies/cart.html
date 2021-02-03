@@ -8,10 +8,36 @@
             word-break: break-all;
             white-space: pre-wrap;
         }
+
+        .modal-backdrop {
+        z-index: -1;
+        }
+
     </style>
 {% endblock style %}
 {% block content %}
-
+ <div class="modal fade" id="postdeletemodal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered" role="document" >
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info text-white">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Do you want to buy the goodie - {{ item.title }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure about buying this, xx points will be deducted from your points and the goodie will be delivered to {{ user.profile.address }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">I'm Not Sure
+                                            </button>
+                                            <!--<a href="{% url 'blog-delete' id=item.id %}"><button type="button" class="btn btn-danger">Buy</button></a>-->
+                                            <a href="{% url 'blog-delete' id=item.id %}"><button type="button" class="btn btn-danger">Buy</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
     <main id="main">
 
         <!-- ======= Breadcrumbs ======= -->
@@ -79,8 +105,8 @@
                             </li>
                         </ul>
 
-                        <button type="button" class="btn btn-primary btn-block">Place the Goodie</button>
-
+                        <button type="button" class="btn btn-primary btn-block" data-backdrop="false" data-toggle="modal"
+                                                    data-target="#postdeletemodal">Place the Goodie</button>
                     </div>
                 </div>
 

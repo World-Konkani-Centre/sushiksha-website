@@ -2,11 +2,21 @@
 {% load static %}
 
 {% block style %}
-    .card-img-top{
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
-    }
+    <style>
+        @media (min-width: 768px) {
+            .img-top {
+                width: 100%;
+                height: 45vh;
+                object-fit: cover;
+            }
+        }
+
+        .wrapping{
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+    </style>
 {% endblock style %}
 {% block content %}
 
@@ -28,9 +38,9 @@
 
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
                     {% for query in queryset %}
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-2">
                             <div class="course-item">
-                                <img src="{{ query.thumbnail.url }}" class="img-fluid" alt="...">
+                                <img src="{{ query.thumbnail.url }}" class="img-fluid img-top" alt="{{ query.title }}">
                                 <div class="course-content">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <a href="{% url 'tag-goodies' tag=query.tag %}" class="card-link text-danger">
@@ -39,7 +49,15 @@
                                     </div>
 
                                     <h3>{{ query.title }}</h3>
-                                    <p>{{ query.description }}</p>
+                                    <p class="wrapping" >{{ query.description }}</p>
+                                    <!--<p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
+                                dolorem tempore.</p>-->
                                     <div class="trainer d-flex justify-content-between align-items-center">
                                         <div class="trainer-profile d-flex align-items-center">
                                             <div class="price text-success"><h5 class="mt-4">Price</h5></div>

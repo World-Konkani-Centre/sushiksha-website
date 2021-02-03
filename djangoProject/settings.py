@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'contact.apps.ContactConfig',
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
@@ -183,3 +184,4 @@ CELERY_TASK_TRACK_STARTED = True
 
 SLACK_TOKEN = config.get('SLACK_AUTH_TOKEN')
 CELERY_TASK_TIME_LIMIT = 30 * 60
+ 

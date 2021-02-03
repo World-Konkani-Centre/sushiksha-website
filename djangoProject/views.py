@@ -16,7 +16,7 @@ def index(request):
         'featured': featured,
         'title': 'Home'
     }
-    return render(request, 'index.html', context=context)
+    return render(request, 'webpages/index.html', context=context)
 
 
 def about(request):
@@ -27,7 +27,7 @@ def about(request):
         # 'featured': featured,
         # 'common': common
     }
-    return render(request, 'about.html', context=context)
+    return render(request, 'webpages/about.html', context=context)
 
 
 def house(request, id):
@@ -51,7 +51,7 @@ def handler404(request, exception):
         'error_no': 404,
         'error_detail': 'Page Not Found'
     }
-    return render(request, '404.html', context)
+    return render(request, 'webpages/404.html', context)
 
 
 def handler500(request):
@@ -59,7 +59,7 @@ def handler500(request):
         'error_no': 500,
         'error_detail': 'Server Error'
     }
-    return render(request, '404.html', context)
+    return render(request, 'webpages/404.html', context)
 
 
 def handler400(request, exception):
@@ -67,7 +67,7 @@ def handler400(request, exception):
         'error_no': 400,
         'error_detail': 'Bad Request'
     }
-    return render(request, '404.html', context)
+    return render(request, 'webpages/404.html', context)
 
 
 def handler403(request, exception):
@@ -75,7 +75,7 @@ def handler403(request, exception):
         'error_no': 403,
         'error_detail': 'Permission Denied'
     }
-    return render(request, '404.html', context)
+    return render(request, 'webpages/404.html', context)
 
 
 def my_logout(request):

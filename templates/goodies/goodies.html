@@ -49,7 +49,7 @@
                                     </div>
 
                                     <h3>{{ query.title }}</h3>
-                                    <p class="wrapping" >{{ query.description }}</p>
+                                    <p class="wrapping" >{{ query.description|truncatechars:200 }}</p>
                                     <!--<p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
                                 dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
                                 dolorem tempore.Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores
@@ -63,9 +63,7 @@
                                             <div class="price text-success"><h5 class="mt-4">Price</h5></div>
                                         </div>
                                         <div class="trainer-rank d-flex align-items-center">
-                                            <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white">Add
-                                                to
-                                                Cart</a>
+                                            <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white">Details</a>
                                         </div>
                                     </div>
                                 </div>

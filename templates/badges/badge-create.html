@@ -17,9 +17,9 @@
 
         <section id="about" class="container">
 
-                <h1 class="lead">Badge giving is temporarily  closed, come after the results are announced</h1>
+                {% comment %} <h1 class="lead">Badge giving is temporarily  closed, come after the results are announced</h1> {% endcomment %}
 
-             {% comment %} <div class="container" data-aos="zoom-in" data-aos-delay="10">
+            <div class="container" data-aos="zoom-in" data-aos-delay="10">
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <form method="POST" action="">
                         {% csrf_token %}
@@ -27,7 +27,7 @@
                         <button type="submit" class="btn btn-block get-started-btn-special">Submit</button>
                     </form>
                 </div>
-            </div>  {% endcomment %}
+            </div> 
 
         </section><!-- End About Section -->
 
@@ -38,7 +38,7 @@
 
                       <div class="row">
                     <div class="col-lg-12 d-flex align-items-stretch">
-                        <div class="content">
+                        <div class="content" data-aos="flip-right">
                             <h3>Why give a badge?</h3>
                             <p>
                                 Badges are a symbol of recognition for a work done. It signifies the amount of hard work
@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-3" data-aos="zoom-in" data-aos-delay="10" >
+                <div class="row mt-3" data-aos="zoom-in">
 
                     <div class="col-lg-12">
                         <div class="card mb-4">

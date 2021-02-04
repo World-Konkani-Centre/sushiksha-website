@@ -13,7 +13,7 @@ from django.utils import timezone
 from djqscsv import render_to_csv_response
 
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, RangeRequestForm, \
-    UserRangeRequestForm
+    UserRangeRequestForm, MultiBadgeForm
 from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import email_check, user_chart_data, get_category_points_data
 
@@ -232,6 +232,29 @@ def badge(request):
         'badges': badges
     }
     return render(request, 'badges/badge.html', context=context)
+
+
+def multi_badge(request):
+    form = MultiBadgeForm
+    if request.method == 'POST':
+        form = MultiBadgeForm(request.POST)
+        if form.is_valid():
+            profiles = form.cleaned_data.get('profiles')
+            badge = form.cleaned_data.get('badge')
+            print(badge)
+            awarded = form.cleaned_data.get('awarded_by')
+            describe = form.cleaned_data.get('description')
+            
+            for id in profiles:
+                print('insided loop')
+                row = Reward(user=get_object_or_404(User, id=int(id)), description=describe, awarded_by=awarded, badges=get_object_or_404(Badge, id=int(badge)))
+                print(id + 'user')
+                row.save()
+                print('save')
+
+            return redirect('home')
+    return render(request, 'badges/multi-badge.html', {'form':form})
+
 
 
 @login_required

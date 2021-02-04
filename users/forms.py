@@ -97,7 +97,7 @@ class RangeRequestForm(forms.Form):
 
 
 class UserRangeRequestForm(forms.Form):
-    user = forms.ModelChoiceField(queryset=User.objects.all().order_by('profile__user'),label="Seect the user")
+    user = forms.ModelChoiceField(queryset=User.objects.all().order_by('profile__user'), label="Seect the user")
     beginning = forms.DateTimeField(label="Start Date Time")
     end = forms.DateTimeField(label="End Date Time")
 
@@ -105,8 +105,8 @@ class UserRangeRequestForm(forms.Form):
 class MultiBadgeForm(forms.Form):
     choices = []
     for i in User.objects.all().order_by(Lower('profile__name')):
-        name = str(i.profile.name) + '  ('+ str(i.profile.get_team_name()) + ')'
-        entry = (i.id, name )
+        name = str(i.profile.name) + '  (' + str(i.profile.get_team_name()) + ')'
+        entry = (i.id, name)
         choices.append(entry)
     choices = tuple(choices)
 
@@ -117,9 +117,7 @@ class MultiBadgeForm(forms.Form):
         badge_choices.append(entry)
     badge_choices = tuple(badge_choices)
 
-    
-
     awarded_by = forms.CharField(required=True)
-    badge = forms.ChoiceField( choices=badge_choices, required=True)
+    badge = forms.ChoiceField(choices=badge_choices, required=True)
     description = forms.CharField(widget=forms.Textarea())
     profiles = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)

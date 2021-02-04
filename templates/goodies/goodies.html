@@ -1,7 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
 
+{% block style %}
+    <style>
+        @media (min-width: 768px) {
+            .img-top {
+                width: 100%;
+                height: 45vh;
+                object-fit: cover;
+            }
+        }
+
+        .wrapping {
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+    </style>
+{% endblock style %}
+{% block content %}
     <main id="main">
 
         <!-- ======= Breadcrumbs ======= -->
@@ -11,47 +28,41 @@
             </div>
         </div>
 
-<div class="container">
-                <h2 class="ml-auto">Total points : {{ user.profile.total_points }}</h2>
-            </div>
+        <div class="container">
+            <h2 class="ml-auto">Total points : {{ user.profile.total_points }}</h2>
+        </div>
 
-        <section>
-            <div class="container">
-                <div class="row">
-                     {% for query in queryset %}
-                    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-                        <div class="card mb-2 box">
-                            <img class="card-img img-fluid"
-                                 src="{{ query.thumbnail.url }}"
-                                 alt="Vans">
-                            <div class="card-img-overlay d-inline-flex justify-content-end " style="height: 10px">
-                                <a href="{% url 'tag-goodies' tag=query.tag %}" class="card-link text-danger">
-                                   {{ query.tag }}
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">{{ query.title }}</h4>
-                                <h6 class="card-subtitle mb-2 text-muted">Conditions</h6>
-                                <p class="card-text">
-                                    {{ query.description }} </p>
-                                <!--<div class="options d-flex flex-fill">
-                                    <select class="custom-select mr-1">
-                                        <option selected>Color</option>
-                                    </select>
-                                    <select class="custom-select ml-1">
-                                        <option selected>Size</option>
-                                    </select>
-                                </div> -->
-                                <div class="buy d-flex justify-content-between align-items-center">
-                                    <div class="price text-success"><h5 class="mt-4">Price</h5></div>
-                                    <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white">Add to Cart</a>
+        <section id="courses" class="courses">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row" data-aos="zoom-in" data-aos-delay="100">
+                    {% for query in queryset %}
+                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-2">
+                            <div class="course-item">
+                                <img src="{{ query.thumbnail.url }}" class="img-fluid img-top" alt="{{ query.title }}">
+                                <div class="course-content">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <a href="{% url 'tag-goodies' tag=query.tag %}" class="card-link text-danger">
+                                            {{ query.tag }}
+                                        </a>
+                                    </div>
+
+                                    <h3>{{ query.title }}</h3>
+                                    <p class="wrapping">{{ query.description|truncatechars:200 }}</p>
+                                    <div class="trainer d-flex justify-content-between align-items-center">
+                                        <div class="trainer-profile d-flex align-items-center">
+                                            <div class="price text-success"><h5 class="mt-4">Price</h5></div>
+                                        </div>
+                                        <div class="trainer-rank d-flex align-items-center">
+                                            <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white">Details</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
-
+                    {% endfor %}<!-- End Course Item-->
                 </div>
+
             </div>
         </section>
 

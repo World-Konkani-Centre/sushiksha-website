@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from users.tasks import send_email
-from .models import Profile, Pomodoro, Reward,Teams, House,Badge
+from .models import Profile, Pomodoro, Reward, Teams, House, Badge
 
 
 @receiver(post_save, sender=User)
@@ -35,11 +35,19 @@ def send_mail(sender, instance, created, **kwargs):
         profile.save()
         team = Teams.objects.filter(members__user=instance.user).first()
         if team is not None:
+            # print("team points before : ")
+            # print(team.points)
             team.points = team.points + _badge.points
+            # print("team points after : ")
+            # print(team.points)
             team.save()
         house = House.objects.filter(teams__members__user=instance.user).first()
         if house is not None:
+            # print("house points before : ")
+            # print(house.points)
             house.points = house.points + _badge.points
+            # print("house points after : ")
+            # print(house.points)
             house.save()
         send_email.delay(array)
         # comment during production to avoid unnecessary errors

@@ -29,6 +29,9 @@
                                     <li><a href="{% url 'initiator_claim' %}">Initiator</a></li>
                                 </ul>
                             </li>
+                            {% if user.is_superuser %}
+                                <li><a href="{% url 'multiple-badge' %}">Give Multiple badges (ADMIN ONLY)</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 {% endif %}

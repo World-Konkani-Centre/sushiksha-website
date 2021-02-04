@@ -241,18 +241,12 @@ def multi_badge(request):
         if form.is_valid():
             profiles = form.cleaned_data.get('profiles')
             badge = form.cleaned_data.get('badge')
-            print(badge)
             awarded = form.cleaned_data.get('awarded_by')
             describe = form.cleaned_data.get('description')
             
             for id in profiles:
-                print('insided loop')
-                row = Reward(user=get_object_or_404(User, id=int(id)), description=describe, awarded_by=awarded, badges=get_object_or_404(Badge, id=int(badge)))
-                print(id + 'user')
-                row.save()
-                print('save')
+                entry = Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe, awarded_by=awarded, badges=get_object_or_404(Badge, id=int(badge)))
 
-            return redirect('home')
     return render(request, 'badges/multi-badge.html', {'form':form})
 
 

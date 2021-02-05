@@ -234,21 +234,24 @@ def badge(request):
     return render(request, 'badges/badge.html', context=context)
 
 
+@login_required()
 def multi_badge(request):
-    form = MultiBadgeForm
-    if request.method == 'POST':
-        form = MultiBadgeForm(request.POST)
-        if form.is_valid():
-            profiles = form.cleaned_data.get('profiles')
-            badge = form.cleaned_data.get('badge')
-            awarded = form.cleaned_data.get('awarded_by')
-            describe = form.cleaned_data.get('description')
-            
-            for id in profiles:
-                entry = Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe, awarded_by=awarded, badges=get_object_or_404(Badge, id=int(badge)))
-
-    return render(request, 'badges/multi-badge.html', {'form':form})
-
+    if request.user.is_superuser:
+        form = MultiBadgeForm()
+        if request.method == 'POST':
+            form = MultiBadgeForm(request.POST)
+            if form.is_valid():
+                profiles = form.cleaned_data.get('profiles')
+                badge = form.cleaned_data.get('badge')
+                awarded = form.cleaned_data.get('awarded_by')
+                describe = form.cleaned_data.get('description')
+                badge_obj = get_object_or_404(Badge, id=int(badge))
+                for id in profiles:
+                    Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe,
+                                          awarded_by=awarded, badges=badge_obj)
+                messages.success(request, f'Badge {badge_obj.title} awarded to {len(profiles)} users')
+                return redirect('multiple-badge')
+        return render(request, 'badges/multi-badge.html', {'form': form})
 
 
 @login_required

@@ -13,6 +13,7 @@ urlpatterns = [
     path('search/', views.search, name='user-search'),
     path('badge/<int:id>/', views.create_badge, name='new-badge'),
     path('badge/', views.badge, name='badge'),
+    path('multiple-badge/', views.multi_badge, name='multiple-badge'),
     path('rewards/', badge_list, name='reward'),
     path('<int:pk>/', views.user_detail_view, name='user-detail'),
     path('logs/',views.get_logs , name='logs'),

@@ -1,7 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
 
+{% block style %}
+    <style>
+        .wrapping {
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+        .modal-backdrop {
+        z-index: -1;
+        }
+
+    </style>
+{% endblock style %}
+{% block content %}
+ <div class="modal fade" id="postdeletemodal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered" role="document" >
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info text-white">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Do you want to buy the goodie - {{ item.title }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure about buying this, xx points will be deducted from your points and the goodie will be delivered to {{ user.profile.address }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">I'm Not Sure
+                                            </button>
+                                            <!--<a href="{% url 'blog-delete' id=item.id %}"><button type="button" class="btn btn-danger">Buy</button></a>-->
+                                            <a href="{% url 'blog-delete' id=item.id %}"><button type="button" class="btn btn-danger">Buy</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
     <main id="main">
 
         <!-- ======= Breadcrumbs ======= -->
@@ -17,38 +53,14 @@
         <section class="container">
 
             <div class="row">
-
                 <div class="col-lg-8">
-                    <div class="mb-3">
-                        <div class="pt-4 wish-list">
-                            <div class="row mb-4">
-                                <div class="col-md-5 col-lg-3 col-xl-3">
-                                    <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
-                                        <img class="img-fluid w-100"
-                                             src="{{ item.thumbnail.url }}"
-                                             alt="Sample">
-                                    </div>
-                                </div>
-                                <div class="col-md-7 col-lg-9 col-xl-9">
-                                    <div>
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5>{{ item.title }}</h5>
-                                                <p class="mb-3 text-muted text-uppercase small">{{ item.description }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span><strong id="summary">Points </strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                s
-                            </div>
-                            <hr class="mb-4">
-                        </div>
+                    <img src="{{ item.thumbnail.url }}" class="img-fluid" alt="">
+                    <h3 class="mt-3 mb-3">{{ item.title }}</h3>
+                    <p class="wrapping">{{ item.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5>Points </h5>
                     </div>
-
-
+                <hr>
                     <div class="mb-3">
                         <div class="pt-4">
 
@@ -62,40 +74,43 @@
                                 clicking <a href="{% url 'profile' %}">here</a></p>
                         </div>
                     </div>
+                    <hr>
+
+
                 </div>
 
 
-                <div class="col-lg-4">
+            <div class="col-lg-4">
 
 
-                    <div class="mb-3">
-                        <div class="pt-4">
+                <div class="mb-3">
+                    <div class="pt-4">
 
-                            <h5 class="mb-3">The points usage</h5>
+                        <h5 class="mb-3">The points usage</h5>
 
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                    Points
-                                    <span>points</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                    Shipping
-                                    <span>Gratis</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                    <div>
-                                        <strong>The total points </strong>
-                                    </div>
-                                    <span><strong>points</strong></span>
-                                </li>
-                            </ul>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                Points
+                                <span>points</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                Shipping
+                                <span>Gratis</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>The total points </strong>
+                                </div>
+                                <span><strong>points</strong></span>
+                            </li>
+                        </ul>
 
-                            <button type="button" class="btn btn-primary btn-block">Place the Goodie</button>
-
-                        </div>
+                        <button type="button" class="btn btn-primary btn-block" data-backdrop="false" data-toggle="modal"
+                                                    data-target="#postdeletemodal">Place the Goodie</button>
                     </div>
-
                 </div>
+
+            </div>
 
             </div>
         </section>

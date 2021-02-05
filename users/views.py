@@ -249,7 +249,7 @@ def multi_badge(request):
                 for id in profiles:
                     Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe,
                                           awarded_by=awarded, badges=badge_obj)
-                messages.success(request, f'Badge {badge_obj.title} awarded for  {len(profiles)} user')
+                messages.success(request, f'Badge {badge_obj.title} awarded to {len(profiles)} users')
                 return redirect('multiple-badge')
         return render(request, 'badges/multi-badge.html', {'form': form})
 

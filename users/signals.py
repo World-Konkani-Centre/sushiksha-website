@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from users.tasks import send_email
-from .models import Profile, Pomodoro, Reward,Teams, House,Badge
+from .models import Profile, Pomodoro, Reward, Teams, House, Badge
 
 
 @receiver(post_save, sender=User)

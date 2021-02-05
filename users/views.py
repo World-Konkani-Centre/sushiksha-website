@@ -235,7 +235,6 @@ def badge(request):
 
 
 def multi_badge(request):
-    form = MultiBadgeForm
     if request.method == 'POST':
         form = MultiBadgeForm(request.POST)
         if form.is_valid():
@@ -245,9 +244,17 @@ def multi_badge(request):
             describe = form.cleaned_data.get('description')
             
             for id in profiles:
-                entry = Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe, awarded_by=awarded, badges=get_object_or_404(Badge, id=int(badge)))
+                user = get_object_or_404(User, id=int(id))
+                Reward.objects.create(user=user, description=describe, awarded_by=awarded, badges=get_object_or_404(Badge, id=int(badge)))
+                messages.info(request, f'Badge awarded to {user.profile.name}')
+            return redirect('trainers')
 
-    return render(request, 'badges/multi-badge.html', {'form':form})
+    else:
+        form = MultiBadgeForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'badges/multi-badge.html', context=context)
 
 
 

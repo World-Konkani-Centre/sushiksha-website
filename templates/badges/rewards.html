@@ -25,9 +25,9 @@
         <section id="" class="profile blog">
             <div class="container" data-aos="fade-up">
                 <p class="mb-2">
-                    <button class="btn get-started-btn-special" type="button" data-toggle="collapse"
+                    <button class="btn btn-danger " type="button" data-toggle="collapse"
                             data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Filter options &#8681;
+                        Filter options <span class="icofont-arrow-down"></span>
                     </button>
                 </p>
                 <div class="collapse" id="collapseExample">
@@ -36,7 +36,7 @@
 
                             {{ reward_filter.form | crispy }}
 
-                            <button class="btn btn-block get-started-btn-special" type="submit">Filter</button>
+                            <button class="btn btn-block btn-danger" type="submit">Filter</button>
                         </form>
                     </div>
                 </div>

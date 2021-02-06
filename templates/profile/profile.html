@@ -14,12 +14,20 @@
 {% block content %}
     <main id="main">
 
-        <!-- ======= Breadcrumbs ======= -->
-        <div class="breadcrumbs" data-aos="fade-in">
-            <div class="container">
-                <h2>Profile</h2>
-            </div>
-        </div><!-- End Breadcrumbs -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{{ user.profile.name | truncatechars:20}} Account Details</h2>
+
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+             <li>Account</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
 
         <!-- ======= Contact Section ======= -->
         <section id="" class="">

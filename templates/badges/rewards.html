@@ -13,21 +13,27 @@
 
     <main id="main">
 
-        <!-- ======= Breadcrumbs ======= -->
-        <div class="breadcrumbs" data-aos="fade-in">
-            <div class="container">
-                <h2>Badges</h2>
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
 
-            </div>
-        </div><!-- End Breadcrumbs -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Badges</h2>
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'reward' %}">Badges</a></li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
 
 
         <section id="" class="profile blog">
             <div class="container" data-aos="fade-up">
                 <p class="mb-2">
-                    <button class="btn get-started-btn-special" type="button" data-toggle="collapse"
+                    <button class="btn btn-danger " type="button" data-toggle="collapse"
                             data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Filter options &#8681;
+                        Filter options <span class="icofont-arrow-down"></span>
                     </button>
                 </p>
                 <div class="collapse" id="collapseExample">
@@ -36,7 +42,7 @@
 
                             {{ reward_filter.form | crispy }}
 
-                            <button class="btn btn-block get-started-btn-special" type="submit">Filter</button>
+                            <button class="btn btn-block btn-danger" type="submit">Filter</button>
                         </form>
                     </div>
                 </div>

@@ -1,5 +1,7 @@
 /*Selecion*/
-::-moz-selection { /* Code for Firefox */
+
+::-moz-selection {
+    /* Code for Firefox */
     color: #fff;
     background: #fa1616b8;
 }
@@ -9,31 +11,41 @@
     background: #fa1616b8;
 }
 
+
 /* width */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
 
+
 /* Track */
+
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 6px;
 }
 
+
 /* Handle */
+
 ::-webkit-scrollbar-thumb {
     background: #f5587b;
     border-radius: 6px;
 }
 
+
 /* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
     background: #e41749;
 }
 
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
 body {
     font-family: "Open Sans", sans-serif;
     color: #444444;
@@ -48,13 +60,20 @@ a:hover {
     text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "Raleway", sans-serif;
 }
+
 
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
+
 .back-to-top {
     position: fixed;
     display: none;
@@ -81,9 +100,11 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
 }
 
+
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
+
 #preloader {
     position: fixed;
     top: 0;
@@ -128,18 +149,22 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
+
 @media screen and (max-width: 768px) {
     [data-aos-delay] {
         transition-delay: 0 !important;
     }
 }
 
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
+
 #header {
     background: #e41749;
     transition: all 0.5s;
@@ -173,10 +198,14 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
+
+
 /* Desktop Navigation */
+
 .nav-menu ul {
     margin: 0;
     padding: 0;
@@ -203,7 +232,9 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
-.nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
+.nav-menu a:hover,
+.nav-menu .active > a,
+.nav-menu li:hover > a {
     color: #fff591;
 }
 
@@ -241,7 +272,9 @@ h1, h2, h3, h4, h5, h6 {
     color: #f5587b;
 }
 
-.nav-menu .drop-down ul a:hover, .nav-menu .drop-down ul .active > a, .nav-menu .drop-down ul li:hover > a {
+.nav-menu .drop-down ul a:hover,
+.nav-menu .drop-down ul .active > a,
+.nav-menu .drop-down ul li:hover > a {
     color: #e41749;
 }
 
@@ -287,7 +320,9 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+
 /* Get Startet Button */
+
 .get-started-btn {
     margin-left: 22px;
     background: #f5587b;
@@ -328,7 +363,9 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+
 /* Mobile Navigation */
+
 .mobile-nav-toggle {
     position: fixed;
     top: 17px;
@@ -379,7 +416,9 @@ h1, h2, h3, h4, h5, h6 {
     outline: none;
 }
 
-.mobile-nav a:hover, .mobile-nav .active > a, .mobile-nav li:hover > a {
+.mobile-nav a:hover,
+.mobile-nav .active > a,
+.mobile-nav li:hover > a {
     color: #e41749;
     text-decoration: none;
 }
@@ -435,9 +474,11 @@ h1, h2, h3, h4, h5, h6 {
     color: #e41749;
 }
 
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
+
 #hero {
     width: 100%;
     height: 80vh;
@@ -522,9 +563,11 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
+
 section {
     padding: 60px 0;
     overflow: hidden;
@@ -568,10 +611,15 @@ section {
     color: #37423b;
 }
 
+
+/*--------------------------------------------------------------
+  # Breadcrumbs
+  --------------------------------------------------------------*/
+
 .breadcrumbs {
+    background: #f8f9fa;
+    min-height: 40px;
     margin-top: 73px;
-    text-align: center;
-    background: #fff;
     padding: 30px 0;
     color: #e41749;
 }
@@ -584,17 +632,56 @@ section {
 
 .breadcrumbs h2 {
     font-size: 32px;
-    font-weight: 500;
+    margin: 0;
 }
 
-.breadcrumbs p {
+.breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     font-size: 14px;
-    margin-bottom: 0;
 }
+
+.breadcrumbs ol li + li {
+    padding-left: 10px;
+}
+
+.breadcrumbs ol li + li::before {
+    display: inline-block;
+    padding-right: 10px;
+    color: #6b7b8d;
+    content: "/";
+}
+
+@media (max-width: 992px) {
+    .breadcrumbs {
+        margin-top: 58px;
+    }
+
+    .breadcrumbs .d-flex {
+        display: block !important;
+    }
+
+    .breadcrumbs h2 {
+        margin-bottom: 10px;
+    }
+
+    .breadcrumbs ol {
+        display: block;
+    }
+
+    .breadcrumbs ol li {
+        display: inline-block;
+    }
+}
+
 
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/
+
 .about .content h3 {
     font-weight: 600;
     font-size: 26px;
@@ -615,7 +702,6 @@ section {
     padding-right: 4px;
     color: #ff8a5c;
 }
-
 
 .about .play-btn {
     width: 94px;
@@ -728,7 +814,6 @@ section {
     color: #fff;
 }
 
-
 @media (max-width: 768px) {
     .about .content .learn-more-btn {
         margin: 0 48px 0 0;
@@ -736,9 +821,11 @@ section {
     }
 }
 
+
 /*--------------------------------------------------------------
 # Counts
 --------------------------------------------------------------*/
+
 .counts {
     padding: 30px 0;
 }
@@ -759,9 +846,11 @@ section {
     color: #37423b;
 }
 
+
 /*--------------------------------------------------------------
 # Why Us
 --------------------------------------------------------------*/
+
 .why-us .content {
     padding: 30px;
     background: #e41749;
@@ -825,9 +914,11 @@ section {
     color: #848484;
 }
 
+
 /*--------------------------------------------------------------
 # Features
 --------------------------------------------------------------*/
+
 .features {
     padding-top: 0px;
 }
@@ -867,9 +958,11 @@ section {
     color: #f5587b;
 }
 
+
 /*--------------------------------------------------------------
 # Schedule Section
 --------------------------------------------------------------*/
+
 .section-with-bg {
     padding: 60px 0 60px 0;
 }
@@ -990,6 +1083,7 @@ section {
 /*--------------------------------------------------------------
 # Courses
 --------------------------------------------------------------*/
+
 .courses .course-item {
     border-radius: 5px;
     border: 1px solid #eef0ef;
@@ -1055,9 +1149,11 @@ section {
     color: #657a6d;
 }
 
+
 /*--------------------------------------------------------------
 # Pricing
 --------------------------------------------------------------*/
+
 .pricing .box {
     padding: 20px;
     background: #fff;
@@ -1165,9 +1261,11 @@ section {
     color: #fff;
 }
 
+
 /*--------------------------------------------------------------
 # Team
 --------------------------------------------------------------*/
+
 .team {
     background: #fff;
     padding: 60px 0;
@@ -1180,7 +1278,6 @@ section {
     border-radius: 5px;
     background: #fff;
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-
 }
 
 .team .member .member-img {
@@ -1246,9 +1343,11 @@ section {
     opacity: 1;
 }
 
+
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
+
 .blog {
     padding: 40px 0 20px 0;
 }
@@ -1599,7 +1698,7 @@ section {
 }
 
 .blog .blog-pagination {
-    color: #816a6e;
+    color: #8795a4;
 }
 
 .blog .blog-pagination ul {
@@ -1609,7 +1708,7 @@ section {
 }
 
 .blog .blog-pagination li {
-    border: 1px solid white;
+    border: 1px solid #edeff1;
     margin: 0 5px;
     transition: 0.3s;
 }
@@ -1624,12 +1723,14 @@ section {
     display: inline-block;
 }
 
-.blog .blog-pagination li.active, .blog .blog-pagination li:hover {
-    background: #e43c5c;
-    border: 1px solid #e43c5c;
+.blog .blog-pagination li.active,
+.blog .blog-pagination li:hover {
+    background: #d9232d;
+    border: 1px solid #d9232d;
 }
 
-.blog .blog-pagination li.active a, .blog .blog-pagination li:hover a {
+.blog .blog-pagination li.active a,
+.blog .blog-pagination li:hover a {
     color: #fff;
 }
 
@@ -1788,9 +1889,11 @@ section {
     font-size: 14px;
 }
 
+
 /*--------------------------------------------------------------
 # Testimonials
 --------------------------------------------------------------*/
+
 .testimonials .testimonial-wrap {
     padding-left: 50px;
 }
@@ -1826,7 +1929,8 @@ section {
     margin: 0;
 }
 
-.testimonials .testimonial-item .quote-icon-left, .testimonials .testimonial-item .quote-icon-right {
+.testimonials .testimonial-item .quote-icon-left,
+.testimonials .testimonial-item .quote-icon-right {
     color: #f5587b;
     font-size: 26px;
 }
@@ -1849,7 +1953,8 @@ section {
     margin: 15px auto 15px auto;
 }
 
-.testimonials .owl-nav, .testimonials .owl-dots {
+.testimonials .owl-nav,
+.testimonials .owl-dots {
     margin-top: 5px;
     text-align: center;
 }
@@ -1883,9 +1988,11 @@ section {
     }
 }
 
+
 /*--------------------------------------------------------------
 # Events
 --------------------------------------------------------------*/
+
 .events .card {
     border: 0;
     padding: 0 30px;
@@ -1955,9 +2062,11 @@ section {
     color: #e41749;
 }
 
+
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
+
 .contact {
     padding-top: 5px;
 }
@@ -1996,11 +2105,14 @@ section {
     color: #657a6d;
 }
 
-.contact .info .email, .contact .info .phone {
+.contact .info .email,
+.contact .info .phone {
     margin-top: 40px;
 }
 
-.contact .info .email:hover i, .contact .info .address:hover i, .contact .info .phone:hover i {
+.contact .info .email:hover i,
+.contact .info .address:hover i,
+.contact .info .phone:hover i {
     background: #e41749;
     color: #fff;
 }
@@ -2014,14 +2126,15 @@ section {
     padding-bottom: 8px;
 }
 
-
-.contact .contact-form input, .contact .contact-form textarea {
+.contact .contact-form input,
+.contact .contact-form textarea {
     border-radius: 4px;
     box-shadow: none;
     font-size: 14px;
 }
 
-.contact .contact-form input:focus, .contact .contact-form textarea:focus {
+.contact .contact-form input:focus,
+.contact .contact-form textarea:focus {
     border-color: #e41749;
 }
 
@@ -2046,15 +2159,18 @@ section {
     background: #e41749;
 }
 
+
 /*--------------------------------------------------------------
 # Gallery Section
 --------------------------------------------------------------*/
+
 #gallery .gallery-carousel {
     padding: 60px;
     overflow: hidden;
 }
 
-#gallery .owl-nav, #gallery .owl-dots {
+#gallery .owl-nav,
+#gallery .owl-dots {
     margin-top: 25px;
     text-align: center;
 }
@@ -2090,7 +2206,6 @@ section {
     z-index: 1;
 }
 
-
 #gallery .venue-gallery-container {
     padding-right: 12px;
 }
@@ -2113,6 +2228,7 @@ section {
 /*--------------------------------------------------------------
 # F.A.Q
 --------------------------------------------------------------*/
+
 .faq {
     padding: 60px 0;
 }
@@ -2171,6 +2287,7 @@ section {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
+
 #footer {
     color: #37423b;
     font-size: 14px;
@@ -2332,7 +2449,6 @@ section {
     text-decoration: none;
 }
 
-
 .avatar {
     margin: 0;
     overflow: hidden;
@@ -2341,11 +2457,11 @@ section {
     width: 50px;
 }
 
-.table td, .table th {
+.table td,
+.table th {
     vertical-align: middle;
 !important;
 }
-
 
 .badge {
     position: relative;
@@ -2401,7 +2517,6 @@ section {
 .search-form form button:hover {
     background: #d01d3f;
 }
-
 
 .profile .featured-mentor {
     background: #fafafa;

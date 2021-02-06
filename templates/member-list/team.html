@@ -4,12 +4,23 @@
 {% block content %}
 
     <main id="main">
-        <div class="breadcrumbs" data-aos="fade-in">
-            <div class="container">
-                <h2>{{ query_set.name }}</h2>
-                <h3>Points : {{ query_set.points|intcomma  }}</h3>
-            </div>
+
+
+        
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{{ query_set.name }}</h2>
+          <h3>Points : {{ query_set.points|intcomma  }}</h3>
+          <ol>
+            <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+            <li>{{ query_set.name }}</li>
+          </ol>
         </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
 
         <section id="schedule" class="section-with-bg">
             <div class="container" data-aos="fade-up">

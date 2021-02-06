@@ -3,10 +3,27 @@
 {% block content %}
 
     <main id="main">
-        <div class="breadcrumbs" data-aos="fade-in">
-            <div class="container">
-                <h2>Users</h2>
-                <div class="row">
+
+
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Users</h2>
+
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>Users</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+        <section id="team" class="team section-with-bg">
+            <div class="container" data-aos="fade-up">
+
+                                                    <div class="row mb-4">
                     <div class="col-lg-8 col-md-7">
                     </div>
                     <div class="col-lg-4 col-md-5 col-11">
@@ -18,11 +35,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <section id="team" class="team section-with-bg">
-            <div class="container" data-aos="fade-up">
 
 
                 <ul class="nav nav-tabs" role="tablist" data-aos="fade-up" data-aos-delay="100">

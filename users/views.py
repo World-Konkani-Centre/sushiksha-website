@@ -198,7 +198,7 @@ def create_badge(request, id):
                     return redirect('trainers')
 
     context = {
-        'heading': f'Give a badge to {user.username}',
+        'heading': f'Award a Badge to {user.profile.name}',
         'form': form,
         'badges': badges
     }

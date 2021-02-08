@@ -17,10 +17,10 @@ from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterFo
 from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import email_check, user_chart_data, get_category_points_data
 
-color = ['#120078', '#9d0191',
+color = ['#892cdc', '#9d0191',
          '#fd3a69',
-         '#c0e218', '#fecd1a',
-         '#f37121', '#ffc1f3']
+         '#3e64ff', '#fecd1a',
+         '#eb5e0b', '#ffc1f3']
 
 
 def register(request):
@@ -158,7 +158,8 @@ def user_detail_view(request, pk):
         'badges': badges,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories, result)
+        'query_category': zip(categories, result),
+        'query_point_distribution': result
     }
 
     return render(request, 'profile/profile-detail.html', context=context)

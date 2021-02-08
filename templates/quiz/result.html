@@ -9,8 +9,21 @@
 
 {% block content %}
     <main id="main">
-        <section id="" class="">
+    <section id="breadcrumbs" class="breadcrumbs">
             <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ quiz.title }} Result</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                        <li>
+                            <a href="{% url 'quiz_category_list_matching' category_name=quiz.category %}">{{ quiz.category }}</a>
+                        </li>
+                        <li>{{ quiz.title }}</li>
+                    </ol>
+                </div>
             </div>
         </section>
         <section id="" class="">
@@ -57,7 +70,7 @@
                         {% if user.is_authenticated %}
 
                             <p>{% trans "The result of this exam will be stored in your progress section so you can review and monitor your progression" %}.</p>
-
+                            check your progress <a href="{% url 'quiz_progress' %}">here</a>
                         {% endif %}
                     </div>
 

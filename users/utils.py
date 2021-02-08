@@ -169,8 +169,8 @@ def user_chart_data(user):
         headers.append(category.name)
         category_points.append(0)
     end = timezone.now()
-    delta = datetime.timedelta(days=7)
-    for week in range(1, 5):
+    delta = datetime.timedelta(days=1)
+    for week in range(1, 31):
         points = 0
         for i in range(0, len(category_points)):
             category_points[i] = 0
@@ -184,6 +184,7 @@ def user_chart_data(user):
         result.append(category_points + [points])
         end -= delta
     result = format_result(result, headers)
+    print(result)
     return headers, result
 
 

@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% block title %}{% trans "Quizzes related to" %} {{ category.category }}{% endblock %}
 
 {% block content %}
     <main id="main">
         <section id="breadcrumbs" class="breadcrumbs">
             <div class="container">
-                <h2>{% trans "Quizzes in the" %} <strong>{{ category.category }} </strong>{% trans "category" %}</h2>
+                <h2>{% trans "Quizzes related to " %} <strong>{{ category.category }} </strong>{% trans "category" %}</h2>
             </div>
         </section>
 
         <section id="" class="">
             <div class="container">
-                <h3>Select the category</h3>
+                <h3>Select the Quiz</h3>
                 {% with object_list as quizzes %}
                     {% if quizzes %}
                         <ul>
@@ -26,7 +25,7 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <p>{% trans "There are no quizzes" %}</p>
+                        <p>{% trans "There are no quizzes available in this category" %}</p>
                     {% endif %}
                 {% endwith %}
             </div>

@@ -13,7 +13,7 @@
                 {% endif %}
 
                 {% if user.is_authenticated %}
-
+                    <li><a href="{% url 'quiz_index' %}">Let's Practice</a></li>
                     <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>
                         <ul>
                             <li><a href="{% url 'reward' %}">Badge activity</a></li>

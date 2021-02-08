@@ -12,6 +12,7 @@ from .models import Quiz, Category, Progress, Sitting, Question,Essay_Question
 
 class QuizMarkerMixin(object):
     @method_decorator(login_required)
+    @method_decorator(permission_required('is_superuser'))
     @method_decorator(permission_required('quiz.view_sittings'))
     def dispatch(self, *args, **kwargs):
         return super(QuizMarkerMixin, self).dispatch(*args, **kwargs)

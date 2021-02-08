@@ -22,11 +22,18 @@
     <main id="main">
 
         <!-- ======= Breadcrumbs ======= -->
-        <div class="breadcrumbs" data-aos="fade-in">
+        <section id="breadcrumbs" class="breadcrumbs">
             <div class="container">
-                <h2>Goodies</h2>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Goodies</h2>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li>Goodies</li>
+                    </ol>
+                </div>
             </div>
-        </div>
+        </section>
 
         <div class="container">
             <h2 class="ml-auto">Total points : {{ user.profile.total_points }}</h2>

@@ -380,15 +380,15 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['30', '29','28','27','26','25','24','23','22','21','20','19','18','17','16','15','14','13','12','11','10','9','8','7','6','5','4','3','2','Today'],
+                labels: ['Week 4', 'Week 3', 'Week 2', 'Current Week'],
                 datasets: [
 
                     {% for category, data, color in data_query %}
                         {
                             label: '{{category}}',
                             data: {{data}},
-                            backgroundColor: {{color }},
-                            borderColor: {{color }},
+                            backgroundColor: '{{color }}',
+                            borderColor: '{{color }}',
                             fill: false,
                             borderWidth: 3
                         },

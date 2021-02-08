@@ -184,7 +184,6 @@ def user_chart_data(user):
         result.append(category_points + [points])
         end -= delta
     result = format_result(result, headers)
-    # print(result)
     return headers, result
 
 

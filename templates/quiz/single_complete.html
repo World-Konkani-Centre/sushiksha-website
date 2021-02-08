@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+{% block title %}  {% endblock %}
+{% block description %} {{ quiz.title }} -  {% endblock %}
+
+{% block content %}
+    <main id="main">
+
+        {% if user.is_authenticated %}
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container">
+                    <h2>{{ quiz.title }}</h2>
+                </div>
+            </section>
+
+            <section id="" class="">
+            <div class="container">
+            <p>{{ quiz.description }}</p>
+            <p>{% trans "You have already sat this exam and only one sitting is permitted" %}.</p>
+        {% else %}
+            <p>{% trans "This exam is only accessible to signed in users" %}.</p>
+        {% endif %}
+        </div>
+        </section>
+    </main>
+{% endblock %}

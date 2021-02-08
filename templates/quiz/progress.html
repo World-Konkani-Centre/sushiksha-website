@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+{% block title %} {% trans "Progress Page" %} {% endblock %}
+{% block description %} {% trans "User Progress Page" %} {% endblock %}
+
+{% block content %}
+    <main id="main">
+        {% if cat_scores %}
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container">
+                    <h2>{% trans "Question Category Scores" %}</h2>
+                </div>
+            </section>
+
+            <section id="" class="">
+                <div class="container">
+                    <h3>scores</h3>
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>{% trans "Category" %}</th>
+                            <th>{% trans "Correctly answererd" %}</th>
+                            <th>{% trans "Incorrect" %}</th>
+                            <th>%</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                        {% for cat, value in cat_scores.items %}
+                            <tr>
+                                <td>{{ cat }}</td>
+                                <td>{{ value.0 }}</td>
+                                <td>{{ value.1 }}</td>
+                                <td>{{ value.2 }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+
+        {% endif %}
+
+
+        {% if exams %}
+
+            <hr>
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container">
+                    <h2>{% trans "Previous exam papers" %}</h2>
+                </div>
+            </section>
+            <section id="" class="">
+                <div class="container">
+                    <h3>scores</h3>
+                    <p class="lead">
+                        {% trans "Below are the results of exams that you have sat." %}
+                    </p>
+
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>{% trans "Quiz Title" %}</th>
+                            <th>{% trans "Score" %}</th>
+                            <th>{% trans "Possible Score" %}</th>
+                            <th>%</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for exam in exams %}
+
+                            <tr>
+                                <td>{{ exam.quiz.title }}</td>
+                                <td>{{ exam.current_score }}</td>
+                                <td>{{ exam.get_max_score }}</td>
+                                <td>{{ exam.get_percent_correct }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+        {% endif %}
+    </main>
+
+{% endblock %}

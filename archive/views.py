@@ -8,11 +8,11 @@ def timer(request):
         form = UrlRequestForm(request.POST)
         if form.is_valid():
             url = form.cleaned_data['URL']
-            return render(request, 'templates/timer/timer.html', context={'url': url, 'form':form})
-        return render(request, 'templates/timer/timer.html', context={'url': 'https://cuckoo.team/'})
+            return render(request, '../quiz/../templates/templates/timer/timer.html', context={'url': url, 'form':form})
+        return render(request, '../quiz/../templates/templates/timer/timer.html', context={'url': 'https://cuckoo.team/'})
     else:
         form = UrlRequestForm()
-        return render(request, 'templates/timer/timer.html', context={'url': 'https://cuckoo.team/', 'form':form})
+        return render(request, '../quiz/../templates/templates/timer/timer.html', context={'url': 'https://cuckoo.team/', 'form':form})
 
 
 

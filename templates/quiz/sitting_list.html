@@ -21,13 +21,6 @@
             </div>
         </section>
 
-
-        <section id="breadcrumbs" class="breadcrumbs">
-            <div class="container">
-
-            </div>
-        </section>
-
         {% if sitting_list %}
             <section id="" class="">
             <div class="container">
@@ -69,14 +62,11 @@
                                 {% trans "View details" %}
                             </a>
                     </tr>
-
                 {% endfor %}
-
                 </tbody>
-
             </table>
         {% else %}
-            <p>{% trans "There are no matching quizzes" %}.</p>
+            <p>{% trans "There are no quizzes avaiable" %}.</p>
         {% endif %}
         </div>
         </section>

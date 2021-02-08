@@ -62,12 +62,12 @@
                     </table>
                 </div>
             </section>
-
+        {% else %}
+            <p>No quizzes available right now</p>
         {% endif %}
 
 
         {% if exams %}
-
             <hr>
             <section id="breadcrumbs" class="breadcrumbs">
                 <div class="container">
@@ -110,6 +110,8 @@
                     </table>
                 </div>
             </section>
+            {% else %}
+            <p>No quiz submissions made</p>
         {% endif %}
     </main>
 

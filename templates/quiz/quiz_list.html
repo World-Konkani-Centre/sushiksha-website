@@ -42,7 +42,6 @@
                         <tr>
                             <th>{% trans "Title" %}</th>
                             <th>{% trans "Category" %}</th>
-                            <th>{% trans "Exam" %}</th>
                             <th>{% trans "Single attempt" %}</th>
                             <th></th>
                         </tr>
@@ -53,7 +52,6 @@
                             <tr>
                                 <td>{{ quiz.title }}</td>
                                 <td>{{ quiz.category }}</td>
-                                <td>{{ quiz.exam_paper }}</td>
                                 <td>{{ quiz.single_attempt }}</td>
                                 <td>
                                     <a href="{% url 'quiz_start_page' slug=quiz.url %}">

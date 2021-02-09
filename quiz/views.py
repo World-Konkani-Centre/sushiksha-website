@@ -27,7 +27,7 @@ class SittingFilterTitleMixin(object):
 
         return queryset
 
-
+@method_decorator(login_required, name='dispatch')
 class QuizListView(ListView):
     model = Quiz
 
@@ -35,7 +35,7 @@ class QuizListView(ListView):
         queryset = super(QuizListView, self).get_queryset()
         return queryset.filter(draft=False)
 
-
+@method_decorator(login_required, name='dispatch')
 class QuizDetailView(DetailView):
     model = Quiz
     slug_field = 'url'
@@ -49,11 +49,11 @@ class QuizDetailView(DetailView):
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
-
+@method_decorator(login_required, name='dispatch')
 class CategoriesListView(ListView):
     model = Category
 
-
+@method_decorator(login_required, name='dispatch')
 class ViewQuizListByCategory(ListView):
     model = Quiz
     template_name = 'quiz/view_quiz_category.html'
@@ -78,7 +78,7 @@ class ViewQuizListByCategory(ListView):
         queryset = super(ViewQuizListByCategory, self).get_queryset()
         return queryset.filter(category=self.category, draft=False)
 
-
+@method_decorator(login_required, name='dispatch')
 class QuizUserProgressView(TemplateView):
     template_name = 'quiz/progress.html'
 
@@ -94,7 +94,7 @@ class QuizUserProgressView(TemplateView):
         context['exams'] = progress.show_exams()
         return context
 
-
+@method_decorator(login_required, name='dispatch')
 class QuizMarkingList(QuizMarkerMixin, SittingFilterTitleMixin, ListView):
     model = Sitting
 
@@ -108,7 +108,7 @@ class QuizMarkingList(QuizMarkerMixin, SittingFilterTitleMixin, ListView):
 
         return queryset
 
-
+@method_decorator(login_required, name='dispatch')
 class QuizMarkingDetail(QuizMarkerMixin, DetailView):
     model = Sitting
 
@@ -131,7 +131,7 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
             context['sitting'].get_questions(with_answers=True)
         return context
 
-
+@method_decorator(login_required, name='dispatch')
 class QuizTake(FormView):
     form_class = QuestionForm
     template_name = 'quiz/question.html'
@@ -140,32 +140,18 @@ class QuizTake(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['quiz_name'])
-        if self.quiz.draft and not request.user.has_perm('quiz.change_quiz'):
-            raise PermissionDenied
-
-        try:
-            self.logged_in_user = self.request.user.is_authenticated()
-        except TypeError:
-            self.logged_in_user = self.request.user.is_authenticated
-
-        if self.logged_in_user:
-            self.sitting = Sitting.objects.user_sitting(request.user,
+        self.sitting = Sitting.objects.user_sitting(request.user,
                                                         self.quiz)
-        else:
-            self.sitting = self.anon_load_sitting()
 
         if self.sitting is False:
-            return render(request, self.single_complete_template_name)
+            return render(request, self.single_complete_template_name,context={'quiz':self.quiz})
+
 
         return super(QuizTake, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, *args, **kwargs):
-        if self.logged_in_user:
-            self.question = self.sitting.get_first_question()
-            self.progress = self.sitting.progress()
-        else:
-            self.question = self.anon_next_question()
-            self.progress = self.anon_sitting_progress()
+        self.question = self.sitting.get_first_question()
+        self.progress = self.sitting.progress()
 
         if self.question.__class__ is Essay_Question:
             form_class = EssayForm
@@ -180,14 +166,9 @@ class QuizTake(FormView):
         return dict(kwargs, question=self.question)
 
     def form_valid(self, form):
-        if self.logged_in_user:
-            self.form_valid_user(form)
-            if self.sitting.get_first_question() is False:
-                return self.final_result_user()
-        else:
-            self.form_valid_anon(form)
-            if not self.request.session[self.quiz.anon_q_list()]:
-                return self.final_result_anon()
+        self.form_valid_user(form)
+        if self.sitting.get_first_question() is False:
+            return self.final_result_user()
 
         self.request.POST = {}
 
@@ -250,136 +231,3 @@ class QuizTake(FormView):
             self.sitting.delete()
 
         return render(self.request, self.result_template_name, results)
-
-    def anon_load_sitting(self):
-        if self.quiz.single_attempt is True:
-            return False
-
-        if self.quiz.anon_q_list() in self.request.session:
-            return self.request.session[self.quiz.anon_q_list()]
-        else:
-            return self.new_anon_quiz_session()
-
-    def new_anon_quiz_session(self):
-        """
-        Sets the session variables when starting a quiz for the first time
-        as a non signed-in user
-        """
-        self.request.session.set_expiry(259200)  # expires after 3 days
-        questions = self.quiz.get_questions()
-        question_list = [question.id for question in questions]
-
-        if self.quiz.random_order is True:
-            random.shuffle(question_list)
-
-        if self.quiz.max_questions and (self.quiz.max_questions
-                                        < len(question_list)):
-            question_list = question_list[:self.quiz.max_questions]
-
-        # session score for anon users
-        self.request.session[self.quiz.anon_score_id()] = 0
-
-        # session list of questions
-        self.request.session[self.quiz.anon_q_list()] = question_list
-
-        # session list of question order and incorrect questions
-        self.request.session[self.quiz.anon_q_data()] = dict(
-            incorrect_questions=[],
-            order=question_list,
-        )
-
-        return self.request.session[self.quiz.anon_q_list()]
-
-    def anon_next_question(self):
-        next_question_id = self.request.session[self.quiz.anon_q_list()][0]
-        return Question.objects.get_subclass(id=next_question_id)
-
-    def anon_sitting_progress(self):
-        total = len(self.request.session[self.quiz.anon_q_data()]['order'])
-        answered = total - len(self.request.session[self.quiz.anon_q_list()])
-        return (answered, total)
-
-    def form_valid_anon(self, form):
-        guess = form.cleaned_data['answers']
-        is_correct = self.question.check_if_correct(guess)
-
-        if is_correct:
-            self.request.session[self.quiz.anon_score_id()] += 1
-            anon_session_score(self.request.session, 1, 1)
-        else:
-            anon_session_score(self.request.session, 0, 1)
-            self.request\
-                .session[self.quiz.anon_q_data()]['incorrect_questions']\
-                .append(self.question.id)
-
-        self.previous = {}
-        if self.quiz.answers_at_end is not True:
-            self.previous = {'previous_answer': guess,
-                             'previous_outcome': is_correct,
-                             'previous_question': self.question,
-                             'answers': self.question.get_answers(),
-                             'question_type': {self.question
-                                               .__class__.__name__: True}}
-
-        self.request.session[self.quiz.anon_q_list()] =\
-            self.request.session[self.quiz.anon_q_list()][1:]
-
-    def final_result_anon(self):
-        score = self.request.session[self.quiz.anon_score_id()]
-        q_order = self.request.session[self.quiz.anon_q_data()]['order']
-        max_score = len(q_order)
-        percent = int(round((float(score) / max_score) * 100))
-        session, session_possible = anon_session_score(self.request.session)
-        if score is 0:
-            score = "0"
-
-        results = {
-            'score': score,
-            'max_score': max_score,
-            'percent': percent,
-            'session': session,
-            'possible': session_possible
-        }
-
-        del self.request.session[self.quiz.anon_q_list()]
-
-        if self.quiz.answers_at_end:
-            results['questions'] = sorted(
-                self.quiz.question_set.filter(id__in=q_order)
-                                      .select_subclasses(),
-                key=lambda q: q_order.index(q.id))
-
-            results['incorrect_questions'] = (
-                self.request
-                    .session[self.quiz.anon_q_data()]['incorrect_questions'])
-
-        else:
-            results['previous'] = self.previous
-
-        del self.request.session[self.quiz.anon_q_data()]
-
-        return render(self.request, 'templates/../templates/result.html', results)
-
-
-def anon_session_score(session, to_add=0, possible=0):
-    """
-    Returns the session score for non-signed in users.
-    If number passed in then add this to the running total and
-    return session score.
-
-    examples:
-        anon_session_score(1, 1) will add 1 out of a possible 1
-        anon_session_score(0, 2) will add 0 out of a possible 2
-        x, y = anon_session_score() will return the session score
-                                    without modification
-
-    Left this as an individual function for unit testing
-    """
-    if "session_score" not in session:
-        session["session_score"], session["session_score_possible"] = 0, 0
-
-    if possible > 0:
-        session["session_score"] += to_add
-        session["session_score_possible"] += possible
-
-    return session["session_score"], session["session_score_possible"]

@@ -105,6 +105,10 @@
                                 {{ question|answer_choice_to_string:question.user_answer }}</p>
                         {% endif %}
 
+                        {% if question.image %}
+                        <img src="{{question.image.url}}" class='img-fluid rounded' loading='lazy' />
+                        {% endif %}
+
                         <p><strong>{% trans "Explanation" %}:</strong></p>
                         <div class="well " style="background-color: #fcf8e3;">
                             <p>{{ question.explanation|safe }}</p>

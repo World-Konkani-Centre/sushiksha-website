@@ -25,3 +25,5 @@ vine==5.0.0
 django-queryset-csv~=1.1.0
 
 django-model-utils>=3.1.1
+django-admin-csvexport
+anytree>=2.8.0

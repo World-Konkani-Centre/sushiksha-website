@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+
+{{ question.time }}
+
+
+{% block content %}
+
+
+
+    <main id="main">
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ quiz.title }}</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                        <li>
+                            <a href="{% url 'quiz_category_list_matching' category_name=quiz.category %}">{{ quiz.category }}</a>
+                        </li>
+                        <li>{{ quiz.title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="" class="">
+            <div class="container">
+                {% if previous.answers %}
+
+                    <h2>{{ quiz.title }}</h2>
+                    <p>{{ quiz.description }}</p>
+                    <p class="muted"><small>{% trans "The previous question" %}:</small></p>
+                    <p>{{ previous.previous_question }}</p>
+
+                    {% if previous.previous_outcome %}
+                        <div class="alert alert-success">
+                            <p><small>
+                                {% trans "Your answer was" %} </small>
+                                <strong>
+                                    {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+                                </strong>
+                            </p>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <p><small>
+                                {% trans "Your answer was" %} </small>
+                                <strong>
+                                    {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+                                </strong>
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    {% include 'quiz/correct_answer.html' %}
+
+                    <p><strong>{% trans "Explanation" %}:</strong></p>
+                    <div class="well " style="background-color: #fcf8e3;">
+                        <p>{{ previous.previous_question.explanation }}</p>
+                    </div>
+                    <hr>
+                {% endif %}
+                <br/>
+
+                {% if question %}
+
+                    {% if progress %}
+                        <div style="float: right;">
+                            {% trans "Question" %} {{ progress.0|add:1 }} {% trans "of" %} {{ progress.1 }}
+                        </div>
+                    {% endif %}
+
+                    <p>
+                        <small class="muted">{% trans "Question category" %}:</small>
+                        <strong>{{ question.category }}</strong>
+                    </p>
+
+                    <h3>{{ question.content }}</h3>
+
+                    {% if question.figure %}
+                        <img src="{{ question.figure.url }}" alt="{{ question.content }}"
+                             class="img-thumbnail img-fluid"/>
+                    {% endif %}
+                    <h5>Answer before time ends to get the points</h5>
+                    <h5 id="timer">{{ question.time }}</h5>
+                    <form action="" method="POST" name="question_form">{% csrf_token %}
+                        <input type=hidden name="question_id" value="{{ question.id }}">
+
+                        <ul class="list-group">
+                            {% for answer in form.answers %}
+                                <li class="list-group-item">
+                                    {{ answer }}
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                        <input type="submit" id="submit" value="{% trans "Check" %}"
+                               class="btn btn-lg btn-block btn-info">
+                    </form>
+                    <script>
+                        let time_left = {{ question.time }};
+                        let count = 0
+                        const intervalId = window.setInterval(function () {
+                            if (time_left === 0) {
+                                if(count===0) {
+                                    alert("Time allotted for this question has been parred so you wont be awarded with points of this question, give any answer and try other question in the series")
+                                    count=1
+                                }
+                                //document.getElementById('submit').click()
+                                document.getElementById('timer').innerHTML = time_left.toString()
+                            }
+                            else{
+                                time_left = time_left - 1;
+                                document.getElementById('timer').innerHTML = time_left.toString()
+                            }
+                        }, 1000);
+                    </script>
+                {% endif %}
+
+                <hr>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load quiz_tags %}
+{% block title %}
+    {% trans "Result of" %} {{ sitting.quiz.title }} {% trans "for" %} {{ sitting.user }}
+{% endblock %}
+
+{% block content %}
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{% trans "Quiz title" %}: {{ sitting.quiz.title }}</h2>
+                    <h3>{% trans "Category" %}: {{ sitting.quiz.category }}</h3>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                        <li>
+                            <a href="{% url 'quiz_category_list_matching' category_name=sitting.quiz.category %}">{{ sitting.quiz.category }}</a>
+                        </li>
+                        <li>{{ sitting.quiz.title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="" class="">
+            <div class="container">
+                <p>{{ sitting.quiz.description }}</p>
+                <hr>
+                <p>{% trans "User" %}: {{ sitting.user }}</p>
+                <p>{% trans "Completed" %}: {{ sitting.end|date }}</p>
+                <p>{% trans "Score" %}: {{ sitting.get_percent_correct }}%</p>
+
+                <table class="table table-bordered table-striped">
+
+                    <thead>
+                    <tr>
+                        <th>{% trans "Question" %}</th>
+                        <th>{% trans "User answer" %}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for question in questions %}
+
+                        <tr>
+                            <td>
+                                {{ question.content }}
+                                {% if question.figure %}
+                                    <div style="max-width: 100px;"><img src="{{ question.figure.url }}"
+                                                                        alt="{{ question.figure }}"/></div>
+                                {% endif %}
+                            </td>
+                            <td>{{ question|answer_choice_to_string:question.user_answer }}</td>
+                            <td>
+                                {% if question.id in sitting.get_incorrect_questions %}
+                                    <p>{% trans "incorrect" %}</p>
+                                {% else %}
+                                    <p>{% trans "Correct" %}</p>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form action="" method="POST">{% csrf_token %}
+                                    <input type=hidden name="qid" value="{{ question.id }}">
+                                    <button type="submit"
+                                            class="btn btn-warning">{% trans "Toggle whether correct" %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}

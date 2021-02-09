@@ -156,12 +156,10 @@
                         </div>
                         <div class="col-md-8">
                             <div id="accordion">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <canvas id="myChart" height="200"></canvas>
-                                    </div>
-                                </div>
+                                
                                 <div class="card mb-3">
+                                        <canvas id="myChart" height="400"></canvas>
+                                        <canvas id="myPie" height="400" class="ml-1 mt-1"></canvas>
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
                                             <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
@@ -277,7 +275,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['30', '29','28','27','26','25','24','23','22','21','20','19','18','17','16','15','14','13','12','11','10','9','8','7','6','5','4','3','2','Today'],
+                labels: ['Week 4', 'Week 3', 'Week 2', 'Current Week'],
                 datasets: [
 
                     {% for category, data,color in data_query %}
@@ -338,4 +336,42 @@
         })
 
     </script>
+
+<script>
+  new Chart(document.getElementById("myPie"), {
+    type: "pie",
+    data: {
+      labels: ["Bonding", "Language Skills", "Leadership", "Learning", "Networking", "Productivity", "Responsiveness"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: [
+          '#892cdc',
+           '#9d0191',
+         '#fd3a69',
+         '#3e64ff',
+          '#fecd1a',
+         '#eb5e0b',
+          '#ffc1f3',
+          ],
+          data: {{query_point_distribution}},
+
+        },
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Point Distribution across the category",
+      },
+      responsive: true,
+                animation: {
+              duration: 4000
+          },
+          hoverOffset: 50,
+
+    },
+  });
+</script>
+
 {% endblock script %}

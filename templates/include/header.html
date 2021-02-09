@@ -13,12 +13,12 @@
                 {% endif %}
 
                 {% if user.is_authenticated %}
-
                     <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>
                         <ul>
                             <li><a href="{% url 'reward' %}">Badge activity</a></li>
                             <li><a href="{% url 'badge' %}">Give a badge</a></li>
-                            <li class="drop-down"><a href="#">Badge claim forms</a>
+                            <li><a href="{% url 'badge_claim' %}">Badge Claim Forms</a></li>
+                            {% comment %} <li class="drop-down"><a href="#">Badge claim forms</a>
                                 <ul>
                                     <li><a href="{% url 'one_one_badge_claim' %}">1:1 with Mentors</a></li>
                                     <li><a href="{% url 'donut_badge_claim' %}">Donuts</a></li>
@@ -28,7 +28,7 @@
                                     <li><a href="{% url 'kt_attendee_claim' %}">KT Attendee Feedback Form</a></li>
                                     <li><a href="{% url 'initiator_claim' %}">Initiator</a></li>
                                 </ul>
-                            </li>
+                            </li> {% endcomment %}
                             {% if user.is_superuser %}
                                 <li><a href="{% url 'multiple-badge' %}">Give Multiple badges (ADMIN ONLY)</a></li>
                             {% endif %}
@@ -55,20 +55,12 @@
                     <li class="drop-down"><a href="{% url 'profile' %}">Account</a>
                         <ul>
                             <li><a href="{% url 'profile' %}">Profile</a></li>
-                            {#              <li class="drop-down"><a href="#">Deep Drop Down</a>#}
-                            {#                <ul>#}
-                            {#                  <li><a href="#">Deep Drop Down 1</a></li>#}
-                            {#                  <li><a href="#">Deep Drop Down 2</a></li>#}
-                            {#                  <li><a href="#">Deep Drop Down 3</a></li>#}
-                            {#                  <li><a href="#">Deep Drop Down 4</a></li>#}
-                            {#                  <li><a href="#">Deep Drop Down 5</a></li>#}
-                            {#                </ul>#}
-                            {#              </li>#}
                             <li><a href="{% url 'blog-create' %}">Create a Post</a></li>
                             {#                            <li><a href="{% url 'analytics' %}">Pomodoro leaderboard</a></li>#}
                             {% if user.is_superuser %}
                                 <li><a href="/sushiksha/admin">Admin page</a></li>
                                 <li><a href="{% url 'goodies' %}">Goodies</a></li>
+                                <!--<li><a href="{% url 'quiz_index' %}">Let's Practice</a></li>-->
                             {% endif %}
                             <li><a href="{% url 'logs' %}">Analytics</a></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>

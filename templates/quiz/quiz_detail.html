@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    {{ quiz.title }}
+{% endblock %}
+
+{% block content %}
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ quiz.title }}</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                        <li>
+                            <a href="{% url 'quiz_category_list_matching' category_name=quiz.category %}">{{ quiz.category }}</a>
+                        </li>
+                        <li>{{ quiz.title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+            <section id="" class="">
+                <div class="container">
+                    {% if quiz.single_attempt %}
+                        <h4>{% trans "You will only get one attempt at this quiz" %}.</h4>
+                    {% endif %}
+                    <p>{{ quiz.description }}</p>
+                    <p>
+                        <a href="{% url 'quiz_question' quiz_name=quiz.url %}">
+                            {% trans "Start quiz" %}
+                        </a>
+                    </p>
+                </div>
+            </section>
+    </main>
+{% endblock %}

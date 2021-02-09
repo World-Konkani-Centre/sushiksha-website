@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+
+{% block content %}
+    <main id="main">
+
+    <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{% trans "Progress" %}</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                        <li>Progress</li>
+                    </ol>
+                </div>
+            </div>
+    </section>
+
+        {% if cat_scores %}
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container">
+                    <h2>{% trans "Catagorical Scores" %}</h2>
+                </div>
+            </section>
+
+            <section id="" class="">
+                <div class="container">
+                    <h3>scores</h3>
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>{% trans "Category" %}</th>
+                            <th>{% trans "Correctly answererd" %}</th>
+                            <th>{% trans "Incorrect" %}</th>
+                            <th>%</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                        {% for cat, value in cat_scores.items %}
+                            <tr>
+                                <td>{{ cat }}</td>
+                                <td>{{ value.0 }}</td>
+                                <td>{{ value.1 }}</td>
+                                <td>{{ value.2 }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+        {% else %}
+            <p>No quizzes available right now</p>
+        {% endif %}
+
+
+        {% if exams %}
+            <hr>
+            <section id="breadcrumbs" class="breadcrumbs">
+                <div class="container">
+                    <h2>{% trans "Test Scores" %}</h2>
+                </div>
+            </section>
+            <section id="" class="">
+                <div class="container">
+                    <h3>scores</h3>
+                    <p class="lead">
+                        {% trans "Below are the results of graded tests that you have taken." %}
+                    </p>
+
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>{% trans "Quiz Title" %}</th>
+                            <th>{% trans "Score" %}</th>
+                            <th>{% trans "Possible Score" %}</th>
+                            <th>%</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for exam in exams %}
+
+                            <tr>
+                                <td>{{ exam.quiz.title }}</td>
+                                <td>{{ exam.current_score }}</td>
+                                <td>{{ exam.get_max_score }}</td>
+                                <td>{{ exam.get_percent_correct }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+            {% else %}
+            <p>No quiz submissions made</p>
+        {% endif %}
+    </main>
+
+{% endblock %}

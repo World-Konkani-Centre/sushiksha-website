@@ -547,6 +547,8 @@ class Question(models.Model):
                                   verbose_name=_("Quiz"),
                                   blank=True)
 
+    time = models.IntegerField(default=30, blank=True, help_text=_("Time to solve this question in seconds"))
+
     category = models.ForeignKey(Category,
                                  verbose_name=_("Category"),
                                  blank=True,
@@ -559,7 +561,7 @@ class Question(models.Model):
                                      null=True,
                                      on_delete=models.CASCADE)
 
-    figure = models.ImageField(upload_to='uploads/%Y/%m/%d',
+    figure = models.ImageField(upload_to='practice',
                                blank=True,
                                null=True,
                                verbose_name=_("Figure"))

@@ -3,8 +3,7 @@ from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.utils.translation import gettext_lazy as _
 
-from .models import Quiz, Category, SubCategory, Progress, Question,MCQuestion,Answer,TF_Question,Essay_Question
-
+from .models import Quiz, Category, SubCategory, Progress, Question, MCQuestion, Answer, TF_Question, Essay_Question
 
 
 class AnswerInline(admin.TabularInline):
@@ -34,7 +33,7 @@ class QuizAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuizAdminForm, self).__init__(*args, **kwargs)
         if self.instance.pk:
-            self.fields['questions'].initial =\
+            self.fields['questions'].initial = \
                 self.instance.question_set.all().select_subclasses()
 
     def save(self, commit=True):
@@ -48,25 +47,25 @@ class QuizAdminForm(forms.ModelForm):
 class QuizAdmin(admin.ModelAdmin):
     form = QuizAdminForm
 
-    list_display = ('title', 'category', )
+    list_display = ('title', 'category',)
     list_filter = ('category',)
-    search_fields = ('description', 'category', )
+    search_fields = ('description', 'category',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    search_fields = ('category', )
+    search_fields = ('category',)
 
 
 class SubCategoryAdmin(admin.ModelAdmin):
-    search_fields = ('sub_category', )
+    search_fields = ('sub_category',)
     list_display = ('sub_category', 'category',)
     list_filter = ('category',)
 
 
 class MCQuestionAdmin(admin.ModelAdmin):
-    list_display = ('content', 'category', )
+    list_display = ('content', 'category',)
     list_filter = ('category',)
-    fields = ('content', 'category', 'sub_category',
+    fields = ('content', 'category', 'sub_category','time',
               'figure', 'quiz', 'explanation', 'answer_order')
 
     search_fields = ('content', 'explanation')
@@ -80,13 +79,13 @@ class ProgressAdmin(admin.ModelAdmin):
     to do:
             create a user section
     """
-    search_fields = ('user', 'score', )
+    search_fields = ('user', 'score',)
 
 
 class TFQuestionAdmin(admin.ModelAdmin):
-    list_display = ('content', 'category', )
+    list_display = ('content', 'category',)
     list_filter = ('category',)
-    fields = ('content', 'category', 'sub_category',
+    fields = ('content', 'category', 'sub_category','time',
               'figure', 'quiz', 'explanation', 'correct',)
 
     search_fields = ('content', 'explanation')
@@ -94,11 +93,12 @@ class TFQuestionAdmin(admin.ModelAdmin):
 
 
 class EssayQuestionAdmin(admin.ModelAdmin):
-    list_display = ('content', 'category', )
+    list_display = ('content', 'category',)
     list_filter = ('category',)
-    fields = ('content', 'category', 'sub_category', 'quiz', 'explanation', )
+    fields = ('content', 'category', 'sub_category', 'time','quiz', 'explanation',)
     search_fields = ('content', 'explanation')
     filter_horizontal = ('quiz',)
+
 
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Category, CategoryAdmin)

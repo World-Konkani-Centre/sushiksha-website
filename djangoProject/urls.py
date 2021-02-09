@@ -36,7 +36,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),
     path('goodies/', include('goodies.urls')),
-    #url(r'^practice/', include('quiz.urls')),
+    url('practice/', include('quiz.urls')),
 ]
 
 if settings.DEBUG:

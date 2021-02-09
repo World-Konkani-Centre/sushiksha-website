@@ -66,7 +66,7 @@
                         {% endif %}
 
                         <p>{% trans "Review the questions below and try the test again in the future" %}.</p>
-
+                        <p>{% trans "**Timeout will be treated as wrong answer" %}.</p>
                         {% if user.is_authenticated %}
 
                             <p>{% trans "The result of this exam will be stored in your progress section so you can review and monitor your progression" %}.</p>
@@ -79,16 +79,6 @@
 
 
                 <hr>
-
-                {% if possible %}
-
-                    <p class="lead">
-                        {% trans "Your session score is" %} {{ session }} {% trans "out of a possible" %} {{ possible }}
-                    </p>
-
-                    <hr>
-
-                {% endif %}
 
                 {% if questions %}
 

@@ -580,6 +580,7 @@ class Question(models.Model):
                                    verbose_name=_('Explanation'))
 
     objects = InheritanceManager()
+    image = models.ImageField(upload_to='Questions', blank=True, null=True, help_text=_("Add a optional image for more understading of the question."))
 
     class Meta:
         verbose_name = _("Question")

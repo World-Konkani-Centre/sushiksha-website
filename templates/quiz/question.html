@@ -77,12 +77,12 @@
                 <strong>{{ question.category }}</strong>
             </p>
 
-            <p class="lead">{{ question.content }}</p>
+            <h3>{{ question.content }}</h3>
 
             {% if question.figure %}
-                <img src="{{ question.figure.url }}" alt="{{ question.content }}"/>
+                <img src="{{ question.figure.url }}" alt="{{ question.content }}" class="img-thumbnail img-fluid"/>
             {% endif %}
-
+            <h5>timer : {{ question.time }}</h5>
             <form action="" method="POST">{% csrf_token %}
                 <input type=hidden name="question_id" value="{{ question.id }}">
 
@@ -95,7 +95,7 @@
                     {% endfor %}
 
                 </ul>
-                <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
+                <input type="submit" value="{% trans "Check" %}" class="btn btn-lg btn-block btn-info">
             </form>
 
         {% endif %}

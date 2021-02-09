@@ -94,9 +94,9 @@
 
                     {% for question in questions %}
 
-                        <p class="lead">
+                        <h3>Q{{ forloop.counter }} &nbsp
                             {{ question.content }}
-                        </p>
+                        </h3>
 
                         {% correct_answer_for_all question %}
 

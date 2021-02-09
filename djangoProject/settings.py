@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'tinymce',
-    #'quiz',
+    'quiz',
 ]
 
 MIDDLEWARE = [

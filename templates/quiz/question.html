@@ -107,9 +107,14 @@
                     </form>
                     <script>
                         let time_left = {{ question.time }};
+                        let count = 0
                         const intervalId = window.setInterval(function () {
                             if (time_left === 0) {
-                                document.getElementById('submit').click()
+                                if(count===0) {
+                                    alert("Time allotted for this question has been parred so you wont be awarded with points of this question, give any answer and try other question in the series")
+                                    count=1
+                                }
+                                //document.getElementById('submit').click()
                                 document.getElementById('timer').innerHTML = time_left.toString()
                             }
                             else{

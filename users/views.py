@@ -107,7 +107,8 @@ def profile(request):
         'profile_details': profile_details,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories, result)
+        'query_category': zip(categories, result),
+        'query_point_distribution': result
     }
     return render(request, 'profile/profile.html', context=context)
 

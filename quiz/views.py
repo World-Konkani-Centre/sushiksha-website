@@ -188,8 +188,8 @@ class QuizTake(FormView):
         progress, c = Progress.objects.get_or_create(user=self.request.user)
         guess = form.cleaned_data['answers']
         is_correct = self.question.check_if_correct(guess)
-
-        if is_correct is True:
+        is_timeout = form.cleaned_data['timeout_count']
+        if is_correct is True and not is_timeout:
             self.sitting.add_to_score(1)
             progress.update_score(self.question, 1, 1)
         else:

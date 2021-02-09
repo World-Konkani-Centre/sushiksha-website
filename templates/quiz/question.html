@@ -102,6 +102,7 @@
                             {% endfor %}
 
                         </ul>
+                            {{ form.timeout_count }}
                         <input type="submit" id="submit" value="{% trans "Check" %}"
                                class="btn btn-lg btn-block btn-info">
                     </form>
@@ -112,9 +113,11 @@
                             if (time_left === 0) {
                                 if(count===0) {
                                     alert("Time allotted for this question has been parred so you wont be awarded with points of this question, give any answer and try other question in the series")
-                                    count=1
+                                    count=1;
+                                    console.log(document.getElementById('timeoutID').value);
+                                    document.getElementById('timeoutID').value = "True";
+                                    console.log(document.getElementById('timeoutID').value);
                                 }
-                                //document.getElementById('submit').click()
                                 document.getElementById('timer').innerHTML = time_left.toString()
                             }
                             else{

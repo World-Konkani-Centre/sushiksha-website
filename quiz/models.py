@@ -243,6 +243,9 @@ class Progress(models.Model):
 
         return output
 
+    def __str__(self):
+        return f'{self.user}-{self.score}'
+
     def update_score(self, question, score_to_add=0, possible_to_add=0):
         """
         Pass in question object, amount to increase score

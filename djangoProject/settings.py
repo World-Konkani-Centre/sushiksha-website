@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'tinymce',
     'quiz',
+    'csvexport',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

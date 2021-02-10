@@ -24,27 +24,34 @@
         {% if sitting_list %}
             <section id="" class="">
             <div class="container">
-            <table class="table table-bordered table-striped">
-
+        <div class="card">
+                    <div class="card-header py-3">
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Completed tests</p>
+                            </div>
+        <div class="card-body">
+         <div class="table-responsive">
+          <table class="table  table-hover table-striped table-bordered table-condensed ">
+ 
                 <thead>
                 <tr>
-                    <th>{% trans "User" %}</th>
-                    <th>{% trans "Quiz" %}</th>
+                    <th style="min-width:150px">{% trans "User" %}</th>
+                    <th style="min-width:150px">{% trans "Quiz" %}</th>
                     <th>{% trans "Completed" %}</th>
                     <th>{% trans "Score" %}(%)</th>
-                    <th></th>
+                    <th style="min-width:130px"></th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr>
                     <form action="" method="GET">
-                        <td><input type="text" name="user_filter"/></td>
-                        <td><input type="text" name="quiz_filter"/></td>
+                        <td><input type="text" name="user_filter" class="form-control form-control-sm" placeholder="Search user name.."/></td>
+                        <td><input type="text" name="quiz_filter" class="form-control form-control-sm" placeholder="Search quizzes .."/></td>
                         <td></td>
                         <td></td>
                         <td>
-                            <button type="submit" class="btn btn-default">{% trans "Filter" %}</button>
+                            <button type="submit" class="btn btn-danger btn-block btn-sm">{% trans "Filter" %}</button>
                         </td>
                     </form>
                 </tr>
@@ -58,13 +65,18 @@
                         <td>{{ sitting.end|date }}</td>
                         <td>{{ sitting.get_percent_correct }}</td>
                         <td>
-                            <a href="{% url 'quiz_marking_detail' pk=sitting.id %}">
-                                {% trans "View details" %}
+                            <a href="{% url 'quiz_marking_detail' pk=sitting.id %}" class="p-1 mb-2 lh-1 fw-bold bg-danger bg-gradient text-white rounded-pill text-sm" style="font-size: 9px">
+                              {% trans "View details" %}
                             </a>
+                            
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
+            </div>
+            </div>
+            </div>
+
         {% else %}
             <p>{% trans "There are no quizzes avaiable" %}.</p>
         {% endif %}

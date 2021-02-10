@@ -9,44 +9,43 @@
     <main id="main">
 
 
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>{{heading | truncatechars:30}}</h2>
-          <ol>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'reward' %}">Rewards</a></li>
-            <li><a href="{% url 'badge' %}">Award a Badge</a></li>
-            <li>{{heading |  truncatechars:25}}</li>
-          </ol>
-        </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ heading | truncatechars:30 }}</h2>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'reward' %}">Rewards</a></li>
+                        <li><a href="{% url 'badge' %}">Award a Badge</a></li>
+                        <li>{{ heading |  truncatechars:25 }}</li>
+                    </ol>
+                </div>
 
-      </div>
-    </section><!-- End Breadcrumbs -->
+            </div>
+        </section><!-- End Breadcrumbs -->
 
         <section id="about" class="container">
 
-                {% comment %} <h1 class="lead">Badge giving is temporarily  closed, come after the results are announced</h1> {% endcomment %}
+            {% comment %} <h1 class="lead">Badge giving is temporarily  closed, come after the results are announced</h1> {% endcomment %}
 
             <div class="container" data-aos="zoom-in" data-aos-delay="10">
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <form method="POST" action="">
                         {% csrf_token %}
                         {{ form | crispy }}
-                        <button type="submit" class="btn btn-block get-started-btn-special">Submit</button>
+                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
                     </form>
                 </div>
-            </div> 
+            </div>
 
         </section><!-- End About Section -->
-
 
 
         <section id="why-us" class="profile blog why-us">
             <div class="container">
 
-                      <div class="row">
+                <div class="row">
                     <div class="col-lg-12 d-flex align-items-stretch">
                         <div class="content" data-aos="flip-right">
                             <h3>Why give a badge?</h3>
@@ -77,40 +76,41 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table  table-hover table-striped table-bordered table-condensed table-sm">
-                                       <thead>
+                                        <thead>
                                         <tr class="font-weight-bold">
-                                        <th>Index</th>
+                                            <th>Index</th>
                                             <th>Badge</th>
                                             <th>Title</th>
                                             <th>Category</th>
                                             <th>Points</th>
                                             <th style="min-width:160px">Description</th>
                                         </tr>
-                                        </thead> 
+                                        </thead>
                                         <tbody>
-                                    {% for badge in badges %}
-                                        <tr>
-                                        <td>{{forloop.counter}}</td>
-                                        <td>
-                                        <div class="media align-items-center">
-                                        <img class="rounded" width="80" src="{{ badge.logo.url }}" loading="lazy"
-                                                  title="{{ badge.title }}">
-                                        </div>
-                                        </td>
-                                        <td>
-                                        {{badge.title}} {% if badge.featured %}*{% else %} {% endif %}
-                                        </td>
-                                        <td>
-                                        {{badge.category}}
-                                        </td>
-                                        <td>
-                                        {{badge.points}}
-                                        </td>
-                                        <td>
-                                        {{badge.description}}
-                                        </td>
-                                        </tr>
-                                    {% endfor %}                                        
+                                        {% for badge in badges %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>
+                                                    <div class="media align-items-center">
+                                                        <img class="rounded" width="80" src="{{ badge.logo.url }}"
+                                                             loading="lazy"
+                                                             title="{{ badge.title }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {{ badge.title }} {% if badge.featured %}*{% else %} {% endif %}
+                                                </td>
+                                                <td>
+                                                    {{ badge.category }}
+                                                </td>
+                                                <td>
+                                                    {{ badge.points }}
+                                                </td>
+                                                <td>
+                                                    {{ badge.description }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

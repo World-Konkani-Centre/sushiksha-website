@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% load static %}
 {% load i18n %}
 
@@ -90,7 +92,9 @@
                              class="img-thumbnail img-fluid"/>
                     {% endif %}
                     <h5>Answer before time ends to get the points</h5>
-                    <h5 id="timer">{{ question.time }}</h5>
+
+                    <h3 id="timer" class="font-weight-bolder text-danger">{{ question.time }}</h3>
+
                     <form action="" method="POST" name="question_form">{% csrf_token %}
                         <input type=hidden name="question_id" value="{{ question.id }}">
 
@@ -100,10 +104,12 @@
                                     {{ answer }}
                                 </li>
                             {% endfor %}
-
                         </ul>
+
+                            {{ form.timeout_count }}
+
                         <input type="submit" id="submit" value="{% trans "Check" %}"
-                               class="btn btn-lg btn-block btn-info">
+                               class="btn btn-info btn-lg btn-block mt-2 ">
                     </form>
                     <script>
                         let time_left = {{ question.time }};
@@ -111,10 +117,12 @@
                         const intervalId = window.setInterval(function () {
                             if (time_left === 0) {
                                 if(count===0) {
-                                    alert("Time allotted for this question has been parred so you wont be awarded with points of this question, give any answer and try other question in the series")
-                                    count=1
+                                    alert("Time allotted for this question has been parred so you wont be awarded with points of this question, give this a try and all the best for rest of the questions in the series")
+                                    count=1;
+                                    console.log(document.getElementById('timeoutID').value);
+                                    document.getElementById('timeoutID').value = "True";
+                                    console.log(document.getElementById('timeoutID').value);
                                 }
-                                //document.getElementById('submit').click()
                                 document.getElementById('timer').innerHTML = time_left.toString()
                             }
                             else{
@@ -125,7 +133,6 @@
                     </script>
                 {% endif %}
 
-                <hr>
             </div>
         </section>
     </main>

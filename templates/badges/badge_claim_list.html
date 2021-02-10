@@ -18,16 +18,21 @@
             </div>
         </section>
 
-        <section id="contact" class="contact">
+        <section class="">
             <div class="container" data-aos="fade-up">
-               <ol>
-               {% for form in forms %}
-               <h1><li><a href="{% url 'badge_claim_form' pk=form.id %}">{{form.title}}</a></li></h1>
-               {% endfor %}
-                </ol>
+
+                <div class="card" style="width: 100%%;">
+                    <ol class="list-group list-group-flush">
+                        {% for form in forms %}
+                            <li class="list-group-item fw-bold"><a
+                                    href="{% url 'badge_claim_form' pk=form.id %}">{{ form.title }}</a></li>
+                        {% endfor %}
+                    </ol>
+                </div>
 
             </div>
         </section>
+
 
     </main>
 

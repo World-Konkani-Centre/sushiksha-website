@@ -243,6 +243,9 @@ class Progress(models.Model):
 
         return output
 
+    def __str__(self):
+        return f'{self.user}-{self.score}'
+
     def update_score(self, question, score_to_add=0, possible_to_add=0):
         """
         Pass in question object, amount to increase score
@@ -564,7 +567,9 @@ class Question(models.Model):
     figure = models.ImageField(upload_to='practice',
                                blank=True,
                                null=True,
-                               verbose_name=_("Figure"))
+                               verbose_name=_("Figure"), help_text=_("Add a optional image for "
+                                                                     "more understanding of the "
+                                                                     "Question."))
 
     content = models.CharField(max_length=1000,
                                blank=False,
@@ -580,7 +585,9 @@ class Question(models.Model):
                                    verbose_name=_('Explanation'))
 
     objects = InheritanceManager()
-    image = models.ImageField(upload_to='Questions', blank=True, null=True, help_text=_("Add a optional image for more understading of the question."))
+    image = models.ImageField(upload_to='Questions', blank=True, null=True, help_text=_("Add a optional image for "
+                                                                                        "more understanding of the "
+                                                                                        "solution."))
 
     class Meta:
         verbose_name = _("Question")

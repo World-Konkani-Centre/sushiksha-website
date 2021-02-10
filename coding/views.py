@@ -94,7 +94,6 @@ def compileCode(request):
             }
 
             r = requests.post(COMPILE_URL, data=compile_data)
-            print(r)
             return JsonResponse(r.json(), safe=False)
 
     else:
@@ -193,7 +192,6 @@ def runCode(request):
             #     run_status_stderr=rsstdr
             # )
             # code_response.save()
-            print(r)
             return JsonResponse(r, safe=False)
     else:
         return HttpResponseForbidden()

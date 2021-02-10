@@ -3,6 +3,8 @@ from django.forms.widgets import RadioSelect, Textarea
 
 
 class QuestionForm(forms.Form):
+    timeout_count = forms.BooleanField( widget=forms.HiddenInput(attrs={'id':'timeoutID'}), required=False, initial=False)
+
     def __init__(self, question, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         choice_list = [x for x in question.get_answers_list()]

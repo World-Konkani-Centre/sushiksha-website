@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.utils.translation import gettext_lazy as _
 
-from .models import Quiz, Category, SubCategory, Progress, Question, MCQuestion, Answer, TF_Question, Essay_Question
+from .models import Quiz, Category, SubCategory, Progress, Question, MCQuestion, Answer, TF_Question, Essay_Question, \
+    Sitting
 
 
 class AnswerInline(admin.TabularInline):
@@ -100,10 +101,17 @@ class EssayQuestionAdmin(admin.ModelAdmin):
     filter_horizontal = ('quiz',)
 
 
+class SittingAdmin(admin.ModelAdmin):
+    list_display = ('user', 'quiz','start','end')
+    list_filter = ('user','quiz',)
+    search_fields = ('user__username','user__profile__name','quiz__title',)
+
+
+admin.site.register(Sitting,SittingAdmin)
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(Progress, ProgressAdmin)
 admin.site.register(TF_Question, TFQuestionAdmin)
-admin.site.register(Essay_Question, EssayQuestionAdmin)
+#admin.site.register(Essay_Question, EssayQuestionAdmin)

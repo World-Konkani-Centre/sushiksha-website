@@ -4,8 +4,8 @@
 
 {% load quiz_tags %}
 
-{% block title %} {{ quiz.title }} {% endblock %}
-{% block description %} {% trans "Exam Results for" %} {{ quiz.title }} {% endblock %}
+{% block style %}
+{% endblock style %}
 
 {% block content %}
     <main id="main">
@@ -66,7 +66,7 @@
                         {% endif %}
 
                         <p>{% trans "Review the questions below and try the test again in the future" %}.</p>
-
+                        <p>{% trans "**Timeout will be treated as wrong answer" %}.</p>
                         {% if user.is_authenticated %}
 
                             <p>{% trans "The result of this exam will be stored in your progress section so you can review and monitor your progression" %}.</p>
@@ -79,16 +79,6 @@
 
 
                 <hr>
-
-                {% if possible %}
-
-                    <p class="lead">
-                        {% trans "Your session score is" %} {{ session }} {% trans "out of a possible" %} {{ possible }}
-                    </p>
-
-                    <hr>
-
-                {% endif %}
 
                 {% if questions %}
 
@@ -105,11 +95,11 @@
                                 {{ question|answer_choice_to_string:question.user_answer }}</p>
                         {% endif %}
 
+                        <p><strong>{% trans "Explanation" %}:</strong></p>
                         {% if question.image %}
+
                         <img src="{{question.image.url}}" class='img-fluid img-thumbnail rounded mx-auto d-block' loading='lazy' />
                         {% endif %}
-
-                        <p><strong>{% trans "Explanation" %}:</strong></p>
                         <div class="well " style="background-color: #fcf8e3;">
                             <p>{{ question.explanation|safe }}</p>
                         </div>

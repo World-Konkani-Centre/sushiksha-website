@@ -1,11 +1,13 @@
 import random
 
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 
+from users.models import Badge, Reward
 from .forms import QuestionForm, EssayForm
 from .models import Quiz, Category, Progress, Sitting, Question,Essay_Question
 
@@ -229,5 +231,19 @@ class QuizTake(FormView):
 
         if self.quiz.exam_paper is False:
             self.sitting.delete()
+
+        percent = results['percent']
+        describe = "This is a badge for your aptitude practice session, keep learning."
+        awarded = 'ADMIN'
+        if percent == 100:
+            badge_obj = get_object_or_404(Badge,id=1)
+        elif percent >= 80:
+            badge_obj = get_object_or_404(Badge,id=4)
+        elif percent >= 50:
+            badge_obj = get_object_or_404(Badge,id=3)
+        else:
+            badge_obj = get_object_or_404(Badge,id=7)
+        Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
+                              awarded_by=awarded, badges=badge_obj)
 
         return render(self.request, self.result_template_name, results)

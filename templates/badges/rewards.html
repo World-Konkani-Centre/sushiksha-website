@@ -13,19 +13,19 @@
 
     <main id="main">
 
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>Badges</h2>
-          <ol>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'reward' %}">Badges</a></li>
-          </ol>
-        </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Badges</h2>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'reward' %}">Badges</a></li>
+                    </ol>
+                </div>
 
-      </div>
-    </section><!-- End Breadcrumbs -->
+            </div>
+        </section><!-- End Breadcrumbs -->
 
 
         <section id="" class="profile blog">
@@ -70,7 +70,7 @@
                                         {% for reward in query %}
                                             <tr>
                                                 <td class="font-weight-bold">
-                                                    {{ reward.timestamp | date:"d-M f a"}}
+                                                    {{ reward.timestamp | date:"d-M f a" }}
                                                 </td>
                                                 <td>
                                                     <div class="media align-items-center">
@@ -81,7 +81,9 @@
                                                 <td>
                                                     <details>
                                                         <summary
-                                                                class="font-weight-bold">{{ reward.badges.title }} ({{reward.badges.points}})</summary>
+                                                                class="font-weight-bold">{{ reward.badges.title }}
+                                                            ({{ reward.badges.points }})
+                                                        </summary>
                                                         <p>{{ reward.description }}</p>
                                                     </details>
                                                 </td>

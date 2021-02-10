@@ -14,20 +14,20 @@
 {% block content %}
     <main id="main">
 
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>{{ user.profile.name | truncatechars:20}} Account Details</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ user.profile.name | truncatechars:20 }} Account Details</h2>
 
-          <ol>
-            <li><a href="{% url 'home' %}">Home</a></li>
-             <li>Account</li>
-          </ol>
-        </div>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li>Account</li>
+                    </ol>
+                </div>
 
-      </div>
-    </section><!-- End Breadcrumbs -->
+            </div>
+        </section><!-- End Breadcrumbs -->
 
         <!-- ======= Contact Section ======= -->
         <section id="" class="">
@@ -115,20 +115,20 @@
 
 
 
-                         <div class="card mb-2">
-                        <div class="card-body">
+                        <div class="card mb-2">
+                            <div class="card-body">
 
-                        <div class="row badge-row">
-                            <div class='col-12'>
-                                <h4 class="lead font-weight-bold text-end"><a
-                                        href="{% url 'user-posts' id=user.id %}"
-                                        class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:15}}'s
-                                    Blog Posts</a></h4>
+                                <div class="row badge-row">
+                                    <div class='col-12'>
+                                        <h4 class="lead font-weight-bold text-end"><a
+                                                href="{% url 'user-posts' id=user.id %}"
+                                                class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:15 }}'s
+                                            Blog Posts</a></h4>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-
-                           </div>
-                    </div>
 
                         <div class="card">
                             <div class="card-header">Points Distribution</div>
@@ -144,7 +144,7 @@
                                     {% for cat,count in query_category %}
                                         <tr>
                                             <td>{{ cat }}</td>
-                                            <td>{{ count|intcomma  }}</td>
+                                            <td>{{ count|intcomma }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -156,10 +156,10 @@
                         </div>
                         <div class="col-md-8">
                             <div id="accordion">
-                                
+
                                 <div class="card mb-3">
-                                        <canvas id="myChart" height="400"></canvas>
-                                        <canvas id="myPie" height="400" class="ml-1 mt-1"></canvas>
+                                    <canvas id="myChart" height="400"></canvas>
+                                    <canvas id="myPie" height="400" class="ml-1 mt-1"></canvas>
                                     <div class="card-header" id="headingTwo">
                                         <h5 class="mb-0">
                                             <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
@@ -337,41 +337,41 @@
 
     </script>
 
-<script>
-  new Chart(document.getElementById("myPie"), {
-    type: "bar",
-    data: {
-      labels: ["Bonding", "Language Skills", "Leadership", "Learning", "Networking", "Productivity", "Responsiveness"],
-      datasets: [
-        {
-          label: "Category points",
-          backgroundColor: [
-          '#892cdc',
-           '#9d0191',
-         '#fd3a69',
-         '#3e64ff',
-          '#fecd1a',
-         '#eb5e0b',
-          '#ffc1f3',
-          ],
-          data: {{query_point_distribution}},
+    <script>
+        new Chart(document.getElementById("myPie"), {
+            type: "bar",
+            data: {
+                labels: ["Bonding", "Language Skills", "Leadership", "Learning", "Networking", "Productivity", "Responsiveness"],
+                datasets: [
+                    {
+                        label: "Category points",
+                        backgroundColor: [
+                            '#892cdc',
+                            '#9d0191',
+                            '#fd3a69',
+                            '#3e64ff',
+                            '#fecd1a',
+                            '#eb5e0b',
+                            '#ffc1f3',
+                        ],
+                        data: {{query_point_distribution}},
 
-        },
-      ],
-    },
-    options: {
-      title: {
-        display: true,
-        text: "Point Distribution across the category",
-      },
-      responsive: true,
+                    },
+                ],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Point Distribution across the category",
+                },
+                responsive: true,
                 animation: {
-              duration: 4000
-          },
-          hoverOffset: 50,
+                    duration: 4000
+                },
+                hoverOffset: 50,
 
-    },
-  });
-</script>
+            },
+        });
+    </script>
 
 {% endblock script %}

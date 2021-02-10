@@ -4,17 +4,17 @@
 
 <head>
 
-{% comment %} Meta detaisl {% endcomment %}
-<title>{% block title %}{% endblock title %}</title>
-<meta name="description" content="{% block description %}{% endblock %}">
-{% include 'include/meta.html' %}
+    {% comment %} Meta detaisl {% endcomment %}
+    <title>{% block title %}{% endblock title %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
+    {% include 'include/meta.html' %}
 
-{% comment %} Includes style block  {% endcomment %}
-{% block main_style %}
-{% endblock main_style %}
-{% include 'include/styles.html' %}
-{% block style %}
-{% endblock style %}
+    {% comment %} Includes style block  {% endcomment %}
+    {% block main_style %}
+    {% endblock main_style %}
+    {% include 'include/styles.html' %}
+    {% block style %}
+    {% endblock style %}
 
 </head>
 

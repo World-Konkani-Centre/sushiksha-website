@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+    <main id="main">
+
+
+        
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{{ query_set.name }}</h2>
+          <h3>Points : {{ query_set.points|intcomma  }}</h3>
+          <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+            <li><a href="{{query_set.house_set.first.get_absolute_url}}">{{query_set.house_set.first}}</a></li>
+            <li>{{ query_set.name }}</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+        <section id="schedule" class="section-with-bg">
+            <div class="container" data-aos="fade-up">
+                <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="team-{{ forloop.counter }}">
+                        {% for member in query_set.members.all|dictsortreversed:"points" %}
+                            <div class="row schedule-item">
+                                <div class="col-md-2"><h4>{{ forloop.counter }}</h4></div>
+                                <div class="col-md-8">
+                                    <div class="speaker">
+                                        <img src="{{ member.image.url }}" alt="{{ member.user.username }}"
+                                             title="{{ member.user.username }}">
+                                    </div>
+                                    {% if member.user.profile.name %}
+                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.user.profile.name }}
+                                            <span>{{ member.get_role }}</span></h4></a>
+
+                                    {% else %}
+                                        <a href="{{ member.get_absolute_url }}"><h4>{{ member.username }}
+                                            <span>{{ member.get_role }}</span></h4></a>
+
+                                    {% endif %}
+                                    <p>{{ member.batch }} VKSSF Scholar</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4>Points: {{ member.points |intcomma }}</h4>
+                                    <!--<h4>Stars: {{ member.stars }}</h4>-->
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+{% endblock content %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+
+{% block content %}
+<main id="main">
+
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>{% trans "Progress" %}</h2>
+
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                    <li>Progress</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+
+            {% if cat_scores %}
+            <div class="section-title">
+                <h2>Catagorical Score</h2>
+                <p>{% trans "Catagorical Scores" %}</p>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header py-3">
+                    <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                        Scores</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table  table-hover table-striped table-bordered table-light ">
+
+
+                            <thead>
+                            <tr>
+                                <th>{% trans "Category" %}</th>
+                                <th>{% trans "Correctly answererd" %}</th>
+                                <th>{% trans "Incorrect" %}</th>
+                                <th>%</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                            {% for cat, value in cat_scores.items %}
+                            <tr>
+                                <td>{{ cat }}</td>
+                                <td>{{ value.0 }}</td>
+                                <td>{{ value.1 }}</td>
+                                <td>{{ value.2 }}</td>
+                            </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>No quizzes available right now</p>
+            {% endif %}
+
+            {% if exams %}
+            <div class="section-title mt-5">
+                <h2>Test Score</h2>
+                <p>{% trans "Test Scores" %}</p>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header py-3">
+                    <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                        {% trans "Below are the results of graded tests that you have taken." %}</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table  table-hover table-striped table-bordered table-light ">
+
+
+                            <thead>
+                            <tr>
+                                <th>{% trans "Quiz Title" %}</th>
+                                <th>{% trans "Score" %}</th>
+                                <th>{% trans "Possible Score" %}</th>
+                                <th>%</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            {% for exam in exams %}
+
+                            <tr>
+                                <td>{{ exam.quiz.title }}</td>
+                                <td>{{ exam.current_score }}</td>
+                                <td>{{ exam.get_max_score }}</td>
+                                <td>{{ exam.get_percent_correct }}</td>
+                            </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>No quiz submissions made</p>
+            {% endif %}
+        </div>
+    </section>
+
+
+</main>
+
+{% endblock %}

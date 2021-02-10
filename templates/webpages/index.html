@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block loader %}
+ <div id="preloader"></div>
+{% endblock loader %}
+ 
+{% block content %}
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex justify-content-center align-items-center">
+        <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+            <h1>Learning Today,<br>Leading Tomorrow</h1>
+            <h2>An interactive platform for students with a growth mindset</h2>
+            {% if user.is_authenticated %}
+                <a href="https://sophists-workspace.slack.com/ssb/redirect" class="btn-get-started" target="_blank">Go
+                    to Sophists</a>
+                <a href="https://us02web.zoom.us/j/89238479481?pwd=VG5SRzZlUjBWQUpBd1NEbm4yS2Z1Zz09" target="_blank"
+                   class="btn-get-started">Go to Pair</a>
+                <a href="{% url 'leaderboard' %}" class="btn-get-started">Go to Leaderboard</a>
+
+            {% else %}
+                <a href="{% url 'about' %}" class="btn-get-started">Know more</a>
+            {% endif %}
+        </div>
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>About</h2>
+                    <p>Sushiksha</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 video-box align-self-baseline order-1 order-lg-2" data-aos="fade-left"
+                         data-aos-delay="100">
+                        <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid" alt="">
+                        {#                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>#}
+                    </div>
+
+                    <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+                        <h3>Sushiksha</h3>
+                        <p>
+                            Sushiksha Mentoring Program is organized for scholars of Vishwa Konkani Student Scholarship
+                            Fund(VKSSF) by members of VKSSF Alumni Association(VAA). Sushiksha was started in 2018 by
+                            Royal Denzil Sequeira, a member of VAA since 2015, with 20 mentees. Since then, Sushiksha
+                            has grown to be family of 170 mentees and 20 mentors. Mentees of Sushiksha are undergraduate
+                            scholars of VKSSF who are determined to thrive and be successful in their area of study and
+                            career. Mentors of Sushiksha Program are experienced professionals who were once the
+                            scholars of VKSSF and have lived through their own share of successes and failures but
+                            believe in empowering the scholars early on in their career path.</p>
+                        <p>
+                            Sushiksha thrives because of the dedication of its active mentees and mentors – who have
+                            contributed countless hours of work to shape their future and make it a highly productive
+                            and focused workspace. </p>
+                        <a href="{% url 'about' %}" class="get-started-btn-special">Learn More</a>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End About Section -->
+
+        <!-- ======= Counts Section ======= -->
+        <section id="counts" class="counts section-bg">
+            <div class="container" data-aos="fade-in">
+
+                <div class="row counters">
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-toggle="counter-up">170</span>
+                        <p>Mentees</p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-toggle="counter-up">20</span>
+                        <p>Mentors</p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-toggle="counter-up">10</span>
+                        <p>Events</p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-toggle="counter-up">15</span>
+                        <p>Projects</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Counts Section -->
+
+        {#        <!-- ======= F.A.Q Section ======= -->#}
+        {#        <section id="faq" class="faq">#}
+        {#            <div class="container" data-aos="fade-in">#}
+        {##}
+        {#                <div class="section-title">#}
+        {#                    <h2>F.A.Q</h2>#}
+        {#                    <p>Frequently Asked questions</p>#}
+        {#                </div>#}
+        {##}
+        {#                <ul class="faq-list">#}
+        {#                    {% for faq in faqs %}#}
+        {#                        <li>#}
+        {#                            <a data-toggle="collapse" class="collapsed" href="#faq{{ forloop.counter }}">{{ faq.question }}<i class="icofont-simple-up"></i></a>#}
+        {#                            <div id="faq{{ forloop.counter }}" class="collapse" data-parent=".faq-list">#}
+        {#                                <p>#}
+        {#                                    {{ faq.answer }}#}
+        {#                                </p>#}
+        {#                            </div>#}
+        {#                        </li>#}
+        {#                    {% endfor %}#}
+        {##}
+        {#                </ul>#}
+        {##}
+        {#            </div>#}
+        {#        </section><!-- End F.A.Q Section -->#}
+
+
+        <section id="blog" class="blog">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Featured Blogs</h2>
+                    <p>Latest Update</p>
+                </div>
+                <div class="row">
+                    <div class="entries">
+                        <div class="row">
+                            {% for post in featured %}
+                                <div class="col-md-4 d-flex align-items-stretch" data-aos="fade-up">
+                                    <article class="entry">
+                                        <div class="entry-img">
+                                            <img src="{{ post.thumbnail.url }}" alt="" class="img-fluid">
+                                        </div>
+                                        <h2 class="entry-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h2>
+                                        <div class="entry-meta">
+                                            <ul>
+                                                <li class="d-flex align-items-center"><i class="icofont-user"></i> <a
+                                                        href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a>
+                                                </li>
+                                                <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i><a>{{ post.timestamp | timesince }}
+                                                    ago</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="entry-content">
+                                            <p>
+                                                {{ post.overview }}.
+                                            </p>
+                                            <div class="read-more">
+                                                <a href="{{ post.get_absolute_url }}">Read More</a>
+                                            </div>
+                                        </div>
+                                    </article><!-- End blog entry -->
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div><!-- End blog entries list -->
+                </div>
+            </div>
+        </section><!-- End Blog Section -->
+
+
+        <!-- ======= Testimonials Section ======= -->
+        <section id="testimonials" class="testimonials">
+            <div class="container" data-aos="fade-in">
+                <div class="section-title">
+                    <h2>Testimonials</h2>
+                    <p>What are they saying</p>
+                </div>
+                <div class="owl-carousel testimonials-carousel" data-aos="zoom-in" data-aos-delay="100">
+                    {% for data in testimonial %}
+                        <div class="testimonial-wrap">
+                            <div class="testimonial-item">
+                                <img src="{{ data.image.url }}" title="{{ data.name }} Testimonial"
+                                     class="testimonial-img" alt="">
+                                <h3>{{ data.name }}</h3>
+                                <h4>{{ data.role }}</h4>
+                                <p>
+                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                    {{ data.testimonial }}
+                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main><!-- End #main -->
+
+
+
+{% endblock content %}

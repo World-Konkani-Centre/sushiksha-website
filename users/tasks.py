@@ -12,3 +12,4 @@ def send_email(array):
     send_reward_mail(array)
     send_reward_slack(array)
     return "DONE\n"
+

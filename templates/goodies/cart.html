@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <style>
+        .wrapping {
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+        .modal-backdrop {
+        z-index: -1;
+        }
+
+    </style>
+{% endblock style %}
+{% block content %}
+ <div class="modal fade" id="postdeletemodal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered" role="document" >
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info text-white">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Do you want to buy the goodie - {{ item.title }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure about buying this, xx points will be deducted from your points and the goodie will be delivered to {{ user.profile.address }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">I'm Not Sure
+                                            </button>
+                                            <a href="{% url 'home'  %}"><button type="button" class="btn btn-danger">Buy</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+         <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Goodies</h2>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'goodies' %}">Goodies</a></li>
+                        <li>Cart</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+            
+
+    <section id="course-details" class="course-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-8">
+          <h3 class="ml-auto">Total points : {{ user.points }}</h3>
+            <img src="{{ item.thumbnail.url }}" class="img-fluid rounded" alt="">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+            
+            <h3>Details</h3>
+             <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Delivery Address</h5>
+              <p>{{ user.profile.address }}</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+               <p class="text-dark mb-0">Check and update your details by clicking <a href="{% url 'profile' %}" class="text-danger">here</a></p>
+            </div>
+
+          </div>
+
+
+          <div class="col-lg-4">
+
+          <h3>Points usage</h3>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Points</h5>
+              <p>10,000</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Stars</h5>
+              <p>5</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Shipping</h5>
+              <p>500</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+               <button type="button" class="btn btn-danger btn-block" data-backdrop="false" data-toggle="modal"
+                                                    data-target="#postdeletemodal">Place the Goodie</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Cource Details Section -->
+    </main>
+
+{% endblock content %}

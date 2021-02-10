@@ -1,53 +1,42 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
-{% block main_style %}
-{% endblock main_style %}
+<head>
 
-{% include "head.html" %}
+    {% comment %} Meta detaisl {% endcomment %}
+    {% comment %} <title>{% block title %}{% endblock title %}</title> {% endcomment %}
+    <meta name="description" content="{% block description %}{% endblock %}">
+    {% include 'include/meta.html' %}
 
-{% block style %}
-{% endblock style %}
+    {% comment %} Includes style block  {% endcomment %}
+    {% block main_style %}
+    {% endblock main_style %}
+    {% include 'include/styles.html' %}
+    {% block style %}
+    {% endblock style %}
+
+</head>
 
 <body>
-{% include "header.html" %}
+{% include "include/header.html" %}
+
+{% block loader %}
+{% endblock loader %}
+
 
 {% block content %}
 {% endblock content %}
 
-{% include "footer.html" %}
-{% include "scripts.html" %}
 
+{% include "include/footer.html" %}
+
+
+{% comment %} Script block and Script tags including notification scripts {% endcomment %}
+{% include "include/scripts.html" %}
 {% block script %}
 {% endblock script %}
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "6000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-        {% if messages %}
-            {% for message in messages %}
-                toastr["{{message.tags}}"]("{{ message }}");
-            {% endfor %}
-        {% endif %}
-
-    });
-</script>
+{% include 'include/notification.html' %}
 
 </body>
 </html>

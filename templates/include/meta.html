@@ -1,0 +1,39 @@
+{% load static %}
+
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+{% if title %}
+    <title>Sushiksha - {{ title }}</title>
+{% else %}
+    <title>Sushiksha - An Initiative by WKC</title>
+{% endif %}
+
+
+{% if meta_title %}
+    <meta property="og:title" content="{{ meta_title }}">
+{% else %}
+    <meta property="og:title" content="Sushiksha">
+{% endif %}
+
+<meta content="Sushiksha, Sophists, World Konkani Centre, WKC, VKSSF, Vishwa Konkani" name="keywords">
+
+{% if meta_description %}
+    <meta property="og:description" content="{{ meta_description }}">
+{% else %}
+    <meta property="og:description"
+          content="Sushiksha is an initiative by VKSSF Alumni Association to create a platform for VKSSF Scholars to realize their potential by enabling personal and professional relationships with VAA members who have succeeded in the path of their chosen career. They will act as role models and provide guidance to the Students (Mentees).">
+{% endif %}
+
+{% if meta_image_url %}
+    <meta property="og:image" content="{{ meta_image_url }}">
+{% else %}
+    <meta property="og:image" content="{% static 'assets/img/sushikshalogo.png' %}">
+{% endif %}
+
+<meta property="og:url" content="{% url 'home' %}">
+
+<meta name="twitter:card" content="Sushiksha an initiative by VKSSF Alumni">
+
+<meta property="og:site_name" content="Sushiksha.">
+<meta name="twitter:image:alt" content="Sushiksha logo">
+<meta name="google-site-verification" content="SXwa4FmlrrCSYHmHjQ0-BPlNqwZVxEcY9VVMA3a246Q"/>

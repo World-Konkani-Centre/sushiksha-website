@@ -1,0 +1,377 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block main_style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
+          integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
+          crossorigin="anonymous"/>
+{% endblock main_style %}
+
+
+{% block content %}
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ user.profile.name | truncatechars:20 }} Account Details</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li>Account</li>
+                    </ol>
+                </div>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+        <!-- ======= Contact Section ======= -->
+        <section id="" class="">
+            <div class="profile container" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-md-4">
+                        {% if user.profile.role %}
+                            <div class="card mb-4 featured-mentor">
+                        {% else %}
+                            <div class="card mb-4">
+                        {% endif %}
+                        <div class="card-body ">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="{{ user.profile.image.url }}" alt="Admin" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4 class="h4">{{ user.username }}</h4>
+                                    {% if user.profile.role %}
+                                        <p class="text-secondary mb-1">Mentor</p>
+                                    {% else %}
+                                        <p class="text-secondary mb-1">Mentee</p>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% if user.profile.teams_set.first %}
+                                    <div class="col-6 mt-1 mb-0 text-justify">
+                                        <p class="font-weight-bold">Team: <a
+                                                href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name }}</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-6 text-justify">
+                                        <p class="font-weight-bold">House: <a
+                                                href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name }}</a>
+                                        </p>
+                                    </div>
+                                {% endif %}
+
+                                <div class="col-6 mt-1 text-justify">
+                                    <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
+                                </div>
+                                <div class="col-6 mt-1 text-justify">
+                                    <p class="font-weight-bold">Points: {{ user.profile.points |intcomma }}</p>
+                                </div>
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
+                                </div>-->
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
+                                </div>-->
+                                <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="social-links text-center  pt-1 pt-md-0 text-center">
+                                {% if user.profile.instagram %}
+                                    <a href="{{ user.profile.instagram }}" target="_blank"><i
+                                            class="bx bxl-instagram bx-burst-hover bx-lg"></i></a>
+                                {% endif %}
+                                {% if user.profile.twitter %}
+                                    <a href="{{ user.profile.twitter }}" target="_blank"><i
+                                            class="bx bxl-twitter bx-burst-hover bx-lg"></i></a>
+                                {% endif %}
+                                {% if user.profile.linkedin %}
+                                    <a href="{{ user.profile.linkedin }}" target="_blank"><i
+                                            class="bx bxl-linkedin bx-burst-hover bx-lg"></i></a>
+                                {% endif %}
+                                {% if user.profile.github %}
+                                    <a href="{{ user.profile.github }}" target="_blank"><i
+                                            class="bx bxl-github bx-burst-hover bx-lg"></i></a>
+                                {% endif %}
+                                {% if user.email %}
+                                    <a href="mailto:{{ user.email }}"><i
+                                            class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
+                                {% endif %}
+                                {% if user.profile.okr %}
+                                    <a href="{{ user.profile.okr }}" target="_blank"><i
+                                            class="bx bx-table bx-burst-hover bx-lg"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+
+
+
+                        <div class="card mb-2">
+                            <div class="card-body">
+
+                                <div class="row badge-row">
+                                    <div class='col-12'>
+                                        <h4 class="lead font-weight-bold text-end"><a
+                                                href="{% url 'user-posts' id=user.id %}"
+                                                class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:15 }}'s
+                                            Blog Posts</a></h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">Points Distribution</div>
+                            <div class="card-body">
+                                <table class="table table-borderless table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Points</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cat,count in query_category %}
+                                        <tr>
+                                            <td>{{ cat }}</td>
+                                            <td>{{ count|intcomma }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <div id="accordion">
+
+                                <div class="card mb-3">
+                                    <canvas id="myChart" height="400"></canvas>
+                                    <canvas id="myPie" height="400" class="ml-1 mt-1"></canvas>
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
+                                                    data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
+                                                    aria-controls="Profile">
+                                                Update Profile
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Profile1" class="collapse" aria-labelledby="headingTwo"
+                                         data-parent="#accordion">
+                                        <div class="card-body">
+
+                                            <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                {{ u_form|crispy }}
+                                                {{ p_form|crispy }}
+                                                <div class="form-group">
+                                                    <button class="btn btn-block get-started-btn-special" type="submit">
+                                                        Submit
+                                                    </button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div id="Profile">
+                                        <div class="card-body">
+                                            {% for i,j in profile_details.items %}
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0 text-capitalize">{{ i }}</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-dark">
+                                                        {{ j }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center wrapper">
+                                        <div class="badge-carousel pricing owl-carousel owl-theme"
+                                             data-aos="zoom-in"
+                                             data-aos-delay="100">
+                                            {% for badge in badges %}
+                                                <div class="box">
+                                                    <h3>{{ badge.badges__title }}</h3>
+                                                    <img src="/media/{{ badge.badges__logo }}" loading="lazy"
+                                                         title="{{ badge.badges__title }}"
+                                                         alt="{{ badge.badges__title }}"
+                                                         width="80%" class="img-rounded">
+                                                    <h4>{{ badge.badges__title__count }}</h4>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h1 class="lead text-center ">Badges</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Contact Section -->
+
+    </main><!-- End #main -->
+
+
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'assets/js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+            crossorigin="anonymous"></script>
+
+
+    <script>
+        $i = 0
+        $("#swap").click(function () {
+            $("#Profile").toggle()
+            if ($i === 0) {
+                $(this).text("View Profile");
+                $i = 1;
+            } else {
+                $(this).text("Update Profile");
+                $i = 0;
+            }
+        });
+
+        var dynamicColors = function () {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        };
+
+
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 4', 'Week 3', 'Week 2', 'Current Week'],
+                datasets: [
+
+                    {% for category, data,color in data_query %}
+                        {
+                            label: '{{category}}',
+                            data: {{data}},
+                            backgroundColor: '{{color}}',
+                            borderColor: '{{ color }}',
+                            fill: false,
+                            borderWidth: 3
+                        },
+                    {% endfor %}
+
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'User Performance'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                animation: {
+                    duration: 4000
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        $('.badge-carousel').owlCarousel({
+            loop: false,
+            nav: true,
+            dots: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        })
+
+    </script>
+
+    <script>
+        new Chart(document.getElementById("myPie"), {
+            type: "bar",
+            data: {
+                labels: ["Bonding", "Language Skills", "Leadership", "Learning", "Networking", "Productivity", "Responsiveness"],
+                datasets: [
+                    {
+                        label: "Category points",
+                        backgroundColor: [
+                            '#892cdc',
+                            '#9d0191',
+                            '#fd3a69',
+                            '#3e64ff',
+                            '#fecd1a',
+                            '#eb5e0b',
+                            '#ffc1f3',
+                        ],
+                        data: {{query_point_distribution}},
+
+                    },
+                ],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Point Distribution across the category",
+                },
+                responsive: true,
+                animation: {
+                    duration: 4000
+                },
+                hoverOffset: 50,
+
+            },
+        });
+    </script>
+
+{% endblock script %}

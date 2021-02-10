@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs" data-aos="fade-in">
+            <div class="container">
+                <h2>{{ heading }}</h2>
+                {% if user.is_authenticated %}
+                <a href="{% url 'blog-create' %}">
+                    <button class="btn btn-danger btn-sm mt-2" type="button">
+                        Create a Post
+                    </button></a>
+                {% endif %}
+            </div>
+        </div><!-- End Breadcrumbs -->
+
+        <section id="blog" class="blog">
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-lg-12 entries">
+
+                        <div class="row">
+                            {% for post in queryset %}
+                                <div class="col-md-4 d-flex align-items-stretch" data-aos="fade-up">
+
+                                    <article class="entry">
+
+                                        <div class="entry-img">
+                                            <img src="{{ post.thumbnail.url }}" loading="lazy" alt="{{ post.title }}"
+                                                 title="{{ post.title }}" class="img-fluid">
+                                        </div>
+
+                                        <h2 class="entry-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h2>
+
+                                        <div class="entry-meta">
+                                            <ul>
+                                                <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a
+                                                        href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a>
+                                                </li>
+                                                <li class="d-flex align-items-center"><i
+                                                        class="bx bxs-time"></i><a>{{ post.timestamp | timesince }}
+                                                    ago</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="entry-content">
+                                            <p>
+                                                {{ post.overview }}.
+                                            </p>
+                                            <div class="read-more">
+                                                <a href="{{ post.get_absolute_url }}">Read More</a>
+                                            </div>
+                                        </div>
+
+                                    </article><!-- End blog entry -->
+
+                                </div>
+                            {% endfor %}
+
+
+                        </div>
+
+                        <div class="blog-pagination">
+                            <ul class="justify-content-center">
+                                {% if queryset.has_previous %}
+                                    <li><a href="?page=1">First</a></li>
+                                    <li>
+                                        <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for num in queryset.paginator.page_range %}
+                                    {% if queryset.number == num %}
+                                        <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% elif num > queryset.number|add:'-3' and num < queryset.number|add:'3' %}
+                                        <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if queryset.has_next %}
+                                    <li><a href="?page={{ queryset.next_page_number }}">Next</a></li>
+                                    <li><a href="?page={{ queryset.paginator.num_pages }}">Last</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+
+                    </div><!-- End blog entries list -->
+
+                </div>
+
+            </div>
+        </section><!-- End Blog Section -->
+
+
+    </main>
+
+{% endblock content %}

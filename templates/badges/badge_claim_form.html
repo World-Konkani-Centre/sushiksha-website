@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ form.title }}</h2>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'reward' %}">Rewards</a></li>
+                        <li><a href="{% url 'badge_claim' %}">Badge Claim Forms</a></li>
+                        <li>{{ form.title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container" data-aos="fade-up">
+                <iframe style="border:0; width: 100%; height: 800px;"
+                        src="{{ form.url }}"
+                        frameborder="0">Loading…
+                </iframe>
+
+            </div>
+        </section>
+
+    </main>
+
+{% endblock content %}

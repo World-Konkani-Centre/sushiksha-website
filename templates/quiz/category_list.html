@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "All Quizzes" %}{% endblock %}
+
+{% block content %}
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{% trans "Category list" %}</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Practice</a></li>
+                        <li>Category</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="" class="">
+            <div class="container">
+                {% if category_list.count != 0 %}
+                    <h3>Select the category</h3>
+                    <ul>
+                        {% for cat in category_list %}
+                            <li>
+                                <a href="{% url 'quiz_category_list_matching' category_name=cat.category %}">
+                                    {{ cat.category }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No categories avalable now</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

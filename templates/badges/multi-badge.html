@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Multi Badge</h2>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'reward' %}">Rewards</a></li>
+                        <li><a href="{% url 'badge' %}">Award a Badge</a></li>
+                        <li>Multi Badge</li>
+                    </ol>
+                </div>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+        <section id="about" class="container">
+            <div class="container" data-aos="fade-down">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <form method='post'>
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        {% comment %} <input type='submit' value='submit'> {% endcomment %}
+                        <button type='submit' class='btn btn-danger btn-block'>Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+{% endblock content %}
+

@@ -29,7 +29,7 @@ def contact(request):
             pass
         return redirect(request.META['HTTP_REFERER'])
     else:
-        return render(request, 'contact.html', {})
+        return render(request, 'webpages/contact.html', {})
 
 
 # def events(request):
@@ -68,3 +68,7 @@ def contact(request):
 #         'form': form
 #     }
 #     return render(request, 'gallery_photo_submit.html', context=context)
+
+
+def pentathlon(request):
+    return render(request, 'event/pentathlon.html')

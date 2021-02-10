@@ -1,0 +1,123 @@
+{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    {% include "include/meta.html" %}
+
+    <title>Sushiksha - Login</title>
+    <link href="{% static 'assets/img/feviicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch.png' %}" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link href="{% static 'assets/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/toaster/toaster.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4" id="linkButton">Welcome Back!</h1>
+                                </div>
+                                <div class="text-center">
+                                    <h1 class="h6 text-muted mb-4">For logging into your account you need to be part of
+                                        Sophists workspace</h1>
+                                </div>
+                                <form action="" class="user" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail"
+                                               name='username' aria-describedby="emailHelp"
+                                               placeholder="Enter Username or email" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user" name='password'
+                                               id="exampleInputPassword" placeholder="Password" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                                        Login
+                                    </button>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'assets/vendor/toaster/toaster.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'assets/js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "7000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        {% if messages %}
+            {% for message in messages %}
+                toastr["{{message.tags}}"]("{{ message }}");
+            {% endfor %}
+        {% endif %}
+
+    });
+</script>
+
+</html>
+

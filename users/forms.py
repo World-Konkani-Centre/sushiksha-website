@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Reward
+from django.db.models.functions import Lower
+from .models import Profile, Reward, Mentions, Badge
 
 
 class UserRegisterForm(UserCreationForm):
@@ -23,7 +24,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'batch', 'phone', 'college',
+        fields = ['name', 'batch', 'phone', 'college', 'degree', 'branch',
                   'profession', 'address', 'guidance',
                   'linkedin', 'instagram', 'twitter',
                   'github', 'okr', 'facebook',
@@ -54,8 +55,14 @@ class BadgeForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Describe why your are giving the badge',
-        'rows': 4
+        'rows': 5,
+        'minlength': 125,
     }))
+
+    badges = forms.Select(attrs={
+        'class': 'form-control'
+    }
+    )
 
     class Meta:
         model = Reward
@@ -66,3 +73,51 @@ class BadgeForm(forms.ModelForm):
         # for visible in self.visible_fields():
         #     if visible.html_name == 'user' or visible.html_name == 'badges':
         #         visible.field.widget.attrs['class'] = 'fstdropdown-select'
+
+
+class MentionUpdateForm(forms.ModelForm):
+    team = forms.Select(attrs={
+        'class': 'form-control'
+    })
+    house = forms.Select(attrs={
+        'class': 'form-control'
+    })
+    user = forms.Select(attrs={
+        'class': 'form-control'
+    })
+
+    class Meta:
+        model = Mentions
+        fields = ['title', 'team', 'house', 'user', 'image']
+
+
+class RangeRequestForm(forms.Form):
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")
+
+
+class UserRangeRequestForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all().order_by('profile__user'), label="Seect the user")
+    beginning = forms.DateTimeField(label="Start Date Time")
+    end = forms.DateTimeField(label="End Date Time")
+
+
+class MultiBadgeForm(forms.Form):
+    choices = []
+    for i in User.objects.all().order_by(Lower('profile__name')):
+        name = str(i.profile.name) + '  (' + str(i.profile.get_team_name()) + ')'
+        entry = (i.id, name)
+        choices.append(entry)
+    choices = tuple(choices)
+
+    badge_choices = []
+    for i in Badge.objects.all():
+        name = str(i.title) + '  (' + str(i.points) + ')'
+        entry = (i.id, name)
+        badge_choices.append(entry)
+    badge_choices = tuple(badge_choices)
+
+    awarded_by = forms.CharField(required=True)
+    badge = forms.ChoiceField(choices=badge_choices, required=True)
+    description = forms.CharField(widget=forms.Textarea())
+    profiles = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)

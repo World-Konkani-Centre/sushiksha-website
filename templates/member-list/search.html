@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main id="main">
+
+
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Members</h2>
+
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>Members</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+        <section id="team" class="team section-with-bg">
+            <div class="container" data-aos="fade-up">
+
+                                                    <div class="row mb-4">
+                    <div class="col-lg-8 col-md-7">
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-11">
+                        <div class="search-form ">
+                            <form action="{% url 'user-search' %}">
+                                <input type="text" name="q" autofocus>
+                                <button type="submit"><i class="bx bx-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <ul class="nav nav-tabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#mentors" role="tab" data-toggle="tab">Mentors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mentee" role="tab" data-toggle="tab">Mentees</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+                    <div role="tabpanel" class="tab-pane fade show active" id="mentors">
+                        <div class="row">
+                            {% if mentors.count != 0 %}
+                                {% for user in mentors %}
+                                    <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
+                                        <div class="member ">
+                                            <div class="member-img">
+                                                <img src="{{ user.profile.image.url }}" loading="lazy" class="img-fluid"
+                                                     alt="{{ user.user.username }}">
+                                                <div class="social">
+                                                    {% if user.twitter %}
+                                                        <a href="{{ user.profile.twitter }}" target="_blank"><i
+                                                                class="bx bxl-twitter"></i></a>
+                                                    {% endif %}
+                                                    {% if user.facebook %}
+                                                        <a href="{{ user.profile.facebook }}" target="_blank"><i
+                                                                class="bx bxl-facebook"></i></a>
+                                                    {% endif %}
+                                                    {% if user.instagram %}
+                                                        <a href="{{ user.profile.instagram }}" target="_blank"><i
+                                                                class="bx bxl-instagram"></i></a>
+                                                    {% endif %}
+                                                    {% if user.linkedin %}
+                                                        <a href="{{ user.profile.linkedin }}" target="_blank"><i
+                                                                class="bx bxl-linkedin"></i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                {% if user.profile.name %}
+                                                    <h4>
+                                                        <a href="{% url 'user-detail' user.id %}">{{ user.profile.name }}</a>
+                                                    </h4>
+
+                                                {% else %}
+                                                    <h4>
+                                                        <a href="{% url 'user-detail' user.id %}">{{ user.username }}</a>
+                                                    </h4>
+                                                {% endif %}
+                                                {% if user.profession %}
+                                                    <span>{{ user.profile.profession }}</span>
+                                                {% endif %}
+                                                {% if request.user.is_authenticated %}
+                                                    <p>
+                                                        <strong>VKSSF Batch: </strong>{{ user.profile.batch }}
+                                                    </p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <h2>No mentors found with this match</h2>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane fade" id="mentee">
+                        <div class="row">
+                            {% if mentee.count != 0 %}
+                                {% for user in mentee %}
+                                    <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
+                                        <div class="member ">
+                                            <div class="member-img">
+                                                <img src="{{ user.profile.image.url }}" class="img-fluid"
+                                                     alt="{{ user.user.username }}">
+                                                <div class="social">
+                                                    {% if user.twitter %}
+                                                        <a href="{{ user.profile.twitter }}" target="_blank"><i
+                                                                class="bx bxl-twitter"></i></a>
+                                                    {% endif %}
+                                                    {% if user.facebook %}
+                                                        <a href="{{ user.profile.facebook }}" target="_blank"><i
+                                                                class="bx bxl-facebook"></i></a>
+                                                    {% endif %}
+                                                    {% if user.instagram %}
+                                                        <a href="{{ user.profile.instagram }}" target="_blank"><i
+                                                                class="bx bxl-instagram"></i></a>
+                                                    {% endif %}
+                                                    {% if user.linkedin %}
+                                                        <a href="{{ user.profile.linkedin }}" target="_blank"><i
+                                                                class="bx bxl-linkedin"></i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                {% if user.profile.name %}
+                                                    <h4>
+                                                        <a href="{% url 'user-detail' user.id %}">{{ user.profile.name }}</a>
+                                                    </h4>
+
+                                                {% else %}
+                                                    <h4>
+                                                        <a href="{% url 'user-detail' user.id %}">{{ user.username }}</a>
+                                                    </h4>
+                                                {% endif %}
+                                                {% if user.profession %}
+                                                    <span>{{ user.profile.profession }}</span>
+                                                {% endif %}
+                                                {% if request.user.is_authenticated %}
+                                                    <p>
+                                                        <strong>VKSSF Batch: </strong>{{ user.profile.batch }}
+                                                    </p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <h2>No mentees found with this match</h2>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}

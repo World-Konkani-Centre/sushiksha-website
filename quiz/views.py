@@ -1,5 +1,5 @@
 import random
-
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
@@ -237,13 +237,22 @@ class QuizTake(FormView):
         awarded = 'ADMIN'
         if percent == 100:
             badge_obj = get_object_or_404(Badge,id=1)
+            Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
+                                  awarded_by=awarded, badges=badge_obj)
+            messages.success(self.request,
+                             f'You have successfully completed the quiz and you are awarded with {badge_obj.title} badge')
         elif percent >= 80:
             badge_obj = get_object_or_404(Badge,id=4)
+            Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
+                                  awarded_by=awarded, badges=badge_obj)
+            messages.success(self.request,
+                             f'You have successfully completed the quiz and you are awarded with {badge_obj.title} badge')
         elif percent >= 50:
             badge_obj = get_object_or_404(Badge,id=3)
+            Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
+                                  awarded_by=awarded, badges=badge_obj)
+            messages.success(self.request, f'You have successfully completed the quiz and you are awarded with {badge_obj.title} badge')
         else:
-            badge_obj = get_object_or_404(Badge,id=7)
-        #Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
-        #                      awarded_by=awarded, badges=badge_obj)
-
+            messages.warning(self.request,
+                             f'Keep learning and score higher percentage to win a badge')
         return render(self.request, self.result_template_name, results)

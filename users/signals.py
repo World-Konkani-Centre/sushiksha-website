@@ -44,6 +44,7 @@ def send_mail(sender, instance, created, **kwargs):
         send_email.delay(array)
         # comment during production to avoid unnecessary errors
         # uncomment above line only if you have celery, rabbitmq setup and know the implementation
+        print("signal called")
         return True
 
 

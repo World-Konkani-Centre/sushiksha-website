@@ -53,74 +53,61 @@
                 </div>
             </div>
         </section>
-        <div class="container">
-            <h2 class="ml-auto">Total points : {{ user.points }}</h2>
+
+            
+
+    <section id="course-details" class="course-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-8">
+          <h3 class="ml-auto">Total points : {{ user.points }}</h3>
+            <img src="{{ item.thumbnail.url }}" class="img-fluid rounded" alt="">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+            
+            <h3>Details</h3>
+             <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Delivery Address</h5>
+              <p>{{ user.profile.address }}</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+               <p class="text-dark mb-0">Check and update your details by clicking <a href="{% url 'profile' %}" class="text-danger">here</a></p>
+            </div>
+
+          </div>
+
+
+          <div class="col-lg-4">
+
+          <h3>Points usage</h3>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Points</h5>
+              <p>10,000</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Stars</h5>
+              <p>5</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Shipping</h5>
+              <p>500</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+               <button type="button" class="btn btn-danger btn-block" data-backdrop="false" data-toggle="modal"
+                                                    data-target="#postdeletemodal">Place the Goodie</button>
+            </div>
+
+          </div>
         </div>
 
-        <section class="container">
-
-            <div class="row">
-                <div class="col-lg-8">
-                    <img src="{{ item.thumbnail.url }}" class="img-fluid" alt="">
-                    <h3 class="mt-3 mb-3">{{ item.title }}</h3>
-                    <p class="wrapping">{{ item.description }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5>Points </h5>
-                    </div>
-                <hr>
-                    <div class="mb-3">
-                        <div class="pt-4">
-
-                            <h5 class="mb-4">Delivery address</h5>
-
-                            <p class="mb-0"> {{ user.profile.address }}</p>
-                            <br>
-                            <br>
-                            <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Check and update your
-                                details by
-                                clicking <a href="{% url 'profile' %}">here</a></p>
-                        </div>
-                    </div>
-                    <hr>
-
-
-                </div>
-
-
-            <div class="col-lg-4">
-
-
-                <div class="mb-3">
-                    <div class="pt-4">
-
-                        <h5 class="mb-3">The points usage</h5>
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                Points
-                                <span>points</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                Shipping
-                                <span>Gratis</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                <div>
-                                    <strong>The total points </strong>
-                                </div>
-                                <span><strong>points</strong></span>
-                            </li>
-                        </ul>
-
-                        <button type="button" class="btn btn-primary btn-block" data-backdrop="false" data-toggle="modal"
-                                                    data-target="#postdeletemodal">Place the Goodie</button>
-                    </div>
-                </div>
-
-            </div>
-
-            </div>
-        </section>
+      </div>
+    </section><!-- End Cource Details Section -->
     </main>
 
 {% endblock content %}

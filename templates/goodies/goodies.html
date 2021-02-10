@@ -18,6 +18,13 @@
         }
     </style>
 {% endblock style %}
+
+
+{% block loader %}
+ <div id="preloader"></div>
+{% endblock loader %}
+
+
 {% block content %}
     <main id="main">
 
@@ -35,7 +42,7 @@
             </div>
         </section>
 
-        <div class="container">
+        <div class="container mt-3">
             <h2 class="ml-auto">Total points : {{ user.profile.total_points }}</h2>
         </div>
 
@@ -61,7 +68,7 @@
                                             <div class="price text-success"><h5 class="mt-4">Price</h5></div>
                                         </div>
                                         <div class="trainer-rank d-flex align-items-center">
-                                            <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white">Details</a>
+                                            <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white btn-sm">Details</a>
                                         </div>
                                     </div>
                                 </div>

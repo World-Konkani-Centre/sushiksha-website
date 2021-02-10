@@ -23,7 +23,7 @@ class BadgeAdmin(admin.ModelAdmin):
     list_display = ("id", "badge_photo", "category", "featured", "title", "points", "description")
     list_display_links = ("id", "title")
     list_filter = ("points", "featured")
-    search_fields = ("title", "category")
+    search_fields = ("title", "category__name")
     list_editable = ("featured", "points", "description", "category")
     actions = [csvexport]
 

@@ -97,7 +97,8 @@
 
                         <p><strong>{% trans "Explanation" %}:</strong></p>
                         {% if question.image %}
-                        <img src="{{question.image.url}}" class='img-fluid rounded' loading='lazy' alt="solution image" />
+
+                        <img src="{{question.image.url}}" class='img-fluid img-thumbnail rounded mx-auto d-block' loading='lazy' />
                         {% endif %}
                         <div class="well " style="background-color: #fcf8e3;">
                             <p>{{ question.explanation|safe }}</p>

@@ -1,5 +1,14 @@
 {% load static %}
-{# Essential META Tags #}
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    {% if title %}
+        <title>Sushiksha - {{ title }}</title>
+    {% else %}
+        <title>Sushiksha - An Initiative by WKC</title>
+    {% endif %}
+
+
 {% if meta_title %}
     <meta property="og:title" content="{{ meta_title }}">
 {% else %}
@@ -7,8 +16,6 @@
 {% endif %}
 
 <meta content="Sushiksha, Sophists, World Konkani Centre, WKC, VKSSF, Vishwa Konkani" name="keywords">
-
-<meta name="author" content="Praneeth">
 
 {% if meta_description %}
     <meta property="og:description" content="{{ meta_description }}">
@@ -26,9 +33,6 @@
 <meta property="og:url" content="{% url 'home' %}">
 
 <meta name="twitter:card" content="Sushiksha an initiative by VKSSF Alumni">
-
-
-{#  Non_Essential, But Recommended#}
 
 <meta property="og:site_name" content="Sushiksha.">
 <meta name="twitter:image:alt" content="Sushiksha logo">

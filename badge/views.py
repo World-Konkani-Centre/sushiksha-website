@@ -45,34 +45,3 @@ def badge_claim_form(request, pk):
         'form':form
     }
     return render(request, 'badges/badge_claim_form.html', context=context)
-
-# def donut_form(request):
-#     return render(request, 'badge_claim/donut.html')
-
-
-# def blog(request):
-#     return render(request, 'badge_claim/blog.html')
-
-
-# def book_reading(request):
-#     return render(request, 'badge_claim/book_reading.html')
-
-
-# def one_one(request):
-#     return render(request, 'badge_claim/one_one.html')
-
-
-# def kt_session(request):
-#     return render(request, 'badge_claim/kt_session.html')
-
-
-# def kt_giver(request):
-#     return render(request, 'badge_claim/kt_giver.html')
-
-
-# def kt_attendee(request):
-#     return render(request, 'badge_claim/kt_attendee.html')
-
-
-# def intiator(request):
-#     return render(request, 'badge_claim/intiator.html')

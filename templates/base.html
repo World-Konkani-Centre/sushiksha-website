@@ -5,7 +5,7 @@
 <head>
 
     {% comment %} Meta detaisl {% endcomment %}
-    <title>{% block title %}{% endblock title %}</title>
+    {% comment %} <title>{% block title %}{% endblock title %}</title> {% endcomment %}
     <meta name="description" content="{% block description %}{% endblock %}">
     {% include 'include/meta.html' %}
 
@@ -20,6 +20,9 @@
 
 <body>
 {% include "include/header.html" %}
+
+{% block loader %}
+{% endblock loader %}
 
 
 {% block content %}

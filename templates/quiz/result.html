@@ -9,7 +9,7 @@
 
 {% block content %}
     <main id="main">
-    <section id="breadcrumbs" class="breadcrumbs">
+        <section id="breadcrumbs" class="breadcrumbs">
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
@@ -98,7 +98,8 @@
                         <p><strong>{% trans "Explanation" %}:</strong></p>
                         {% if question.image %}
 
-                        <img src="{{question.image.url}}" class='img-fluid img-thumbnail rounded mx-auto d-block' loading='lazy' />
+                            <img src="{{ question.image.url }}" class='img-fluid img-thumbnail rounded mx-auto d-block' height="400px" width="auto"
+                                 loading='lazy'/>
                         {% endif %}
                         <div class="well " style="background-color: #fcf8e3;">
                             <p>{{ question.explanation|safe }}</p>

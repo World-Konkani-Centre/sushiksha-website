@@ -1,9 +1,7 @@
-{% load static %}
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
         <h1 class="logo mr-auto"><a href="{% url 'home' %}">Sushiksha</a></h1>
-        {#      <a href="index.html" class="logo mr-auto"><img src="{%  static 'assets/img/logo.png' %}" alt="" class="img-fluid"></a>#}
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
@@ -18,17 +16,6 @@
                             <li><a href="{% url 'reward' %}">Badge activity</a></li>
                             <li><a href="{% url 'badge' %}">Give a badge</a></li>
                             <li><a href="{% url 'badge_claim' %}">Badge Claim Forms</a></li>
-                            {% comment %} <li class="drop-down"><a href="#">Badge claim forms</a>
-                                <ul>
-                                    <li><a href="{% url 'one_one_badge_claim' %}">1:1 with Mentors</a></li>
-                                    <li><a href="{% url 'donut_badge_claim' %}">Donuts</a></li>
-                                    <li><a href="{% url 'blogger_claim' %}">Blogger</a></li>
-                                    <li><a href="{% url 'book_reading_claim' %}">Book Lovers</a></li>
-                                    <li><a href="{% url 'kt_giver_claim' %}">KT Giver</a></li>
-                                    <li><a href="{% url 'kt_attendee_claim' %}">KT Attendee Feedback Form</a></li>
-                                    <li><a href="{% url 'initiator_claim' %}">Initiator</a></li>
-                                </ul>
-                            </li> {% endcomment %}
                             {% if user.is_superuser %}
                                 <li><a href="{% url 'multiple-badge' %}">Give Multiple badges (ADMIN ONLY)</a></li>
                             {% endif %}

@@ -243,7 +243,7 @@ class QuizTake(FormView):
             badge_obj = get_object_or_404(Badge,id=3)
         else:
             badge_obj = get_object_or_404(Badge,id=7)
-        Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
-                              awarded_by=awarded, badges=badge_obj)
+        #Reward.objects.create(user=get_object_or_404(User, id=int(self.request.user.id)), description=describe,
+        #                      awarded_by=awarded, badges=badge_obj)
 
         return render(self.request, self.result_template_name, results)

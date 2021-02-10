@@ -567,7 +567,9 @@ class Question(models.Model):
     figure = models.ImageField(upload_to='practice',
                                blank=True,
                                null=True,
-                               verbose_name=_("Figure"))
+                               verbose_name=_("Figure"), help_text=_("Add a optional image for "
+                                                                     "more understanding of the "
+                                                                     "Question."))
 
     content = models.CharField(max_length=1000,
                                blank=False,
@@ -583,7 +585,9 @@ class Question(models.Model):
                                    verbose_name=_('Explanation'))
 
     objects = InheritanceManager()
-    image = models.ImageField(upload_to='Questions', blank=True, null=True, help_text=_("Add a optional image for more understading of the question."))
+    image = models.ImageField(upload_to='Questions', blank=True, null=True, help_text=_("Add a optional image for "
+                                                                                        "more understanding of the "
+                                                                                        "solution."))
 
     class Meta:
         verbose_name = _("Question")

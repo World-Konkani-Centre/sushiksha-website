@@ -30,13 +30,27 @@
 
         <section id="" class="">
             <div class="container">
-                <p>{{ sitting.quiz.description }}</p>
-                <hr>
-                <p>{% trans "User" %}: {{ sitting.user }}</p>
-                <p>{% trans "Completed" %}: {{ sitting.end|date }}</p>
-                <p>{% trans "Score" %}: {{ sitting.get_percent_correct }}%</p>
+ 
+<div class="card bg-light bg-gradient mb-3" style="width:100%">
+  <div class="card-header">{{ sitting.quiz.description }}</div>
+  <div class="card-body">
+    <h5 class="card-title">{% trans "User" %}: {{ sitting.user }}</h5>
+    <h5 class="card-title">{% trans "Completed" %}: {{ sitting.end|date }}</h5>
+    <h5 class="card-title">{% trans "Score" %}: {{ sitting.get_percent_correct }} %</h5>
+  </div>
+</div>
+              
+               <div class="card">
+                    <div class="card-header py-3">
+                                <p class="font-weight-bold p-0 m-0 text-center text-uppercase underline highlight_text">
+                                    Quiz details</p>
+                            </div>
+        <div class="card-body">
+         <div class="table-responsive">
+          <table class="table  table-hover table-striped table-bordered table-primary">
 
-                <table class="table table-bordered table-striped">
+          
+
 
                     <thead>
                     <tr>
@@ -70,14 +84,18 @@
                                 <form action="" method="POST">{% csrf_token %}
                                     <input type=hidden name="qid" value="{{ question.id }}">
                                     <button type="submit"
-                                            class="btn btn-warning">{% trans "Toggle whether correct" %}</button>
+                                            class="btn btn-dark btn-sm">{% trans "Toggle whether correct" %}</button>
                                 </form>
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
-                </table>
+                       </table>
+          </div>
+          </div>
+          </div>
             </div>
         </section>
+
     </main>
 {% endblock %}

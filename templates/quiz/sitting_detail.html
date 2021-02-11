@@ -32,7 +32,7 @@
             <div class="container">
 
                 <div class="card bg-light bg-gradient mb-3" style="width:100%">
-                    <div class="card-header">{{ sitting.quiz.description }}</div>
+                    <div class="card-header">{{ sitting.quiz.description | safe }}</div>
                     <div class="card-body">
                         <h5 class="card-title">{% trans "User" %}: {{ sitting.user }}</h5>
                         <h5 class="card-title">{% trans "Completed" %}: {{ sitting.end|date }}</h5>

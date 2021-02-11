@@ -38,7 +38,7 @@
                 {% if previous.answers %}
 
                     <h2>{{ quiz.title }}</h2>
-                    <p>{{ quiz.description }}</p>
+                    {{ quiz.description | safe }}
                     <p class="muted"><small>{% trans "The previous question" %}:</small></p>
                     <p>{{ previous.previous_question }}</p>
 
@@ -66,7 +66,7 @@
 
                     <p><strong>{% trans "Explanation" %}:</strong></p>
                     <div class="well " style="background-color: #fcf8e3;">
-                        <p>{{ previous.previous_question.explanation }}</p>
+                        {{ previous.previous_question.explanation | safe}}
                     </div>
                     <hr>
                 {% endif %}

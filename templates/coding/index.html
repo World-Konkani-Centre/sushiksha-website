@@ -1,0 +1,191 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'hackIDE/css/custom.css' %}">
+{% endblock style %}
+{% block content %}
+    <main id="main">
+        <section id="" class="">
+            <div class="container">
+                <!-- Hidden input field containing CSRF token required for making AJAX calls to Django -->
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
+                <input type="hidden" id='saved_code_content' value="{{ code_content }}"/>
+                <input type="hidden" id='saved_code_lang' value="{{ lang }}"/>
+                <input type="hidden" id='saved_code_input' value="{{ inp }}"/>
+                <input type='hidden' id='compile_status' value={{ compile_status }}/>
+                <input type='hidden' id='run_status_status' value={{ run_status_status }}/>
+                <input type='hidden' id='run_status_time' value={{ run_status_time }}/>
+                <input type='hidden' id='run_status_memory' value={{ run_status_memory }}/>
+                <input type='hidden' id='run_status_output' value={{ run_status_output }}/>
+                <input type='hidden' id='run_status_stderr' value={{ run_status_stderr }}/>
+                <textarea id='copy_link' readonly></textarea>
+                <div class="row">
+                    <div class="left col-md-12">
+                        <div id="editor-topbar">
+                            <div class="lang-choose">
+                                <select class="form-select" name="lang" id="lang">
+                                    <option value="C">C (gcc 5.4.0)</option>
+                                    <option value="CPP" selected>C++ (g++ 5.4.0)</option>
+                                    <option value="CSHARP">C# (mcs 5.4.0.201)</option>
+                                    <option value="JAVA">Java (openjdk 1.7.0_95)</option>
+                                    <option value="JAVASCRIPT">JavaScript (Rhino 1.7)</option>
+                                    <option value="PHP">PHP (php 7.0.18)</option>
+                                    <option value="PYTHON">Python (python 2.7.6)</option>
+                                    <option value="PYTHON3">Python 3 (python 3.5.2)</option>
+                                    <option value="R">R (RScript 3.4.0)</option>
+                                    <option value="RUBY">Ruby (ruby 2.3.1)</option>
+                                </select>
+                            </div>
+                            <!-- END of lang-choose -->
+                            <div id="settings">
+                                <a class="cursor no-select icofont-download" id="download-code">
+                                </a>
+                                <a class="cursor no-select icofont-settings-alt" id="show-settings">
+                                </a>
+                                <div id="settings-pane">
+                                    <div id="inner-settings-pane"></div>
+                                    <label>Editor Theme</label>
+                                    <div>
+                                        <select class="form-select" name="editor-theme" id="editor-theme">
+                                            <option value="LIGHT">Light</option>
+                                            <option value="DARK" selected>Dark</option>
+                                        </select>
+                                    </div>
+                                    <label>Indent Spaces</label>
+                                    <input class="" name="indent-spaces" id="indent-spaces" type="text" value="4">
+                                </div>
+                            </div>
+                            <!-- END of settings-pane -->
+                        </div>
+                        <!-- END of editor-topbar -->
+                        <pre id="editor"></pre>
+                        <div id="editor-statusbar"></div>
+                    </div>
+                    <div class="right col-md-4">
+                    </div>
+                </div>
+                <!-- END of row -->
+                <div class="row">
+                    <div class="col-md-12 right" id="show-results">
+                        <div class="pull-left custom-input-panel">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="custom-input-checkbox"> Use custom input to test the code
+                                </label>
+                            </div>
+                        </div>
+                        <div class="pull-right run-save-panel">
+                            <span id='copy_code'></span>
+                            <button class="btn btn-info" id="compile-code" data-toggle="tooltip" data-placement="top"
+                                    title="Press Shift+Enter">Compile it!
+                            </button>
+                            <button class="btn btn-success" id="run-code" data-toggle="tooltip" data-placement="top"
+                                    title="Press Ctrl+Enter">Hack(run) it!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END of row -->
+                <div class="row">
+                    <div class="col-md-12 right">
+                        <!-- custom input textarea -->
+                        <div class="custom-input-container">
+                            <textarea id="custom-input" class="nice-textarea" placeholder="Custom input"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- END of row -->
+                <div class="row">
+                    <div class="col-md-12 right">
+                        <div class="output-response-box">
+                            <div class="output-details">
+                                <div class="output-details-info run-status">
+                                    <div class="key">Run Status:</div>
+                                    <div class="value"></div>
+                                </div>
+                                <div class="output-details-info compile-status">
+                                    <div class="key">Compile Status:</div>
+                                    <div class="value"></div>
+                                </div>
+                                <div class="output-details-info time-sec">
+                                    <div class="key">Time (sec):</div>
+                                    <div class="value"></div>
+                                </div>
+                                <div class="output-details-info memory-kb">
+                                    <div class="key">Memory (KB):</div>
+                                    <div class="value"></div>
+                                </div>
+                            </div>
+                            <div class="output-io">
+                                <div class="output-error-box">
+                                    <div class="error-key"></div>
+                                    <pre class="error-message"></pre>
+                                </div>
+                                <div class="output-io-info output-i-info">
+                                    <div class="key">Input (stdin)</div>
+                                    <pre class="output-text output-i"> </pre>
+                                    <span class="output-empty-message output-i-message"><i>Standard input is empty</i></span>
+                                </div>
+                                <div class="output-io-info output-o-info">
+                                    <div class="key">Output (stdout)</div>
+                                    <pre class="output-text output-o"> </pre>
+                                    <span class="output-empty-message output-o-message"><i>Standard output is empty</i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'hackIDE/js/custom.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'hackIDE/js/FileSaver.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'hackIDE/js/jszip.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'hackIDE/ace-builds/src/ace.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'hackIDE/ace-builds/src/ext-statusbar.js' %}" type="text/javascript"
+            charset="utf-8"></script>
+    <script src="{% static 'hackIDE/ace-builds/src/ext-language_tools.js' %}" type="text/javascript"
+            charset="utf-8"></script>
+    <!-- Include all the custom js here -->
+    <!-- Start of Google Analytics Code -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),f
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-40193912-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End of Google Analytics Code-->
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+        const sc_project = 9940142;
+        const sc_invisible = 1;
+        const sc_security = "b0991b09";
+        const scJsHost = (("https:" == document.location.protocol) ? "https://secure." : "http://www.");
+        document.write("<sc" + "ript type='text/javascript' src='" +
+            scJsHost + "statcounter.com/counter/counter.js'></" + "script>");
+    </script>
+    <noscript>
+        <div class="statcounter">
+            <a title="site stats" href="http://statcounter.com/" target="_blank"><img class="statcounter"
+                                                                                      src="http://c.statcounter.com/9940142/0/b0991b09/1/"
+                                                                                      alt="site stats"></a>
+        </div>
+    </noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+
+{% endblock script %}

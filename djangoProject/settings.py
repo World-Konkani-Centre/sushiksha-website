@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'tinymce',
     'quiz',
+    'coding',
     'csvexport',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -187,3 +187,5 @@ CELERY_TASK_TRACK_STARTED = True
 
 SLACK_TOKEN = config.get('SLACK_AUTH_TOKEN')
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+HCK_SECRET_KEY = config.get('HCK_SECRET_kEY')

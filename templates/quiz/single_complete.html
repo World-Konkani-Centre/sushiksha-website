@@ -28,7 +28,7 @@
 
             <section id="" class="">
             <div class="container">
-            <p>{{ quiz.description }}</p>
+            {{ quiz.description | safe}}
             <p>{% trans "You have already taken this test and only one test is permitted for a user" %}.</p>
         {% else %}
             <p>{% trans "This exam is only accessible to signed in users" %}.</p>

@@ -14,7 +14,9 @@
           <h2>{{ query_set.name }}</h2>
           <h3>Points : {{ query_set.points|intcomma  }}</h3>
           <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+            <li><a href="{{query_set.house_set.first.get_absolute_url}}">{{query_set.house_set.first}}</a></li>
             <li>{{ query_set.name }}</li>
           </ol>
         </div>

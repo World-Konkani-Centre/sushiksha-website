@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'tinymce',
+    'ckeditor',
     'quiz',
     'coding',
     'csvexport',

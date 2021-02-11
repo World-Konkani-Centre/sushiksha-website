@@ -15,7 +15,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from model_utils.managers import InheritanceManager
-
+from ckeditor.fields import RichTextField
 
 class CategoryManager(models.Manager):
 
@@ -67,7 +67,7 @@ class Quiz(models.Model):
         verbose_name=_("Title"),
         max_length=60, blank=False)
 
-    description = models.TextField(
+    description = RichTextField(
         verbose_name=_("Description"),
         blank=True, help_text=_("a description of the quiz"))
 
@@ -577,8 +577,7 @@ class Question(models.Model):
                                            "you want displayed"),
                                verbose_name=_('Question'))
 
-    explanation = models.TextField(max_length=2000,
-                                   blank=True,
+    explanation = RichTextField(blank=True,
                                    help_text=_("Explanation to be shown "
                                                "after the question has "
                                                "been answered."),

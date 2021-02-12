@@ -196,7 +196,7 @@ def create_badge(request, id):
                     form.instance.user = user
                     form.instance.awarded_by = request.user.username
                     form.save()
-                    messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                    messages.success(request, 'Your badge has been awarded successfully')
                     return redirect('trainers')
 
     context = {
@@ -227,7 +227,7 @@ def badge(request):
                 else:
                     row.awarded_by = request.user.username
                 row.save()
-                messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                messages.success(request, 'Your badge has been awarded successfully')
                 return redirect('trainers')
     context = {
         'form': form,

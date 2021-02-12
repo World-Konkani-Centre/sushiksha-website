@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'quiz',
     'coding',
     'csvexport',
+    'OKR',
 ]
 
 MIDDLEWARE = [

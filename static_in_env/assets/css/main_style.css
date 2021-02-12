@@ -2710,3 +2710,49 @@ section {
 .avatar-group .avatar+.avatar {
     margin-left: -1rem;
 }
+
+.user-profile {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.user-level-1 {
+    background-color: #ffefa0;
+    border-radius: 3px;
+}
+
+.user-level-2 {
+    background-color: #ffe05d;
+    border-radius: 3px;
+}
+
+.user-level-3 {
+    background-color: #ff9642;
+    border-radius: 3px;
+}
+
+.user-profile .cardheader {
+    background: url("https://sushiksha.konkanischolarship.com/static/assets/img/banner.png");
+    background-size: cover;
+    height: 135px;
+    border-radius: 3px;
+}
+
+.user-profile .user-img {
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+
+.user-profile .user-img img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}

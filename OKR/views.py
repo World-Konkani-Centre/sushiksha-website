@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .forms import EntryCreationForm, ObjectiveCreationForm, KRCreationForm
 from .models import Entry, Objective
+from .filters import ObjectiveKRFilter
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required
@@ -36,12 +38,27 @@ def view_data(request):
     form_kr = KRCreationForm()
     form_entry = EntryCreationForm()
     data = Entry.objects.filter(user=request.user)
+    form = ObjectiveKRFilter(request.GET, queryset=data)
+    data = form.qs
+
+    paginator = Paginator(data, 10)
+
+    page = request.GET.get('page')
+    try:
+        response = paginator.page(page)
+    except PageNotAnInteger:
+        response = paginator.page(1)
+    except EmptyPage:
+        response = paginator.page(paginator.num_pages)
+
     context = {
         'show': True,
-        'data': data,
-        'form_kr': form_kr,
-        'form_objective': form_objective,
-        'form_entry': form_entry
+        'data': response,
+        'form_kr':form_kr,
+        'form_objective':form_objective,
+        'form_entry':form_entry,
+        'filter_form': form
+
     }
     return render(request, 'OKR/show_entry.html', context=context)
 

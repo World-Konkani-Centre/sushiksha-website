@@ -34,25 +34,27 @@
             <div class="profile container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-md-4">
-                        {% if user.profile.role %}
-                            <div class="card mb-4 featured-mentor">
-                        {% else %}
-                            <div class="card mb-4">
-                        {% endif %}
-                        <div class="card-body ">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ user.profile.image.url }}" alt="Admin" class="rounded-circle" width="150">
-                                <div class="mt-3">
-                                    <h4 class="h4">{{ user.username }}</h4>
+                      <div class="card mb-4 user-profile user-level-2">
+
+
+                        <div class="card-body p-0">
+
+                        <div class="cardheader">
+                        </div>
+                        <div class="user-img">
+                             <img alt="" src="{{ user.profile.image.url }}">
+                        </div>
+
+                                <div class="mt-2">
+                                    <h4 class="h4">{{ user.profile.name }}</h4>
                                     {% if user.profile.role %}
                                         <p class="text-secondary mb-1">Mentor</p>
                                     {% else %}
                                         <p class="text-secondary mb-1">Mentee</p>
                                     {% endif %}
-
                                 </div>
-                            </div>
-                            <div class="row">
+                    
+                            <div class="row p-2">
                                 {% if user.profile.teams_set.first %}
                                     <div class="col-6 mt-1 mb-0 text-justify">
                                         <p class="font-weight-bold">Team: <a

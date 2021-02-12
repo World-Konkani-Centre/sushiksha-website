@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {%
-load crispy_forms_tags %} {% load humanize %} {% block main_style %}
+{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
+{% block main_style %}
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
@@ -135,6 +135,11 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                                         class="btn btn-outline-danger btn-sm">Give a badge
                                                     to {{ user.profile.name | truncatechars:20 }}</a
                                                 >
+                                            </h1>
+                                            <h1 class="lead font-weight-bold text-start">
+                                                <a
+                                                        href="{% url 'okr-view-id' user.id %}"
+                                                        class="btn btn-outline-danger btn-sm">View Airtable of {{ user.profile.name | truncatechars:20 }}</a>
                                             </h1>
                                         </div>
                                         <div class="col-12">

@@ -124,6 +124,11 @@
                                                 class="btn btn-outline-danger btn-sm">
                                             {{ user.profile.name | truncatechars:15 }}'s
                                             Blog Posts</a></h4>
+                                        <h1 class="lead font-weight-bold text-start">
+                                                <a
+                                                        href="{% url 'okr-view-data' %}"
+                                                        class="btn btn-outline-danger btn-sm">My OKR {{ user.profile.name | truncatechars:20 }}</a>
+                                            </h1>
                                     </div>
                                 </div>
 

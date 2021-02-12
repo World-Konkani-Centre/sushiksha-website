@@ -208,18 +208,10 @@ def update_profile_points(profile, _badge):
     points = get_category_points_data(profile.user, categories)
     if profile.rank == "Senator" and points >= UPGRADE_POINTS[1]:
         profile.rank = "Caesar"
-        print("inside 1")
     elif profile.rank == "Sophist" and points >= UPGRADE_POINTS[0]:
         profile.rank = "Senator"
     if profile.rank == "Caesar" and profile.total_points >= 1000:
         profile.suShells += profile.total_points / 1000
         profile.total_points = profile.total_points % 1000
     profile.save()
-    team = Teams.objects.filter(members__user=profile.user).first()
-    if team is not None:
-        team.points = team.points + _badge.points
-        team.save()
-    house = House.objects.filter(teams__members__user=profile.user).first()
-    if house is not None:
-        house.points = house.points + _badge.points
-        house.save()
+

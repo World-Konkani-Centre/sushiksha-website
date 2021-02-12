@@ -33,6 +33,14 @@ def send_mail(sender, instance, created, **kwargs):
         profile = Profile.objects.get(user=instance.user)
         _badge = Badge.objects.get(title=badge)
         update_profile_points(profile, _badge)
+        team = Teams.objects.filter(members__user=profile.user).first()
+        if team is not None:
+            team.points = team.points + _badge.points
+            team.save()
+        house = House.objects.filter(teams__members__user=profile.user).first()
+        if house is not None:
+            house.points = house.points + _badge.points
+            house.save()
         send_email.delay(array)
         # comment during production to avoid unnecessary errors
         # uncomment above line only if you have celery, rabbitmq setup and know the implementation
@@ -45,6 +53,7 @@ def reduce_points(sender, instance, using, **kwargs):
     badge = instance.badges.title
     _badge = Badge.objects.get(title=badge)
     profile.points = profile.points - _badge.points
+    profile.total_points = profile.total_points - _badge.points
     profile.save()
     team = Teams.objects.filter(members__user=instance.user).first()
     if team is not None:

@@ -5,10 +5,22 @@
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
                 {% if not user.is_authenticated %}
+                   <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About</a></li>
                 {% endif %}
+
+                 {% if user.is_superuser %}
+                 <li class="drop-down"><a href="{% url 'quiz_index' %}">Admin only</a>
+
+                 <ul>
+                 <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
+                 <li><a href="{% url 'coding-index' %}">Coding</a></li>
+                 <li><a href="{% url 'quiz_index' %}">Quiz</a></li>
+                 </ul>
+
+                 </li>
+                 {% endif %}
 
                 {% if user.is_authenticated %}
                     <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>

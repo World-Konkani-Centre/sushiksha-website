@@ -4,10 +4,25 @@ from django.urls import reverse
 from django.db.models import Sum
 from PIL import Image
 
-
 ROLE = (
     ('Mentee', "Mentee"),
     ('Mentor', "Mentor"),
+)
+
+UPGRADE_POINTS = [
+    [500, 1000, 2000, 5000, 2000, 3000, 5000],
+    [1000, 3000, 5000, 15000, 4000, 5000, 10000],
+]
+
+# UPGRADE_POINTS = [
+#     [0, 0, 0, 10815, 0, 21, 1004],
+#     [0, 0, 0, 10815, 0, 21, 1004],
+# ]
+
+RANK = (
+    ('Sophist', 'Sophist'),
+    ('Senator', 'Senator'),
+    ('Caesar', 'Caesar'),
 )
 
 BATCH = (
@@ -48,7 +63,8 @@ class Profile(models.Model):
     facebook = models.URLField(default=None, blank=True, null=True)
     points = models.IntegerField(default=0)
     total_points = models.IntegerField(default=0)
-    stars = models.IntegerField(default=0)
+    suShells = models.IntegerField(default=0)
+    rank = models.CharField(max_length=10, choices=RANK, default='Sophist')
 
     def __str__(self):
         return f'{self.user.username} Profile'

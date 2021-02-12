@@ -19,7 +19,7 @@ class KR(models.Model):
     key_result = models.CharField(max_length=40)
 
     def __str__(self):
-        return f'{self.objective}'
+        return f'{self.key_result}({self.objective})'
 
     class Meta:
         verbose_name = "Key Result"
@@ -30,11 +30,10 @@ class Entry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_time = models.DateTimeField()
     created = models.DateTimeField(auto_now_add=True)
-    objective = models.ForeignKey(Objective, on_delete=models.SET_NULL, blank=True, null=True)
-    key_result = models.ForeignKey(KR, on_delete=models.SET_NULL, blank=True, null=True)
+    key_result = models.ForeignKey(KR, on_delete=models.CASCADE)
     percentage = models.IntegerField(help_text="What is the completion percentage",default=0)
     update = models.TextField(help_text="Brief description on the progress")
-    time_spent = models.TimeField(help_text="Time spent on the task")
+    time_spent = models.IntegerField(default=0,help_text="Time spent on the task in minutes")
 
     def __str__(self):
         return f'{self.user}-{self.date_time}'

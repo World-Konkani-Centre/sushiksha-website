@@ -2,8 +2,75 @@
 {% load static %}
 
 {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
+{% block style %}
+    .modal-backdrop {
+    z-index: -1;
+    }
 
+{% endblock style %}
 {% block content %}
+    <div class="modal fade" id="objectivecreatemodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New Objective</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form_objective | crispy }}
+                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="entrycreatemodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form_entry | crispy }}
+                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="krcreatemodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New KR</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form_kr | crispy }}
+                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <main id="main">
 
         <section id="breadcrumbs" class="breadcrumbs">
@@ -11,7 +78,6 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     <h2>Entries</h2>
-
                     <ol>
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li>OKR</li>
@@ -22,8 +88,18 @@
 
         <section id="" class="">
             <div class="container">
-                <table class="table table-responsive table-striped">
 
+                <button type="button" class="objective-btn" data-backdrop="false" data-toggle="modal"
+                        data-target="#objectivecreatemodal"><i class="bx bx-x"></i>Create Objective
+                </button>
+                <button type="button" class="kr-btn" data-backdrop="false" data-toggle="modal"
+                        data-target="#krcreatemodal"><i class="bx bx-x"></i>Create new KR
+                </button>
+                <button type="button" class="entry-btn" data-backdrop="false" data-toggle="modal"
+                        data-target="#entrycreatemodal"><i class="bx bx-x"></i>Create Entry
+                </button>
+
+                <table class="table table-responsive table-striped">
                     <thead>
                     <tr>
                         <td>Date</td>

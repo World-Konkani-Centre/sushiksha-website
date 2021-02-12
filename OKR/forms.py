@@ -22,12 +22,12 @@ class KRCreationForm(forms.ModelForm):
 
 
 class EntryCreationForm(forms.ModelForm):
+
     class Meta:
         model = Entry
-        fields = ['date_time', 'objective', 'key_result', 'percentage', 'update', 'time_spent']
+        fields = ['date_time','key_result', 'percentage', 'update', 'time_spent']
         labels = {
             "date_time": "Date",
-            "objective": "Objective",
             "key_result": "Key Result",
             "percentage": "Percentage",
             "update": "Brief update",

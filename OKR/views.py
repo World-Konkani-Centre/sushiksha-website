@@ -37,17 +37,24 @@ def view_data(request):
     form_entry = EntryCreationForm()
     data = Entry.objects.filter(user=request.user)
     context = {
+        'show': True,
         'data': data,
-        'form_kr':form_kr,
-        'form_objective':form_objective,
-        'form_entry':form_entry
+        'form_kr': form_kr,
+        'form_objective': form_objective,
+        'form_entry': form_entry
     }
     return render(request, 'OKR/show_entry.html', context=context)
 
 
 @login_required
-def load_okr(request):
+def load_okr(request, id):
+    if id == request.user.id:
+        return redirect('okr-view-data')
+    user = get_object_or_404(User, id=id)
+    data = Entry.objects.filter(user=user)
     context = {
-
+        'show': False,
+        'id': id,
+        'data': data
     }
     return render(request, 'webpages/index.html', context=context)

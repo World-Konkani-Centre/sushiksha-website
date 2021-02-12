@@ -34,7 +34,7 @@ def create_key_results(request):
             messages.success(request, 'Key Result Created successfully')
             return redirect('okr-view-data')
     form = KRCreationForm()
-    form.objective.queryset = Objective.objects.filter(user=request.user)
+    form.fields['objective'].queryset = Objective.objects.filter(user=request.user)
     context = {
         'form': form
     }

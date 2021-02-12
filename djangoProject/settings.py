@@ -200,7 +200,7 @@ CKEDITOR_CONFIGS = {
         'uiColor': '#b7d6ec',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
-        ],
+        ], 
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},

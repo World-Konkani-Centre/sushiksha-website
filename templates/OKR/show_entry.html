@@ -97,31 +97,51 @@
         <section id="" class="">
             <div class="container">
                 <div class="btn-group mb-5">
-                    <button type="button" class="objective-btn btn btn-danger m-2" data-backdrop="false"
+                    <button type="button" class="objective-btn btn btn-danger mr-2 btn-lg" data-backdrop="false"
                             data-toggle="modal"
                             data-target="#objectivecreatemodal">Create Objective
                     </button>
-                    <button type="button" class="kr-btn btn btn-danger m-2" data-backdrop="false" data-toggle="modal"
+                    <button type="button" class="kr-btn btn btn-danger mr-2 btn-lg" data-backdrop="false" data-toggle="modal"
                             data-target="#krcreatemodal">Create new KR
                     </button>
-                    <button type="button" class="entry-btn btn btn-danger m-2" data-backdrop="false" data-toggle="modal"
+                    <button type="button" class="entry-btn btn btn-danger mr-2 btn-lg" data-backdrop="false" data-toggle="modal"
                             data-target="#entrycreatemodal">Create Entry
                     </button>
                 </div>
-                <table class="table table-responsive table-striped">
+
+
+                <p class="mb-2">
+                    <button class="btn btn-dark btn-sm " type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filter options <span class="icofont-arrow-down"></span>
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-3">
+                        <form method="GET" class="mb-3" class="form-inline">
+
+                            {{ filter_form.form | crispy }}
+
+                            <button class="btn btn-block btn-dark" type="submit">Filter</button>
+                        </form>
+                    </div>
+                </div>
+
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-sm">
                     <thead>
                     <tr>
-                        <td>Date</td>
-                        <td>objective</td>
-                        <td>key result</td>
-                        <td>update</td>
-                        <td>percentage</td>
-                        <td>time spent</td>
+                        <th>Date</th>
+                        <th>Objective</th>
+                        <th>Key result</th>
+                        <th>Update</th>
+                        <th>Percentage</th>
+                        <th>Time spent</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for entry in data %}
-
                         <tr>
                             <td>{{ entry.date_time }}</td>
                             <td>{{ entry.key_result.objective }}</td>
@@ -133,6 +153,58 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                 <div class="btn-group  justify-content-md-end" role="group">
+                          {% if data.has_previous %}
+                               <a href="?page=1" class="btn btn-outline-dark">First</a>
+                            <a href="?page={{ data.previous_page_number }}" class="btn btn-outline-dark">Previous</a>
+                            {% endif %}
+
+                            {% for num in data.paginator.page_range %}
+                                {% if data.number == num %}
+                                    <a href="?page={{ num }}" class="btn btn-dark">{{ num }}</a>
+                                {% elif num > data.number|add:'-3' and num < data.number|add:'3' %}
+                                    <a href="?page={{ num }}" class="btn btn-outline-dark">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if data.has_next %}
+                                <a href="?page={{ data.next_page_number }}" class="btn btn-outline-dark">Next</a>
+                                <a href="?page={{ data.paginator.num_pages }}" class="btn btn-outline-dark">Last</a>
+                            {% endif %}
+                </div>
+
+                </div>
+
+              
+
+                {% comment %} {% if 'key_result' in request.get_full_path %}
+
+
+                           {% if data.has_previous %}
+                                <li><a href="{{ request.GET }}&page=1">First</a></li>
+                                <li><a href="{{ request.get_full_path }}&page={{ data.previous_page_number }}">Previous</a></li>
+                            {% endif %}
+
+                            {% for num in data.paginator.page_range %}
+                                {% if data.number == num %}
+                                    <li class="active"><a href="{{ request.get_full_path }}&page={{ num }}">{{ num }}</a></li>
+                                {% elif num > data.number|add:'-3' and num < data.number|add:'3' %}
+                                    <li><a href="{{ request.get_full_path }}&page={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if query.has_next %}
+                                <li><a href="{{ request.get_full_path }}&page={{ data.next_page_number }}">Next</a></li>
+                                <li><a href="{{ request.get_full_path }}&page={{ data.paginator.num_pages }}">Last</a></li>
+                            {% endif %} {% endcomment %}
+
+                            
+                {% comment %} {% else %} {% endcomment %}
+
+
+
+                {% comment %} {% endif %} {% endcomment %}
             </div>
         </section>
     </main>

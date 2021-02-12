@@ -22,7 +22,12 @@ class KRCreationForm(forms.ModelForm):
 
 
 class EntryCreationForm(forms.ModelForm):
+    update = forms.CharField(widget=forms.Textarea(attrs={
+        'rows': 2,
+        'minlength': 20,
+        'title': "Brief update",
 
+    }))
     class Meta:
         model = Entry
         fields = ['date_time','key_result', 'percentage', 'update', 'time_spent']
@@ -31,5 +36,5 @@ class EntryCreationForm(forms.ModelForm):
             "key_result": "Key Result",
             "percentage": "Percentage",
             "update": "Brief update",
-            "time_spent": "productive time spent"
+            "time_spent": "Productive time spent"
         }

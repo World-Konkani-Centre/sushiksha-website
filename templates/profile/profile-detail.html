@@ -136,11 +136,11 @@
                                                     to {{ user.profile.name | truncatechars:20 }}</a
                                                 >
                                             </h1>
-                                            <h1 class="lead font-weight-bold text-start">
+                                            <!--<h1 class="lead font-weight-bold text-start">
                                                 <a
-                                                        href="{% url 'okr-view-id' user.id %}"
+                                                        href="{% url 'okr-view-id' id=user.id %}"
                                                         class="btn btn-outline-danger btn-sm">View Airtable of {{ user.profile.name | truncatechars:20 }}</a>
-                                            </h1>
+                                            </h1>-->
                                         </div>
                                         <div class="col-12">
                                             <h1 class="lead font-weight-bold text-end">
@@ -151,6 +151,11 @@
                                                     Posts</a
                                                 >
                                             </h1>
+                                        <!--<h1 class="lead font-weight-bold text-start">
+                                                <a
+                                                        href="{% url 'okr-view-id' id=user.id %}"
+                                                        class="btn btn-outline-danger btn-sm">View Airtable of {{ user.profile.name | truncatechars:20 }}</a>
+                                            </h1>-->
                                         </div>
                                     {% else %}
                                         <div class="col-12">

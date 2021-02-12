@@ -43,6 +43,7 @@ BATCH = (
 
 
 class Profile(models.Model):
+    slack_id = models.CharField(max_length=15, null=True,blank=True,help_text="Slack Id of user")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     role = models.BooleanField(default=False)

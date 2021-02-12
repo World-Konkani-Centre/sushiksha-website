@@ -103,21 +103,22 @@ class UserRangeRequestForm(forms.Form):
 
 
 class MultiBadgeForm(forms.Form):
-    choices = []
-    for i in User.objects.all().order_by(Lower('profile__name')):
-        name = str(i.profile.name) + '  (' + str(i.profile.get_team_name()) + ')'
-        entry = (i.id, name)
-        choices.append(entry)
-    choices = tuple(choices)
-
-    badge_choices = []
-    for i in Badge.objects.all():
-        name = str(i.title) + '  (' + str(i.points) + ')'
-        entry = (i.id, name)
-        badge_choices.append(entry)
-    badge_choices = tuple(badge_choices)
-
-    awarded_by = forms.CharField(required=True)
-    badge = forms.ChoiceField(choices=badge_choices, required=True)
-    description = forms.CharField(widget=forms.Textarea())
-    profiles = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)
+    pass
+    # choices = []
+    # for i in User.objects.all().order_by(Lower('profile__name')):
+    #     name = str(i.profile.name) + '  (' + str(i.profile.get_team_name()) + ')'
+    #     entry = (i.id, name)
+    #     choices.append(entry)
+    # choices = tuple(choices)
+    #
+    # badge_choices = []
+    # for i in Badge.objects.all():
+    #     name = str(i.title) + '  (' + str(i.points) + ')'
+    #     entry = (i.id, name)
+    #     badge_choices.append(entry)
+    # badge_choices = tuple(badge_choices)
+    #
+    # awarded_by = forms.CharField(required=True)
+    # badge = forms.ChoiceField(choices=badge_choices, required=True)
+    # description = forms.CharField(widget=forms.Textarea())
+    # profiles = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)

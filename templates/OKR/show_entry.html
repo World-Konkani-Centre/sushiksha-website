@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
+
+{% block content %}
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Entries</h2>
+
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
+                        <li>Create Entry</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="" class="">
+            <div class="container">
+                <table class="table table-responsive table-striped">
+
+                    <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>objective</td>
+                        <td>key result</td>
+                        <td>update</td>
+                        <td>percentage</td>
+                        <td>time spent</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in data %}
+
+                        <tr>
+                            <td>{{ entry.date_time }}</td>
+                            <td>{{ entry.objective }}</td>
+                            <td>{{ entry.key_result }}</td>
+                            <td>{{ entry.update }}</td>
+                            <td>{{ entry.percentage }}</td>
+                            <td>{{ entry.time_spent }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}

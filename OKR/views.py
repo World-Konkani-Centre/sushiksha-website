@@ -8,8 +8,8 @@ from django.shortcuts import get_object_or_404
 
 
 @login_required
-def create_objectives(request):
-    if request.POST:
+def view_data(request):
+    if request.method == 'POST' and 'objective-btn' in request.POST:
         form = ObjectiveCreationForm(request.POST)
         if form.is_valid():
             objective = form.save(commit=False)
@@ -17,33 +17,7 @@ def create_objectives(request):
             objective.save()
             messages.success(request, 'Objective Created successfully')
             return redirect('okr-view-data')
-    else:
-        form = ObjectiveCreationForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'OKR/create_objectives.html', context=context)
-
-
-@login_required
-def create_key_results(request):
-    if request.POST:
-        form = KRCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Key Result Created successfully')
-            return redirect('okr-view-data')
-    form = KRCreationForm()
-    form.fields['objective'].queryset = Objective.objects.filter(user=request.user)
-    context = {
-        'form': form
-    }
-    return render(request, 'OKR/create_kr.html', context=context)
-
-
-@login_required
-def insert_data(request):
-    if request.POST:
+    if request.method == 'POST' and 'entry-btn' in request.POST:
         form = EntryCreationForm(request.POST)
         if form.is_valid():
             entry = form.save(commit=False)
@@ -51,18 +25,22 @@ def insert_data(request):
             entry.save()
             messages.success(request, 'Entry Created successfully')
             return redirect('okr-view-data')
-    form = EntryCreationForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'OKR/create_new_entry.html', context=context)
+    if request.method == 'POST' and 'kr-btn' in request.POST:
+        form = KRCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Key Result Created successfully')
+            return redirect('okr-view-data')
 
-
-@login_required
-def view_data(request):
+    form_objective = ObjectiveCreationForm()
+    form_kr = KRCreationForm()
+    form_entry = EntryCreationForm()
     data = Entry.objects.filter(user=request.user)
     context = {
-        'data': data
+        'data': data,
+        'form_kr':form_kr,
+        'form_objective':form_objective,
+        'form_entry':form_entry
     }
     return render(request, 'OKR/show_entry.html', context=context)
 

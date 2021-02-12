@@ -3,10 +3,17 @@
 
 {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
 {% block style %}
-    .modal-backdrop {
-    z-index: -1;
-    }
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css"/>
 
+    <style>
+        .modal-backdrop {
+            z-index: -1;
+        }
+
+    </style>
 {% endblock style %}
 {% block content %}
     <div class="modal fade" id="objectivecreatemodal" tabindex="-1" role="dialog"
@@ -23,7 +30,8 @@
                     <form method="POST" action="">
                         {% csrf_token %}
                         {{ form_objective | crispy }}
-                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
+                        <button type="submit" class="btn btn-danger btn-block btn-md" name="objective-btn">Submit
+                        </button>
                     </form>
                 </div>
             </div>
@@ -45,7 +53,7 @@
                     <form method="POST" action="">
                         {% csrf_token %}
                         {{ form_entry | crispy }}
-                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
+                        <button type="submit" class="btn btn-danger btn-block btn-md" name="entry-btn">Submit</button>
                     </form>
                 </div>
             </div>
@@ -65,7 +73,7 @@
                     <form method="POST" action="">
                         {% csrf_token %}
                         {{ form_kr | crispy }}
-                        <button type="submit" class="btn btn-danger btn-block btn-md">Submit</button>
+                        <button type="submit" class="btn btn-danger btn-block btn-md" name="kr-btn">Submit</button>
                     </form>
                 </div>
             </div>
@@ -88,17 +96,18 @@
 
         <section id="" class="">
             <div class="container">
-
-                <button type="button" class="objective-btn" data-backdrop="false" data-toggle="modal"
-                        data-target="#objectivecreatemodal"><i class="bx bx-x"></i>Create Objective
-                </button>
-                <button type="button" class="kr-btn" data-backdrop="false" data-toggle="modal"
-                        data-target="#krcreatemodal"><i class="bx bx-x"></i>Create new KR
-                </button>
-                <button type="button" class="entry-btn" data-backdrop="false" data-toggle="modal"
-                        data-target="#entrycreatemodal"><i class="bx bx-x"></i>Create Entry
-                </button>
-
+                <div class="btn-group mb-5">
+                    <button type="button" class="objective-btn btn btn-danger m-2" data-backdrop="false"
+                            data-toggle="modal"
+                            data-target="#objectivecreatemodal">Create Objective
+                    </button>
+                    <button type="button" class="kr-btn btn btn-danger m-2" data-backdrop="false" data-toggle="modal"
+                            data-target="#krcreatemodal">Create new KR
+                    </button>
+                    <button type="button" class="entry-btn btn btn-danger m-2" data-backdrop="false" data-toggle="modal"
+                            data-target="#entrycreatemodal">Create Entry
+                    </button>
+                </div>
                 <table class="table table-responsive table-striped">
                     <thead>
                     <tr>
@@ -115,8 +124,8 @@
 
                         <tr>
                             <td>{{ entry.date_time }}</td>
-                            <td>{{ entry.objective }}</td>
-                            <td>{{ entry.key_result }}</td>
+                            <td>{{ entry.key_result.objective }}</td>
+                            <td>{{ entry.key_result.key_result }}</td>
                             <td>{{ entry.update }}</td>
                             <td>{{ entry.percentage }}</td>
                             <td>{{ entry.time_spent }}</td>
@@ -128,3 +137,60 @@
         </section>
     </main>
 {% endblock %}
+
+
+{% block script %}
+    <script>
+        $(function () {
+            $("#id_date_time").datetimepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+            }).attr("autocomplete", "off");
+        });
+    </script>
+
+    <script>
+        $('#objectivecreatemodal').on('hide.bs.modal', function (e) {
+            console.log("hide called")
+            $('#main').css("opacity", "1")
+            $("#footer").css("opacity", "1")
+        })
+        $('#objectivecreatemodal').on('show.bs.modal', function (e) {
+            console.log("show called")
+            $('#main').css("opacity", "0.2")
+            $('#footer').css("opacity", "0.2")
+        })
+        $('#entrycreatemodal').on('hide.bs.modal', function (e) {
+            console.log("hide called")
+            $('#main').css("opacity", "1")
+            $("#footer").css("opacity", "1")
+        })
+        $('#entrycreatemodal').on('show.bs.modal', function (e) {
+            console.log("show called")
+            $('#main').css("opacity", "0.2")
+            $('#footer').css("opacity", "0.2")
+        })
+        $('#krcreatemodal').on('hide.bs.modal', function (e) {
+            console.log("hide called")
+            $('#main').css("opacity", "1")
+            $("#footer").css("opacity", "1")
+        })
+        $('#krcreatemodal').on('show.bs.modal', function (e) {
+            console.log("show called")
+            $('#main').css("opacity", "0.2")
+            $('#footer').css("opacity", "0.2")
+        })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"
+            integrity="sha512-s5u/JBtkPg+Ff2WEr49/cJsod95UgLHbC00N/GglqdQuLnYhALncz8ZHiW/LxDRGduijLKzeYb7Aal9h3codZA=="
+            crossorigin="anonymous"></script>
+    <script type='text/javascript'
+            src='https://platform-api.sharethis.com/js/sharethis.js#property=5fabf3b1413ed100120cd977&product=sop'
+            async='async'></script>
+{% endblock script %}

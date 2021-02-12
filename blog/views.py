@@ -153,7 +153,7 @@ def categories_view(request, category):
     post = Post.objects.filter(categories__title=category)
     category_count = get_category_count()
     most_recent = Post.objects.order_by('-timestamp')[:4]
-    paginator = Paginator(post, 4)
+    paginator = Paginator(post, 16)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
     try:

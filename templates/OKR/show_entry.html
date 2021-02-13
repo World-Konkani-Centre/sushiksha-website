@@ -163,6 +163,27 @@
                 </div>
             {% endif %}
 
+            {% if not show %}
+                
+                <p class="mb-2">
+                    <button class="btn btn-dark btn-sm " type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filter options <span class="icofont-arrow-down"></span>
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-3">
+                        <form method="GET" class="mb-3" class="form-inline">
+
+                            {{ user_filter_form.form | crispy }}
+
+                            <button class="btn btn-block btn-dark" type="submit">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            
+            {% endif %}
+
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-sm">
 

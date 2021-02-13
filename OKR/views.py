@@ -84,11 +84,24 @@ def load_okr(request, pk):
     if pk == request.user.id:
         return redirect('okr-view-data')
     user = get_object_or_404(User, id=pk)
-    data = Entry.objects.filter(user=user)
+    data = Entry.objects.filter(user=user).order_by('-date_time')
+    form = ObjectiveKRFilter(request.GET, queryset=data,user=user)
+    data = form.qs
+
+    paginator = Paginator(data, 50)
+
+    page = request.GET.get('page')
+    try:
+        response = paginator.page(page)
+    except PageNotAnInteger:
+        response = paginator.page(1)
+    except EmptyPage:
+        response = paginator.page(paginator.num_pages)
+
     context = {
         'show': False,
-        'id': id,
-        'data': data,
+        'user_filter_form': form,
+        'data': response,
         'user': user,
     }
     return render(request, 'OKR/show_entry.html', context=context)

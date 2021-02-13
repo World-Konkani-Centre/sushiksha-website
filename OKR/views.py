@@ -53,7 +53,7 @@ def view_data(request):
     form_entry = EntryCreationForm()
     form_entry.fields['objective'].queryset = Objective.objects.filter(user=user)
     data = Entry.objects.filter(user=request.user).order_by('-date_time')
-    form = ObjectiveKRFilter(request.GET, queryset=data)
+    form = ObjectiveKRFilter(request.GET, queryset=data,user=request.user)
     data = form.qs
 
     paginator = Paginator(data, 50)

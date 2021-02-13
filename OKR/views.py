@@ -58,7 +58,7 @@ def view_data(request):
     form = ObjectiveKRFilter(request.GET, queryset=data)
     data = form.qs
 
-    paginator = Paginator(data, 10)
+    paginator = Paginator(data, 50)
 
     page = request.GET.get('page')
     try:
@@ -82,15 +82,16 @@ def view_data(request):
 
 
 @login_required
-def load_okr(request, id):
-    if id == request.user.id:
+def load_okr(request, pk):
+    if pk == request.user.id:
         return redirect('okr-view-data')
-    user = get_object_or_404(User, id=id)
+    user = get_object_or_404(User, id=pk)
     data = Entry.objects.filter(user=user)
     context = {
         'show': False,
         'id': id,
-        'data': data
+        'data': data,
+        'user':user,
     }
-    return render(request, 'webpages/index.html', context=context)
+    return render(request, 'OKR/show_entry.html', context=context)
 

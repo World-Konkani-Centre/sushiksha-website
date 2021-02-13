@@ -33,7 +33,7 @@ class Entry(models.Model):
     date_time = models.DateTimeField()
     key_result = models.ForeignKey(KR, on_delete=models.CASCADE)
     update = models.TextField(help_text="Brief description on the progress")
-    time_spent = models.IntegerField(default=0, help_text="Time spent on the task in minutes")
+    time_spent = models.IntegerField(default=10, help_text="Time spent on the task in minutes")
 
     def __str__(self):
         return f'{self.user}-{self.date_time}'

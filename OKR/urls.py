@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    url('', views.view_data, name="okr-view-data"),
-    url('<int:id>/', views.load_okr, name="okr-view-id"),
+    path('', views.view_data, name="okr-view-data"),
+    path('entries/<int:pk>/', views.load_okr, name="okr-view-id"),
 ]

@@ -1,15 +1,14 @@
-import json
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
+
+from .filters import ObjectiveKRFilter
 from .forms import EntryCreationForm, ObjectiveCreationForm, KRCreationForm
 from .models import Entry, Objective, KR
-from .filters import ObjectiveKRFilter
-from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required
@@ -30,11 +29,10 @@ def view_data(request):
             kr = entry.key_result.id
             entry.user = get_object_or_404(User, id=request.user.id)
             entry.save()
-            kr = get_object_or_404(KR,id=kr)
+            kr = get_object_or_404(KR, id=kr)
             prev_percentage = kr.percentage
-            percentage = round(((((prev_percentage/100)*kr.hours*60)+time_spent)/(kr.hours*60))*100)
+            percentage = round(((((prev_percentage / 100) * kr.hours * 60) + time_spent) / (kr.hours * 60)) * 100)
             kr.percentage = percentage
-            print(kr.percentage)
             kr.save()
             messages.success(request, 'Entry Created successfully')
             return redirect('okr-view-data')
@@ -55,7 +53,7 @@ def view_data(request):
     form_entry = EntryCreationForm()
     form_entry.fields['objective'].queryset = Objective.objects.filter(user=user)
     data = Entry.objects.filter(user=request.user).order_by('-date_time')
-    form = ObjectiveKRFilter(request.GET, queryset=data)
+    form = ObjectiveKRFilter(request.GET, queryset=data,user=request.user)
     data = form.qs
 
     paginator = Paginator(data, 50)
@@ -91,7 +89,6 @@ def load_okr(request, pk):
         'show': False,
         'id': id,
         'data': data,
-        'user':user,
+        'user': user,
     }
     return render(request, 'OKR/show_entry.html', context=context)
-

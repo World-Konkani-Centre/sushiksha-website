@@ -289,11 +289,12 @@
         const obj_id = $(this).val();
         console.log(obj_id)
         $.ajax({
-            url:"okr/",
+            url:"",
             data:{
                 'objective_id':obj_id
             },
             success: function(val){
+                console.log(val)
                 let html_data = '<option value="">---------</option>';
                 val.forEach(function (krs) {
                     html_data += `<option value="${krs.id}">${krs.key_result}</option>`

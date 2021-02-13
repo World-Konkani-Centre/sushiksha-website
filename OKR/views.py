@@ -1,15 +1,14 @@
-import json
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
+
+from .filters import ObjectiveKRFilter
 from .forms import EntryCreationForm, ObjectiveCreationForm, KRCreationForm
 from .models import Entry, Objective, KR
-from .filters import ObjectiveKRFilter
-from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required
@@ -34,7 +33,6 @@ def view_data(request):
             prev_percentage = kr.percentage
             percentage = round(((((prev_percentage/100)*kr.hours*60)+time_spent)/(kr.hours*60))*100)
             kr.percentage = percentage
-            print(kr.percentage)
             kr.save()
             messages.success(request, 'Entry Created successfully')
             return redirect('okr-view-data')

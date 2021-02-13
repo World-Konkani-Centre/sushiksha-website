@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {%
-load crispy_forms_tags %} {% load humanize %} {% block main_style %}
+{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
+{% block main_style %}
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
@@ -89,7 +89,7 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                     <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
                                 </div>-->
                                 <!--<div class="col-12 mt-1 text-justify">
-                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                    <p class="font-weight-bold">Sushiksha Shells: {{ user.profile.suShells }}</p>
                                 </div>-->
                             </div>
                         </div>
@@ -134,6 +134,12 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                                 <a
                                                         href="{% url 'new-badge' user.id %}"
                                                         class="btn btn-outline-danger btn-sm">Give a badge
+                                                    to {{ user.profile.name | truncatechars:20 }} </a>
+                                                <a
+                                                        href="{% url 'okr-view-id' user.id %}"
+                                                        class="btn btn-outline-danger btn-sm">View Airtable of
+                                                    {{ user.profile.name | truncatechars:20 }}</a>
+
                                                     to {{ user.profile.name | truncatechars:20 }}</a
                                                 >
                                                 </p>
@@ -144,6 +150,13 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                                 <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'user-posts' id=user.id %}"
+                                                        class="btn btn-outline-danger btn-sm">
+                                                    {{ user.profile.name | truncatechars:20 }}'s Blog
+                                                    Posts</a>
+                                                <a
+                                                        href="#"
+                                                        class="btn btn-outline-danger btn-sm">View Airtable of
+                                                    {{ user.profile.name | truncatechars:20 }}</a>
                                                         class="btn btn-outline-danger btn-sm"
                                                 >{{ user.profile.name | truncatechars:20 }}'s Blog
                                                     Posts</a
@@ -156,10 +169,9 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                             <h1 class="lead font-weight-bold text-end">
                                                 <a
                                                         href="{% url 'user-posts' id=user.id %}"
-                                                        class="btn btn-outline-danger"
-                                                >{{ user.profile.name | truncatechars:20 }}'s Blog
-                                                    Posts</a
-                                                >
+                                                        class="btn btn-outline-danger">
+                                                    {{ user.profile.name | truncatechars:20 }}'s Blog
+                                                    Posts</a>
                                             </h1>
                                         </div>
                                     {% endif %}

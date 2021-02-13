@@ -75,13 +75,13 @@
                                     <p class="font-weight-bold">Points: {{ user.profile.points |intcomma }}</p>
                                 </div>
                                 <!--<div class="col-12 mt-1 text-justify">
-                                    <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
+                                    <p class="font-weight-bold">Rank: {{ user.profile.rank }}</p>
                                 </div>-->
                                 <!--<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
                                 </div>-->
                                 <!--<div class="col-12 mt-1 text-justify">
-                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                    <p class="font-weight-bold">Susiksha Shells: {{ user.profile.suShells }}</p>
                                 </div>-->
                             </div>
                         </div>
@@ -124,8 +124,14 @@
                                     <div class='col-12'>
                                         <h4 class="lead font-weight-bold text-end"><a
                                                 href="{% url 'user-posts' id=user.id %}"
-                                                class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:15 }}'s
+                                                class="btn btn-outline-danger btn-sm">
+                                            {{ user.profile.name | truncatechars:15 }}'s
                                             Blog Posts</a></h4>
+                                        <h1 class="lead font-weight-bold text-start">
+                                                <a
+                                                        href="{% url 'okr-view-data' %}"
+                                                        class="btn btn-outline-danger btn-sm">My OKR {{ user.profile.name | truncatechars:20 }}</a>
+                                            </h1>
                                     </div>
                                 </div>
 

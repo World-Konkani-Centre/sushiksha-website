@@ -16,6 +16,7 @@
     </style>
 {% endblock style %}
 {% block content %}
+    {% if not show %}
     <div class="modal fade" id="objectivecreatemodal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered" role="document">
@@ -79,6 +80,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <main id="main">
 
         <section id="breadcrumbs" class="breadcrumbs">
@@ -88,6 +90,9 @@
                     <h2>Entries</h2>
                     <ol>
                         <li><a href="{% url 'home' %}">Home</a></li>
+                        {% if not show %}
+                            <li><a href="{% url 'user-detail' id=id %}">Home</a></li>
+                        {% endif %}
                         <li>OKR</li>
                     </ol>
                 </div>
@@ -96,6 +101,7 @@
 
         <section id="" class="">
             <div class="container">
+            {% if show %}
                 <div class="btn-group mb-5">
                     <button type="button" class="objective-btn btn btn-danger mr-2 btn-lg" data-backdrop="false"
                             data-toggle="modal"
@@ -130,6 +136,7 @@
 
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-sm">
+
                     <thead>
                     <tr>
                         <th>Date</th>

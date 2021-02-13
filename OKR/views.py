@@ -52,18 +52,26 @@ def view_data(request):
         response = paginator.page(paginator.num_pages)
 
     context = {
+        'show': True,
         'data': response,
         'form_kr':form_kr,
         'form_objective':form_objective,
         'form_entry':form_entry,
         'filter_form': form
+
     }
     return render(request, 'OKR/show_entry.html', context=context)
 
 
 @login_required
-def load_okr(request):
+def load_okr(request, id):
+    if id == request.user.id:
+        return redirect('okr-view-data')
+    user = get_object_or_404(User, id=id)
+    data = Entry.objects.filter(user=user)
     context = {
-
+        'show': False,
+        'id': id,
+        'data': data
     }
     return render(request, 'webpages/index.html', context=context)

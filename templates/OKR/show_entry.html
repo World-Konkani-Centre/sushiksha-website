@@ -89,13 +89,17 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2>Entries</h2>
+                    <h2>OKR Entries of {{user.profile.name | truncatechars:20}} <a href="{% url 'user-detail' pk=user.id %}"><i class="bx bxs-user"></i></a></h2>
+                    
                     <ol>
                         <li><a href="{% url 'home' %}">Home</a></li>
+
                         {% if not show %}
-                            <li><a href="{% url 'user-detail' id=id %}">Home</a></li>
-                        {% endif %}
+                        <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
+                        <li>Entries of {{user.profile.name | truncatechars:20}}</li>
+                        {% else %}
                         <li>OKR</li>
+                        {% endif %}
                     </ol>
                 </div>
             </div>
@@ -105,14 +109,14 @@
             <div class="container">
             {% if show %}
                 <div class="btn-group mb-5">
-                    <button type="button" class="objective-btn btn btn-danger mr-2 btn-lg" data-backdrop="false"
+                    <button type="button" class="objective-btn btn btn-danger mr-2" data-backdrop="false"
                             data-toggle="modal"
                             data-target="#objectivecreatemodal">Create Objective
                     </button>
-                    <button type="button" class="kr-btn btn btn-danger mr-2 btn-lg" data-backdrop="false" data-toggle="modal"
+                    <button type="button" class="kr-btn btn btn-danger mr-2" data-backdrop="false" data-toggle="modal"
                             data-target="#krcreatemodal">Create new KR
                     </button>
-                    <button type="button" class="entry-btn btn btn-danger mr-2 btn-lg" data-backdrop="false" data-toggle="modal"
+                    <button type="button" class="entry-btn btn btn-danger mr-2" data-backdrop="false" data-toggle="modal"
                             data-target="#entrycreatemodal">Create Entry
                     </button>
                 </div>
@@ -120,7 +124,6 @@
 
                 <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-sm">
-
                     <thead>
                     <tr>
                         <th>Objective</th>
@@ -140,6 +143,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                </div>
 
                 <p class="mb-2">
                     <button class="btn btn-dark btn-sm " type="button" data-toggle="collapse"

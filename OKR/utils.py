@@ -28,7 +28,7 @@ def send_okr_message(array):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*Objective: *"+ objective +"\n*Key Result :* "+ key_result + "\n*Date :* "+ date_time + "\n*Time Spent: *"+ time_spent +"\n*Update :*" + update +"
+                    "text": "*Objective: *" + objective + "\n*Key Result :* " + key_result + "\n*Date :* " +str(date_time) + "\n*Time Spent: *" + str(time_spent) + "\n*Update :*" + update
                 },
                 "accessory": {
                     "type": "image",

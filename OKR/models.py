@@ -17,7 +17,7 @@ class Objective(models.Model):
 class KR(models.Model):
     objective = models.ForeignKey(Objective, on_delete=models.CASCADE)
     key_result = models.CharField(max_length=80)
-    hours = models.IntegerField(default=0, help_text="Number of hours you wish to spend on this kr")
+    hours = models.IntegerField(default=1, help_text="Number of hours you wish to spend on this kr")
     percentage = models.IntegerField(help_text="What is the completion percentage", default=0)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Entry(models.Model):
     date_time = models.DateTimeField()
     key_result = models.ForeignKey(KR, on_delete=models.CASCADE)
     update = models.TextField(help_text="Brief description on the progress")
-    time_spent = models.IntegerField(default=10, help_text="Time spent on the task in minutes")
+    time_spent = models.IntegerField(default=0, help_text="Time spent on the task in minutes")
 
     def __str__(self):
         return f'{self.user}-{self.date_time}'

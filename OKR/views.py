@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from .filters import ObjectiveKRFilter
 from .forms import EntryCreationForm, ObjectiveCreationForm, KRCreationForm
 from .models import Entry, Objective, KR
-
+from .tasks import okr_entry
 
 @login_required
 def view_data(request):
@@ -21,6 +21,7 @@ def view_data(request):
             objective.save()
             messages.success(request, 'Objective Created successfully')
             return redirect('okr-view-data')
+
     if request.method == 'POST' and 'entry-btn' in request.POST:
         form = EntryCreationForm(request.POST)
         if form.is_valid():
@@ -34,18 +35,24 @@ def view_data(request):
             percentage = round(((((prev_percentage / 100) * kr.hours * 60) + time_spent) / (kr.hours * 60)) * 100)
             kr.percentage = percentage
             kr.save()
+            image = 'https://sushiksha.konkanischolarship.com' + str(request.user.profile.image.url)
+            array = [request.user.profile.name, entry.date_time, kr.key_result, time_spent, kr.objective.objective, entry.update, image]
+            okr_entry.delay(array)
             messages.success(request, 'Entry Created successfully')
             return redirect('okr-view-data')
+
     if request.method == 'POST' and 'kr-btn' in request.POST:
         form = KRCreationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Key Result Created successfully')
             return redirect('okr-view-data')
+
     if request.is_ajax():
         obj_id = request.GET.get('objective_id')
         krs = KR.objects.filter(objective_id=obj_id)
         return JsonResponse(list(krs.values('id', 'key_result')), safe=False)
+
     form_objective = ObjectiveCreationForm()
     form_kr = KRCreationForm()
     user = get_object_or_404(User, id=request.user.id)

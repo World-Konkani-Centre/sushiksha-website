@@ -1,7 +1,9 @@
 import django_filters
-from .models import Objective, KR, Entry
+
+from .models import Entry
+
+
 # from django_filters import CharFilter, ModelChoiceFilter
-from django.db.models.functions import Lower
 
 
 class ObjectiveKRFilter(django_filters.FilterSet):

@@ -19,6 +19,13 @@ class KRAdmin(admin.ModelAdmin):
     def user(self,obj):
         return obj.objective.user.profile.name
     user.admin_order_field = 'user'
-# @admin.register(Entry)
-# class EntryAdmin(admin.ModelAdmin):
-#     pass
+
+
+@admin.register(Entry)
+class EntryAdmin(admin.ModelAdmin):
+    def objective(self, obj):
+        return obj.key_result.objective
+
+    list_display = ('id', 'user', 'objective', 'key_result', 'date_time')
+    list_filter = ('user',)
+    list_display_links = ('id', 'user')

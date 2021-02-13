@@ -29,9 +29,9 @@ def view_data(request):
             kr = entry.key_result.id
             entry.user = get_object_or_404(User, id=request.user.id)
             entry.save()
-            kr = get_object_or_404(KR,id=kr)
+            kr = get_object_or_404(KR, id=kr)
             prev_percentage = kr.percentage
-            percentage = round(((((prev_percentage/100)*kr.hours*60)+time_spent)/(kr.hours*60))*100)
+            percentage = round(((((prev_percentage / 100) * kr.hours * 60) + time_spent) / (kr.hours * 60)) * 100)
             kr.percentage = percentage
             kr.save()
             messages.success(request, 'Entry Created successfully')
@@ -89,7 +89,6 @@ def load_okr(request, pk):
         'show': False,
         'id': id,
         'data': data,
-        'user':user,
+        'user': user,
     }
     return render(request, 'OKR/show_entry.html', context=context)
-

@@ -2724,17 +2724,17 @@ section {
 }
 
 .user-level-2 {
-    background-color: #ffe05d;
+    background-color: #cdfffc;
     border-radius: 3px;
 }
 
 .user-level-3 {
-    background-color: #ff9642;
+    background-color: #ffefa0;
     border-radius: 3px;
 }
 
 .user-profile .cardheader {
-    background: url("https://sushiksha.konkanischolarship.com/static/assets/img/banner.png");
+    background: url("../img/level1.jpg");
     background-size: cover;
     height: 135px;
     border-radius: 3px;

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from colorfield.fields import ColorField
 
 
 class Contact(models.Model):
@@ -51,3 +52,16 @@ class Gallery(models.Model):
 
     def __str__(self):
         return f'{self.user.username}s uploaded {self.name}'
+
+
+class OneOneSession(models.Model):
+    heading = models.CharField(max_length=100, help_text='Heading to be displayed')
+    overview = models.TextField(help_text='Description for each entries')
+    button_name = models.CharField(max_length=40, help_text='The text which will be displayed on button')
+    url = models.URLField(help_text="Calendly link or any other calender link which can be accessed by only logged user")
+    color = ColorField(format='hexa', help_text='The accent color of the card')
+    image = models.ImageField(upload_to='oneonesession', help_text='Image to be displayed in the card')
+
+    class Meta:
+        verbose_name = 'Mentor Session'
+        verbose_name_plural = 'Mentors Sessions'

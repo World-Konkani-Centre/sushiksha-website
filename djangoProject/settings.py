@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'tinymce',
     'ckeditor',
+    'colorfield',
     'quiz',
     'coding',
     'csvexport',

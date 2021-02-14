@@ -36,7 +36,9 @@ def view_data(request):
             kr.percentage = percentage
             kr.save()
             image = 'https://sushiksha.konkanischolarship.com' + str(request.user.profile.image.url)
-            array = [request.user.profile.name, entry.date_time, kr.key_result, time_spent, kr.objective.objective, entry.update, image]
+            _date_time = str(entry.date_time.date()) + ' ' + str(entry.date_time.time())
+            array = [request.user.profile.name, _date_time, kr.key_result, time_spent, kr.objective.objective, entry.update, image]
+            print(array)
             okr_entry.delay(array)
             messages.success(request, 'Entry Created successfully')
             return redirect('okr-view-data')

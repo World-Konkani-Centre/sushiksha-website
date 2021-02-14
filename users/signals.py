@@ -24,12 +24,13 @@ def send_mail(sender, instance, created, **kwargs):
     if created:
         email = instance.user.email
         name = instance.user.profile.name
+        slack_id = instance.user.profile.slack_id
         badge = instance.badges.title
         description = instance.description
         awarded_by = instance.awarded_by
         timestamp = instance.timestamp
         image = 'https://sushiksha.konkanischolarship.com' + str(instance.badges.logo.url)
-        array = [email, timestamp, awarded_by, description, badge, name, image]
+        array = [email, timestamp, awarded_by, description, badge, name, image, slack_id]
         profile = Profile.objects.get(user=instance.user)
         _badge = Badge.objects.get(title=badge)
         update_profile_points(profile, _badge)

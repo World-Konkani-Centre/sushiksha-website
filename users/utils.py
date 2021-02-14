@@ -113,6 +113,7 @@ def send_reward_slack(array):
     badge = array[4]
     name = array[5]
     image = array[6]
+    slack_id = array[7]
     message = {
         'channel': '#sushiksha-badges',
         "blocks": [
@@ -143,7 +144,7 @@ def send_reward_slack(array):
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": ":wkc-badge1: <https://sushiksha.konkanischolarship.com/user/rewards/|Sushiksha Badges>"
+                        "text": f":wkc-badge1: <https://sushiksha.konkanischolarship.com/user/rewards/|Sushiksha Badges> | <@{slack_id}>"
                     }
                 ]
             },

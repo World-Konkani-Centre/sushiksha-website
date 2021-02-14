@@ -10,6 +10,7 @@ def send_okr_message(array):
     objective = array[4]
     update = array[5]
     image = array[6]
+    slack_id = array[7]
 
     message = {
         'channel': '#okrs',
@@ -40,7 +41,7 @@ def send_okr_message(array):
                 "type": "context",
                 "elements": [
                     {
-                        "text": ":wkc-badge1: <https://sushiksha.konkanischolarship.com/okr/|Sushiksha OKR>",
+                        "text": f":wkc-badge1: <https://sushiksha.konkanischolarship.com/okr/|Sushiksha OKR> | <@{slack_id}>",
                         "type": "mrkdwn"
                     }
                 ]

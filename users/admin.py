@@ -73,6 +73,7 @@ class MentionAdmin(admin.ModelAdmin):
 class HouseAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
+    filter_horizontal = ('teams', )
     actions = [csvexport]
 
 
@@ -80,6 +81,7 @@ class HouseAdmin(admin.ModelAdmin):
 class TeamsAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
+    filter_horizontal = ('members', )
     actions = [csvexport]
 
 

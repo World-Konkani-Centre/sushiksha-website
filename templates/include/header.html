@@ -41,7 +41,9 @@
                 {% endif %}
 
                 <li><a href="{% url 'blog' %}">Blogs</a></li>
+                <li><a href="{% url 'sessions' %}">Sessions</a></li>
                 {% if user.is_authenticated %}
+                    <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
                     <li><a href="{% url 'pentathlon' %}">Pentathlon</a></li>
                     <li><a href="{% url 'trainers' %}">Members</a></li>
                 {% endif %}

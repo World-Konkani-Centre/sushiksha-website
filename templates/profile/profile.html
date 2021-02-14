@@ -122,15 +122,18 @@
 
                                 <div class="row badge-row">
                                     <div class='col-12'>
-                                        <h4 class="lead font-weight-bold text-end"><a
+                                        <h4 class="lead font-weight-bold text-end">
+                                            <p class="text-center mb-3" align="center"><a
                                                 href="{% url 'user-posts' id=user.id %}"
                                                 class="btn btn-outline-danger btn-sm">
                                             {{ user.profile.name | truncatechars:15 }}'s
-                                            Blog Posts</a></h4>
+                                            Blog Posts</a></p></h4>
                                         <h1 class="lead font-weight-bold text-start">
-                                                <a
+                                            <p class="text-center mb-3" align="center">    
+                                            <a
                                                         href="{% url 'okr-view-data' %}"
                                                         class="btn btn-outline-danger btn-sm">My OKR {{ user.profile.name | truncatechars:20 }}</a>
+                                            </p>
                                             </h1>
                                     </div>
                                 </div>

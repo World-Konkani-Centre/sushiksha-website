@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Contact
+from .models import Contact, OneOneSession
 from django.contrib import messages
 from django.core.mail import send_mail
 # from django.contrib.auth.decorators import login_required
@@ -72,3 +72,10 @@ def contact(request):
 
 def pentathlon(request):
     return render(request, 'event/pentathlon.html')
+
+def sessions(request):
+    query_set = OneOneSession.objects.all()
+    context = {
+        'sessions': query_set,
+    }
+    return render(request, 'event/sessions.html', context=context)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Testimonial
+from .models import Contact, Testimonial, OneOneSession
 
 
 # Events, , Faq, Gallery
@@ -19,10 +19,11 @@ class ContactAdmin(admin.ModelAdmin):
 class TestimonialAdmin(admin.ModelAdmin):
     list_display = ("name", "role")
 
-#
-# @admin.register(Faq)
-# class FaqAdmin(admin.ModelAdmin):
-#     list_display = ("short_title", "question")
+
+@admin.register(OneOneSession)
+class OneOneSessionAdmin(admin.ModelAdmin):
+    list_display = ("heading", "color")
+    list_display_links = ('heading', 'color')
 #
 #
 # @admin.register(Gallery)

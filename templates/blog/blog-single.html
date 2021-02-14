@@ -88,7 +88,7 @@
                             <div class="entry-meta">
                                 <ul>
                                     <li class="d-flex align-items-center"><i class="bx bxs-user"></i> <a
-                                            href="{{ post.author.get_absolute_url }}">{{ post.author.user.username }}</a>
+                                        href="{% url 'user-posts' id=post.author.user.id %}">{{ post.author.user.profile.name }}</a>
                                     </li>
                                     <li class="d-flex align-items-center"><i class="bx bx-time"></i> <a href="">
                                         <time datetime="2020-01-01">{{ post.timestamp| date }}</time>

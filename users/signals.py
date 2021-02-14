@@ -4,6 +4,7 @@ from django.dispatch import receiver
 
 from users.tasks import send_email
 from .models import Profile, Pomodoro, Reward, Teams, House, Badge
+from users.utils import update_profile_points
 
 
 @receiver(post_save, sender=User)
@@ -31,13 +32,12 @@ def send_mail(sender, instance, created, **kwargs):
         array = [email, timestamp, awarded_by, description, badge, name, image]
         profile = Profile.objects.get(user=instance.user)
         _badge = Badge.objects.get(title=badge)
-        profile.points = profile.points + _badge.points
-        profile.save()
-        team = Teams.objects.filter(members__user=instance.user).first()
+        update_profile_points(profile, _badge)
+        team = Teams.objects.filter(members__user=profile.user).first()
         if team is not None:
             team.points = team.points + _badge.points
             team.save()
-        house = House.objects.filter(teams__members__user=instance.user).first()
+        house = House.objects.filter(teams__members__user=profile.user).first()
         if house is not None:
             house.points = house.points + _badge.points
             house.save()
@@ -53,6 +53,7 @@ def reduce_points(sender, instance, using, **kwargs):
     badge = instance.badges.title
     _badge = Badge.objects.get(title=badge)
     profile.points = profile.points - _badge.points
+    profile.total_points = profile.total_points - _badge.points
     profile.save()
     team = Teams.objects.filter(members__user=instance.user).first()
     if team is not None:

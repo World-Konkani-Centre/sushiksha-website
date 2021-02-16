@@ -1,5 +1,6 @@
 import csv
 import datetime
+import re
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -10,6 +11,7 @@ from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from djqscsv import render_to_csv_response
 
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, RangeRequestForm, \
@@ -596,3 +598,42 @@ def get_single_user_file_large(request):
             'heading': heading
         }
         return render(request, 'analytics/logs-users.html', context=context)
+
+
+@csrf_exempt
+def slack_badge(request):
+    if request.POST:
+        try:
+            user_id = request.POST.get('user_id')
+            text = request.POST.get('text')
+            given_to_id = re.findall(r"<(.*?)\|", text)[0]
+            sender = User.objects.filter(profile__slack_id=user_id).first()
+            receiver = User.objects.filter(profile__slack_id=given_to_id[1:]).first()
+            quotation_find = re.findall(r"'(.*?)'", text)
+            badge_name = quotation_find[0]
+            badge = Badge.objects.filter(title__icontains=badge_name).first()
+            message = quotation_find[1]
+            if len(message) < 25:
+                return HttpResponse("Message length must be at least 25 characters")
+            elif badge is None:
+                return HttpResponse("Badge entry is not found use: "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif sender is None:
+                return HttpResponse("Your Slack Id not found in website, contact the admin or use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif receiver is None:
+                return HttpResponse("Receiver Slack Id is not found in website, contact the admin or use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif badge.featured:
+                return HttpResponse("*Admin only* badges cannot be awarded here use please use: "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            Reward.objects.create(user=receiver, description=message,
+                                  awarded_by=sender.profile.name, badges=badge)
+            return HttpResponse(
+                "Badge " + str(badge) + "has been sent to " + str(receiver.profile.name) + " and entry will be "
+                                                                                           "created shortly in "
+                                                                                           "https://sushiksha"
+                                                                                           ".konkanischolarship.com"
+                                                                                           "/user/rewards/")
+        except:
+            return HttpResponse("Invalid input, Please follow this command \n `/badge 'badge-name' @user 'message'` ")

@@ -613,14 +613,27 @@ def slack_badge(request):
             badge_name = quotation_find[0]
             badge = Badge.objects.filter(title__icontains=badge_name).first()
             message = quotation_find[1]
-            if len(message) < 125 or badge is None or sender is None or receiver is None and not badge.featured:
-                return HttpResponse("Unable to send the badge, please report the issue to the admin and use "
+            if len(message) < 25:
+                return HttpResponse("message length must be at least 25 characters")
+            elif badge is None:
+                return HttpResponse("Badge entry is not found use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif sender is None:
+                return HttpResponse("Your Slack Id not found in website, contact the admin or use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif receiver is None:
+                return HttpResponse("Receiver slack Id is not found in website, contact the admin or use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif not badge.featured:
+                return HttpResponse("*Admin only* badges cannot be awarded here use please use"
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
             Reward.objects.create(user=receiver, description=message,
                                   awarded_by=sender.profile.name, badges=badge)
             return HttpResponse(
                 "Badge " + str(badge) + "has been sent to " + str(receiver.profile.name) + " and entry will be "
                                                                                            "created shortly in "
-                                                                                           "https://sushiksha.konkanischolarship.com/user/rewards/")
+                                                                                           "https://sushiksha"
+                                                                                           ".konkanischolarship.com"
+                                                                                           "/user/rewards/")
         except:
             return HttpResponse("Invalid input, check the command again")

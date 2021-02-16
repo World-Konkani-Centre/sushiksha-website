@@ -11,6 +11,7 @@ STATUS = (
 
 class Goodie(models.Model):
     title = models.CharField(max_length=30)
+    suShells = models.IntegerField(default=0)
     tag = models.CharField(max_length=10)
     is_shown = models.BooleanField(default=True)
     thumbnail = models.ImageField(upload_to='goodies')

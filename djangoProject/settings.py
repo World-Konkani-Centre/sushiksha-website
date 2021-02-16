@@ -28,7 +28,7 @@ SECRET_KEY = config.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sushiksha.konkanischolarship.com', '127.0.0.1','72ba512a3ff3.ngrok.io']
+ALLOWED_HOSTS = ['sushiksha.konkanischolarship.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [

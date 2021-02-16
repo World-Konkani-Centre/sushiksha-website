@@ -141,16 +141,21 @@
                                         {% for mention in mentions %}
                                             <tr>
                                             <td class="font-weight-bolder">
-                                                <h6
-                                                        class="font-weight-bold"><img src="{{ mention.image.url }}"
-                                                                                      class="img-fluid rounded mr-2"
-                                                                                      width="50"
-                                                                                      loading="lazy"
-                                                                                      alt="{{ mention.title }}"
-                                                                                      title="{{ mention.title }}">
-                                                    {{ mention.title }}
-                                                </h6>
-
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6
+                                                            class="font-weight-bold"><img src="{{ mention.image.url }}"
+                                                                                        class="img-fluid rounded mr-2"
+                                                                                        width="50"
+                                                                                        loading="lazy"
+                                                                                        alt="{{ mention.title }}"
+                                                                                        title="{{ mention.title }}">   
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                            {{ mention.title }}  
+                                                    </div>
+                                                </div> 
                                             </td>
                                             <td>
                                             <div class="media align-items-center">

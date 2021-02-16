@@ -624,8 +624,8 @@ def slack_badge(request):
             elif receiver is None:
                 return HttpResponse("Receiver slack Id is not found in website, contact the admin or use "
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
-            elif not badge.featured:
-                return HttpResponse("*Admin only* badges cannot be awarded here use please use"
+            elif badge.featured:
+                return HttpResponse("*Admin only* badges cannot be awarded here use please use: "
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
             Reward.objects.create(user=receiver, description=message,
                                   awarded_by=sender.profile.name, badges=badge)

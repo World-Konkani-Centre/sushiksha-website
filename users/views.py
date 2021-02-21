@@ -162,6 +162,13 @@ def user_detail_view(request, pk):
     badges = Reward.objects.filter(user=user).values('badges__title', 'badges__logo').annotate(Count('badges__title'))
     categories, data = user_chart_data(user)
     result = get_category_points_data(user, categories)
+    max_cat_points = None
+    if user.profile.rank == 'Sophist':
+        max_cat_points = UPGRADE_POINTS[0]
+    elif user.profile.rank == 'Senator':
+        max_cat_points = UPGRADE_POINTS[1]
+    else:
+        max_cat_points = result
     zipped_data = zip(categories, data, color)
     context = {
         'title': f"{user.username}",
@@ -169,7 +176,7 @@ def user_detail_view(request, pk):
         'badges': badges,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories, result),
+        'query_category': zip(categories, [i * 100 for i in result], max_cat_points),
         'query_point_distribution': result
     }
 

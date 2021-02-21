@@ -174,26 +174,34 @@
                         </div>
 
                         <div class="card">
-                            <div class="card-header">Points Distribution</div>
+                            <div class="card-header">Points to Upgrade</div>
                             <div class="card-body">
-                                <table class="table table-borderless table-responsive">
+                                <table class="table table-responsive">
                                     <thead>
                                     <tr>
                                         <td>Category</td>
-                                        <td>Points</td>
+                                        <td>Progress</td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for cat,count in query_category %}
+                                    {% for cat,count,max_cat_points in query_category %}
                                         <tr>
-                                            <td>{{ cat }}</td>
-                                            <td>{{ count|intcomma }}</td>
+                                            <td>
+                                                {{ cat }}
+                                            </td>
+                                            <td>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success"
+                                                         style="width:{{ count|intdiv:max_cat_points }}%">
+                                                        Completed {{ count|intdiv:max_cat_points }}%
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
                         </div>
 
                         <div class="col-md-8">

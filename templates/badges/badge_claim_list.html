@@ -21,11 +21,11 @@
         <section class="">
             <div class="container" data-aos="fade-up">
 
-                <div class="card" style="width: 100%;">
+                <div class="card" >
                     <ol class="list-group list-group-flush">
                         {% for form in forms %}
-                            <li class="list-group-item fw-bold"><a
-                                    href="{% url 'badge_claim_form' pk=form.id %}">{{ form.title }}</a></li>
+                            <a class="list-group-item list-group-item-action fw-bold text-danger"
+                                    href="{% url 'badge_claim_form' pk=form.id %}">{{ form.title }}</a>
                         {% endfor %}
                     </ol>
                 </div>

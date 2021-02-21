@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'coding',
     'csvexport',
     'OKR',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

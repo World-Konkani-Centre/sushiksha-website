@@ -18,6 +18,7 @@ from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterFo
     UserRangeRequestForm, MultiBadgeForm
 from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import email_check, user_chart_data, get_category_points_data
+from .models import UPGRADE_POINTS
 
 color = ['#892cdc', '#9d0191',
          '#fd3a69',
@@ -68,6 +69,13 @@ def profile(request):
     user = get_object_or_404(User, id=request.user.id)
     categories, data = user_chart_data(user)
     result = get_category_points_data(user, categories)
+    max_cat_points = None
+    if user.profile.rank == 'Sophist':
+        max_cat_points = UPGRADE_POINTS[0]
+    elif user.profile.rank == 'Senator':
+        max_cat_points = UPGRADE_POINTS[1]
+    else:
+        max_cat_points = result
     zipped_data = zip(categories, data, color)
     profile_details = {}
     badges = Reward.objects.filter(user=request.user).values('badges__title', 'badges__logo').annotate(
@@ -109,7 +117,7 @@ def profile(request):
         'profile_details': profile_details,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories, result),
+        'query_category': zip(categories, [i * 100 for i in result], max_cat_points),
         'query_point_distribution': result
     }
     return render(request, 'profile/profile.html', context=context)
@@ -606,6 +614,12 @@ def slack_badge(request):
         try:
             user_id = request.POST.get('user_id')
             text = request.POST.get('text')
+            if len(text) == 0 or len(text.split(' ')) == 0:
+                query = Badge.objects.filter(featured=False)
+                message = ""
+                for _badge in query:
+                    message = message + _badge + '\n'
+                return HttpResponse(message)
             given_to_id = re.findall(r"<(.*?)\|", text)[0]
             sender = User.objects.filter(profile__slack_id=user_id).first()
             receiver = User.objects.filter(profile__slack_id=given_to_id[1:]).first()

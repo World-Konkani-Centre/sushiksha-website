@@ -614,18 +614,18 @@ def slack_badge(request):
             badge = Badge.objects.filter(title__icontains=badge_name).first()
             message = quotation_find[1]
             if len(message) < 25:
-                return HttpResponse("message length must be at least 25 characters")
+                return HttpResponse("Message length must be at least 25 characters")
             elif badge is None:
-                return HttpResponse("Badge entry is not found use "
+                return HttpResponse("Badge entry is not found use: "
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
             elif sender is None:
                 return HttpResponse("Your Slack Id not found in website, contact the admin or use "
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
             elif receiver is None:
-                return HttpResponse("Receiver slack Id is not found in website, contact the admin or use "
+                return HttpResponse("Receiver Slack Id is not found in website, contact the admin or use "
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
-            elif not badge.featured:
-                return HttpResponse("*Admin only* badges cannot be awarded here use please use"
+            elif badge.featured:
+                return HttpResponse("*Admin only* badges cannot be awarded here use please use: "
                                     "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
             Reward.objects.create(user=receiver, description=message,
                                   awarded_by=sender.profile.name, badges=badge)
@@ -636,4 +636,4 @@ def slack_badge(request):
                                                                                            ".konkanischolarship.com"
                                                                                            "/user/rewards/")
         except:
-            return HttpResponse("Invalid input, check the command again")
+            return HttpResponse("Invalid input, Please follow this command \n `/badge 'badge-name' @user 'message'` ")

@@ -43,7 +43,7 @@
         </section>
 
         <div class="container mt-3">
-            <h2 class="ml-auto">Total points : {{ user.profile.total_points }}</h2>
+            <h2 class="ml-auto">My su-Shells : {{ user.profile.suShells }}</h2>
         </div>
 
         <section id="courses" class="courses">
@@ -65,7 +65,7 @@
                                     <p class="wrapping">{{ query.description|truncatechars:200 }}</p>
                                     <div class="trainer d-flex justify-content-between align-items-center">
                                         <div class="trainer-profile d-flex align-items-center">
-                                            <div class="price text-success"><h5 class="mt-4">Price</h5></div>
+                                            <div class="price text-success"><h5 class="mt-4">{{ query.suShells }} sushells</h5></div>
                                         </div>
                                         <div class="trainer-rank d-flex align-items-center">
                                             <a href="{% url 'cart' id=query.id %}" class="btn btn-danger text-white btn-sm">Details</a>

@@ -255,7 +255,7 @@ def badge(request):
 
 @login_required()
 def multi_badge(request):
-    if request.user.is_superuser:
+    if request.user.is_superuser or request.user.profile.initiator:
         form = MultiBadgeForm()
         if request.method == 'POST':
             form = MultiBadgeForm(request.POST)

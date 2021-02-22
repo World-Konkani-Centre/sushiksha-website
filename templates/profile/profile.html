@@ -156,14 +156,14 @@
                                     {% for cat,count,max_cat_points in query_category %}
                                         <tr>
                                             <td>
-                                                {{ cat }}
+                                                {{ cat }} ({{ count|intdiv:max_cat_points }}%)
                                             </td>
                                             <td>
                                                 <div class="progress" style="height: 20px;">
                                                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                                          style="width:{{ count|intdiv:max_cat_points }}%">
+                                                        Completed {{ count|intdiv:max_cat_points }}%
                                                     </div>
-                                                        <span class="text-dark">Completed {{ count|intdiv:max_cat_points }}%</span>
                                                 </div>
                                             </td>
                                         </tr>

@@ -188,10 +188,10 @@
                                                 {{ cat }}
                                             </td>
                                             <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-success"
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar progress-bar-animated bg-success"
                                                          style="width:{{ count|intdiv:max_cat_points }}%">
-                                                        Completed {{ count|intdiv:max_cat_points }}%
+                                                        <span class="text-dark">Completed {{ count|intdiv:max_cat_points }}%</span>
                                                     </div>
                                                 </div>
                                             </td>

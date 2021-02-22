@@ -14,7 +14,6 @@
                  <li class="drop-down"><a href="{% url 'quiz_index' %}">Admin only</a>
 
                  <ul>
-                 <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
                  <li><a href="{% url 'coding-index' %}">Coding</a></li>
                  <li><a href="{% url 'quiz_index' %}">Quiz</a></li>
                  </ul>
@@ -28,8 +27,8 @@
                             <li><a href="{% url 'reward' %}">Badge activity</a></li>
                             <li><a href="{% url 'badge' %}">Give a badge</a></li>
                             <li><a href="{% url 'badge_claim' %}">Badge Claim Forms</a></li>
-                            {% if user.is_superuser %}
-                                <li><a href="{% url 'multiple-badge' %}">Give Multiple badges (ADMIN ONLY)</a></li>
+                            {% if user.is_superuser or user.profile.initiator %}
+                                <li><a href="{% url 'multiple-badge' %}">Give Multiple badges</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -44,7 +43,6 @@
                 <li><a href="{% url 'sessions' %}">Sessions</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
-                    <li><a href="{% url 'pentathlon' %}">Pentathlon</a></li>
                     <li><a href="{% url 'trainers' %}">Members</a></li>
                 {% endif %}
                 {% if not user.is_authenticated %}
@@ -64,6 +62,7 @@
                                 <!--<li><a href="{% url 'quiz_index' %}">Let's Practice</a></li>-->
                             {% endif %}
                             <li><a href="{% url 'logs' %}">Analytics</a></li>
+                            <li><a href="{% url 'pentathlon' %}">Pentathlon</a></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>

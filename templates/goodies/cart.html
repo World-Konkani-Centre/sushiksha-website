@@ -27,12 +27,12 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure about buying this, xx points will be deducted from your points and the goodie will be delivered to {{ user.profile.address }}
+                                            Are you sure about buying this, {{ item.suShells }} will be deducted from your points and the goodie will be delivered to {{ user.profile.address }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">I'm Not Sure
                                             </button>
-                                            <a href="{% url 'home'  %}"><button type="button" class="btn btn-danger">Buy</button></a>
+                                            <a href="{% url 'place-goodie' id=item.id  %}"><button type="button" class="btn btn-danger">Buy</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
 
         <div class="row">
           <div class="col-lg-8">
-          <h3 class="ml-auto">Total points : {{ user.points }}</h3>
+          <h3 class="ml-auto">My su-shells : {{ user.profile.suShells }}</h3>
             <img src="{{ item.thumbnail.url }}" class="img-fluid rounded" alt="">
             <h3>{{ item.title }}</h3>
             <p>{{ item.description }}</p>
@@ -84,18 +84,13 @@
           <h3>Points usage</h3>
 
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Points</h5>
-              <p>10,000</p>
-            </div>
-
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Stars</h5>
-              <p>5</p>
+              <h5>su-shells</h5>
+              <p>{{ item.suShells }}</p>
             </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Shipping</h5>
-              <p>500</p>
+              <p>0</p>
             </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">

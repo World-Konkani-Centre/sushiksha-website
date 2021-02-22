@@ -62,6 +62,7 @@ class Profile(models.Model):
     github = models.URLField(default=None, blank=True, null=True)
     okr = models.URLField(default=None, blank=True, null=True)
     facebook = models.URLField(default=None, blank=True, null=True)
+    initiator = models.BooleanField(default=False)
     points = models.IntegerField(default=0)
     total_points = models.IntegerField(default=0)
     suShells = models.IntegerField(default=0)

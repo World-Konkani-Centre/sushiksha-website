@@ -144,7 +144,8 @@
                         <div class="card">
                             <div class="card-header">Points to Upgrade</div>
                             <div class="card-body">
-                                <table class="table table-responsive">
+                            <div class=" table-responsive table-light table-hover ">
+                                <table class="table">
                                     <thead>
                                     <tr>
                                         <td>Category</td>
@@ -155,11 +156,11 @@
                                     {% for cat,count,max_cat_points in query_category %}
                                         <tr>
                                             <td>
-                                                {{ cat }}
+                                                {{ cat }} ({{ count|intdiv:max_cat_points }}%)
                                             </td>
                                             <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-success"
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                                          style="width:{{ count|intdiv:max_cat_points }}%">
                                                         Completed {{ count|intdiv:max_cat_points }}%
                                                     </div>
@@ -169,6 +170,7 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            </div>
                             </div>
                         </div>
 

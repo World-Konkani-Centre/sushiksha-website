@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
+{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %} {% load mathfilters %}
 {% block main_style %}
     <link
             rel="stylesheet"
@@ -6,7 +6,8 @@
             integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
             crossorigin="anonymous"
     />
-{% endblock main_style %} {% block content %}
+{% endblock main_style %}
+ {% block content %}
 
     <main id="main">
         <section id="breadcrumbs" class="breadcrumbs">
@@ -24,17 +25,13 @@
         </section>
         <!-- End Breadcrumbs -->
 
-        <!-- ======= Contact Section ======= -->
         <section id="" class="">
             <div class="profile container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-md-4">
 
                        <div class="card mb-4 user-profile user-level-2">
-
-
                         <div class="card-body p-0">
-
                         <div class="cardheader">
                         </div>
                         <div class="user-img">
@@ -175,8 +172,9 @@
 
                         <div class="card">
                             <div class="card-header">Points to Upgrade</div>
-                            <div class="card-body">
-                                <table class="table table-responsive">
+                            <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-light table-hover">
                                     <thead>
                                     <tr>
                                         <td>Category</td>
@@ -187,13 +185,13 @@
                                     {% for cat,count,max_cat_points in query_category %}
                                         <tr>
                                             <td>
-                                                {{ cat }}
+                                                {{ cat }} ({{ count|intdiv:max_cat_points }}%)
                                             </td>
                                             <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-success"
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                                          style="width:{{ count|intdiv:max_cat_points }}%">
-                                                        Completed {{ count|intdiv:max_cat_points }}%
+                                                         Completed {{ count|intdiv:max_cat_points }}%
                                                     </div>
                                                 </div>
                                             </td>
@@ -201,9 +199,10 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
-
+</div>
                         <div class="col-md-8">
                             <div id="accordion">
                                 <div class="card mb-3">
@@ -397,7 +396,6 @@
                 </div>
             </div>
         </section>
-        <!-- End Contact Section -->
 
     </main>
     <!-- End #main -->

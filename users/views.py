@@ -663,3 +663,12 @@ def slack_badge(request):
                                                                                            "/user/rewards/")
         except:
             return HttpResponse("Invalid input, Please follow this command \n `/badge 'badge-name' @user 'message'` ")
+
+
+def delete_rewards(request):
+    rewards = Reward.objects.all()
+
+    for item in rewards:
+        item.delete()
+
+    return redirect('home')

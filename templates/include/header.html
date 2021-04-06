@@ -25,6 +25,7 @@
                     <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>
                         <ul>
                             <li><a href="{% url 'reward' %}">Badge activity</a></li>
+                            <li><a href="{% url 'okr-activity' %}">OKR activity</a></li>
                             <li><a href="{% url 'badge' %}">Give a badge</a></li>
                             <li><a href="{% url 'badge_claim' %}">Badge Claim Forms</a></li>
                             {% if user.is_superuser or user.profile.initiator %}
@@ -42,7 +43,12 @@
                 <li><a href="{% url 'blog' %}">Blogs</a></li>
                 <li><a href="{% url 'sessions' %}">Sessions</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
+                <li class="drop-down"><a href="{% url 'okr-view-data' %}">OKR</a>
+                <ul>
+                    <li><a href="{% url 'okr-view-data' %}">Add a Entry</a></li>
+                    <li><a href="{% url 'okr-activity' %}">OKR activity</a></li>
+                </ul>
+                </li>
                     <li><a href="{% url 'trainers' %}">Members</a></li>
                 {% endif %}
                 {% if not user.is_authenticated %}

@@ -24,8 +24,7 @@
                 {% if user.is_authenticated %}
                     <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>
                         <ul>
-                            <li><a href="{% url 'reward' %}">Badge activity</a></li>
-                            <li><a href="{% url 'okr-activity' %}">OKR activity</a></li>
+                            <li><a href="{% url 'reward' %}">Badge activity</a></li> 
                             <li><a href="{% url 'badge' %}">Give a badge</a></li>
                             <li><a href="{% url 'badge_claim' %}">Badge Claim Forms</a></li>
                             {% if user.is_superuser or user.profile.initiator %}

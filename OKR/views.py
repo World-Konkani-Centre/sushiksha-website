@@ -6,10 +6,38 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 
-from .filters import ObjectiveKRFilter
+from .filters import ObjectiveKRFilter, OKRFilter
 from .forms import EntryCreationForm, ObjectiveCreationForm, KRCreationForm
 from .models import Entry, Objective, KR
 from .tasks import okr_entry
+
+@login_required
+def okr_activity(request):
+    query = Entry.objects.order_by('-date_time')
+
+    f = OKRFilter(request.GET, queryset=query)
+    paginated_queryset = f.qs
+
+    paginator = Paginator(paginated_queryset, 30)
+
+    page_request_var = 'page'
+    page = request.GET.get(page_request_var)    
+    
+    try:
+        paginated_queryset = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_queryset = paginator.page(1)
+    except EmptyPage:
+        paginated_queryset = paginator.page(paginator.num_pages)
+
+    context = {
+        'query': paginated_queryset,
+        'okr_filter': f,
+        'page_request_var': page_request_var,
+        'title': "OKR activity"
+    }
+    return render(request, 'OKR/activity.html', context=context)
+
 
 @login_required
 def view_data(request):

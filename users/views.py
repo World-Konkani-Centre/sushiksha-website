@@ -13,7 +13,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from djqscsv import render_to_csv_response
-
+from OKR.models import Entry
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, RangeRequestForm, \
     UserRangeRequestForm, MultiBadgeForm
 from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
@@ -268,7 +268,7 @@ def multi_badge(request):
                 if request.user.profile.initiator and not request.user.is_superuser:
                     awarded = request.user.profile.name
                     if badge_obj.featured:
-                        messages.error(request,f'{badge_obj.title} can be awarded only by the ADMIN')
+                        messages.error(request, f'{badge_obj.title} can be awarded only by the ADMIN')
                         return redirect('multiple-badge')
                 for id in profiles:
                     Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe,
@@ -672,3 +672,31 @@ def delete_rewards(request):
         item.delete()
 
     return redirect('home')
+
+
+@login_required
+def okr_weekly(request):
+    if request.POST:
+        form = RangeRequestForm(request.POST)
+        if form.is_valid():
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            queryset = Entry.objects.filter(date_time__gt=beginning, date_time__lte=end
+                                            ).values('user__username', 'user__profile__name', 'user__profile__batch',
+                                                     'key_result__objective',
+                                                     'key_result__key_result', 'update'
+                                                     , 'time_spent').order_by('user__username')
+            return render_to_csv_response(queryset, filename='Sushiksha-OKR' + str(datetime.date.today()),
+                                          field_header_map={'user__username': 'Username','user__profile__name':'Name',
+                                                            'user__profile__batch': 'Batch',
+                                                            'key_result__objective': 'Objective',
+                                                            'key_result__key_result': 'KR', 'update': 'Update',
+                                                            'time_spent': 'Time Spent'})
+    else:
+        form = RangeRequestForm()
+        heading = "OKR Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'analytics/logs-users.html', context=context)

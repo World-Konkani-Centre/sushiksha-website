@@ -684,13 +684,14 @@ def okr_weekly(request):
             queryset = Entry.objects.filter(date_time__gt=beginning, date_time__lte=end
                                             ).values('user__username', 'user__profile__name', 'user__profile__batch',
                                                      'key_result__objective',
-                                                     'key_result__key_result', 'update'
+                                                     'key_result__key_result', 'update', 'date_time'
                                                      , 'time_spent').order_by('user__username')
             return render_to_csv_response(queryset, filename='Sushiksha-OKR' + str(datetime.date.today()),
                                           field_header_map={'user__username': 'Username','user__profile__name':'Name',
                                                             'user__profile__batch': 'Batch',
                                                             'key_result__objective': 'Objective',
                                                             'key_result__key_result': 'KR', 'update': 'Update',
+                                                            'date_time': "Date and Time",
                                                             'time_spent': 'Time Spent'})
     else:
         form = RangeRequestForm()

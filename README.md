@@ -76,6 +76,7 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     git pull
     git branch
     git checkout develop
+    
     ```
    
 5. Create a `settings.py` in `sushiksha-website/djangoProject/`
@@ -137,5 +138,5 @@ We only accept PR's to `develop` branch.
 
 **Note: PR's are accepted that are sent only by Sushiksha members.**
 
-## License
+## Apache License
 [Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)

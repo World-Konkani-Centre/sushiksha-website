@@ -116,39 +116,6 @@ h6 {
     background: #fff;
 }
 
-#preloader:before {
-    content: "";
-    position: fixed;
-    top: calc(50% - 30px);
-    left: calc(50% - 30px);
-    border: 6px solid #e41749;
-    border-top-color: #fff;
-    border-bottom-color: #fff;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: animate-preloader 1s linear infinite;
-    animation: animate-preloader 1s linear infinite;
-}
-
-@-webkit-keyframes animate-preloader {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes animate-preloader {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
@@ -2709,4 +2676,117 @@ section {
 
 .avatar-group .avatar+.avatar {
     margin-left: -1rem;
+}
+
+.user-profile {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.user-level-1 {
+    background-color: #ffefa0;
+    border-radius: 3px;
+}
+
+.user-level-2 {
+    background-color: #cdfffc;
+    border-radius: 3px;
+}
+
+.user-level-3 {
+    background-color: #ffefa0;
+    border-radius: 3px;
+}
+
+.user-profile .cardheader {
+    background: url("../img/level1.jpg");
+    background-size: cover;
+    height: 135px;
+    border-radius: 3px;
+}
+
+.user-profile .user-img {
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+
+.user-profile .user-img img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+
+/*--------------------------------------------------------------
+# session
+--------------------------------------------------------------*/
+
+.session .box {
+    padding: 40px 20px;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.session .box:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
+.session h2 {
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.session p {
+    font-size: 16px;
+}
+
+.session .price sup {
+    font-size: 20px;
+    top: -15px;
+    left: -3px;
+}
+
+.session .price span {
+    color: #bababa;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.session img {
+    /*padding: 30px 40px;*/
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.session .btn-buy {
+    display: inline-block;
+    padding: 6px 30px 8px 30px;
+    border-radius: 2px;
+    color: #fa163f;
+    transition: none;
+    font-size: 16px;
+    font-weight: 400;
+    font-weight: 600;
+    transition: 0.3s;
+    border: 1px solid #fa163f;
+}
+
+.session .btn-buy:hover {
+    background: #fa163f;
+    color: #fff;
 }

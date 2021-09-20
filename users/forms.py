@@ -1,8 +1,11 @@
 from django import forms
+import django
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models.functions import Lower
 from .models import Profile, Reward, Mentions, Badge
+from django.contrib.auth.models import User
+
 
 
 class UserRegisterForm(UserCreationForm):
@@ -71,9 +74,6 @@ class BadgeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BadgeForm, self).__init__(*args, **kwargs)
-        # for visible in self.visible_fields():
-        #     if visible.html_name == 'user' or visible.html_name == 'badges':
-        #         visible.field.widget.attrs['class'] = 'fstdropdown-select'
 
 
 class MentionUpdateForm(forms.ModelForm):
@@ -103,8 +103,9 @@ class UserRangeRequestForm(forms.Form):
     end = forms.DateTimeField(label="End Date Time")
 
 
-class MultiBadgeForm(forms.Form):
+class BadgeForm(forms.Form):
     choices = []
+    # try:
     for i in User.objects.all().order_by(Lower('profile__name')):
         name = str(i.profile.name) + '  (' + str(i.profile.get_team_name()) + ')'
         entry = (i.id, name)
@@ -122,3 +123,12 @@ class MultiBadgeForm(forms.Form):
     badge = forms.ChoiceField(choices=badge_choices, required=True)
     description = forms.CharField(widget=forms.Textarea())
     profiles = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)
+    # except django.db.utils.OperationalError:
+    #     pass
+
+
+class MultiBadgeForm(forms.Form):
+    awarded_by = forms.CharField(required=True)
+    badge = forms.ModelChoiceField(queryset=Badge.objects.all(), required=True, label='Badge to be awarded')
+    description = forms.CharField(widget=forms.Textarea(), label='Message to users')
+    profiles = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=User.objects.all().order_by(Lower('profile__name')), required=True, label='Select the Profiles')

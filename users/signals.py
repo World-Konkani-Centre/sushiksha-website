@@ -10,7 +10,7 @@ from users.utils import update_profile_points
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, name=instance.username)
         Pomodoro.objects.create(user=instance)
 
 

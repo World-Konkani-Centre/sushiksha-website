@@ -261,17 +261,17 @@ def multi_badge(request):
             form = MultiBadgeForm(request.POST)
             if form.is_valid():
                 profiles = form.cleaned_data.get('profiles')
-                badge = form.cleaned_data.get('badge')
+                badge_obj = form.cleaned_data.get('badge')
                 awarded = form.cleaned_data.get('awarded_by')
                 describe = form.cleaned_data.get('description')
-                badge_obj = get_object_or_404(Badge, id=int(badge))
+
                 if request.user.profile.initiator and not request.user.is_superuser:
                     awarded = request.user.profile.name
                     if badge_obj.featured:
                         messages.error(request, f'{badge_obj.title} can be awarded only by the ADMIN')
                         return redirect('multiple-badge')
-                for id in profiles:
-                    Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe,
+                for user in profiles:
+                    Reward.objects.create(user=user, description=describe,
                                           awarded_by=awarded, badges=badge_obj)
                 messages.success(request, f'Badge {badge_obj.title} awarded to {len(profiles)} users')
                 return redirect('multiple-badge')

@@ -138,5 +138,5 @@ We only accept PR's to `develop` branch.
 
 **Note: PR's are accepted that are sent only by Sushiksha members.**
 
-## Apache License
+## License
 [Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)

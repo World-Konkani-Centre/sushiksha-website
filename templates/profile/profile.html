@@ -3,7 +3,7 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load humanize %}
-
+{% load mathfilters %}
 {% block main_style %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
           integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
@@ -34,85 +34,82 @@
             <div class="profile container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-md-4">
-                        {% if user.profile.role %}
-                            <div class="card mb-4 featured-mentor">
-                        {% else %}
-                            <div class="card mb-4">
-                        {% endif %}
-                        <div class="card-body ">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ user.profile.image.url }}" alt="Admin" class="rounded-circle" width="150">
-                                <div class="mt-3">
-                                    <h4 class="h4">{{ user.username }}</h4>
+                        <div class="card mb-4 user-profile user-level-2">
+
+
+                            <div class="card-body p-0">
+
+                                    <img alt="" src="{{ user.profile.image.url }}">
+
+                                <div class="mt-2">
+                                    <h4 class="h4">{{ user.profile.name }}</h4>
                                     {% if user.profile.role %}
                                         <p class="text-secondary mb-1">Mentor</p>
                                     {% else %}
                                         <p class="text-secondary mb-1">Mentee</p>
                                     {% endif %}
+                                </div>
 
-                                </div>
-                            </div>
-                            <div class="row">
-                                {% if user.profile.teams_set.first %}
-                                    <div class="col-6 mt-1 mb-0 text-justify">
-                                        <p class="font-weight-bold">Team: <a
-                                                href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name }}</a>
-                                        </p>
-                                    </div>
-                                    <div class="col-6 text-justify">
-                                        <p class="font-weight-bold">House: <a
-                                                href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name }}</a>
-                                        </p>
-                                    </div>
-                                {% endif %}
+                                <div class="row p-2">
+                                    {% if user.profile.teams_set.first %}
+                                        <div class="col-6 mt-1 mb-0 text-justify">
+                                            <p class="font-weight-bold">Team: <a
+                                                    href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name }}</a>
+                                            </p>
+                                        </div>
+                                        <div class="col-6 text-justify">
+                                            <p class="font-weight-bold">House: <a
+                                                    href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name }}</a>
+                                            </p>
+                                        </div>
+                                    {% endif %}
 
-                                <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
-                                </div>
-                                <div class="col-6 mt-1 text-justify">
-                                    <p class="font-weight-bold">Points: {{ user.profile.points |intcomma }}</p>
-                                </div>
-                                <!--<div class="col-12 mt-1 text-justify">
-                                    <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
+                                    <div class="col-6 mt-1 text-justify">
+                                        <p class="font-weight-bold">Badges: {{ user.profile.get_number_of_badges }}</p>
+                                    </div>
+                                    <div class="col-6 mt-1 text-justify">
+                                        <p class="font-weight-bold">Points: {{ user.profile.points |intcomma }}</p>
+                                    </div>
+                                    <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Rank: {{ user.profile.rank }}</p>
                                 </div>-->
-                                <!--<div class="col-12 mt-1 text-justify">
+                                    <!--<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
                                 </div>-->
-                                <!--<div class="col-12 mt-1 text-justify">
-                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                    <!--<div class="col-12 mt-1 text-justify">
+                                    <p class="font-weight-bold">Susiksha Shells: {{ user.profile.suShells }}</p>
                                 </div>-->
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="social-links text-center  pt-1 pt-md-0 text-center">
+                                    {% if user.profile.instagram %}
+                                        <a href="{{ user.profile.instagram }}" target="_blank"><i
+                                                class="bx bxl-instagram bx-burst-hover bx-lg"></i></a>
+                                    {% endif %}
+                                    {% if user.profile.twitter %}
+                                        <a href="{{ user.profile.twitter }}" target="_blank"><i
+                                                class="bx bxl-twitter bx-burst-hover bx-lg"></i></a>
+                                    {% endif %}
+                                    {% if user.profile.linkedin %}
+                                        <a href="{{ user.profile.linkedin }}" target="_blank"><i
+                                                class="bx bxl-linkedin bx-burst-hover bx-lg"></i></a>
+                                    {% endif %}
+                                    {% if user.profile.github %}
+                                        <a href="{{ user.profile.github }}" target="_blank"><i
+                                                class="bx bxl-github bx-burst-hover bx-lg"></i></a>
+                                    {% endif %}
+                                    {% if user.email %}
+                                        <a href="mailto:{{ user.email }}"><i
+                                                class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
+                                    {% endif %}
+                                    {% if user.profile.okr %}
+                                        <a href="{{ user.profile.okr }}" target="_blank"><i
+                                                class="bx bx-table bx-burst-hover bx-lg"></i></a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <div class="social-links text-center  pt-1 pt-md-0 text-center">
-                                {% if user.profile.instagram %}
-                                    <a href="{{ user.profile.instagram }}" target="_blank"><i
-                                            class="bx bxl-instagram bx-burst-hover bx-lg"></i></a>
-                                {% endif %}
-                                {% if user.profile.twitter %}
-                                    <a href="{{ user.profile.twitter }}" target="_blank"><i
-                                            class="bx bxl-twitter bx-burst-hover bx-lg"></i></a>
-                                {% endif %}
-                                {% if user.profile.linkedin %}
-                                    <a href="{{ user.profile.linkedin }}" target="_blank"><i
-                                            class="bx bxl-linkedin bx-burst-hover bx-lg"></i></a>
-                                {% endif %}
-                                {% if user.profile.github %}
-                                    <a href="{{ user.profile.github }}" target="_blank"><i
-                                            class="bx bxl-github bx-burst-hover bx-lg"></i></a>
-                                {% endif %}
-                                {% if user.email %}
-                                    <a href="mailto:{{ user.email }}"><i
-                                            class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
-                                {% endif %}
-                                {% if user.profile.okr %}
-                                    <a href="{{ user.profile.okr }}" target="_blank"><i
-                                            class="bx bx-table bx-burst-hover bx-lg"></i></a>
-                                {% endif %}
-                            </div>
-                        </div>
-                        </div>
-
 
 
                         <div class="card mb-2">
@@ -120,10 +117,20 @@
 
                                 <div class="row badge-row">
                                     <div class='col-12'>
-                                        <h4 class="lead font-weight-bold text-end"><a
-                                                href="{% url 'user-posts' id=user.id %}"
-                                                class="btn btn-outline-danger btn-sm">{{ user.profile.name | truncatechars:15 }}'s
-                                            Blog Posts</a></h4>
+                                        <h4 class="lead font-weight-bold text-end">
+                                            <p class="text-center mb-3" align="center"><a
+                                                    href="{% url 'user-posts' id=user.id %}"
+                                                    class="btn btn-outline-danger btn-sm">
+                                                {{ user.profile.name | truncatechars:15 }}'s
+                                                Blog Posts</a></p></h4>
+                                        <h1 class="lead font-weight-bold text-start">
+                                            <p class="text-center mb-3" align="center">
+                                                <a
+                                                        href="{% url 'okr-view-data' %}"
+                                                        class="btn btn-outline-danger btn-sm">My OKR
+                                                    {{ user.profile.name | truncatechars:20 }}</a>
+                                            </p>
+                                        </h1>
                                     </div>
                                 </div>
 
@@ -131,110 +138,123 @@
                         </div>
 
                         <div class="card">
-                            <div class="card-header">Points Distribution</div>
+                            <div class="card-header">Points to Upgrade</div>
                             <div class="card-body">
-                                <table class="table table-borderless table-responsive">
+                            <div class=" table-responsive table-light table-hover ">
+                                <table class="table">
                                     <thead>
                                     <tr>
                                         <td>Category</td>
-                                        <td>Points</td>
+                                        <td>Progress</td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for cat,count in query_category %}
+                                    {% for cat,count,max_cat_points in query_category %}
                                         <tr>
-                                            <td>{{ cat }}</td>
-                                            <td>{{ count|intcomma }}</td>
+                                            <td>
+                                                {{ cat }} ({{ count|intdiv:max_cat_points }}%)
+                                            </td>
+                                            <td>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                         style="width:{{ count|intdiv:max_cat_points }}%">
+                                                        Completed {{ count|intdiv:max_cat_points }}%
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
+                            </div>
                         </div>
 
 
+                    </div>
+                    <div class="col-md-8">
+                        <div id="accordion">
+
+                            <div class="card mb-3">
+
+                                <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
+                                                data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
+                                                aria-controls="Profile">
+                                            Update Profile
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="Profile1" class="collapse" aria-labelledby="headingTwo"
+                                     data-parent="#accordion">
+                                    <div class="card-body">
+
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+
+                                            {{ u_form|crispy }}
+                                            {{ p_form|crispy }}
+                                            <div class="form-group">
+                                                <button class="btn btn-block get-started-btn-special" type="submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                                                
+
+                                <div id="Profile">
+                                    <div class="card-body">
+                                        {% for i,j in profile_details.items %}
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0 text-capitalize">{{ i }}</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-dark">
+                                                    {{ j }}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <div id="accordion">
 
-                                <div class="card mb-3">
-                                    <canvas id="myChart" height="400"></canvas>
-                                    <canvas id="myPie" height="400" class="ml-1 mt-1"></canvas>
-                                    <div class="card-header" id="headingTwo">
-                                        <h5 class="mb-0">
-                                            <button class="btn  btn-outline-danger collapsed item-collapse" id="swap"
-                                                    data-toggle="collapse" data-target="#Profile1" aria-expanded="false"
-                                                    aria-controls="Profile">
-                                                Update Profile
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="Profile1" class="collapse" aria-labelledby="headingTwo"
-                                         data-parent="#accordion">
-                                        <div class="card-body">
 
-                                            <form method="POST" enctype="multipart/form-data">
-                                                {% csrf_token %}
-
-                                                {{ u_form|crispy }}
-                                                {{ p_form|crispy }}
-                                                <div class="form-group">
-                                                    <button class="btn btn-block get-started-btn-special" type="submit">
-                                                        Submit
-                                                    </button>
-                                                </div>
-
-                                            </form>
-                                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center wrapper">
+                                    <div class="badge-carousel pricing owl-carousel owl-theme"
+                                         data-aos="zoom-in"
+                                         data-aos-delay="100">
+                                        {% for badge in badges %}
+                                            <div class="box">
+                                                <h3>{{ badge.badges__title }}</h3>
+                                                <img src="/media/{{ badge.badges__logo }}" loading="lazy"
+                                                     title="{{ badge.badges__title }}"
+                                                     alt="{{ badge.badges__title }}"
+                                                     width="80%" class="img-rounded">
+                                                <h4>{{ badge.badges__title__count }}</h4>
+                                            </div>
+                                        {% endfor %}
                                     </div>
 
-                                    <div id="Profile">
-                                        <div class="card-body">
-                                            {% for i,j in profile_details.items %}
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <h6 class="mb-0 text-capitalize">{{ i }}</h6>
-                                                    </div>
-                                                    <div class="col-sm-9 text-dark">
-                                                        {{ j }}
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
-
-
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center wrapper">
-                                        <div class="badge-carousel pricing owl-carousel owl-theme"
-                                             data-aos="zoom-in"
-                                             data-aos-delay="100">
-                                            {% for badge in badges %}
-                                                <div class="box">
-                                                    <h3>{{ badge.badges__title }}</h3>
-                                                    <img src="/media/{{ badge.badges__logo }}" loading="lazy"
-                                                         title="{{ badge.badges__title }}"
-                                                         alt="{{ badge.badges__title }}"
-                                                         width="80%" class="img-rounded">
-                                                    <h4>{{ badge.badges__title__count }}</h4>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <h1 class="lead text-center ">Badges</h1>
-                                </div>
+                            <div class="card-footer">
+                                <h1 class="lead text-center ">Badges</h1>
                             </div>
+                            <canvas id="myChart" height="400"></canvas>
+                                <canvas id="myPie" height="400" class="ml-1 mt-1"></canvas>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section><!-- End Contact Section -->
 

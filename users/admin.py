@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "role", "batch", "phone", "name", "college", "points", "stars")
+    list_display = ("id", "user", "role", "batch", "phone", "name", "college", "points")
     search_fields = ("user__username", "role", "batch")
     list_filter = ("role", "batch")
     list_display_links = ("user", "id")
@@ -73,6 +73,7 @@ class MentionAdmin(admin.ModelAdmin):
 class HouseAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
+    filter_horizontal = ('teams', )
     actions = [csvexport]
 
 
@@ -80,6 +81,7 @@ class HouseAdmin(admin.ModelAdmin):
 class TeamsAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
+    filter_horizontal = ('members', )
     actions = [csvexport]
 
 

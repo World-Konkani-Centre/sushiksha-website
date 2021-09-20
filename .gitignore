@@ -4,6 +4,7 @@
 media
 db.sqlite3
 myenv
+*/migrations/0*
 venv
 djangoProject/settings.py
 users/signals.py

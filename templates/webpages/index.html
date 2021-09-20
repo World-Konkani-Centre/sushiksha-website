@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block loader %}
- <div id="preloader"></div>
+   <div id="preloader">
+  <img src="{% static 'assets/img/2x-plain.gif' %}" class="img-fluid">
+  </div>
 {% endblock loader %}
  
 {% block content %}
@@ -15,7 +17,7 @@
             {% if user.is_authenticated %}
                 <a href="https://sophists-workspace.slack.com/ssb/redirect" class="btn-get-started" target="_blank">Go
                     to Sophists</a>
-                <a href="https://us02web.zoom.us/j/89238479481?pwd=VG5SRzZlUjBWQUpBd1NEbm4yS2Z1Zz09" target="_blank"
+                <a href="https://us02web.zoom.us/j/89238479481?pwd=OFptaDhyV0VLU1ZWSWdYeUFZdkhOZz09" target="_blank"
                    class="btn-get-started">Go to Pair</a>
                 <a href="{% url 'leaderboard' %}" class="btn-get-started">Go to Leaderboard</a>
 
@@ -40,7 +42,6 @@
                     <div class="col-lg-6 video-box align-self-baseline order-1 order-lg-2" data-aos="fade-left"
                          data-aos-delay="100">
                         <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid" alt="">
-                        {#                        <a href="https://youtu.be/3pDMLt4m7TU" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>#}
                     </div>
 
                     <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
@@ -53,11 +54,13 @@
                             scholars of VKSSF who are determined to thrive and be successful in their area of study and
                             career. Mentors of Sushiksha Program are experienced professionals who were once the
                             scholars of VKSSF and have lived through their own share of successes and failures but
-                            believe in empowering the scholars early on in their career path.</p>
+                            believe in empowering the scholars early on in their career path.
+                        </p>
                         <p>
                             Sushiksha thrives because of the dedication of its active mentees and mentors – who have
                             contributed countless hours of work to shape their future and make it a highly productive
-                            and focused workspace. </p>
+                            and focused workspace.
+                        </p>
                         <a href="{% url 'about' %}" class="get-started-btn-special">Learn More</a>
                     </div>
                 </div>
@@ -95,32 +98,6 @@
 
             </div>
         </section><!-- End Counts Section -->
-
-        {#        <!-- ======= F.A.Q Section ======= -->#}
-        {#        <section id="faq" class="faq">#}
-        {#            <div class="container" data-aos="fade-in">#}
-        {##}
-        {#                <div class="section-title">#}
-        {#                    <h2>F.A.Q</h2>#}
-        {#                    <p>Frequently Asked questions</p>#}
-        {#                </div>#}
-        {##}
-        {#                <ul class="faq-list">#}
-        {#                    {% for faq in faqs %}#}
-        {#                        <li>#}
-        {#                            <a data-toggle="collapse" class="collapsed" href="#faq{{ forloop.counter }}">{{ faq.question }}<i class="icofont-simple-up"></i></a>#}
-        {#                            <div id="faq{{ forloop.counter }}" class="collapse" data-parent=".faq-list">#}
-        {#                                <p>#}
-        {#                                    {{ faq.answer }}#}
-        {#                                </p>#}
-        {#                            </div>#}
-        {#                        </li>#}
-        {#                    {% endfor %}#}
-        {##}
-        {#                </ul>#}
-        {##}
-        {#            </div>#}
-        {#        </section><!-- End F.A.Q Section -->#}
 
 
         <section id="blog" class="blog">

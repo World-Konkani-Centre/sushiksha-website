@@ -39,9 +39,10 @@ def badge_claim(request):
     }
     return render(request, 'badges/badge_claim_list.html', context=context)
 
+
 def badge_claim_form(request, pk):
     form = get_object_or_404(BadgeClaim, id=pk)
     context = {
-        'form':form
+        'form': form
     }
     return render(request, 'badges/badge_claim_form.html', context=context)

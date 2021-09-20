@@ -5,7 +5,6 @@ from users.models import Profile
 from tinymce import HTMLField
 from PIL import Image
 
-
 class Categories(models.Model):
     title = models.CharField(max_length=20)
 

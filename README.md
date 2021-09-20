@@ -76,6 +76,7 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     git pull
     git branch
     git checkout develop
+    
     ```
    
 5. Create a `settings.py` in `sushiksha-website/djangoProject/`

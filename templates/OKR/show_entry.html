@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %}
+{% block style %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css"/>
+
+    <style>
+        .modal-backdrop {
+            z-index: -1;
+        }
+
+    </style>
+{% endblock style %}
+{% block content %}
+    {% if show %}
+
+        <div class="modal fade" id="entrycreatemodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="" id="entryform" >
+                        {% csrf_token %}
+                        {{ form_entry | crispy }}
+                        <button type="submit" class="btn btn-danger btn-block btn-md" name="entry-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="objectivecreatemodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New Objective</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form_objective | crispy }}
+                        <button type="submit" class="btn btn-danger btn-block btn-md" name="objective-btn">Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="krcreatemodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New KR</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form_kr | crispy }}
+                        <button type="submit" class="btn btn-danger btn-block btn-md" name="kr-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>OKR Entries of {{user.profile.name | truncatechars:20}} <a href="{% url 'user-detail' pk=user.id %}"><i class="bx bxs-user"></i></a></h2>
+                    
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+
+                        {% if not show %}
+                        <li><a href="{% url 'okr-view-data' %}">OKR</a></li>
+                        <li>Entries of {{user.profile.name | truncatechars:20}}</li>
+                        {% else %}
+                        <li>OKR</li>
+                        {% endif %}
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="" class="">
+            <div class="container">
+            {% if show %}
+                <div class="btn-group mb-5">
+                    <button type="button" class="objective-btn btn btn-danger mr-2" data-backdrop="false"
+                            data-toggle="modal"
+                            data-target="#objectivecreatemodal">Create Objective
+                    </button>
+                    <button type="button" class="kr-btn btn btn-danger mr-2" data-backdrop="false" data-toggle="modal"
+                            data-target="#krcreatemodal">Create new KR
+                    </button>
+                    <button type="button" class="entry-btn btn btn-danger mr-2" data-backdrop="false" data-toggle="modal"
+                            data-target="#entrycreatemodal">Create Entry
+                    </button>
+                </div>
+
+
+                <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-sm">
+                    <thead>
+                    <tr>
+                        <th>Objective</th>
+                        <th>Key result</th>
+                        <th>Percentage</th>
+                        <th>Hours</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in krs %}
+                        <tr>
+                            <td>{{ entry.objective.objective }}</td>
+                            <td>{{ entry.key_result }}</td>
+                            <td>{{ entry.percentage }}</td>
+                            <td>{{ entry.hours }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+
+                <p class="mb-2">
+                    <button class="btn btn-dark btn-sm " type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filter options <span class="icofont-arrow-down"></span>
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-3">
+                        <form method="GET" class="mb-3" class="form-inline">
+
+                            {{ filter_form.form | crispy }}
+
+                            <button class="btn btn-block btn-dark" type="submit">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if not show %}
+                
+                <p class="mb-2">
+                    <button class="btn btn-dark btn-sm " type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filter options <span class="icofont-arrow-down"></span>
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-3">
+                        <form method="GET" class="mb-3" class="form-inline">
+
+                            {{ user_filter_form.form | crispy }}
+
+                            <button class="btn btn-block btn-dark" type="submit">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-sm">
+
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Objective</th>
+                        <th>Key result</th>
+                        <th>Update</th>
+                        <th>Time spent</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in data %}
+                        <tr>
+                            <td>{{ entry.date_time }}</td>
+                            <td>{{ entry.key_result.objective }}</td>
+                            <td>{{ entry.key_result.key_result }}</td>
+                            <td>{{ entry.update }}</td>
+                            <td>{{ entry.time_spent }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                 <div class="btn-group  justify-content-md-end" role="group">
+                          {% if data.has_previous %}
+                               <a href="?page=1" class="btn btn-outline-dark">First</a>
+                            <a href="?page={{ data.previous_page_number }}" class="btn btn-outline-dark">Previous</a>
+                            {% endif %}
+
+                            {% for num in data.paginator.page_range %}
+                                {% if data.number == num %}
+                                    <a href="?page={{ num }}" class="btn btn-dark">{{ num }}</a>
+                                {% elif num > data.number|add:'-3' and num < data.number|add:'3' %}
+                                    <a href="?page={{ num }}" class="btn btn-outline-dark">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if data.has_next %}
+                                <a href="?page={{ data.next_page_number }}" class="btn btn-outline-dark">Next</a>
+                                <a href="?page={{ data.paginator.num_pages }}" class="btn btn-outline-dark">Last</a>
+                            {% endif %}
+                </div>
+
+                </div>
+
+              
+
+                {% comment %} {% if 'key_result' in request.get_full_path %}
+
+
+                           {% if data.has_previous %}
+                                <li><a href="{{ request.GET }}&page=1">First</a></li>
+                                <li><a href="{{ request.get_full_path }}&page={{ data.previous_page_number }}">Previous</a></li>
+                            {% endif %}
+
+                            {% for num in data.paginator.page_range %}
+                                {% if data.number == num %}
+                                    <li class="active"><a href="{{ request.get_full_path }}&page={{ num }}">{{ num }}</a></li>
+                                {% elif num > data.number|add:'-3' and num < data.number|add:'3' %}
+                                    <li><a href="{{ request.get_full_path }}&page={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if query.has_next %}
+                                <li><a href="{{ request.get_full_path }}&page={{ data.next_page_number }}">Next</a></li>
+                                <li><a href="{{ request.get_full_path }}&page={{ data.paginator.num_pages }}">Last</a></li>
+                            {% endif %} {% endcomment %}
+
+                            
+                {% comment %} {% else %} {% endcomment %}
+
+
+
+                {% comment %} {% endif %} {% endcomment %}
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $(function () {
+            $("#id_date_time").datetimepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+            }).attr("autocomplete", "off");
+        });
+    </script>
+
+    <script>
+        $('#objectivecreatemodal').on('hide.bs.modal', function (e) {
+            $('#main').css("opacity", "1")
+            $("#footer").css("opacity", "1")
+        })
+        $('#objectivecreatemodal').on('show.bs.modal', function (e) {
+            $('#main').css("opacity", "0.2")
+            $('#footer').css("opacity", "0.2")
+        })
+        $('#entrycreatemodal').on('hide.bs.modal', function (e) {
+            $('#main').css("opacity", "1")
+            $("#footer").css("opacity", "1")
+        })
+        $('#entrycreatemodal').on('show.bs.modal', function (e) {
+            $('#main').css("opacity", "0.2")
+            $('#footer').css("opacity", "0.2")
+        })
+        $('#krcreatemodal').on('hide.bs.modal', function (e) {
+            $('#main').css("opacity", "1")
+            $("#footer").css("opacity", "1")
+        })
+        $('#krcreatemodal').on('show.bs.modal', function (e) {
+            $('#main').css("opacity", "0.2")
+            $('#footer').css("opacity", "0.2")
+        })
+    </script>
+
+    <script>
+    $("#id_objective").change(function(){
+        const obj_id = $(this).val();
+        console.log(obj_id)
+        $.ajax({
+            url:"",
+            data:{
+                'objective_id':obj_id
+            },
+            success: function(val){
+                console.log(val)
+                let html_data = '<option value="">---------</option>';
+                val.forEach(function (krs) {
+                    html_data += `<option value="${krs.id}">${krs.key_result}</option>`
+                });
+                $("#id_key_result").html(html_data)
+            }
+        });
+    });
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"
+            integrity="sha512-s5u/JBtkPg+Ff2WEr49/cJsod95UgLHbC00N/GglqdQuLnYhALncz8ZHiW/LxDRGduijLKzeYb7Aal9h3codZA=="
+            crossorigin="anonymous"></script>
+{% endblock script %}

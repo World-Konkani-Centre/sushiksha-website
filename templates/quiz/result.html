@@ -39,8 +39,8 @@
                     </p>
                     {% include 'quiz/correct_answer.html' %}
                     <p><strong>{% trans "Explanation" %}:</strong></p>
-                    <div class="well " style="background-color: #fcf8e3;">
-                        <p>{{ previous.previous_question.explanation }}</p>
+                    <div class="well p-2 rounded" style="background-color: #fcf8e3;">
+                        {{ previous.previous_question.explanation | safe}}
                     </div>
                     <hr>
 
@@ -101,8 +101,8 @@
                             <img src="{{ question.image.url }}" class='img-fluid img-thumbnail rounded mx-auto d-block' height="400px" width="auto"
                                  loading='lazy'/>
                         {% endif %}
-                        <div class="well " style="background-color: #fcf8e3;">
-                            <p>{{ question.explanation|safe }}</p>
+                        <div class="well p-2 rounded bg-warning">
+                            {{ question.explanation | safe }}
                         </div>
 
                         <hr>
@@ -114,3 +114,8 @@
         </section>
     </main>
 {% endblock %}
+
+{% block script %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock script %}

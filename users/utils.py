@@ -1,14 +1,16 @@
+import datetime
 import re
+
 import numpy as np
+import slack
 from django.core.mail import send_mail
+from django.db.models import Sum
 from django.db.models.functions import Lower
 from django.template import loader
-import slack
-from djangoProject.settings import SLACK_TOKEN
-from .models import BadgeCategory, Reward
-from django.db.models import Count, Sum
-import datetime
 from django.utils import timezone
+
+from djangoProject.settings import SLACK_TOKEN
+from .models import BadgeCategory, Reward, Teams, House, UPGRADE_POINTS
 
 
 def collect_titles(badges):
@@ -111,6 +113,7 @@ def send_reward_slack(array):
     badge = array[4]
     name = array[5]
     image = array[6]
+    slack_id = array[7]
     message = {
         'channel': '#sushiksha-badges',
         "blocks": [
@@ -141,7 +144,7 @@ def send_reward_slack(array):
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": ":wkc-badge1: <https://sushiksha.konkanischolarship.com/user/rewards/|Sushiksha Badges>"
+                        "text": f":wkc-badge1: <https://sushiksha.konkanischolarship.com/user/rewards/|Sushiksha Badges> | <@{slack_id}>"
                     }
                 ]
             },
@@ -194,3 +197,22 @@ def get_category_points_data(user, categories):
     for q in query_category:
         result[categories.index(q['badges__category__name'])] = q['badges__points__sum']
     return result
+
+
+def update_profile_points(profile, _badge):
+    profile.points = profile.points + _badge.points
+    if profile.total_points == 0:
+        profile.total_points = max(0, profile.points)
+    else:
+        profile.total_points += _badge.points
+    categories = list(BadgeCategory.objects.all().order_by(Lower('name')).values_list('name', flat=True))
+    points = get_category_points_data(profile.user, categories)
+    if profile.rank == "Senator" and points >= UPGRADE_POINTS[1]:
+        profile.rank = "Caesar"
+    elif profile.rank == "Sophist" and points >= UPGRADE_POINTS[0]:
+        profile.rank = "Senator"
+    if profile.rank == "Caesar" and profile.total_points >= 1000:
+        profile.suShells += profile.total_points / 1000
+        profile.total_points = profile.total_points % 1000
+    profile.save()
+

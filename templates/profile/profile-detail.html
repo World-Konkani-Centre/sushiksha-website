@@ -1,12 +1,13 @@
-{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {%
-load crispy_forms_tags %} {% load humanize %} {% block main_style %}
+{% extends 'base.html' %} {% load static %} {% load crispy_forms_filters %} {% load crispy_forms_tags %} {% load humanize %} {% load mathfilters %}
+{% block main_style %}
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
             integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
             crossorigin="anonymous"
     />
-{% endblock main_style %} {% block content %}
+{% endblock main_style %}
+ {% block content %}
 
     <main id="main">
         <section id="breadcrumbs" class="breadcrumbs">
@@ -24,25 +25,18 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
         </section>
         <!-- End Breadcrumbs -->
 
-        <!-- ======= Contact Section ======= -->
         <section id="" class="">
             <div class="profile container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-md-4">
-                        {% if user.profile.role %}
-                            <div class="card mb-4 featured-mentor">
-                        {% else %}
-                            <div class="card mb-4">
-                        {% endif %}
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img
-                                        src="{{ user.profile.image.url }}"
-                                        loading="lazy"
-                                        alt="Admin"
-                                        class="rounded-circle"
-                                        width="150"
-                                />
+
+                       <div class="card mb-4 user-profile user-level-2">
+                        <div class="card-body p-0">
+                        {% comment %} <div class="cardheader">
+                        </div> {% endcomment %}
+                        <div class="">
+                             <img alt="" src="{{ user.profile.image.url }}">
+                        </div>
                                 <div class="mt-3">
                                     <h4 class="h4">{{ user.username }}</h4>
                                     {% if user.profile.role %}
@@ -51,8 +45,7 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                         <p class="text-secondary mb-1">Mentee</p>
                                     {% endif %}
                                 </div>
-                            </div>
-                            <div class="row">
+                            <div class="row p-2">
                                 {% if user.profile.teams_set.first %}
                                     <div class="col-6 mt-1 mb-0 text-justify">
                                         <p class="font-weight-bold">
@@ -89,7 +82,7 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                     <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
                                 </div>-->
                                 <!--<div class="col-12 mt-1 text-justify">
-                                    <p class="font-weight-bold">Stars: {{ user.profile.stars }}</p>
+                                    <p class="font-weight-bold">Sushiksha Shells: {{ user.profile.suShells }}</p>
                                 </div>-->
                             </div>
                         </div>
@@ -129,33 +122,47 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                                 <div class="row badge-row">
                                     {% if not user.id == request.user.id %}
                                         <div class="col-12">
-                                            <h1 class="lead font-weight-bold text-start">
+                                            <h1 class="lead font-weight-bold">
+                                                <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'new-badge' user.id %}"
                                                         class="btn btn-outline-danger btn-sm">Give a badge
-                                                    to {{ user.profile.name | truncatechars:20 }}</a
-                                                >
+                                                    to {{ user.profile.name | truncatechars:20 }} </a>
+                                                </p>
                                             </h1>
-                                        </div>
-                                        <div class="col-12">
-                                            <h1 class="lead font-weight-bold text-end">
+                                            <h1 class="lead font-weight-bold">
+                                                <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'user-posts' id=user.id %}"
-                                                        class="btn btn-outline-danger btn-sm"
-                                                >{{ user.profile.name | truncatechars:20 }}'s Blog
-                                                    Posts</a
-                                                >
+                                                        class="btn btn-outline-danger btn-sm">
+                                                    {{ user.profile.name | truncatechars:20 }}'s Blog
+                                                    Posts</a>
+                                                </p>
+                                            </h1>
+
+                                            <h1 class="lead font-weight-bold">
+                                                <p class="text-center mb-3" align="center">
+                                                <a
+                                                        href="{% url 'okr-view-id' pk=user.id %}"
+                                                        class="btn btn-outline-danger btn-sm">View Airtable of
+                                                    {{ user.profile.name | truncatechars:20 }}</a>
+                                                </p>
                                             </h1>
                                         </div>
                                     {% else %}
                                         <div class="col-12">
-                                            <h1 class="lead font-weight-bold text-end">
+                                            <h1 class="lead font-weight-bold">
                                                 <a
                                                         href="{% url 'user-posts' id=user.id %}"
-                                                        class="btn btn-outline-danger"
-                                                >{{ user.profile.name | truncatechars:20 }}'s Blog
-                                                    Posts</a
-                                                >
+                                                        class="btn btn-outline-danger btn-sm">
+                                                    {{ user.profile.name | truncatechars:20 }}'s Blog
+                                                    Posts</a>
+                                            </h1>
+                                        <h1 class="lead font-weight-bold">
+                                                <a
+                                                        href="#"
+                                                        class="btn btn-outline-danger btn-sm">View Airtable of
+                                                    {{ user.profile.name | truncatechars:20 }}</a>
                                             </h1>
                                         </div>
                                     {% endif %}
@@ -164,28 +171,38 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                         </div>
 
                         <div class="card">
-                            <div class="card-header">Points Distribution</div>
-                            <div class="card-body">
-                                <table class="table table-borderless table-responsive">
+                            <div class="card-header">Points to Upgrade</div>
+                            <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-light table-hover">
                                     <thead>
                                     <tr>
                                         <td>Category</td>
-                                        <td>Points</td>
+                                        <td>Progress</td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for cat,count in query_category %}
+                                    {% for cat,count,max_cat_points in query_category %}
                                         <tr>
-                                            <td>{{ cat }}</td>
-                                            <td>{{ count|intcomma }}</td>
+                                            <td>
+                                                {{ cat }} ({{ count|intdiv:max_cat_points }}%)
+                                            </td>
+                                            <td>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                         style="width:{{ count|intdiv:max_cat_points }}%">
+                                                         Completed {{ count|intdiv:max_cat_points }}%
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
-                        </div>
-
+</div>
                         <div class="col-md-8">
                             <div id="accordion">
                                 <div class="card mb-3">
@@ -379,7 +396,6 @@ load crispy_forms_tags %} {% load humanize %} {% block main_style %}
                 </div>
             </div>
         </section>
-        <!-- End Contact Section -->
 
     </main>
     <!-- End #main -->

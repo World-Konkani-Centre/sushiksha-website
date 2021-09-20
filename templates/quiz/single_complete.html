@@ -28,7 +28,7 @@
 
             <section id="" class="">
             <div class="container">
-            <p>{{ quiz.description }}</p>
+            {{ quiz.description | safe}}
             <p>{% trans "You have already taken this test and only one test is permitted for a user" %}.</p>
         {% else %}
             <p>{% trans "This exam is only accessible to signed in users" %}.</p>
@@ -37,3 +37,8 @@
         </section>
     </main>
 {% endblock %}
+
+{% block script %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock script %}

@@ -37,6 +37,8 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('goodies/', include('goodies.urls')),
     url('practice/', include('quiz.urls')),
+    url('coding/', include('coding.urls')),
+    url('okr/', include('OKR.urls')),
 ]
 
 if settings.DEBUG:

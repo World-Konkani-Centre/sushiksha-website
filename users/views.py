@@ -1,5 +1,6 @@
 import csv
 import datetime
+import re
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -10,12 +11,14 @@ from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from djqscsv import render_to_csv_response
-
+from OKR.models import Entry
 from .forms import UserUpdateForm, ProfileUpdateForm, RewardForm, UserRegisterForm, BadgeForm, RangeRequestForm, \
     UserRangeRequestForm, MultiBadgeForm
 from .models import Badge, Profile, House, Teams, Reward, BadgeCategory, Mentions
 from .utils import email_check, user_chart_data, get_category_points_data
+from .models import UPGRADE_POINTS
 
 color = ['#892cdc', '#9d0191',
          '#fd3a69',
@@ -66,6 +69,13 @@ def profile(request):
     user = get_object_or_404(User, id=request.user.id)
     categories, data = user_chart_data(user)
     result = get_category_points_data(user, categories)
+    max_cat_points = None
+    if user.profile.rank == 'Sophist':
+        max_cat_points = UPGRADE_POINTS[0]
+    elif user.profile.rank == 'Senator':
+        max_cat_points = UPGRADE_POINTS[1]
+    else:
+        max_cat_points = result
     zipped_data = zip(categories, data, color)
     profile_details = {}
     badges = Reward.objects.filter(user=request.user).values('badges__title', 'badges__logo').annotate(
@@ -107,7 +117,7 @@ def profile(request):
         'profile_details': profile_details,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories, result),
+        'query_category': zip(categories, [i * 100 for i in result], max_cat_points),
         'query_point_distribution': result
     }
     return render(request, 'profile/profile.html', context=context)
@@ -152,6 +162,13 @@ def user_detail_view(request, pk):
     badges = Reward.objects.filter(user=user).values('badges__title', 'badges__logo').annotate(Count('badges__title'))
     categories, data = user_chart_data(user)
     result = get_category_points_data(user, categories)
+    max_cat_points = None
+    if user.profile.rank == 'Sophist':
+        max_cat_points = UPGRADE_POINTS[0]
+    elif user.profile.rank == 'Senator':
+        max_cat_points = UPGRADE_POINTS[1]
+    else:
+        max_cat_points = result
     zipped_data = zip(categories, data, color)
     context = {
         'title': f"{user.username}",
@@ -159,7 +176,7 @@ def user_detail_view(request, pk):
         'badges': badges,
         'data_query': zipped_data,
         'color': color,
-        'query_category': zip(categories, result),
+        'query_category': zip(categories, [i * 100 for i in result], max_cat_points),
         'query_point_distribution': result
     }
 
@@ -196,7 +213,7 @@ def create_badge(request, id):
                     form.instance.user = user
                     form.instance.awarded_by = request.user.username
                     form.save()
-                    messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                    messages.success(request, 'Your badge has been awarded successfully')
                     return redirect('trainers')
 
     context = {
@@ -227,7 +244,7 @@ def badge(request):
                 else:
                     row.awarded_by = request.user.username
                 row.save()
-                messages.info(request, 'Your Badge submission is under review, it will be updated shortly')
+                messages.success(request, 'Your badge has been awarded successfully')
                 return redirect('trainers')
     context = {
         'form': form,
@@ -238,18 +255,23 @@ def badge(request):
 
 @login_required()
 def multi_badge(request):
-    if request.user.is_superuser:
+    if request.user.is_superuser or request.user.profile.initiator:
         form = MultiBadgeForm()
         if request.method == 'POST':
             form = MultiBadgeForm(request.POST)
             if form.is_valid():
                 profiles = form.cleaned_data.get('profiles')
-                badge = form.cleaned_data.get('badge')
+                badge_obj = form.cleaned_data.get('badge')
                 awarded = form.cleaned_data.get('awarded_by')
                 describe = form.cleaned_data.get('description')
-                badge_obj = get_object_or_404(Badge, id=int(badge))
-                for id in profiles:
-                    Reward.objects.create(user=get_object_or_404(User, id=int(id)), description=describe,
+
+                if request.user.profile.initiator and not request.user.is_superuser:
+                    awarded = request.user.profile.name
+                    if badge_obj.featured:
+                        messages.error(request, f'{badge_obj.title} can be awarded only by the ADMIN')
+                        return redirect('multiple-badge')
+                for user in profiles:
+                    Reward.objects.create(user=user, description=describe,
                                           awarded_by=awarded, badges=badge_obj)
                 messages.success(request, f'Badge {badge_obj.title} awarded to {len(profiles)} users')
                 return redirect('multiple-badge')
@@ -591,6 +613,89 @@ def get_single_user_file_large(request):
     else:
         form = UserRangeRequestForm()
         heading = "Single User Data"
+        context = {
+            'form': form,
+            'heading': heading
+        }
+        return render(request, 'analytics/logs-users.html', context=context)
+
+
+@csrf_exempt
+def slack_badge(request):
+    if request.POST:
+        try:
+            user_id = request.POST.get('user_id')
+            text = request.POST.get('text')
+            if len(text) == 0 or len(text.split(' ')) == 0:
+                query = Badge.objects.filter(featured=False)
+                message = ""
+                for _badge in query:
+                    message = message + _badge + '\n'
+                return HttpResponse(message)
+            given_to_id = re.findall(r"<(.*?)\|", text)[0]
+            sender = User.objects.filter(profile__slack_id=user_id).first()
+            receiver = User.objects.filter(profile__slack_id=given_to_id[1:]).first()
+            quotation_find = re.findall(r"'(.*?)'", text)
+            badge_name = quotation_find[0]
+            badge = Badge.objects.filter(title__icontains=badge_name).first()
+            message = quotation_find[1]
+            if len(message) < 25:
+                return HttpResponse("Message length must be at least 25 characters")
+            elif badge is None:
+                return HttpResponse("Badge entry is not found use: "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif sender is None:
+                return HttpResponse("Your Slack Id not found in website, contact the admin or use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif receiver is None:
+                return HttpResponse("Receiver Slack Id is not found in website, contact the admin or use "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            elif badge.featured:
+                return HttpResponse("*Admin only* badges cannot be awarded here use please use: "
+                                    "https://sushiksha.konkanischolarship.com/user/badge/ to award the badge")
+            Reward.objects.create(user=receiver, description=message,
+                                  awarded_by=sender.profile.name, badges=badge)
+            return HttpResponse(
+                "Badge " + str(badge) + "has been sent to " + str(receiver.profile.name) + " and entry will be "
+                                                                                           "created shortly in "
+                                                                                           "https://sushiksha"
+                                                                                           ".konkanischolarship.com"
+                                                                                           "/user/rewards/")
+        except:
+            return HttpResponse("Invalid input, Please follow this command \n `/badge 'badge-name' @user 'message'` ")
+
+
+def delete_rewards(request):
+    rewards = Reward.objects.all()
+
+    for item in rewards:
+        item.delete()
+
+    return redirect('home')
+
+
+@login_required
+def okr_weekly(request):
+    if request.POST:
+        form = RangeRequestForm(request.POST)
+        if form.is_valid():
+            beginning = form.cleaned_data['beginning']
+            end = form.cleaned_data['end']
+            queryset = Entry.objects.filter(date_time__gt=beginning, date_time__lte=end
+                                            ).values('user__username', 'user__profile__name', 'user__profile__batch',
+                                                     'key_result__objective',
+                                                     'key_result__key_result', 'update', 'date_time'
+                                                     , 'time_spent').order_by('user__username')
+            return render_to_csv_response(queryset, filename='Sushiksha-OKR' + str(datetime.date.today()),
+                                          field_header_map={'user__username': 'Username','user__profile__name':'Name',
+                                                            'user__profile__batch': 'Batch',
+                                                            'key_result__objective': 'Objective',
+                                                            'key_result__key_result': 'KR', 'update': 'Update',
+                                                            'date_time': "Date and Time",
+                                                            'time_spent': 'Time Spent'})
+    else:
+        form = RangeRequestForm()
+        heading = "OKR Data"
         context = {
             'form': form,
             'heading': heading

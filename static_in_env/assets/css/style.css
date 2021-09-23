@@ -1299,6 +1299,8 @@ section {
 .team .member .member-img {
     position: relative;
     overflow: hidden;
+    height: 255px;
+    width: 255px;
 }
 
 .team .member .social {
@@ -2473,8 +2475,7 @@ section {
 
 .table td,
 .table th {
-    vertical-align: middle;
-    !important;
+    vertical-align: middle!important;
 }
 
 .badge {
@@ -2632,7 +2633,7 @@ section {
 
 .avatar {
     color: #fff;
-    background-color: #adb5bd;
+    background-color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2644,7 +2645,6 @@ section {
 
 .avatar img {
     width: 100%;
-    border-radius: 50%;
 }
 
 .avatar+.avatar-content {

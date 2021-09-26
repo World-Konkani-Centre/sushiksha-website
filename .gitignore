@@ -1,7 +1,8 @@
 # Mac
 .DS_Store
 .idea
-media
+media/*
+!media/default.jpg
 db.sqlite3
 myenv
 */migrations/0*

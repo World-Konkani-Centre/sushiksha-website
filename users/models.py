@@ -69,6 +69,11 @@ class Profile(models.Model):
     rank = models.CharField(max_length=10, choices=RANK, default='Sophist')
 
     def __str__(self):
+        if self.name:
+            try:
+                return f'{self.name} - {self.teams.name}'
+            except:
+                return f'{self.name}'
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):

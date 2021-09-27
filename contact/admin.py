@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Contact, Testimonial, OneOneSession
+from .models import Contact, Poll, Testimonial, OneOneSession
 
 
 # Events, , Faq, Gallery
 
+admin.site.register(Poll)
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):

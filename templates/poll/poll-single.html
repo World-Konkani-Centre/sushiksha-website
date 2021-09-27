@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block loader %}
+   <div id="preloader">
+  <img src="{% static 'assets/img/2x-plain.gif' %}" class="img-fluid">
+  </div>
+{% endblock loader %}
+
+{% block content %}
+
+    <main id="main">
+
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{{title}}</h2>
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'poll' %}">Poll</a></li>
+            <li>{{title}}</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= session Section ======= -->
+    <section id="session" class="session">
+
+      <div class="container" data-aos="fade-up">
+
+            {{poll.embed_tag | safe}}
+
+      </div>
+
+    </section>
+
+    </main><!-- End #main -->
+
+{% endblock content %}

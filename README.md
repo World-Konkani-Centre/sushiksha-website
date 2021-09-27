@@ -79,13 +79,8 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     
     ```
    
-5. Create a `settings.py` in `sushiksha-website/djangoProject/`
-
-    Copy paste the code from below document to `settings.py`
-    
-    [settings.py](https://github.com/18praneeth/sushiksha-website/blob/master/djangoProject/settings.py)
-    
-    Change the config parameters,
+5.     
+    Change the config parameters (Optional, only if you want to enable mail sending functionality)
     ```python
    
    SECRET_KEY = 'Enter random character string'
@@ -95,7 +90,8 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
 
     ```
    
-   comment line #44 of users/signals.py (send_email.delay(array)) during development and uncomment before sending PR
+   comment line #45 (If you are using badge giving feature other leave as it is) of users/signals.py (send_email.delay(array)) during development and uncomment before sending PR
+   
 
 6. Make migrations/ Create db.sqlite3
 
@@ -125,7 +121,6 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
     
 From your `master` branch or your main branch that you are working on, give a PR to our `develop` branch.
 
-Developers should create a folder /media and put an image named `default.jpg` to avoid errors in creating superuser.
 
 `!IMPORTANT`: Don't give a PR to the master branch
 We only accept PR's to `develop` branch.
@@ -136,7 +131,9 @@ We only accept PR's to `develop` branch.
    Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
    While sending the PR please mention the issue in the Comment.
 
-**Note: PR's are accepted that are sent only by Sushiksha members.**
+Anyone can Contribute to the site, This repo is also part of Hactober fest, so changes ranging from small css changes to extra backend app is acceptable.
+
+Feel free to open the discussion and Issues.
 
 ## License
 [Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)

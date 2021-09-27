@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                <h2>{{title}}</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'poll' %}">Poll</a></li>
+                    <li>{{title}}</li>
+                </ol>
+                </div>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+        <section id="about" class="container">
+            <div class="container" data-aos="fade-down">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <form method='POST'>
+                    {% csrf_token %}
+                        <div class="form-group">
+                          <label for="passw">Passowrd</label>
+                          <input type="number"
+                            class="form-control" name="passw" id="passw" >
+                          <small id="helpId" class="form-text text-muted">Enter the passcode of the poll</small>
+                        </div>
+                        <button type='submit' class='btn btn-danger btn-block'>Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+{% endblock content %}
+

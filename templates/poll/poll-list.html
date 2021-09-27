@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block loader %}
+   <div id="preloader">
+  <img src="{% static 'assets/img/2x-plain.gif' %}" class="img-fluid">
+  </div>
+{% endblock loader %}
+
+{% block content %}
+
+    <main id="main">
+
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Poll</h2>
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>Poll</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= session Section ======= -->
+    <section id="session" class="session">
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4" data-aos="fade-left">
+
+        {% for item in queryset %}
+
+          <div class="col-lg-6 col-md-12" data-aos="zoom-in" data-aos-delay="100">
+            <div class="box">
+                <div class="row">
+                        <h2 style="color: {{item.color}};">{{item.title}}</h2>
+                        <p class="text-sm">{{item.overview}}</p>
+
+                        <div>
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'vote' id=item.id passw=item.password %}" class="btn-buy" >Vote Now!!</a>
+                            {% else %}
+                                {% if item.password_enable %}
+                                    <a href="{% url 'auth-vote' id=item.id %}" class="btn-buy" >Vote Now!!</a>
+                                {% else %}
+                                    <a href="{% url 'vote' id=item.id passw=item.password %}" class="btn-buy" >Vote Now!!</a>
+                                {% endif %}
+                                
+                            {% endif %}
+                        </div>
+                        
+                </div>
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+    </section>
+
+    </main><!-- End #main -->
+
+{% endblock content %}

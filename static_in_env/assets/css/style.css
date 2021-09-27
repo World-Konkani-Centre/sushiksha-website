@@ -2790,3 +2790,29 @@ section {
     background: #fa163f;
     color: #fff;
 }
+
+.over-image{
+    position: absolute; 
+    top : 15%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.illustration{
+    margin-top: -20px;
+}
+
+@media (max-width: 767px){
+    .over-image {
+        position: absolute; 
+        top: 20%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        font-size: 13px;
+    }
+
+    .illustration{
+        margin-top: 20%;
+    }
+    
+}

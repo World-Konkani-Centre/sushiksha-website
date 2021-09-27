@@ -4,16 +4,18 @@
 
     <main id="main">
         <!-- ======= Breadcrumbs ======= -->
-        <div class="breadcrumbs" data-aos="fade-in">
-            <div class="container">
-                <h2>{{ error_no }}</h2>
+        <div class="breadcrumbs " data-aos="fade-in" >
+            <div class="container text-center">                
+                <div class="text-center over-image" > 
+                 <!-- <h2>{{ error_no }}</h2> -->
                 <h3>{{ error_detail }}</h3>
                 <p class="mb-3 mt-1">It looks like you found a glitch in the matrix...</p>
-
+                <button class="btn btn-outline-danger" href="{% url 'home' %}">&larr; Back to Home page</button>
+                </div>
                
-                <img src="{% static 'assets/img.404_illustration.png' %}" class="" alt="">
+                <img class="illustration img-fluid" src="{% static 'assets/img/404_illustration.png' %}" class="w-50 " alt="">
 
-                <a href="{% url 'home' %}">&larr; Back to Home page</a>
+                
 
             </div>
         </div><!-- End Breadcrumbs -->

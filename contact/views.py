@@ -81,7 +81,7 @@ def sessions(request):
 
 
 def poll(request):
-    queryset = Poll.objects.all()
+    queryset = Polls.objects.all()
     context = {
         'title': 'Poll',
         'queryset': queryset
@@ -91,7 +91,7 @@ def poll(request):
 
 
 def vote(request, id, passw):
-    pollv = get_object_or_404(Poll, id=id)
+    pollv = get_object_or_404(Polls, id=id)
     if pollv.password != passw:
         messages.error(request, f'Wrong Password!!')
         return redirect('poll')
@@ -105,7 +105,7 @@ def vote(request, id, passw):
 
 
 def votepass(request, id):
-    pollv = get_object_or_404(Poll, id=id)
+    pollv = get_object_or_404(Polls, id=id)
     if request.POST:
         try:
             passw = int(request.POST.get('passw'))

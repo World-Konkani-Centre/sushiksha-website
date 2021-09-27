@@ -67,7 +67,7 @@ class OneOneSession(models.Model):
 
 
 
-class Poll(models.Model):
+class Polls(models.Model):
     title = models.CharField(max_length=300, verbose_name='Title of the Poll')
     overview = models.TextField(help_text='Description for poll, this is optional', null=True, blank=True)
     password = models.IntegerField(default=0, help_text='Passowrd to open the poll')
@@ -76,4 +76,4 @@ class Poll(models.Model):
     color = ColorField(format='hexa', help_text='The accent color of the card')
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.title} Poll'

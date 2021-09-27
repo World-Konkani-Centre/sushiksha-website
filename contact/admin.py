@@ -3,7 +3,7 @@ from .models import Contact,Testimonial, OneOneSession, Poll
 
 # Events, , Faq, Gallery
 
-admin.site.register(Poll)
+admin.site.register(Polls)
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):

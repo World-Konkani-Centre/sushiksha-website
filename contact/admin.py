@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import Contact,Testimonial, OneOneSession
-from blog.models import Poll
-
+from .models import Contact,Testimonial, OneOneSession, Poll
 
 # Events, , Faq, Gallery
 

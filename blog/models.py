@@ -4,7 +4,6 @@ from django.urls import reverse
 from users.models import Profile
 from tinymce import HTMLField
 from PIL import Image
-from colorfield.fields import ColorField
 
 
 
@@ -62,13 +61,3 @@ class Comment(models.Model):
         return f"{self.user.username}'s Comment"
 
 
-class Poll(models.Model):
-    title = models.CharField(max_length=300, verbose_name='Title of the Poll')
-    overview = models.TextField(help_text='Description for poll, this is optional', null=True, blank=True)
-    password = models.IntegerField(default=0, help_text='Passowrd to open the poll')
-    password_enable = models.BooleanField(default=False, help_text='Check this box if you want to enable Password for the poll.')
-    embed_tag = models.TextField(help_text='Paste the complete embed link here')
-    color = ColorField(format='hexa', help_text='The accent color of the card')
-
-    def __str__(self):
-        return f'{self.title}'

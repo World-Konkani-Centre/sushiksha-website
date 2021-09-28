@@ -40,7 +40,7 @@
                 {% endif %}
 
                 <li><a href="{% url 'blog' %}">Blogs</a></li>
-                <li><a href="{% url 'poll' %}">Poll</a></li>
+                {% comment %} <li><a href="{% url 'poll' %}">Poll</a></li> {% endcomment %}
                 {% if user.is_authenticated %}
                 <li class="drop-down"><a href="{% url 'okr-view-data' %}">OKR</a>
                 <ul>

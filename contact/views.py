@@ -123,5 +123,12 @@ def votepass(request, id):
     return render(request, 'poll/poll-auth.html', context=context)
 
 
+def work_from_wkc(request):
+    context = {
+        'title': 'Work From WKC',
+    }
+    return render(request, 'badge_claim/blog.html', context=context)
+
+
     
     

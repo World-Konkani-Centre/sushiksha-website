@@ -7,6 +7,7 @@ urlpatterns = [
     path('sessions/', views.sessions, name='sessions'),
     path('poll/', views.poll, name='poll'),
     path('poll/vote/<int:id>/<int:passw>/', views.vote, name='vote'),
-    path('poll/auth/<int:id>/', views.votepass, name='auth-vote')
+    path('poll/auth/<int:id>/', views.votepass, name='auth-vote'),
+    path('work-from-wkc/', views.work_from_wkc, name='work-from-wkc')
     # path('gallery/', views.gallery, name='gallery')
 ]

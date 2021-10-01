@@ -123,7 +123,7 @@ From your `master` branch or your main branch that you are working on, give a PR
 
 
 `!IMPORTANT`: Don't give a PR to the master branch
-We only accept PR's to `develop` branch.
+
 
    
 

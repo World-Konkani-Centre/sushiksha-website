@@ -2816,3 +2816,16 @@ section {
     }
     
 }
+
+.card .badges-claim{
+    
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+
+}
+
+  /* On mouse-over, add a deeper shadow */
+.card .badges-claim:hover {
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+  }

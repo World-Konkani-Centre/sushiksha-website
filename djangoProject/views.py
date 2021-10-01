@@ -20,12 +20,8 @@ def index(request):
 
 
 def about(request):
-    # featured = Gallery.objects.filter(featured=True)
-    # common = Gallery.objects.filter(featured=False)
     context = {
         'title': 'About US',
-        # 'featured': featured,
-        # 'common': common
     }
     return render(request, 'webpages/about.html', context=context)
 

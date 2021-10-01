@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
-from .models import Contact, OneOneSession
+from django.shortcuts import get_object_or_404, render, redirect
+from .models import Contact, OneOneSession, Polls
 from django.contrib import messages
 from django.core.mail import send_mail
-# from django.contrib.auth.decorators import login_required
-# from .forms import GalleryForm
+
 
 
 def contact(request):
@@ -79,3 +78,57 @@ def sessions(request):
         'sessions': query_set,
     }
     return render(request, 'event/sessions.html', context=context)
+
+
+def poll(request):
+    queryset = Polls.objects.all()
+    context = {
+        'title': 'Poll',
+        'queryset': queryset
+    }
+
+    return render(request, 'poll/poll-list.html', context=context)
+
+
+def vote(request, id, passw):
+    pollv = get_object_or_404(Polls, id=id)
+    if pollv.password != passw:
+        messages.error(request, f'Wrong Password!!')
+        return redirect('poll')
+    
+    context = {
+        'title': f'{pollv.title}',
+        'poll': pollv
+    }
+
+    return render(request, 'poll/poll-single.html', context=context)
+
+
+def votepass(request, id):
+    pollv = get_object_or_404(Polls, id=id)
+    if request.POST:
+        try:
+            passw = int(request.POST.get('passw'))
+            if pollv.password != passw:
+                messages.error(request, f'Wrong Password!!')
+                return redirect('auth-vote', id=id)
+            return redirect('vote', id=id, passw=passw)
+        except:
+            return redirect('auth-vote', id=id)
+        
+    context = {
+        'title': f'{pollv.title} Password',
+        'poll': pollv
+    }
+    return render(request, 'poll/poll-auth.html', context=context)
+
+
+def work_from_wkc(request):
+    context = {
+        'title': 'Work From WKC',
+    }
+    return render(request, 'badge_claim/blog.html', context=context)
+
+
+    
+    

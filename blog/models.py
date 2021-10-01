@@ -5,6 +5,8 @@ from users.models import Profile
 from tinymce import HTMLField
 from PIL import Image
 
+
+
 class Categories(models.Model):
     title = models.CharField(max_length=20)
 
@@ -57,3 +59,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Comment"
+
+

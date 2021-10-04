@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 
 def index(request):
     featured = Post.objects.filter(featured=True)
-    faqs = Faq.objects.all()
+    
     testimonial = Testimonial.objects.all()
     context = {
         'faqs': faqs,

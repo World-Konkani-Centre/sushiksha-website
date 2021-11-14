@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from . import views
+from users.views import send_message
 
 handler404 = 'djangoProject.views.handler404'
 handler500 = 'djangoProject.views.handler500'
@@ -13,6 +14,7 @@ handler403 = 'djangoProject.views.handler403'
 
 urlpatterns = [
     path('sushiksha/admin/', admin.site.urls, name='admin'),
+    path('message/', send_message, name='message-send'),
     path('house/<int:id>', views.house, name='house'),
     path('team/<int:id>', views.team, name='team'),
     path('grappelli/', include('grappelli.urls')),

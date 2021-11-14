@@ -3,7 +3,6 @@ from . import views
 from badge.views import badge_list
 
 urlpatterns = [
-    path('message/', views.send_message, name='message-send'),
     path('login/', views.user_login, name='login'),
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),

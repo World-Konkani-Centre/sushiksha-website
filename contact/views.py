@@ -21,7 +21,7 @@ def contact(request):
         message.save()
         if email:
             messages.success(request, 'Thank you for showing interest in '
-                                      'the Sophists, We will contact you '
+                                      'the Sushiksha, We will contact you '
                                       'within '
                                       '24hrs.')
         else:

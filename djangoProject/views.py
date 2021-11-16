@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from contact.models import Testimonial, Faq
+from contact.models import Testimonial
 from users.models import House, Teams
 from blog.models import Post
 from django.shortcuts import get_object_or_404
@@ -11,7 +11,6 @@ def index(request):
     
     testimonial = Testimonial.objects.all()
     context = {
-        'faqs': faqs,
         'testimonial': testimonial,
         'featured': featured,
         'title': 'Home'

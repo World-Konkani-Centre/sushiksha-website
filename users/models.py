@@ -4,10 +4,6 @@ from django.urls import reverse
 from django.db.models import Sum
 from PIL import Image
 
-ROLE = (
-    ('Mentee', "Mentee"),
-    ('Mentor', "Mentor"),
-)
 
 UPGRADE_POINTS = [
     [500, 1000, 2000, 5000, 2000, 3000, 5000],
@@ -41,12 +37,18 @@ BATCH = (
     ("None", "None"),
 )
 
+ROLE = (
+    (1, 'MENTEE'),
+    (2, 'MENTOR'),
+    (3, 'ADVISOR')
+)
+
 
 class Profile(models.Model):
     slack_id = models.CharField(max_length=15, null=True,blank=True,help_text="Slack Id of user")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    role = models.BooleanField(default=False)
+    role = models.CharField(max_length=20, choices=ROLE, help_text='Role of the user', default=1)
     batch = models.CharField(max_length=10, choices=BATCH, default="2019")
     name = models.CharField(max_length=100, default=None, blank=True, null=True)
     phone = models.PositiveBigIntegerField(default=None, blank=True, null=True)

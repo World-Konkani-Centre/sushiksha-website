@@ -148,9 +148,9 @@ def search(request):
             Q(profile__guidance__icontains=query) |
             Q(email__icontains=query)
         ).distinct()
-    mentors = queryset.filter(profile__role=2).order_by(Lower('profile__name'))
-    mentees = queryset.filter(profile__role=1).order_by(Lower('profile__name'))
-    advisor = queryset.filter(profile__role=3).order_by(Lower('profile__name'))
+    mentors = queryset.filter(profile__role='2').order_by(Lower('profile__name'))
+    mentees = queryset.filter(profile__role='1').order_by(Lower('profile__name'))
+    advisor = queryset.filter(profile__role='3').order_by(Lower('profile__name'))
     context = {
         'mentee': mentees,
         'mentors': mentors,
@@ -161,9 +161,9 @@ def search(request):
 
 
 def user_list_view(request):
-    mentors = Profile.objects.filter(role=2).order_by(Lower('name'))
-    mentee = Profile.objects.filter(role=1).order_by(Lower('name'))
-    advisor = Profile.objects.filter(role=3).order_by(Lower('name'))
+    mentors = Profile.objects.filter(role='2').order_by(Lower('name'))
+    mentee = Profile.objects.filter(role='1').order_by(Lower('name'))
+    advisor = Profile.objects.filter(role='3').order_by(Lower('name'))
     context = {
         'mentors': mentors,
         'mentee': mentee,

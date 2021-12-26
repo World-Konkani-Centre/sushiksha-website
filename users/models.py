@@ -138,7 +138,7 @@ class Profile(models.Model):
 
     @property
     def get_role(self):
-        if self.role:
+        if self.role == '2':
             return 'Mentor'
         else:
             return 'Mentee'

@@ -245,7 +245,7 @@ def create_badge(request, id):
 def badge(request):
     form = BadgeForm(request.POST or None)
     badges = Badge.objects.all().order_by(Lower('title'))
-    if not request.user.profile.role:
+    if request.user.profile.role == '1':
         form.fields['badges'].queryset = Badge.objects.filter(featured=False).order_by(Lower('title'))
     else:
         form.fields['badges'].queryset = badges

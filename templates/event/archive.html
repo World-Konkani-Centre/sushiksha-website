@@ -11,10 +11,10 @@
             <div class="container">
         
                 <div class="d-flex justify-content-between align-items-center">
-                <h2>Leaderboard</h2>
+                <h2>Archive</h2>
                 <ol>
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                    <li><a href="">Archive</a></li>
                 </ol>
                 </div>
         
@@ -28,6 +28,14 @@
                     <ul>
                         <li><a href="{% url 'okr-view-data' %}">Add an Entry</a></li>
                         <li><a href="{% url 'okr-activity' %}">OKR activity</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'logs' %}">Analytics</a></li>
+                <li><a href="{% url 'pentathlon' %}">Pentathlon</a></li>
+                <li class="drop-down"><a href="{% url 'quiz_index' %}">Admin only</a>
+                    <ul>
+                        <li><a href="{% url 'coding-index' %}">Coding</a></li>
+                        <li><a href="{% url 'quiz_index' %}">Quiz</a></li>
                     </ul>
                 </li>
             </div>

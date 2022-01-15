@@ -9,7 +9,7 @@
                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About</a></li>
                 {% endif %}
-
+{% comment %} 
                  {% if user.is_superuser %}
                  <li class="drop-down"><a href="{% url 'quiz_index' %}">Admin only</a>
 
@@ -19,7 +19,7 @@
                  </ul>
 
                  </li>
-                 {% endif %}
+                 {% endif %} {% endcomment %}
 
                 {% if user.is_authenticated %}
                     <li class="drop-down"><a href="{% url 'reward' %}">Badges</a>
@@ -60,7 +60,7 @@
                     <li class="drop-down"><a href="{% url 'profile' %}">Account</a>
                         <ul>
                             <li><a href="{% url 'profile' %}">Profile</a></li>
-                            <li><a href="{% url 'blog-create' %}">Create a Post</a></li>
+                            {% comment %} <li><a href="{% url 'blog-create' %}">Create a Post</a></li> {% endcomment %}
                             {#                            <li><a href="{% url 'analytics' %}">Pomodoro leaderboard</a></li>#}
                             {% if user.is_superuser %}
                                 <li><a href="/sushiksha/admin">Admin page</a></li>

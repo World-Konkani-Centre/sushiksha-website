@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <main id="main">
+
+
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+        
+                <div class="d-flex justify-content-between align-items-center">
+                <h2>Leaderboard</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                </ol>
+                </div>
+        
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+
+        <section class="about">
+            <div class="container" data-aos="fade-up">
+                <li class="drop-down"><a href="{% url 'okr-view-data' %}">OKR</a>
+                    <ul>
+                        <li><a href="{% url 'okr-view-data' %}">Add an Entry</a></li>
+                        <li><a href="{% url 'okr-activity' %}">OKR activity</a></li>
+                    </ul>
+                </li>
+            </div>
+        </section>
+
+    </main>
+
+
+
+{% endblock content %}

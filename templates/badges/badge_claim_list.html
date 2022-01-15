@@ -21,38 +21,22 @@
     <section class="">
         <div class="container" data-aos="fade-up">
 
-            <!-- <div class="card" >
-                    <ol class="list-group list-group-flush">
-                        {% for form in forms %}
-                            <a class="list-group-item list-group-item-action fw-bold text-danger"
-                                    href="{% url 'badge_claim_form' pk=form.id %}">{{ form.title }}</a>
-                        {% endfor %}
-                    </ol>
-                </div>
-             -->
+
             
-                <div class="row">
+            <div class="row">
                 {% for form in forms %}
-                
-                <div class="col-lg-3 mb-4">
-                    <a href="{% url 'badge_claim_form' pk=form.id %}"
-                                class="">
-                                <div class="card border-danger">
-                                    <img src="" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title ">{{ form.title }}</h5>
-                            <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-                          </a>
-                        </div>
+                    <div class="col-lg-3 mb-4">
+                        <a href="{% url 'badge_claim_form' pk=form.id %}" class="">
+                            <div class="card border-danger">
+                                <img src="" alt="">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title ">{{ form.title }}</h5>
+                            </div>
+                        </a>
                     </div>
-                </div>
-                       
-                    
-               
                 {% endfor %}
             </div>
-            </div>
-           
 
         </div>
     </section>

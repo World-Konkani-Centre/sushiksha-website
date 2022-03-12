@@ -111,15 +111,18 @@ def blog_create(request):
     author = get_author(request.user)
     if request.POST:
         if form.is_valid():
-
             #Plagiarism Checker
             text = striphtml(form.instance.content) #Stripping html off from form.content
+            print(text)
+            text = text.replace("\n","")
+            text = text.replace("\t","")
+            print(text)
             url = "https://plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com/plagiarism"
             payload = '''{\r\n    \"text\": \"'''+ text +'''\",\r\n    \"language\": \"en\",\r\n    \"includeCitations\": false,\r\n    \"scrapeSources\": false\r\n}'''
             headers = {
                 'content-type': "application/json",
                 'x-rapidapi-host': "plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com",
-                'x-rapidapi-key': "6849226095mshcb8f3da8926036dp17e36ejsn83cd755c32fc"
+                'x-rapidapi-key': "6849226095mshcb8f3da8926036dp17e36ejsn83cd755c32fc" #'x-rapidapi-key': config.get('API_KEY')
             }
             response = requests.request("POST", url, data=payload, headers=headers)
             resp = json.loads(response.text)

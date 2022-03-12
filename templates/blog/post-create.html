@@ -20,6 +20,7 @@
       </div>
     </section><!-- End Breadcrumbs -->
 
+    {% if percent %}
     <div>
       <p>Hey {{author}}, Please recheck your article. Your article appears to be {{percent}}% plagiarised.</p>
       <p>Here are the matched sources: </p>
@@ -29,6 +30,7 @@
       </ul>
       {% endfor %}
     </div>
+    {% endif %}
 
         <section id="about" class="container">
             {{ form.media }}

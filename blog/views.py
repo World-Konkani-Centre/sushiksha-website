@@ -7,7 +7,9 @@ from .models import Post
 from .forms import CommentForm, PostForm
 from users.models import Profile
 from django.contrib.auth.models import User
-
+import re
+import requests
+import json
 
 def get_category_count():
     queryset = Post.objects.values('categories__title').annotate(Count('categories'))
@@ -98,6 +100,10 @@ def blog_single(request, id):
     }
     return render(request, 'blog/blog-single.html', context=context)
 
+#Custom function to strip html tags from form.instance.content (html.escape() is can't be the choice here)
+def striphtml(data):
+    p = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+    return p.sub('', data)
 
 def blog_create(request):
     title = "Create"
@@ -105,10 +111,41 @@ def blog_create(request):
     author = get_author(request.user)
     if request.POST:
         if form.is_valid():
-            form.instance.author = author
-            form.save()
-            messages.info(request, "Your Post has been created!")
-            return redirect(reverse("blog-detail", kwargs={'id': form.instance.id}))
+
+            #Plagiarism Checker
+            text = striphtml(form.instance.content) #Stripping html off from form.content
+            url = "https://plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com/plagiarism"
+            payload = '''{\r\n    \"text\": \"'''+ text +'''\",\r\n    \"language\": \"en\",\r\n    \"includeCitations\": false,\r\n    \"scrapeSources\": false\r\n}'''
+            headers = {
+                'content-type': "application/json",
+                'x-rapidapi-host': "plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com",
+                'x-rapidapi-key': "6849226095mshcb8f3da8926036dp17e36ejsn83cd755c32fc"
+            }
+            response = requests.request("POST", url, data=payload, headers=headers)
+            resp = json.loads(response.text)
+
+            percent = resp['percentPlagiarism']
+            sources = []
+            for url in resp['sources']:
+                sources.append(url['url'])
+            
+            #If plagiarism is more than 8%, avoid saving the form and let user know the matches.
+            if percent>8:
+                messages.warning(request, "Plagiarised content found, Post couldn't be created!")
+                context = {
+                    "author": author,
+                    "percent": percent,
+                    "sources": sources,
+                    "title": title,
+                    'form': form
+                }
+                return render(request, "blog/post-create.html", context)
+            else:
+                form.instance.author = author
+                form.save()
+                messages.info(request, "Your Post has been created!")
+                return redirect(reverse("blog-detail", kwargs={'id': form.instance.id}))
+
     context = {
         "title": title,
         'form': form

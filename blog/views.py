@@ -113,10 +113,8 @@ def blog_create(request):
         if form.is_valid():
             #Plagiarism Checker
             text = striphtml(form.instance.content) #Stripping html off from form.content
-            print(text)
-            text = text.replace("\n","")
-            text = text.replace("\t","")
-            print(text)
+            text = text.replace("\r"," ")
+            text = text.replace("\n"," ")
             url = "https://plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com/plagiarism"
             payload = '''{\r\n    \"text\": \"'''+ text +'''\",\r\n    \"language\": \"en\",\r\n    \"includeCitations\": false,\r\n    \"scrapeSources\": false\r\n}'''
             headers = {
@@ -131,7 +129,7 @@ def blog_create(request):
             sources = []
             for url in resp['sources']:
                 sources.append(url['url'])
-            
+
             #If plagiarism is more than 8%, avoid saving the form and let user know the matches.
             if percent>8:
                 messages.warning(request, "Plagiarised content found, Post couldn't be created!")
@@ -144,8 +142,10 @@ def blog_create(request):
                 }
                 return render(request, "blog/post-create.html", context)
             else:
+                post_instance = form.save(commit=False)
+                post_instance.percent = percent
                 form.instance.author = author
-                form.save()
+                post_instance.save()
                 messages.info(request, "Your Post has been created!")
                 return redirect(reverse("blog-detail", kwargs={'id': form.instance.id}))
 

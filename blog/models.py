@@ -23,6 +23,7 @@ class Post(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     thumbnail = models.ImageField(upload_to='blog-post-thumbnail')
     categories = models.ManyToManyField(Categories)
+    percent = models.IntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

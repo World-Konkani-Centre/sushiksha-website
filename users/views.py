@@ -76,6 +76,8 @@ def user_login(request):
     else:
         return render(request, 'authorization/login.html', {'title': "Login"})
 
+    
+    #profile page updatation function
 
 @login_required
 def profile(request):

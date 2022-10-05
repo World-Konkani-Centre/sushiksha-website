@@ -140,4 +140,4 @@ Anyone can Contribute to the site, This repo is also part of Hactober fest, so c
 Feel free to open the discussion and Issues.
 
 ## License
-[Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)
+This repository is licensed under [Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)

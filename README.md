@@ -45,8 +45,11 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
 </details>
 
 
-1. Backend Framework: **Django**
-2. Front-end Framework: **Bootstrap**
+Frameworks:
+  <ol>
+    <li>Backend Framework: **Django**</li>
+    <li>Front-end Framework: **Bootstrap**</li>
+  </ol>
 
 ## Installation 
 

@@ -27,6 +27,8 @@ Sushiksha thrives because of the dedication of its active mentees and mentors â€
 
 <b>VAA</b> envisions a community that empowers all its people to live with dignity and fulfillment and be active contributors to society.
 
+<b>'Vishwa Konkani Student Scholarship Fund (VKSSF)â€™</b> envisages grant of Merit Cum Means Scholarship for students having Konkani language as their mother tongue. Instituted World Konkani Centre in the year 2010 as envisioned by the eminent thinker and corporate leader T.V.Mohandas Pai, the VKSSF has since then successfully grown into a large programme.
+
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>

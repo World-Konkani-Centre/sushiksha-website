@@ -43,10 +43,12 @@
 
                                 <div class="mt-2">
                                     <h4 class="h4">{{ user.profile.name }}</h4>
-                                    {% if user.profile.role %}
-                                        <p class="text-secondary mb-1">Mentor</p>
+                                    {% if user.profile.role == "1" %}
+                                        <p class="text-secondary mb-1">MENTEE</p>
+                                    {% elif user.profile.role == "2" %}
+                                        <p class="text-secondary mb-1">MENTOR</p>
                                     {% else %}
-                                        <p class="text-secondary mb-1">Mentee</p>
+                                        <p class="text-secondary mb-1">ADVISOR</p>
                                     {% endif %}
                                 </div>
 

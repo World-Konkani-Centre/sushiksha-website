@@ -165,11 +165,11 @@ def search(request):
 def user_list_view(request):
     mentors = Profile.objects.filter(role='2').order_by(Lower('name'))
     mentee = Profile.objects.filter(role='1').order_by(Lower('name'))
-    advisor = Profile.objects.filter(role='3').order_by(Lower('name'))
+    # advisor = Profile.objects.filter(role='3').order_by(Lower('name'))
     context = {
         'mentors': mentors,
         'mentee': mentee,
-        'advisor': advisor,
+        # 'advisor': advisor,
         'title': "Members"
     }
     return render(request, 'member-list/trainers.html', context=context)

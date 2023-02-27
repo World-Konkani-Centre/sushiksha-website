@@ -105,10 +105,10 @@
                                         <a href="mailto:{{ user.email }}"><i
                                                 class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
                                     {% endif %}
-                                    {% if user.profile.okr %}
+                                    {% comment %} {% if user.profile.okr %}
                                         <a href="{{ user.profile.okr }}" target="_blank"><i
                                                 class="bx bx-table bx-burst-hover bx-lg"></i></a>
-                                    {% endif %}
+                                    {% endif %} {% endcomment %}
                                 </div>
                             </div>
                         </div>
@@ -125,14 +125,14 @@
                                                     class="btn btn-outline-danger btn-sm">
                                                 {{ user.profile.name | truncatechars:15 }}'s
                                                 Blog Posts</a></p></h4>
-                                        <h1 class="lead font-weight-bold text-start">
+                                        {% comment %} <h1 class="lead font-weight-bold text-start">
                                             <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'okr-view-data' %}"
                                                         class="btn btn-outline-danger btn-sm">My OKR
                                                     {{ user.profile.name | truncatechars:20 }}</a>
                                             </p>
-                                        </h1>
+                                        </h1> {% endcomment %}
                                     </div>
                                 </div>
 

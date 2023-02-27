@@ -110,11 +110,11 @@
                                 <a href="mailto:{{ user.email }}"
                                 ><i class="bx bxs-envelope bx-burst-hover bx-lg"></i
                                 ></a>
-                            {% endif %} {% if user.profile.okr %}
+                            {% comment %} {% endif %} {% if user.profile.okr %}
                                 <a href="{{ user.profile.okr }}" target="_blank"
                                 ><i class="bx bx-table bx-burst-hover bx-lg"></i
                                 ></a>
-                            {% endif %}
+                            {% endif %} {% endcomment %}
                             </div>
                         </div>
                         </div>
@@ -142,14 +142,14 @@
                                                 </p>
                                             </h1>
 
-                                            <h1 class="lead font-weight-bold">
+                                            {% comment %} <h1 class="lead font-weight-bold">
                                                 <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'okr-view-id' pk=user.id %}"
                                                         class="btn btn-outline-danger btn-sm">View Airtable of
                                                     {{ user.profile.name | truncatechars:20 }}</a>
                                                 </p>
-                                            </h1>
+                                            </h1> {% endcomment %}
                                         </div>
                                     {% else %}
                                         <div class="col-12">

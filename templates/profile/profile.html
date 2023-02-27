@@ -117,7 +117,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
 
-                                <div class="row badge-row">
+                                {% comment %} <div class="row badge-row">
                                     <div class='col-12'>
                                         <h4 class="lead font-weight-bold text-end">
                                             <p class="text-center mb-3" align="center"><a
@@ -125,16 +125,16 @@
                                                     class="btn btn-outline-danger btn-sm">
                                                 {{ user.profile.name | truncatechars:15 }}'s
                                                 Blog Posts</a></p></h4>
-                                        {% comment %} <h1 class="lead font-weight-bold text-start">
+                                         <h1 class="lead font-weight-bold text-start">
                                             <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'okr-view-data' %}"
                                                         class="btn btn-outline-danger btn-sm">My OKR
                                                     {{ user.profile.name | truncatechars:20 }}</a>
                                             </p>
-                                        </h1> {% endcomment %}
+                                        </h1> 
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
 
                             </div>
                         </div>

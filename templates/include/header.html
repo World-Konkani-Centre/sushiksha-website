@@ -39,7 +39,7 @@
                     <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
                 {% endif %}
 
-                <li><a href="{% url 'blog' %}">Blogs</a></li>
+                {% comment %} <li><a href="{% url 'blog' %}">Blogs</a></li> {% endcomment %}
                 {% comment %} <li><a href="{% url 'poll' %}">Poll</a></li> {% endcomment %}
                 {% if user.is_authenticated %}
                 {% comment %} <li class="drop-down"><a href="{% url 'okr-view-data' %}">OKR</a>

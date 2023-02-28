@@ -24,12 +24,12 @@
 
         <section class="about">
             <div class="container" data-aos="fade-up">
-                <li class="drop-down"><a href="{% url 'okr-view-data' %}">OKR</a>
+                {% comment %} <li class="drop-down"><a href="{% url 'okr-view-data' %}">OKR</a>
                     <ul>
                         <li><a href="{% url 'okr-view-data' %}">Add an Entry</a></li>
                         <li><a href="{% url 'okr-activity' %}">OKR activity</a></li>
                     </ul>
-                </li>
+                </li> {% endcomment %}
                 <li><a href="{% url 'logs' %}">Analytics</a></li>
                 <li><a href="{% url 'pentathlon' %}">Pentathlon</a></li>
                 <li class="drop-down"><a href="{% url 'quiz_index' %}">Admin only</a>

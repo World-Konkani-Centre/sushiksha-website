@@ -46,9 +46,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#mentee" role="tab" data-toggle="tab">Mentees</a>
                     </li>
-                    <li class="nav-item">
+                    {% comment %} <li class="nav-item">
                         <a class="nav-link" href="#advisor" role="tab" data-toggle="tab">Advisor</a>
-                    </li>
+                    </li> {% endcomment %}
                 </ul>
 
                 <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
@@ -164,7 +164,7 @@
                     </div>
 
 
-                    <div role="tabpanel" class="tab-pane fade" id="advisor">
+                    {% comment %} <div role="tabpanel" class="tab-pane fade" id="advisor">
                         <div class="row">
                             {% for user in advisor %}
                                 <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
@@ -218,7 +218,7 @@
                             {% endfor %}
                         </div>
 
-                    </div>
+                    </div> {% endcomment %}
 
                 </div>
             </div>

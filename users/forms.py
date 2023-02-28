@@ -29,11 +29,12 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['name', 'batch', 'phone', 'college', 'degree', 'branch',
                   'profession', 'address', 'guidance', 'slack_id',
-                                                       'linkedin', 'instagram', 'twitter',
-                  'github', 'okr', 'facebook',
-                  'image']
+                    'linkedin', 'instagram', 'twitter', 'github', 'facebook',
+                    # 'okr', 
+                    'image']
+
         labels = {
-            "okr": "OKR",
+            # "okr": "OKR",
             'slack_id': "Slack Id"
         }
 

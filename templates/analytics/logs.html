@@ -86,14 +86,14 @@
                                                     <a href="{% url 'logs-teams' %}"><button class="btn btn-danger btn-block col-12">All Teams Data<span class="icofont-arrow-right"></span></button></a>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            {% comment %} <tr>
                                                 <td class="font-weight-bold">
                                                    Get OKR Data
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'okr-weekly' %}"><button class="btn btn-danger btn-block col-12">OKR data<span class="icofont-arrow-right"></span></button></a>
                                                 </td>
-                                            </tr>
+                                            </tr> {% endcomment %}
                                         {% endif %}
                                         </tbody>
                                     </table>

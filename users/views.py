@@ -165,11 +165,11 @@ def search(request):
 def user_list_view(request):
     mentors = Profile.objects.filter(role='2').order_by(Lower('name'))
     mentee = Profile.objects.filter(role='1').order_by(Lower('name'))
-    advisor = Profile.objects.filter(role='3').order_by(Lower('name'))
+    # advisor = Profile.objects.filter(role='3').order_by(Lower('name'))
     context = {
         'mentors': mentors,
         'mentee': mentee,
-        'advisor': advisor,
+        # 'advisor': advisor,
         'title': "Members"
     }
     return render(request, 'member-list/trainers.html', context=context)
@@ -326,14 +326,17 @@ def get_profile_file(request):
     if request.user.is_superuser:
         queryset = Profile.objects.all().values('user__username', 'name', 'batch', 'user__email'
                                                 , 'phone', 'college', 'profession', 'linkedin',
-                                                'github', 'okr', 'points', 'stars').order_by('name')
+                                                'github', 'points', 
+                                                # 'okr',
+                                                'stars').order_by('name'),
         return render_to_csv_response(queryset, filename='Sushiksha-Profiles' + str(datetime.date.today()),
                                       field_header_map={'user__username': 'Username', 'name': 'Name', 'batch': 'batch',
                                                         'user__email': 'email', 'phone': 'phone number',
                                                         'college': 'college',
                                                         'profession': 'profession', 'linkedin': 'linked in',
                                                         'github': 'github',
-                                                        'okr': 'OKR', 'points': 'Total Points', 'stars': 'Stars'})
+                                                        # 'okr': 'OKR', 
+                                                        'points': 'Total Points', 'stars': 'Stars'})
 
 
 @login_required
@@ -693,30 +696,30 @@ def delete_rewards(request):
     return redirect('home')
 
 
-@login_required
-def okr_weekly(request):
-    if request.POST:
-        form = RangeRequestForm(request.POST)
-        if form.is_valid():
-            beginning = form.cleaned_data['beginning']
-            end = form.cleaned_data['end']
-            queryset = Entry.objects.filter(date_time__gt=beginning, date_time__lte=end
-                                            ).values('user__username', 'user__profile__name', 'user__profile__batch',
-                                                     'key_result__objective',
-                                                     'key_result__key_result', 'update', 'date_time'
-                                                     , 'time_spent').order_by('user__username')
-            return render_to_csv_response(queryset, filename='Sushiksha-OKR' + str(datetime.date.today()),
-                                          field_header_map={'user__username': 'Username','user__profile__name':'Name',
-                                                            'user__profile__batch': 'Batch',
-                                                            'key_result__objective': 'Objective',
-                                                            'key_result__key_result': 'KR', 'update': 'Update',
-                                                            'date_time': "Date and Time",
-                                                            'time_spent': 'Time Spent'})
-    else:
-        form = RangeRequestForm()
-        heading = "OKR Data"
-        context = {
-            'form': form,
-            'heading': heading
-        }
-        return render(request, 'analytics/logs-users.html', context=context)
+# @login_required
+# def okr_weekly(request):
+#     if request.POST:
+#         form = RangeRequestForm(request.POST)
+#         if form.is_valid():
+#             beginning = form.cleaned_data['beginning']
+#             end = form.cleaned_data['end']
+#             queryset = Entry.objects.filter(date_time__gt=beginning, date_time__lte=end
+#                                             ).values('user__username', 'user__profile__name', 'user__profile__batch',
+#                                                      'key_result__objective',
+#                                                      'key_result__key_result', 'update', 'date_time'
+#                                                      , 'time_spent').order_by('user__username')
+#             return render_to_csv_response(queryset, filename='Sushiksha-OKR' + str(datetime.date.today()),
+#                                           field_header_map={'user__username': 'Username','user__profile__name':'Name',
+#                                                             'user__profile__batch': 'Batch',
+#                                                             'key_result__objective': 'Objective',
+#                                                             'key_result__key_result': 'KR', 'update': 'Update',
+#                                                             'date_time': "Date and Time",
+#                                                             'time_spent': 'Time Spent'})
+#     else:
+#         form = RangeRequestForm()
+#         heading = "OKR Data"
+#         context = {
+#             'form': form,
+#             'heading': heading
+#         }
+#         return render(request, 'analytics/logs-users.html', context=context)

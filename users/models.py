@@ -62,7 +62,7 @@ class Profile(models.Model):
     instagram = models.URLField(default=None, blank=True, null=True)
     twitter = models.URLField(default=None, blank=True, null=True)
     github = models.URLField(default=None, blank=True, null=True)
-    okr = models.URLField(default=None, blank=True, null=True)
+    # okr = models.URLField(default=None, blank=True, null=True)
     facebook = models.URLField(default=None, blank=True, null=True)
     initiator = models.BooleanField(default=False)
     points = models.IntegerField(default=0)

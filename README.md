@@ -23,6 +23,12 @@ Sushiksha Mentoring Program is organized for scholars of Vishwa Konkani Student 
 
 Sushiksha thrives because of the dedication of its active mentees and mentors – who have contributed countless hours of work to shape their future and make it a highly productive and focused workspace.
 
+<b>VKSSF Alumni Association</b> is a young and vibrant group of alumni VKSSF scholars who have successfully thrived through their undergraduate and graduate studies and are now on their path to be successful professionals.
+
+<b>VAA</b> envisions a community that empowers all its people to live with dignity and fulfillment and be active contributors to society.
+
+<b>'Vishwa Konkani Student Scholarship Fund (VKSSF)’</b> envisages grant of Merit Cum Means Scholarship for students having Konkani language as their mother tongue. Instituted World Konkani Centre in the year 2010 as envisioned by the eminent thinker and corporate leader T.V.Mohandas Pai, the VKSSF has since then successfully grown into a large programme.
+
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -39,8 +45,11 @@ Sushiksha thrives because of the dedication of its active mentees and mentors �
 </details>
 
 
-1. Backend Framework: **Django**
-2. Front-end Framework: **Bootstrap**
+Frameworks:
+  <ol>
+    <li>Backend Framework: **Django**</li>
+    <li>Front-end Framework: **Bootstrap**</li>
+  </ol>
 
 ## Installation 
 
@@ -140,4 +149,4 @@ Anyone can Contribute to the site, This repo is also part of Hactober fest, so c
 Feel free to open the discussion and Issues.
 
 ## License
-[Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)
+This repository is licensed under [Apache License 2.0](https://github.com/18praneeth/sushiksha-website/blob/master/LICENSE)

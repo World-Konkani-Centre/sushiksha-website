@@ -23,7 +23,7 @@
                 </div>
             </div>
         </section>
-        <!-- End Breadcrumbs -->
+        {% comment %} End Breadcrumbs {% endcomment %}
 
         <section id="" class="">
             <div class="profile container" data-aos="fade-up">
@@ -32,17 +32,19 @@
 
                        <div class="card mb-4 user-profile user-level-2">
                         <div class="card-body p-0">
-                        {% comment %} <div class="cardheader">
+                        {% comment %}<div class="cardheader">
                         </div> {% endcomment %}
                         <div class="">
                              <img alt="" src="{{ user.profile.image.url }}">
                         </div>
                                 <div class="mt-3">
                                     <h4 class="h4">{{ user.username }}</h4>
-                                    {% if user.profile.role %}
-                                        <p class="text-secondary mb-1">Mentor</p>
+                                    {% if user.profile.role == "1" %}
+                                        <p class="text-secondary mb-1">MENTEE</p>
+                                    {% elif user.profile.role == "2" %}
+                                        <p class="text-secondary mb-1">MENTOR</p>
                                     {% else %}
-                                        <p class="text-secondary mb-1">Mentee</p>
+                                        {% comment %} <p class="text-secondary mb-1">ADVISOR</p> {% endcomment %}
                                     {% endif %}
                                 </div>
                             <div class="row p-2">
@@ -55,14 +57,14 @@
                                             >
                                         </p>
                                     </div>
-                                    <div class="col-6 text-justify">
+                                    {% comment %}<div class="col-6 text-justify">
                                         <p class="font-weight-bold">
                                             House:
                                             <a href="{{ user.profile.get_house_url }}"
                                             >{{ user.profile.get_house_name }}</a
                                             >
                                         </p>
-                                    </div>
+                                    </div> {% endcomment %}
                                 {% endif %}
 
                                 <div class="col-6 mt-1 text-justify">
@@ -75,15 +77,15 @@
                                         Points: {{ user.profile.points |intcomma }}
                                     </p>
                                 </div>
-                                <!--<div class="col-12 mt-1 text-justify">
+                                {% comment %}<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Level: {{ user.profile.level }}</p>
-                                </div>-->
-                                <!--<div class="col-12 mt-1 text-justify">
+                                </div>{% endcomment %}
+                                {% comment %}<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Total Points: {{ user.profile.total_points }}</p>
-                                </div>-->
-                                <!--<div class="col-12 mt-1 text-justify">
+                                </div>{% endcomment %}
+                                {% comment %}<div class="col-12 mt-1 text-justify">
                                     <p class="font-weight-bold">Sushiksha Shells: {{ user.profile.suShells }}</p>
-                                </div>-->
+                                </div>{% endcomment %}
                             </div>
                         </div>
                         <div class="card-footer">
@@ -108,11 +110,12 @@
                                 <a href="mailto:{{ user.email }}"
                                 ><i class="bx bxs-envelope bx-burst-hover bx-lg"></i
                                 ></a>
-                            {% endif %} {% if user.profile.okr %}
+                            {% endif %} 
+                            {% comment %}{% if user.profile.okr %}
                                 <a href="{{ user.profile.okr }}" target="_blank"
                                 ><i class="bx bx-table bx-burst-hover bx-lg"></i
                                 ></a>
-                            {% endif %}
+                            {% endif %} {% endcomment %}
                             </div>
                         </div>
                         </div>
@@ -130,7 +133,7 @@
                                                     to {{ user.profile.name | truncatechars:20 }} </a>
                                                 </p>
                                             </h1>
-                                            <h1 class="lead font-weight-bold">
+                                            {% comment %} <h1 class="lead font-weight-bold">
                                                 <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'user-posts' id=user.id %}"
@@ -138,26 +141,26 @@
                                                     {{ user.profile.name | truncatechars:20 }}'s Blog
                                                     Posts</a>
                                                 </p>
-                                            </h1>
+                                            </h1> {% endcomment %}
 
-                                            <h1 class="lead font-weight-bold">
+                                            {% comment %}<h1 class="lead font-weight-bold">
                                                 <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'okr-view-id' pk=user.id %}"
                                                         class="btn btn-outline-danger btn-sm">View Airtable of
                                                     {{ user.profile.name | truncatechars:20 }}</a>
                                                 </p>
-                                            </h1>
+                                            </h1> {% endcomment %}
                                         </div>
                                     {% else %}
                                         <div class="col-12">
-                                            <h1 class="lead font-weight-bold">
+                                            {% comment %} <h1 class="lead font-weight-bold">
                                                 <a
                                                         href="{% url 'user-posts' id=user.id %}"
                                                         class="btn btn-outline-danger btn-sm">
                                                     {{ user.profile.name | truncatechars:20 }}'s Blog
                                                     Posts</a>
-                                            </h1>
+                                            </h1> {% endcomment %}
                                         <h1 class="lead font-weight-bold">
                                                 <a
                                                         href="#"
@@ -375,7 +378,7 @@
 
                                 <div class="card-footer">
                                     <h1 class="lead text-center">Badges</h1>
-                                    <!--<div class="row badge-row">
+                                    {% comment %}<div class="row badge-row">
                                         <div class='col-6'>
                                             {% if not user.id == request.user.id %}
                                                 <h1 class="lead font-weight-bold text-start">Badges : <a
@@ -388,7 +391,7 @@
                                                     href="{% url 'user-posts' id=user.id %}">{{ user.profile.name }}'s
                                                 Blog Posts</a></h1>
                                         </div>
-                                    </div>-->
+                                    </div>{% endcomment %}
                                 </div>
                             </div>
                         </div>
@@ -398,7 +401,7 @@
         </section>
 
     </main>
-    <!-- End #main -->
+    {% comment %} End #main {% endcomment %}
 
 {% endblock content %} {% block script %}
     <script src="{% static 'assets/js/utils.js' %}"></script>

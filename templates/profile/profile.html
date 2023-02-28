@@ -43,10 +43,12 @@
 
                                 <div class="mt-2">
                                     <h4 class="h4">{{ user.profile.name }}</h4>
-                                    {% if user.profile.role %}
-                                        <p class="text-secondary mb-1">Mentor</p>
+                                    {% if user.profile.role == "1" %}
+                                        <p class="text-secondary mb-1">MENTEE</p>
+                                    {% elif user.profile.role == "2" %}
+                                        <p class="text-secondary mb-1">MENTOR</p>
                                     {% else %}
-                                        <p class="text-secondary mb-1">Mentee</p>
+                                        {% comment %} <p class="text-secondary mb-1">ADVISOR</p> {% endcomment %}
                                     {% endif %}
                                 </div>
 
@@ -57,11 +59,11 @@
                                                     href="{{ user.profile.get_team_url }}">{{ user.profile.get_team_name }}</a>
                                             </p>
                                         </div>
-                                        <div class="col-6 text-justify">
+                                        {% comment %} <div class="col-6 text-justify">
                                             <p class="font-weight-bold">House: <a
                                                     href="{{ user.profile.get_house_url }}">{{ user.profile.get_house_name }}</a>
                                             </p>
-                                        </div>
+                                        </div> {% endcomment %}
                                     {% endif %}
 
                                     <div class="col-6 mt-1 text-justify">
@@ -103,10 +105,10 @@
                                         <a href="mailto:{{ user.email }}"><i
                                                 class="bx bxs-envelope bx-burst-hover bx-lg"></i></a>
                                     {% endif %}
-                                    {% if user.profile.okr %}
+                                    {% comment %} {% if user.profile.okr %}
                                         <a href="{{ user.profile.okr }}" target="_blank"><i
                                                 class="bx bx-table bx-burst-hover bx-lg"></i></a>
-                                    {% endif %}
+                                    {% endif %} {% endcomment %}
                                 </div>
                             </div>
                         </div>
@@ -115,7 +117,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
 
-                                <div class="row badge-row">
+                                {% comment %} <div class="row badge-row">
                                     <div class='col-12'>
                                         <h4 class="lead font-weight-bold text-end">
                                             <p class="text-center mb-3" align="center"><a
@@ -123,16 +125,16 @@
                                                     class="btn btn-outline-danger btn-sm">
                                                 {{ user.profile.name | truncatechars:15 }}'s
                                                 Blog Posts</a></p></h4>
-                                        <h1 class="lead font-weight-bold text-start">
+                                         <h1 class="lead font-weight-bold text-start">
                                             <p class="text-center mb-3" align="center">
                                                 <a
                                                         href="{% url 'okr-view-data' %}"
                                                         class="btn btn-outline-danger btn-sm">My OKR
                                                     {{ user.profile.name | truncatechars:20 }}</a>
                                             </p>
-                                        </h1>
+                                        </h1> 
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
 
                             </div>
                         </div>

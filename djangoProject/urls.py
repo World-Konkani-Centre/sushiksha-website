@@ -34,13 +34,13 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('', include('contact.urls')),
     path('badge/', include('badge.urls')),
-    path('blog/', include('blog.urls')),
+#     path('blog/', include('blog.urls')),
     path('about/', views.about, name='about'),
     path('tinymce/', include('tinymce.urls')),
     path('goodies/', include('goodies.urls')),
     url('practice/', include('quiz.urls')),
     url('coding/', include('coding.urls')),
-    url('okr/', include('OKR.urls')),
+#     url('okr/', include('OKR.urls')),
 ]
 
 if settings.DEBUG:
